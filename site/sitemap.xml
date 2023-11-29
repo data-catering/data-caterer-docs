@@ -61,6 +61,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://data.catering/setup/design/</loc>
+         <lastmod>2023-11-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://data.catering/setup/foreign-key/</loc>
          <lastmod>2023-11-29</lastmod>
          <changefreq>daily</changefreq>
@@ -177,6 +182,11 @@
     </url>
     <url>
          <loc>https://data.catering/use-case/roadmap/</loc>
+         <lastmod>2023-11-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://data.catering/use-case/blog/shift-left-data-quality/</loc>
          <lastmod>2023-11-29</lastmod>
          <changefreq>daily</changefreq>
     </url>

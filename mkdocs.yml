@@ -61,6 +61,7 @@ nav:
   - Get Started: 'get-started/docker.md'
   - Setup:
       - 'setup/index.md'
+      - Design: 'setup/design.md'
       - Guide:
           - 'setup/guide/index.md'
           - Scenario:
@@ -98,6 +99,8 @@ nav:
       - Business Value: 'use-case/business-value.md'
       - Comparison: 'use-case/comparison.md'
       - Roadmap: 'use-case/roadmap.md'
+      - Blog:
+          - Shift Left Data Quality: 'use-case/blog/shift-left-data-quality.md'
   - About:
       - 'about.md'
       - Terms of service: 'legal/terms-of-service.md'
@@ -142,3 +145,8 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

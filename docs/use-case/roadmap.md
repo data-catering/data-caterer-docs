@@ -1,75 +1,23 @@
 # Roadmap
 
-- Support for other data sources
-    - AWS, GCP and Azure related data services (:white_check_mark: [cloud storage](../setup/advanced.md#cloud-storage))
-    - Deltalake
-    - RabbitMQ
-    - ActiveMQ
-    - MongoDB
-    - Elasticsearch
-    - Snowflake
-    - Databricks
-    - Pulsar
-- Further support for metadata discovery
-    - :white_check_mark: [HTTP (OpenAPI spec)](../setup/guide/data-source/http.md)
-    - JMS
-    - Read from samples
-- :white_check_mark: [API for developers and testers](https://github.com/pflooky/data-caterer-example)
-    - :white_check_mark: Scala
-    - :white_check_mark: Java
-- UI Portal for metadata and data generation
-    - Metadata stored in database
-    - Store data generation/validation run information in file/database
-- :white_check_mark: [Report for data generated and validation rules](../sample/report/html/index.html)
-- Integration with existing metadata services
-    - Populate metadata back to metadata services
-    - :white_check_mark: [OpenLineage metadata (Marquez)](../setup/guide/data-source/marquez-metadata-source.md)
-    - :white_check_mark: [OpenMetadata](../setup/guide/data-source/open-metadata-source.md)
-    - ODCS (Open Data Contract Standard)
-    - Amundsen
-    - Datahub
-    - Solace Event Portal
-    - Airflow
-    - DBT
-- Integration with existing data validations
-    - [Great Expectation](https://greatexpectations.io/)
-    - [DBT constraints](https://docs.getdbt.com/reference/resource-properties/constraints)
-    - [SodaCL](https://docs.soda.io/soda-cl/soda-cl-overview.html)
-    - [MonteCarlo](https://docs.getmontecarlo.com/docs/monitors-as-code)
-- :white_check_mark: Suggest data validations
-- Data dictionary
-    - Business definitions of fields that can be referenced for metadata across all data sources
-- :white_check_mark: Verification rules after data generation
-- :white_check_mark: [Validation waiting conditions](../setup/validation.md#wait-condition)
-    - :white_check_mark: Webhook
-    - :white_check_mark: File exists
-    - :white_check_mark: Data exists via SQL expression
-    - :white_check_mark: Pause
-- Extend validation types
-    - :white_check_mark: [Aggregates](../setup/validation/group-by-validation.md) (sum of amount per account is > 500)
-    - Ordering (transactions are ordered by date)
-    - :white_check_mark: [Relationship](../setup/validation/upstream-data-source-validation.md) (at least one account entry in history table per account in accounts table)
-    - Data profile (how close the generated data profile is compared to the expected data profile)
-- Extend count
-    - Cover all possible cases (i.e. record for each combination of oneOf values, positive/negative values etc.)
-    - Similar to edge cases
-    - Ability to override edge cases
-- Alerting
-    - Slack
-    - Email
-- Overriding tasks
-    - Can customise tasks without copying whole schema definitions, easier to create scenarios
-- Gradle plugin
-- Metadata improvements
-    - PII detection (can integrate with [Presidio](https://microsoft.github.io/presidio/analyzer/))
-    - Relationship detection across data sources
-    - SQL generation
-    - Ordering information
-- Code generation
-- Schema generation from Scala/Java class
-- Ordering within data sources that support order for insertion
-- Further data cleanup
-    - Clean up data in consumer data sinks
-    - Clean up data from real time sources (i.e. DELETE HTTP endpoint, delete events in JMS)
-- :white_check_mark: [Trial app to try out all features](../get-started/docker.md#paid-version-trial)
-- HTTP response data validation
+Items below summarise the roadmap of Data Caterer. As each task gets completed, it will be documented and linked.
+
+| Feature                                | Description                                                                                                                                         | Sub Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Data source support                    | Batch or real time data sources that can be added to Data Caterer. Support data sources that users want                                             | - AWS, GCP and Azure related data services (:white_check_mark: [cloud storage](../setup/advanced.md#cloud-storage))<br>- Deltalake<br>- RabbitMQ<br>- ActiveMQ<br>- MongoDB<br>- Elasticsearch<br>- Snowflake<br>- Databricks<br>- Pulsar                                                                                                                                                                                                                                                                                             |
+| Metadata discovery                     | Allow for schema and data profiling from external metadata sources                                                                                  | - :white_check_mark: [HTTP (OpenAPI spec)](../setup/guide/data-source/http.md)<br>- JMS<br>- Read from samples- :white_check_mark: [OpenLineage metadata (Marquez)](../setup/guide/data-source/marquez-metadata-source.md)<br>- :white_check_mark: [OpenMetadata](../setup/guide/data-source/open-metadata-source.md)<br>- ODCS (Open Data Contract Standard)<br>- Amundsen<br>- Datahub<br>- Solace Event Portal<br>- Airflow<br>- DBT                                                                                               |
+| Developer API                          | Scala/Java interface for developers/testers to create data generation and validation tasks                                                          | - :white_check_mark: Scala<br>- :white_check_mark: Java                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Report generation                      | Generate a report that summarises the data generation or validation results                                                                         | - [Report for data generated and validation rules](../sample/report/html/index.html)                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| UI portal                              | Allow users to access a UI to input data generation or validation tasks. Also be able to view report results                                        | - Metadata stored in database<br>- Store data generation/validation run information in file/database                                                                                                                                                                                                                                                                                                                                                                                                                                  |                                  
+| Integration with data validation tools | Derive data validation rules from existing data validation tools                                                                                    | - [Great Expectation](https://greatexpectations.io/)<br>- [DBT constraints](https://docs.getdbt.com/reference/resource-properties/constraints)<br>- [SodaCL](https://docs.soda.io/soda-cl/soda-cl-overview.html)<br>- [MonteCarlo](https://docs.getmontecarlo.com/docs/monitors-as-code)                                                                                                                                                                                                                                              |
+| Data validation rule suggestions       | Based on metadata, generate data validation rules appropriate for the dataset                                                                       | - :white_check_mark: Suggest basic data validations                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Wait conditions before data validation | Define certain conditions to be met before starting data validations                                                                                | - :white_check_mark: Webhook<br>- :white_check_mark: File exists<br>- :white_check_mark: Data exists via SQL expression<br>- :white_check_mark: Pause                                                                                                                                                                                                                                                                                                                                                                                 |
+| Validation types                       | Ability to define simple/complex data validations                                                                                                   | - :white_check_mark: [Basic validations](../setup/validation/basic-validation.md)<br>- :white_check_mark: [Aggregates](../setup/validation/group-by-validation.md) (sum of amount per account is > 500)<br>- Ordering (transactions are ordered by date)<br>- :white_check_mark: [Relationship](../setup/validation/upstream-data-source-validation.md) (at least one account entry in history table per account in accounts table)<br>- Data profile (how close the generated data profile is compared to the expected data profile) |
+| Data generation record count           | Generate scenarios where there are one to many, many to many situations relating to record count. Also ability to cover all edge cases or scenarios | - Cover all possible cases (i.e. record for each combination of oneOf values, positive/negative values etc.)<br>- Ability to override edge cases                                                                                                                                                                                                                                                                                                                                                                                      |
+| Alerting                               | When tasks have completed, ability to define alerts based on certain conditions                                                                     | - Slack<br>- Email                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Metadata enhancements                  | Based on data profiling or inference, can add to existing metadata                                                                                  | - PII detection (can integrate with [Presidio](https://microsoft.github.io/presidio/analyzer/))<br>- Relationship detection across data sources<br>- SQL generation<br>- Ordering information                                                                                                                                                                                                                                                                                                                                         |
+| Data cleanup                           | Ability to clean up generated data                                                                                                                  | - :white_check_mark: [Clean up generated data](../setup/guide/scenario/delete-generated-data.md)<br>- Clean up data in consumer data sinks<br>- Clean up data from real time sources (i.e. DELETE HTTP endpoint, delete events in JMS)                                                                                                                                                                                                                                                                                                |
+| Trial version                          | Trial version of the full app for users to test out all the features                                                                                | - :white_check_mark: [Trial app to try out all features](../get-started/docker.md#paid-version-trial)                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Code generation                        | Based on metadata or existing classes, code for data generation and validation could be generated                                                   | - Code generation<br>- Schema generation from Scala/Java class                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Real time response data validations    | Ability to define data validations based on the response from real time data sources (e.g. HTTP response)                                           | - HTTP response data validation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+
