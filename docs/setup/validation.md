@@ -213,7 +213,7 @@ validations. This can be via:
           url: "http://localhost:8080/finished"
     ```
 
-### File available
+### File exists
 
 === "Java"
 
