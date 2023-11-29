@@ -1,6 +1,6 @@
 site_name: Data Catering
 site_url: https://data.catering/
-repo_url: https://github.com/pflooky/data-caterer
+repo_url: https://github.com/data-catering/data-caterer
 repo_name: data-caterer
 
 extra_css:
@@ -109,7 +109,7 @@ extra:
     - icon: fontawesome/brands/slack
       link: https://join.slack.com/t/data-catering/shared_invite/zt-2664ylbpi-w3n7lWAO~PHeOG9Ujpm~~w
     - icon: fontawesome/brands/github
-      link: https://github.com/pflooky/data-caterer-example
+      link: https://github.com/data-catering/data-caterer-example
     - icon: fontawesome/brands/medium
       link: https://medium.com/@pflooky
     - icon: fontawesome/brands/linkedin
