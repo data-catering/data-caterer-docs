@@ -9,6 +9,9 @@ maintaining, documenting and updating it. I hope that it will help with develope
 by saving time and effort, allowing you to focus on what is important. If you fall under this boat, please consider
 sponsorship to allow me to further maintain and upgrade the solution. Any contributions are much appreciated.
 
+Those who are wanting to use this project for open source applications, [please contact me](#contact) as I would be 
+happy to contribute.
+
 This is inspired by the [mkdocs-material project](https://github.com/squidfunk/mkdocs-material) that
 [follows the same model](https://squidfunk.github.io/mkdocs-material/insiders/).
 

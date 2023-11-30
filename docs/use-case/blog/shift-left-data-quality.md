@@ -11,7 +11,7 @@ quality at the forefront of the development process.
 
 ``` mermaid
 graph LR
-  subgraph badQualityData[<b>Manually generated data, data quality always passes</b>]
+  subgraph badQualityData[<b>Manually generated data, limited data scenarios</b>]
   local[<b>Local</b>\nManual test, unit test]
   dev[<b>Dev</b>\nManual test, integration test]
   stg[<b>Staging</b>\nSanity checks]
@@ -34,7 +34,7 @@ graph LR
 
 ``` mermaid
 graph LR
-  subgraph qualityData[<b>Reliable data for testing anywhere</b>]
+  subgraph qualityData[<b>Reliable data for testing anywhere<br>Common testing tool</b>]
   direction LR
   local[<b>Local</b>\nManual test, unit test]
   dev[<b>Dev</b>\nManual test, integration test]
@@ -81,7 +81,6 @@ complex data flows, validate data sources, and ensure data quality before it rea
 6. **Improved Collaboration:**
     - Facilitate collaboration between developers, testers, and data professionals by providing a common platform for
       early data validation.
-    - No need to rely on seeking domain expertise or external teams for data testing.
 
 ## Realizing the Vision of Proactive Data Quality
 
