@@ -70,22 +70,22 @@ complex data flows, validate data sources, and ensure data quality before it rea
 
 ![Data Caterer generate and validate data flows](../../diagrams/high_level_flow-basic-flow.svg)
 
-1. **Early Issue Detection:**
+1. **Early Issue Detection**
     - Identify data quality issues early in the development process, reducing the risk of errors downstream.
-2. **Proactive Validation:**
+2. **Proactive Validation**
     - Create production-like data scenarios, validate sources and complex flows with simplicity, promoting proactive 
       data quality.
-3. **Efficient Testing Across Sources:**
+3. **Efficient Testing Across Sources**
     - Seamlessly test data across various sources, including databases, file formats, HTTP, and messaging, all within 
       your local laptop or development environment.
     - Fast feedback loop to motivate developers to ensure thorough testing of data consumers.
-4. **Integration with Development Pipelines:**
+4. **Integration with Development Pipelines**
     - Easily integrate Data Caterer as a task in your development pipelines, ensuring that data quality is a continuous 
       consideration rather than an isolated event.
-5. **Integration with Existing Metadata:**
+5. **Integration with Existing Metadata**
     - By harnessing the power of existing metadata from data catalogs, schema registries, or other data validation tools,
       Data Caterer streamlines the process, automating the generation and validation of your data effortlessly.
-6. **Improved Collaboration:**
+6. **Improved Collaboration**
     - Facilitate collaboration between developers, testers, and data professionals by providing a common platform for
       early data validation.
 
