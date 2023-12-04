@@ -3,9 +3,13 @@ description: "A data generation and testing tool that can automatically discover
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
-<h1 align="center" style="padding-top: 100px; padding-bottom: 100px">Data Caterer is a metadata-driven data generation and 
+<h1 align="center" style="padding-top: 50px; padding-bottom: 50px">Data Caterer is a metadata-driven data generation and 
 testing tool that aids in creating production-like data across both batch and event data systems. Run data validations 
 to ensure your systems have ingested it as expected, then clean up the data afterwards.</h1>
+
+<figure markdown>
+  ![Data Caterer generate and validate data flows](diagrams/high_level_flow-basic-flow.svg)
+</figure>
 
 <h1 align="center">Simplify your data testing</h1>
 
@@ -70,10 +74,6 @@ Main features include:
 - :material-delete-sweep: Clean up generated data
 - :material-check: Validate data
 - :material-test-tube: Suggest data validations
-
-<figure markdown>
-  ![Basic flow](diagrams/high_level_flow-basic-flow.svg)
-</figure>
 
 [Check other run configurations here.](setup/index.md#high-level-run-configurations)
 

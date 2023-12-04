@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="How to apply a 'shift-left' approach to data quality.">
+      
       
       
         <link rel="canonical" href="https://data.catering/use-case/blog/shift-left-data-quality/">
@@ -1432,6 +1434,32 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../setup/validation/column-name-validation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Column Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2150,7 +2178,7 @@ increased costs. However, a paradigm shift is underway with the adoption of a "s
 quality at the forefront of the development process.</p>
 <h3 id="today">Today</h3>
 <pre class="mermaid"><code>graph LR
-  subgraph badQualityData[&lt;b&gt;Manually generated data, limited data scenarios&lt;/b&gt;]
+  subgraph badQualityData[&lt;b&gt;Manually generated data, limited data scenarios, fragmented testing tools&lt;/b&gt;]
   local[&lt;b&gt;Local&lt;/b&gt;\nManual test, unit test]
   dev[&lt;b&gt;Dev&lt;/b&gt;\nManual test, integration test]
   stg[&lt;b&gt;Staging&lt;/b&gt;\nSanity checks]
@@ -2168,7 +2196,7 @@ quality at the forefront of the development process.</p>
   stg --&gt; prod</code></pre>
 <h3 id="with-data-caterer">With Data Caterer</h3>
 <pre class="mermaid"><code>graph LR
-  subgraph qualityData[&lt;b&gt;Reliable data for testing anywhere&lt;br&gt;Common testing tool&lt;/b&gt;]
+  subgraph qualityData[&lt;b&gt;Reliable data anywhere, common testing tool across all data sources&lt;/b&gt;]
   direction LR
   local[&lt;b&gt;Local&lt;/b&gt;\nManual test, unit test]
   dev[&lt;b&gt;Dev&lt;/b&gt;\nManual test, integration test]
@@ -2191,19 +2219,21 @@ system, reducing the likelihood of downstream errors.</p>
 data quality left. By incorporating Data Caterer into the early stages of development, teams can proactively test
 complex data flows, validate data sources, and ensure data quality before it reaches downstream processes.</p>
 <h2 id="key-advantages-of-shifting-data-quality-left-with-data-caterer">Key Advantages of Shifting Data Quality Left with Data Caterer</h2>
+<p><img alt="Data Caterer generate and validate data flows" src="../../../diagrams/high_level_flow-basic-flow.svg" /></p>
 <ol>
 <li><strong>Early Issue Detection:</strong><ul>
 <li>Identify data quality issues early in the development process, reducing the risk of errors downstream.</li>
 </ul>
 </li>
 <li><strong>Proactive Validation:</strong><ul>
-<li>Validate data sources and complex data flows in a simplified manner, promoting a proactive approach to data quality.</li>
+<li>Create production-like data scenarios, validate sources and complex flows with simplicity, promoting proactive 
+  data quality.</li>
 </ul>
 </li>
 <li><strong>Efficient Testing Across Sources:</strong><ul>
 <li>Seamlessly test data across various sources, including databases, file formats, HTTP, and messaging, all within 
   your local laptop or development environment.</li>
-<li>Fast feedback loop to motivate developers to ensure thorough testing of data scenarios.</li>
+<li>Fast feedback loop to motivate developers to ensure thorough testing of data consumers.</li>
 </ul>
 </li>
 <li><strong>Integration with Development Pipelines:</strong><ul>
@@ -2231,6 +2261,9 @@ where data quality is not just a final checkpoint but an integral part of every 
 left approach with Data Caterer and empower your teams to build robust, high-quality data solutions from the very
 beginning.</p>
 <p><em>Shift Left, Validate Early, and Accelerate with Data Caterer.</em></p>
+
+  
+  
 
 
 

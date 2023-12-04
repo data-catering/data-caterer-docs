@@ -91,6 +91,7 @@ nav:
           - Basic: 'setup/validation/basic-validation.md'
           - Group by/Aggregate: 'setup/validation/group-by-validation.md'
           - Upstream: 'setup/validation/upstream-data-source-validation.md'
+          - Column Names: 'setup/validation/column-name-validation.md'
       - Foreign Keys: 'setup/foreign-key.md'
       - Deployment: 'setup/deployment.md'
       - Advanced: 'setup/advanced.md'

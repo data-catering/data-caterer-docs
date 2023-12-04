@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Define data validations based on data generated or from an upstream data source. Complex or basic data validations checked across multiple data sources, batch and real-time.">
+      
       
       
         <link rel="canonical" href="https://data.catering/setup/validation/upstream-data-source-validation/">
@@ -14,7 +16,7 @@
         <link rel="prev" href="../group-by-validation/">
       
       
-        <link rel="next" href="../../foreign-key/">
+        <link rel="next" href="../column-name-validation/">
       
       
         
@@ -1537,6 +1539,32 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../column-name-validation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Column Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2120,6 +2148,7 @@ data source validations. An example would be generating a Parquet file that gets
 Postgres. The validations can then check for each <code>account_id</code> generated in the Parquet, it exists in <code>account_number</code>
 column in Postgres. The validations can be chained with basic and group by validations or even other upstream data
 sources, to cover any complex validations.</p>
+<p><img alt="Generate and validate flow with upstream validations" src="../../../diagrams/high_level_flow-generate-validate.svg" /></p>
 <h2 id="basic-join">Basic join</h2>
 <p>Join across datasets by particular columns. Then run validations on the joined dataset. You will notice that the data
 source name is appended onto the column names when joined (i.e. <code>my_first_json_customer_details</code>), to ensure column
@@ -2140,11 +2169,11 @@ dataset should equal to the <code>name</code> column in the <code>my_second_json
 
 <span class="kd">var</span><span class="w"> </span><span class="n">secondJsonTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">(</span><span class="s">&quot;my_second_json&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/tmp/data/second_json&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">.</span><span class="na">validations</span><span class="p">(</span>
-<span class="w">    </span><span class="n">validation</span><span class="p">().</span><span class="na">upstreamData</span><span class="p">(</span><span class="n">firstJsonTask</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">joinColumns</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">validation</span><span class="p">().</span><span class="na">upstreamData</span><span class="p">(</span><span class="n">firstJsonTask</span><span class="p">)</span><span class="w">                   </span><span class="c1">//upstream data generation task is `firstJsonTask`</span>
+<span class="w">      </span><span class="p">.</span><span class="na">joinColumns</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">)</span><span class="w">                               </span><span class="c1">//use `account_id` column in both datasets to join corresponding records (outer join by default)</span>
 <span class="w">      </span><span class="p">.</span><span class="na">withValidation</span><span class="p">(</span>
 <span class="w">        </span><span class="n">validation</span><span class="p">().</span><span class="na">col</span><span class="p">(</span><span class="s">&quot;my_first_json_customer_details.name&quot;</span><span class="p">)</span>
-<span class="w">          </span><span class="p">.</span><span class="na">isEqualCol</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+<span class="w">          </span><span class="p">.</span><span class="na">isEqualCol</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="w">                                  </span><span class="c1">//validate the name in `my_second_json` is equal to `customer_details.name` in `my_first_json` when the `account_id` matches</span>
 <span class="w">      </span><span class="p">)</span>
 <span class="w">  </span><span class="p">);</span>
 </code></pre></div>
@@ -2161,11 +2190,11 @@ dataset should equal to the <code>name</code> column in the <code>my_second_json
 
 <span class="kd">val</span><span class="w"> </span><span class="n">secondJsonTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">(</span><span class="s">&quot;my_second_json&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/tmp/data/second_json&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">.</span><span class="n">validations</span><span class="p">(</span>
-<span class="w">    </span><span class="n">validation</span><span class="p">.</span><span class="n">upstreamData</span><span class="p">(</span><span class="n">firstJsonTask</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="n">joinColumns</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">validation</span><span class="p">.</span><span class="n">upstreamData</span><span class="p">(</span><span class="n">firstJsonTask</span><span class="p">)</span><span class="w">                   </span><span class="c1">//upstream data generation task is `firstJsonTask`</span>
+<span class="w">      </span><span class="p">.</span><span class="n">joinColumns</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">)</span><span class="w">                             </span><span class="c1">//use `account_id` column in both datasets to join corresponding records (outer join by default)</span>
 <span class="w">      </span><span class="p">.</span><span class="n">withValidation</span><span class="p">(</span>
 <span class="w">        </span><span class="n">validation</span><span class="p">.</span><span class="n">col</span><span class="p">(</span><span class="s">&quot;my_first_json_customer_details.name&quot;</span><span class="p">)</span>
-<span class="w">          </span><span class="p">.</span><span class="n">isEqualCol</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+<span class="w">          </span><span class="p">.</span><span class="n">isEqualCol</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="w">                                </span><span class="c1">//validate the name in `my_second_json` is equal to `customer_details.name` in `my_first_json` when the `account_id` matches</span>
 <span class="w">      </span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span>
 </code></pre></div>
@@ -2173,9 +2202,9 @@ dataset should equal to the <code>name</code> column in the <code>my_second_json
 </div>
 </div>
 <h2 id="join-expression">Join expression</h2>
-<p>Define join expression to link two datasets together. This can be any SQL expression that returns a boolean value. 
+<p>Define join expression to link two datasets together. This can be any SQL expression that returns a boolean value.
 Useful in situations where join is based on transformations or complex logic.</p>
-<p>In the below example, we have to use <code>CONCAT</code> SQL function to combine <code>'ACC'</code> and <code>account_number</code> to join with 
+<p>In the below example, we have to use <code>CONCAT</code> SQL function to combine <code>'ACC'</code> and <code>account_number</code> to join with
 <code>account_id</code> column in <code>my_first_json</code> dataset.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Java</label><label for="__tabbed_2_2">Scala</label></div>
 <div class="tabbed-content">
@@ -2192,7 +2221,7 @@ Useful in situations where join is based on transformations or complex logic.</p
 <span class="kd">var</span><span class="w"> </span><span class="n">secondJsonTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">(</span><span class="s">&quot;my_second_json&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/tmp/data/second_json&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">.</span><span class="na">validations</span><span class="p">(</span>
 <span class="w">    </span><span class="n">validation</span><span class="p">().</span><span class="na">upstreamData</span><span class="p">(</span><span class="n">firstJsonTask</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="na">joinExpr</span><span class="p">(</span><span class="s">&quot;my_first_json_account_id == CONCAT(&#39;ACC&#39;, account_number)&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="na">joinExpr</span><span class="p">(</span><span class="s">&quot;my_first_json_account_id == CONCAT(&#39;ACC&#39;, account_number)&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">//generic SQL expression that returns a boolean</span>
 <span class="w">      </span><span class="p">.</span><span class="na">withValidation</span><span class="p">(</span>
 <span class="w">        </span><span class="n">validation</span><span class="p">().</span><span class="na">col</span><span class="p">(</span><span class="s">&quot;my_first_json_customer_details.name&quot;</span><span class="p">)</span>
 <span class="w">          </span><span class="p">.</span><span class="na">isEqualCol</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
@@ -2213,7 +2242,7 @@ Useful in situations where join is based on transformations or complex logic.</p
 <span class="kd">val</span><span class="w"> </span><span class="n">secondJsonTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">(</span><span class="s">&quot;my_second_json&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/tmp/data/second_json&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">.</span><span class="n">validations</span><span class="p">(</span>
 <span class="w">    </span><span class="n">validation</span><span class="p">.</span><span class="n">upstreamData</span><span class="p">(</span><span class="n">firstJsonTask</span><span class="p">)</span>
-<span class="w">      </span><span class="p">.</span><span class="n">joinExpr</span><span class="p">(</span><span class="s">&quot;my_first_json_account_id == CONCAT(&#39;ACC&#39;, account_number)&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="n">joinExpr</span><span class="p">(</span><span class="s">&quot;my_first_json_account_id == CONCAT(&#39;ACC&#39;, account_number)&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">//generic SQL expression that returns a boolean</span>
 <span class="w">      </span><span class="p">.</span><span class="n">withValidation</span><span class="p">(</span>
 <span class="w">        </span><span class="n">validation</span><span class="p">.</span><span class="n">col</span><span class="p">(</span><span class="s">&quot;my_first_json_customer_details.name&quot;</span><span class="p">)</span>
 <span class="w">          </span><span class="p">.</span><span class="n">isEqualCol</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
@@ -2224,17 +2253,19 @@ Useful in situations where join is based on transformations or complex logic.</p
 </div>
 </div>
 <h2 id="different-join-type">Different join type</h2>
-<p>By default, an outer join is used to gather columns from both datasets together for validation. But there may be 
+<p>By default, an outer join is used to gather columns from both datasets together for validation. But there may be
 scenarios where you want to control the join type.</p>
-<p>Possible join types include:
-- inner
-- outer, full, fullouter, full_outer
-- leftouter, left, left_outer
-- rightouter, right, right_outer
-- leftsemi, left_semi, semi
-- leftanti, left_anti, anti
-- cross</p>
-<p>In the example below, we do an <code>anti</code> join by column <code>account_id</code> and check if there are no records. This essentially 
+<p>Possible join types include:</p>
+<ul>
+<li>inner</li>
+<li>outer, full, fullouter, full_outer</li>
+<li>leftouter, left, left_outer</li>
+<li>rightouter, right, right_outer</li>
+<li>leftsemi, left_semi, semi</li>
+<li>leftanti, left_anti, anti</li>
+<li>cross</li>
+</ul>
+<p>In the example below, we do an <code>anti</code> join by column <code>account_id</code> and check if there are no records. This essentially
 checks that all <code>account_id</code>'s from <code>my_second_json</code> exist in <code>my_first_json</code>. The second validation also does something
 similar but does an <code>outer</code> join (by default) and checks that the joined dataset has 30 records.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Java</label><label for="__tabbed_3_2">Scala</label></div>
@@ -2288,7 +2319,7 @@ similar but does an <code>outer</code> join (by default) and checks that the joi
 <h2 id="join-then-group-by-validation">Join then group by validation</h2>
 <p>We can apply aggregate or group by validations to the resulting joined dataset as the <code>withValidation</code> method accepts
 any type of validation.</p>
-<p>Here we group by <code>account_id, my_first_json_balance</code> to check that when the <code>amount</code> field is summed up per group, it is 
+<p>Here we group by <code>account_id, my_first_json_balance</code> to check that when the <code>amount</code> field is summed up per group, it is
 between 0.8 and 1.2 times the balance.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Java</label><label for="__tabbed_4_2">Scala</label></div>
 <div class="tabbed-content">
@@ -2340,7 +2371,7 @@ between 0.8 and 1.2 times the balance.</p>
 </div>
 <h2 id="chained-validations">Chained validations</h2>
 <p>Given that the <code>withValidation</code> method accepts any other type of validation, you can chain other upstream data sources
-with it. Here we will show a third upstream data source being checked to ensure 30 records exists after joining them 
+with it. Here we will show a third upstream data source being checked to ensure 30 records exists after joining them
 together by <code>account_id</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Java</label><label for="__tabbed_5_2">Scala</label></div>
 <div class="tabbed-content">
@@ -2409,6 +2440,10 @@ together by <code>account_id</code>.</p>
 </div>
 </div>
 </div>
+<p><a href="https://github.com/data-catering/data-caterer-example/blob/main/src/main/scala/com/github/pflooky/plan/ValidationPlanRun.scala">Can check out a full example here for more details.</a></p>
+
+  
+  
 
 
 
@@ -2459,13 +2494,13 @@ together by <code>account_id</code>.</p>
         
         
           
-          <a href="../../foreign-key/" class="md-footer__link md-footer__link--next" aria-label="Next: Foreign Keys">
+          <a href="../column-name-validation/" class="md-footer__link md-footer__link--next" aria-label="Next: Column Names">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Foreign Keys
+                Column Names
               </div>
             </div>
             <div class="md-footer__button md-icon">

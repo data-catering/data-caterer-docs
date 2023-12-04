@@ -1,3 +1,7 @@
+---
+description: "How to apply a 'shift-left' approach to data quality."
+---
+
 # Shifting Data Quality Left with Data Catering
 
 ## Empowering Proactive Data Management
@@ -11,7 +15,7 @@ quality at the forefront of the development process.
 
 ``` mermaid
 graph LR
-  subgraph badQualityData[<b>Manually generated data, limited data scenarios</b>]
+  subgraph badQualityData[<b>Manually generated data, limited data scenarios, fragmented testing tools</b>]
   local[<b>Local</b>\nManual test, unit test]
   dev[<b>Dev</b>\nManual test, integration test]
   stg[<b>Staging</b>\nSanity checks]
@@ -34,7 +38,7 @@ graph LR
 
 ``` mermaid
 graph LR
-  subgraph qualityData[<b>Reliable data for testing anywhere<br>Common testing tool</b>]
+  subgraph qualityData[<b>Reliable data anywhere, common testing tool across all data sources</b>]
   direction LR
   local[<b>Local</b>\nManual test, unit test]
   dev[<b>Dev</b>\nManual test, integration test]
@@ -64,14 +68,17 @@ complex data flows, validate data sources, and ensure data quality before it rea
 
 ## Key Advantages of Shifting Data Quality Left with Data Caterer
 
+![Data Caterer generate and validate data flows](../../diagrams/high_level_flow-basic-flow.svg)
+
 1. **Early Issue Detection:**
     - Identify data quality issues early in the development process, reducing the risk of errors downstream.
 2. **Proactive Validation:**
-    - Validate data sources and complex data flows in a simplified manner, promoting a proactive approach to data quality.
+    - Create production-like data scenarios, validate sources and complex flows with simplicity, promoting proactive 
+      data quality.
 3. **Efficient Testing Across Sources:**
     - Seamlessly test data across various sources, including databases, file formats, HTTP, and messaging, all within 
       your local laptop or development environment.
-    - Fast feedback loop to motivate developers to ensure thorough testing of data scenarios.
+    - Fast feedback loop to motivate developers to ensure thorough testing of data consumers.
 4. **Integration with Development Pipelines:**
     - Easily integrate Data Caterer as a task in your development pipelines, ensuring that data quality is a continuous 
       consideration rather than an isolated event.

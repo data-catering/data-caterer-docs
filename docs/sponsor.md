@@ -20,10 +20,11 @@ This is inspired by the [mkdocs-material project](https://github.com/squidfunk/m
 - :material-card-search: Metadata discovery
 - :material-connection: All data sources (see [here for all data sources](setup/connection.md))
 - :material-file: Batch and :material-circle-multiple: Event generation
-- :material-auto-fix: Auto generation from data connections or metadata sources
+- :material-auto-fix: [Auto generation from data connections or metadata sources](setup/guide/scenario/auto-generate-connection.md)
 - :material-test-tube: Suggest data validations
-- :material-delete-sweep: Clean up generated data
+- :material-delete-sweep: [Clean up generated data](setup/guide/scenario/delete-generated-data.md)
 - :material-animation-play-outline: Run as many times as you want, not charged by usage
+- [Plus more to come](use-case/roadmap.md)
 
 ## Tiers
 

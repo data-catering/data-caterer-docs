@@ -1,3 +1,7 @@
+---
+description: "Define data validations based on data generated or from an upstream data source. Complex or basic data validations checked across multiple data sources, batch and real-time."
+---
+
 # Upstream Data Source Validation
 
 If you want to run data validations based on data generated or data from another data source, you can use the upstream
@@ -5,6 +9,8 @@ data source validations. An example would be generating a Parquet file that gets
 Postgres. The validations can then check for each `account_id` generated in the Parquet, it exists in `account_number`
 column in Postgres. The validations can be chained with basic and group by validations or even other upstream data
 sources, to cover any complex validations.
+
+![Generate and validate flow with upstream validations](../../diagrams/high_level_flow-generate-validate.svg)
 
 ## Basic join
 
@@ -29,11 +35,11 @@ dataset should equal to the `name` column in the `my_second_json`.
 
     var secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
-        validation().upstreamData(firstJsonTask)
-          .joinColumns("account_id")
+        validation().upstreamData(firstJsonTask)                   //upstream data generation task is `firstJsonTask`
+          .joinColumns("account_id")                               //use `account_id` column in both datasets to join corresponding records (outer join by default)
           .withValidation(
             validation().col("my_first_json_customer_details.name")
-              .isEqualCol("name")
+              .isEqualCol("name")                                  //validate the name in `my_second_json` is equal to `customer_details.name` in `my_first_json` when the `account_id` matches
           )
       );
     ```
@@ -52,21 +58,21 @@ dataset should equal to the `name` column in the `my_second_json`.
 
     val secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
-        validation.upstreamData(firstJsonTask)
-          .joinColumns("account_id")
+        validation.upstreamData(firstJsonTask)                   //upstream data generation task is `firstJsonTask`
+          .joinColumns("account_id")                             //use `account_id` column in both datasets to join corresponding records (outer join by default)
           .withValidation(
             validation.col("my_first_json_customer_details.name")
-              .isEqualCol("name")
+              .isEqualCol("name")                                //validate the name in `my_second_json` is equal to `customer_details.name` in `my_first_json` when the `account_id` matches
           )
       )
     ```
 
 ## Join expression
 
-Define join expression to link two datasets together. This can be any SQL expression that returns a boolean value. 
+Define join expression to link two datasets together. This can be any SQL expression that returns a boolean value.
 Useful in situations where join is based on transformations or complex logic.
 
-In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` and `account_number` to join with 
+In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` and `account_number` to join with
 `account_id` column in `my_first_json` dataset.
 
 === "Java"
@@ -84,7 +90,7 @@ In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` an
     var secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
         validation().upstreamData(firstJsonTask)
-          .joinExpr("my_first_json_account_id == CONCAT('ACC', account_number)")
+          .joinExpr("my_first_json_account_id == CONCAT('ACC', account_number)")  //generic SQL expression that returns a boolean
           .withValidation(
             validation().col("my_first_json_customer_details.name")
               .isEqualCol("name")
@@ -107,7 +113,7 @@ In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` an
     val secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
         validation.upstreamData(firstJsonTask)
-          .joinExpr("my_first_json_account_id == CONCAT('ACC', account_number)")
+          .joinExpr("my_first_json_account_id == CONCAT('ACC', account_number)")  //generic SQL expression that returns a boolean
           .withValidation(
             validation.col("my_first_json_customer_details.name")
               .isEqualCol("name")
@@ -117,10 +123,11 @@ In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` an
 
 ## Different join type
 
-By default, an outer join is used to gather columns from both datasets together for validation. But there may be 
+By default, an outer join is used to gather columns from both datasets together for validation. But there may be
 scenarios where you want to control the join type.
 
 Possible join types include:
+
 - inner
 - outer, full, fullouter, full_outer
 - leftouter, left, left_outer
@@ -129,7 +136,7 @@ Possible join types include:
 - leftanti, left_anti, anti
 - cross
 
-In the example below, we do an `anti` join by column `account_id` and check if there are no records. This essentially 
+In the example below, we do an `anti` join by column `account_id` and check if there are no records. This essentially
 checks that all `account_id`'s from `my_second_json` exist in `my_first_json`. The second validation also does something
 similar but does an `outer` join (by default) and checks that the joined dataset has 30 records.
 
@@ -186,9 +193,8 @@ similar but does an `outer` join (by default) and checks that the joined dataset
 We can apply aggregate or group by validations to the resulting joined dataset as the `withValidation` method accepts
 any type of validation.
 
-Here we group by `account_id, my_first_json_balance` to check that when the `amount` field is summed up per group, it is 
+Here we group by `account_id, my_first_json_balance` to check that when the `amount` field is summed up per group, it is
 between 0.8 and 1.2 times the balance.
-
 
 === "Java"
 
@@ -241,9 +247,8 @@ between 0.8 and 1.2 times the balance.
 ## Chained validations
 
 Given that the `withValidation` method accepts any other type of validation, you can chain other upstream data sources
-with it. Here we will show a third upstream data source being checked to ensure 30 records exists after joining them 
+with it. Here we will show a third upstream data source being checked to ensure 30 records exists after joining them
 together by `account_id`.
-
 
 === "Java"
 
@@ -311,3 +316,5 @@ together by `account_id`.
           ),
       )
     ```
+
+[Can check out a full example here for more details.](https://github.com/data-catering/data-caterer-example/blob/main/src/main/scala/com/github/pflooky/plan/ValidationPlanRun.scala)
