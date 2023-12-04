@@ -1,6 +1,5 @@
 ---
 description: "How to apply a 'shift-left' approach to data quality."
-image: "https://data.catering/diagrams/high_level_flow-basic-flow.svg"
 ---
 
 # Shifting Data Quality Left with Data Catering

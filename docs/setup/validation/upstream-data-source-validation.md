@@ -10,7 +10,9 @@ Postgres. The validations can then check for each `account_id` generated in the 
 column in Postgres. The validations can be chained with basic and group by validations or even other upstream data
 sources, to cover any complex validations.
 
-![Generate and validate flow with upstream validations](../../diagrams/high_level_flow-generate-validate.svg)
+![Generate and validate flow with upstream validations](../../diagrams/validation_generation_run.gif)
+
+![Validation report](../../diagrams/upstream_validation_report.png)
 
 ## Basic join
 
