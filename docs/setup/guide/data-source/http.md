@@ -25,7 +25,7 @@ Creating a data generator based on an [OpenAPI/Swagger](https://spec.openapis.or
 First, we will clone the data-caterer-example repo which will already have the base project setup required.
 
 ```shell
-git clone git@github.com:pflooky/data-caterer-example.git
+git clone git@github.com:data-catering/data-caterer-example.git
 ```
 
 ### HTTP Setup
@@ -44,15 +44,15 @@ docker ps
 
 Create a new Java or Scala class.
 
-- Java: `src/main/java/com/github/pflooky/plan/MyAdvancedHttpJavaPlanRun.java`
-- Scala: `src/main/scala/com/github/pflooky/plan/MyAdvancedHttpPlanRun.scala`
+- Java: `src/main/java/io/github/datacatering/plan/MyAdvancedHttpJavaPlanRun.java`
+- Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedHttpPlanRun.scala`
 
 Make sure your class extends `PlanRun`.
 
 === "Java"
 
     ```java
-    import com.github.pflooky.datacaterer.java.api.PlanRun;
+    import io.github.datacatering.datacaterer.java.api.PlanRun;
     ...
     
     public class MyAdvancedHttpJavaPlanRun extends PlanRun {
@@ -66,7 +66,7 @@ Make sure your class extends `PlanRun`.
 === "Scala"
 
     ```scala
-    import com.github.pflooky.datacaterer.api.PlanRun
+    import io.github.datacatering.datacaterer.api.PlanRun
     ...
     
     class MyAdvancedHttpPlanRun extends PlanRun {
@@ -266,7 +266,7 @@ want to alter this value, you can do so via the below configuration. The lowest 
 === "Java"
 
     ```java
-    import com.github.pflooky.datacaterer.api.model.Constants;
+    import io.github.datacatering.datacaterer.api.model.Constants;
     
     ...
     var httpTask = http("my_http", Map.of(Constants.ROWS_PER_SECOND(), "1"))
@@ -276,7 +276,7 @@ want to alter this value, you can do so via the below configuration. The lowest 
 === "Scala"
 
     ```scala
-    import com.github.pflooky.datacaterer.api.model.Constants.ROWS_PER_SECOND
+    import io.github.datacatering.datacaterer.api.model.Constants.ROWS_PER_SECOND
 
     ...
     val httpTask = http("my_http", options = Map(ROWS_PER_SECOND -> "1"))

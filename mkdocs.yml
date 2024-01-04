@@ -85,13 +85,16 @@ nav:
       - Generator:
           - Data Generator: 'setup/generator/data-generator.md'
           - Record Count: 'setup/generator/count.md'
-          - Report: 'setup/generator/report.md'
       - Validation:
           - 'setup/validation.md'
           - Basic: 'setup/validation/basic-validation.md'
           - Group by/Aggregate: 'setup/validation/group-by-validation.md'
           - Upstream: 'setup/validation/upstream-data-source-validation.md'
           - Column Names: 'setup/validation/column-name-validation.md'
+          - External Source: 'setup/validation/external-source-validation.md'
+      - Report:
+          - HTML Report: 'setup/report/html-report.md'
+          - Alert: 'setup/report/alert.md'
       - Foreign Keys: 'setup/foreign-key.md'
       - Deployment: 'setup/deployment.md'
       - Advanced: 'setup/advanced.md'

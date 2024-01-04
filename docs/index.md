@@ -8,7 +8,7 @@ testing tool that aids in creating production-like data across both batch and ev
 to ensure your systems have ingested it as expected, then clean up the data afterwards.</h1>
 
 <figure markdown>
-  ![Data Caterer generate and validate data flows](diagrams/high_level_flow-basic-flow.svg)
+  ![Data Caterer generate and validate data flows](diagrams/basic_data_caterer_flow_medium.gif)
 </figure>
 
 <h1 align="center">Simplify your data testing</h1>

@@ -21,7 +21,7 @@ Creating a data validator for a JSON file.
 First, we will clone the data-caterer-example repo which will already have the base project setup required.
 
 ```shell
-git clone git@github.com:pflooky/data-caterer-example.git
+git clone git@github.com:data-catering/data-caterer-example.git
 ```
 
 ### Data Setup
@@ -37,15 +37,15 @@ against. Run the below command and it will generate JSON files under `docker/sam
 
 Create a new Java or Scala class.
 
-- Java: `src/main/java/com/github/pflooky/plan/MyValidationJavaPlan.java`
-- Scala: `src/main/scala/com/github/pflooky/plan/MyValidationPlan.scala`
+- Java: `src/main/java/io/github/datacatering/plan/MyValidationJavaPlan.java`
+- Scala: `src/main/scala/io/github/datacatering/plan/MyValidationPlan.scala`
 
 Make sure your class extends `PlanRun`.
 
 === "Java"
 
     ```java
-    import com.github.pflooky.datacaterer.java.api.PlanRun;
+    import io.github.datacatering.datacaterer.java.api.PlanRun;
     ...
     
     public class MyValidationJavaPlan extends PlanRun {
@@ -65,7 +65,7 @@ Make sure your class extends `PlanRun`.
 === "Scala"
 
     ```scala
-    import com.github.pflooky.datacaterer.api.PlanRun
+    import io.github.datacatering.datacaterer.api.PlanRun
     ...
     
     class MyValidationPlan extends PlanRun {

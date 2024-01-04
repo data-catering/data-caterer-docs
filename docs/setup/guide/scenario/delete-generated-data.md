@@ -18,22 +18,22 @@ Creating a data generator for Postgres and delete the generated data after using
 First, we will clone the data-caterer-example repo which will already have the base project setup required.
 
 ```shell
-git clone git@github.com:pflooky/data-caterer-example.git
+git clone git@github.com:data-catering/data-caterer-example.git
 ```
 
 ### Plan Setup
 
 Create a new Java or Scala class.
 
-- Java: `src/main/java/com/github/pflooky/plan/MyAdvancedDeleteJavaPlanRun.java`
-- Scala: `src/main/scala/com/github/pflooky/plan/MyAdvancedDeletePlanRun.scala`
+- Java: `src/main/java/io/github/datacatering/plan/MyAdvancedDeleteJavaPlanRun.java`
+- Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedDeletePlanRun.scala`
 
 Make sure your class extends `PlanRun`.
 
 === "Java"
 
     ```java
-    import com.github.pflooky.datacaterer.java.api.PlanRun;
+    import io.github.datacatering.datacaterer.java.api.PlanRun;
     ...
     
     public class MyAdvancedDeleteJavaPlanRun extends PlanRun {
@@ -56,7 +56,7 @@ Make sure your class extends `PlanRun`.
 === "Scala"
 
     ```scala
-    import com.github.pflooky.datacaterer.api.PlanRun
+    import io.github.datacatering.datacaterer.api.PlanRun
     ...
     
     class MyAdvancedDeletePlanRun extends PlanRun {

@@ -27,7 +27,7 @@ for the queues/topics you configure.
 First, we will clone the data-caterer-example repo which will already have the base project setup required.
 
 ```shell
-git clone git@github.com:pflooky/data-caterer-example.git
+git clone git@github.com:data-catering/data-caterer-example.git
 ```
 
 If you already have a Solace instance running, you can skip to [this step](#plan-setup).
@@ -52,15 +52,15 @@ below. Notice there is 2 queues/topics created. If you do not see 2 created, try
 
 Create a new Java or Scala class.
 
-- Java: `src/main/java/com/github/pflooky/plan/MyAdvancedSolaceJavaPlan.java`
-- Scala: `src/main/scala/com/github/pflooky/plan/MyAdvancedSolacePlan.scala`
+- Java: `src/main/java/io/github/datacatering/plan/MyAdvancedSolaceJavaPlan.java`
+- Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedSolacePlan.scala`
 
 Make sure your class extends `PlanRun`.
 
 === "Java"
 
     ```java
-    import com.github.pflooky.datacaterer.java.api.PlanRun;
+    import io.github.datacatering.datacaterer.java.api.PlanRun;
     
     public class MyAdvancedSolaceJavaPlan extends PlanRun {
     }
@@ -69,7 +69,7 @@ Make sure your class extends `PlanRun`.
 === "Scala"
 
     ```scala
-    import com.github.pflooky.datacaterer.api.PlanRun
+    import io.github.datacatering.datacaterer.api.PlanRun
     
     class MyAdvancedSolacePlan extends PlanRun {
     }

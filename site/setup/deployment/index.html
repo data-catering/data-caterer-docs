@@ -1247,32 +1247,6 @@
 
               
             
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../generator/report/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    
-  
-    Report
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1447,6 +1421,141 @@
     
   
     Column Names
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/external-source-validation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    External Source
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Report
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Report
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../report/html-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    HTML Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../report/alert/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Alert
   
 
     
@@ -2096,17 +2205,17 @@
 </ul>
 <h2 id="docker">Docker</h2>
 <p>To package up your class along with the Data Caterer base image, you can follow
-the <a href="https://github.com/pflooky/data-caterer-example/blob/main/Dockerfile">Dockerfile that is created for you here</a>.</p>
+the <a href="https://github.com/data-catering/data-caterer-example/blob/main/Dockerfile">Dockerfile that is created for you here</a>.</p>
 <p>Then you can run the following:</p>
 <div class="highlight"><pre><span></span><code>./gradlew<span class="w"> </span>clean<span class="w"> </span>build
 docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>&lt;my_image_name&gt;:&lt;my_image_tag&gt;<span class="w"> </span>.
 </code></pre></div>
 <h2 id="helm">Helm</h2>
-<p><a href="https://github.com/pflooky/data-caterer-example/tree/main/helm/data-caterer">Link to sample helm on GitHub here</a></p>
+<p><a href="https://github.com/data-catering/data-caterer-example/tree/main/helm/data-caterer">Link to sample helm on GitHub here</a></p>
 <p>Update
-the <a href="https://github.com/pflooky/data-caterer-example/blob/main/helm/data-caterer/templates/configuration.yaml">configuration</a>
+the <a href="https://github.com/data-catering/data-caterer-example/blob/main/helm/data-caterer/templates/configuration.yaml">configuration</a>
 to your own data connections and configuration or own image created from above.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:pflooky/data-caterer-example.git
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:data-catering/data-caterer-example.git
 helm<span class="w"> </span>install<span class="w"> </span>data-caterer<span class="w"> </span>./data-caterer-example/helm/data-caterer
 </code></pre></div>
 

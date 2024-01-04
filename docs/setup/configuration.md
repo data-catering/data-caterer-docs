@@ -5,24 +5,24 @@ metadata gets saved.
 
 These configurations are defined from within your Java or Scala class via `configuration` or for YAML file setup,
 `application.conf` file as seen 
-[**here**](https://github.com/pflooky/data-caterer-example/blob/main/docker/data/custom/application.conf).
+[**here**](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/application.conf).
 
 ## Flags
 
 Flags are used to control which processes are executed when you run Data Caterer.
 
-| Config                         | Default | Paid | Description                                                                                                                                                                                                               |
-|--------------------------------|---------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `enableGenerateData`           | true    | N    | Enable/disable data generation                                                                                                                                                                                            |
-| `enableCount`                  | true    | N    | Count the number of records generated. Can be disabled to improve performance                                                                                                                                             |
-| `enableFailOnError`            | true    | N    | Whilst saving generated data, if there is an error, it will stop any further data from being generated                                                                                                                    |
-| `enableSaveReports`            | true    | N    | Enable/disable HTML reports summarising data generated, metadata of data generated (if `enableSinkMetadata` is enabled) and validation results (if `enableValidation` is enabled). Sample [**here**](generator/report.md) |
-| `enableSinkMetadata`           | true    | N    | Run data profiling for the generated data. Shown in HTML reports if `enableSaveSinkMetadata` is enabled                                                                                                                   |
-| `enableValidation`             | false   | N    | Run validations as described in plan. Results can be viewed from logs or from HTML report if `enableSaveSinkMetadata` is enabled. Sample [**here**](validation.md)                                             |
-| `enableGeneratePlanAndTasks`   | false   | Y    | Enable/disable plan and task auto generation based off data source connections                                                                                                                                            |
-| `enableRecordTracking`         | false   | Y    | Enable/disable which data records have been generated for any data source                                                                                                                                                 |
-| `enableDeleteGeneratedRecords` | false   | Y    | Delete all generated records based off record tracking (if `enableRecordTracking` has been set to true)                                                                                                                   |
-| `enableGenerateValidations`    | false   | Y    | If enabled, it will generate validations based on the data sources defined.                                                                                                                                               |
+| Config                         | Default | Paid | Description                                                                                                                                                                                                                 |
+|--------------------------------|---------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `enableGenerateData`           | true    | N    | Enable/disable data generation                                                                                                                                                                                              |
+| `enableCount`                  | true    | N    | Count the number of records generated. Can be disabled to improve performance                                                                                                                                               |
+| `enableFailOnError`            | true    | N    | Whilst saving generated data, if there is an error, it will stop any further data from being generated                                                                                                                      |
+| `enableSaveReports`            | true    | N    | Enable/disable HTML reports summarising data generated, metadata of data generated (if `enableSinkMetadata` is enabled) and validation results (if `enableValidation` is enabled). Sample [**here**](report/html-report.md) |
+| `enableSinkMetadata`           | true    | N    | Run data profiling for the generated data. Shown in HTML reports if `enableSaveSinkMetadata` is enabled                                                                                                                     |
+| `enableValidation`             | false   | N    | Run validations as described in plan. Results can be viewed from logs or from HTML report if `enableSaveSinkMetadata` is enabled. Sample [**here**](validation.md)                                                          |
+| `enableGeneratePlanAndTasks`   | false   | Y    | Enable/disable plan and task auto generation based off data source connections                                                                                                                                              |
+| `enableRecordTracking`         | false   | Y    | Enable/disable which data records have been generated for any data source                                                                                                                                                   |
+| `enableDeleteGeneratedRecords` | false   | Y    | Delete all generated records based off record tracking (if `enableRecordTracking` has been set to true)                                                                                                                     |
+| `enableGenerateValidations`    | false   | Y    | If enabled, it will generate validations based on the data sources defined.                                                                                                                                                 |
 
 === "Java"
 

@@ -319,4 +319,4 @@ together by `account_id`.
       )
     ```
 
-[Can check out a full example here for more details.](https://github.com/data-catering/data-caterer-example/blob/main/src/main/scala/com/github/pflooky/plan/ValidationPlanRun.scala)
+[Can check out a full example here for more details.](https://github.com/data-catering/data-caterer-example/blob/main/src/main/scala/io/github/datacatering/plan/ValidationPlanRun.scala)
