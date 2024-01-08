@@ -201,6 +201,7 @@ The schema defined for Kafka has a format that needs to be followed as noted abo
 - value
 
 Whilst, the other fields are optional:
+
 - key
 - partition
 - headers

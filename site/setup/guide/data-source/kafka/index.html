@@ -2551,10 +2551,12 @@ the <code>text</code> fields do not have a data type defined. This is because th
 <h4 id="fields">Fields</h4>
 <p>The schema defined for Kafka has a format that needs to be followed as noted above. Specifically, the required fields are:
 - value</p>
-<p>Whilst, the other fields are optional:
-- key
-- partition
-- headers</p>
+<p>Whilst, the other fields are optional:</p>
+<ul>
+<li>key</li>
+<li>partition</li>
+<li>headers</li>
+</ul>
 <h5 id="headers">headers</h5>
 <p><code>headers</code> follows a particular pattern that where it is of type <code>array&lt;struct&lt;key: string,value: binary&gt;&gt;</code>. To be able
 to generate data for this data type, we need to use an SQL expression like the one below. You will notice that in the 
