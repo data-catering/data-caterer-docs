@@ -8,13 +8,17 @@ summarising the success or failure of the validations is produced and can be exa
 - __[Basic]__ - Basic column level validations
 - __[Group by/Aggregate]__ - Run aggregates over grouped data, then validate
 - __[Upstream data source]__ - Ensure record values exist in datasets based on other data sources or data generated
-- __[Data Profile (Coming soon)]__ - Score how close the data profile of generated data is against the target data profile
+- __[Column names]__ - Validate column names and ordering
+- __[External validation source]__ - Use pre-existing validation rules from sources such as Great Expectations or OpenMetadata
+- __Data Profile (Coming soon)__ - Score how close the data profile of generated data is against the target data profile
 
 </div>
 
   [Basic]: validation/basic-validation.md
   [Group by/Aggregate]: validation/group-by-validation.md
   [Upstream data source]: validation/upstream-data-source-validation.md
+  [Column names]: validation/column-name-validation.md
+  [External validation source]: validation/external-source-validation.md
 
 ## Define Validations
 
