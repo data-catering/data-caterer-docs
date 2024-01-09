@@ -1,6 +1,6 @@
 # About
 
-Hi, my name is Peter. I am a independent Software Developer, mainly focussing on data related services. My experience
+Hi, my name is Peter. I am a Software Developer, mainly focussing on data related services. My experience
 can be found on my [LinkedIn](https://www.linkedin.com/in/peter-flook/).
 
 I have created Data Caterer to help serve individuals and companies with data generation and data testing. It is a
@@ -16,11 +16,3 @@ help the product grow into a sustainable and feature-full service.
 Please contact Peter Flook
 via [Slack](https://join.slack.com/t/data-catering/shared_invite/zt-2664ylbpi-w3n7lWAO~PHeOG9Ujpm~~w)
 or via email `peter.flook@data.catering` if you have any questions or queries.
-
-## Terms of service
-
-Terms of service can be found [**here**](legal/terms-of-service.md).
-
-## Privacy policy
-
-Privacy policy can be found [**here**](legal/privacy-policy.md).
