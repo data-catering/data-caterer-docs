@@ -8,9 +8,9 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 validation tool that aids in creating production-like data across both batch and event data systems. Run data validations 
 to ensure your systems have ingested it as expected, then clean up the data afterwards.</h1>
 
-<figure markdown>
-  ![Data Caterer generate and validate data flows](diagrams/basic_data_caterer_flow_medium.gif)
-</figure>
+<video controls>
+    <source src="diagrams/basic_data_caterer_flow.m4v" type="video/mp4">
+</video>
 
 <h1 align="center">Simplify your data testing</h1>
 
