@@ -1,6 +1,6 @@
 ---
 title: "Data Catering - Automated data generation and validation tool"
-description: "A data generation and testing tool that can automatically discover, generate and validate for files, databases, HTTP APIs and messaging systems."
+description: "A synthetic data generation and testing tool that can automatically discover, generate and validate for files, databases, HTTP APIs and messaging systems."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
@@ -50,9 +50,10 @@ to ensure your systems have ingested it as expected, then clean up the data afte
 
 With Data Caterer, you get:
 
-- Ability to connect to any type of data source: files, SQL or no-SQL databases, messaging systems, HTTP
+- Ability to connect to any type of data source: files, SQL or no-SQL databases, messaging systems, HTTP APIs
 - Discover metadata from your existing infrastructure and services
 - Gain confidence that bugs do not propagate to production
+- Synthetic data generation that is production-like without ever connecting to production
 - Be proactive in ensuring changes do not affect other data producers or consumers
 - Configurability to run the way you want
 
@@ -86,7 +87,7 @@ Main features include:
 
     ---
 
-    Generate production like data to be consumed and validated.
+    Generate synthetic production-like data to be consumed and validated.
 
 -   :material-connection: __Designed for any data source__
 
