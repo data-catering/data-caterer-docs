@@ -11,6 +11,7 @@ plugins:
   - search
   - optimize
   - social
+  - privacy
 
 theme:
   name: material
