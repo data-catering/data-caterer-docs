@@ -1,6 +1,7 @@
 ---
-description: "Data generator comparison. Compare different data generation solutions with description, cost, pros and cons."
-
+title: "Data generation and validation tool comparison"
+description: "Data generator and validation tool comparison by price/cost with pros and cons."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
 # Comparison to similar tools

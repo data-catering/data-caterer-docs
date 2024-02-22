@@ -1,5 +1,6 @@
 ---
-description: "Generate data for Solace queue/topic"
+title: "Data Catering - Solace data generation and validation tool"
+description: "Example of Solace for data generation and validation tool for queue/topic."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 

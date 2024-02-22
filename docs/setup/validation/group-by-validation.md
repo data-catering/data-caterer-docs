@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Group By/Aggregate Validations"
+description: "Examples of group by/aggregate validations to run for data in files, databases, HTTP APIs or messaging systems via Data Catering."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Group By Validation
 
 If you want to run aggregations based on a particular set of columns or just the whole dataset, you can do so via group

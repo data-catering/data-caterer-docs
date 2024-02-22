@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Business value from using Data generation and validation tool"
+description: "Data Catering's value to businesses and their effects on cost reduction, engineering culture, compliance, privacy, reputation, production bugs and reliability."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Business Value
 
 Below is a list of the business related benefits from using Data Caterer which may be applicable for your use case.

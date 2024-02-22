@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Generate Multiple Records Per Column Example"
+description: "Example for generating multiple records per column for data with Data Caterer."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Multiple Records Per Column
 
 Creating a data generator for a CSV file where there are multiple records per column values.

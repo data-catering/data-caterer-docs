@@ -10,6 +10,7 @@ plugins:
   - open-in-new-tab
   - search
   - optimize
+  - social
 
 theme:
   name: material

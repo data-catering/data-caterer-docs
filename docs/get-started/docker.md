@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Quick start for data generation and validation tool"
+description: "Quick start for Data Catering data generation and testing tool that can automatically discover, generate and validate for files, databases, HTTP APIs and messaging systems."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Run Data Caterer
 
 ## Quick start

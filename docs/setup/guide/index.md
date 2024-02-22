@@ -1,6 +1,7 @@
 ---
-description: "Guide to create Data Catering jobs. Generate batch and/or event data, validate data, read metadata"
-
+title: "Data Catering - Guides"
+description: "Guides to create Data Catering jobs. Generate batch and/or event data, validate data, read metadata or any other scenario."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
 # Guides

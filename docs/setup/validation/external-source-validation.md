@@ -1,5 +1,7 @@
 ---
-description: "Define data validations based on validations defined in external sources"
+title: "Data Catering - External Source Validations such as Great Expectations, OpenMetadata, Soda, DBT"
+description: "Examples of external validations from sources such as Great Expectations, OpenMetadata, Soda or DBT, to run for data in files, databases, HTTP APIs or messaging systems via Data Catering."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
 # External Source Validations

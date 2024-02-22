@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Automated data generation and validation tool"
+description: "Example of automatically discovering, generating and validating for Postgres."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Auto Generate From Data Connection
 
 !!! example "Info"

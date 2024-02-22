@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Column Validations"
+description: "Examples of column level validations for data in files, databases, HTTP APIs or messaging systems via Data Catering."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Basic Validations
 
 Run validations on a column to ensure the values adhere to your requirement. Can be set to complex validation logic

@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Using OpenMetadata for data generation and validation"
+description: "Example of using OpenMetadata for data generation and testing tool."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # OpenMetadata Source
 
 !!! example "Info"

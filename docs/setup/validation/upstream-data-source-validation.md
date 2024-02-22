@@ -1,5 +1,7 @@
 ---
-description: "Define data validations based on data generated or from an upstream data source. Complex or basic data validations checked across multiple data sources, batch and real-time."
+title: "Data Catering - Upstream Data Source Validations"
+description: "Examples of upstream data source validations to run for data in files, databases, HTTP APIs or messaging systems via Data Catering."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
 # Upstream Data Source Validation

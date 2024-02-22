@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Data generation and validation tool roadmap"
+description: "Data Catering roadmap of features. Most requested features for data generation and validation tools."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Roadmap
 
 Items below summarise the roadmap of Data Caterer. As each task gets completed, it will be documented and linked.

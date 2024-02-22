@@ -1,10 +1,11 @@
 ---
-description: "A data generation and testing tool that can automatically discover, generate and validate your data ecosystem"
+title: "Data Catering - Automated data generation and validation tool"
+description: "A data generation and testing tool that can automatically discover, generate and validate for files, databases, HTTP APIs and messaging systems."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
 <h1 align="center" style="padding-top: 50px; padding-bottom: 50px">Data Caterer is a metadata-driven data generation and 
-testing tool that aids in creating production-like data across both batch and event data systems. Run data validations 
+validation tool that aids in creating production-like data across both batch and event data systems. Run data validations 
 to ensure your systems have ingested it as expected, then clean up the data afterwards.</h1>
 
 <figure markdown>

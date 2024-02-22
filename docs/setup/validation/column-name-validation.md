@@ -1,5 +1,7 @@
 ---
-description: "Define data validations based on the column names of the dataset."
+title: "Data Catering - Column Name Validations"
+description: "Examples of column name level validations for data in files, databases, HTTP APIs or messaging systems via Data Catering."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
 # Column Name Validations

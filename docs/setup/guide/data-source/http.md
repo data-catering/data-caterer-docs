@@ -1,5 +1,6 @@
 ---
-description: "Automatically generate data for OpenAPI/Swagger to HTTP endpoints."
+title: "Data Catering - HTTP data generation and validation tool"
+description: "Example of automatically generating data for OpenAPI/Swagger docs to HTTP endpoints."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 

@@ -1,3 +1,9 @@
+---
+title: "Data Catering - Kafka data generation and validation tool"
+description: "Example of Kafka data generation and testing tool that can automatically discover, generate and validate."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Kafka
 
 !!! example "Info"
