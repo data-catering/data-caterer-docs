@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Delete Generated Data"
+title: "Delete Generated Data"
 description: "Example of deleting generated data that is used for testing. Help clean up data in shared environments."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

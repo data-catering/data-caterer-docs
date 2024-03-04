@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Generate Multiple Records Per Column Example"
+title: "Generate Multiple Records Per Column Example"
 description: "Example for generating multiple records per column for data with Data Caterer."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

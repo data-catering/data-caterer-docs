@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - First Data Generation Example"
+title: "First Data Generation Example"
 description: "Introduction example for generating data with Data Caterer. Generate linked data between two CSV files. Then validating data saved in Postgres."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

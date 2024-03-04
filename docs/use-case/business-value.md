@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Business value from using Data generation and validation tool"
+title: "Business value from using Data generation and validation tool"
 description: "Data Catering's value to businesses and their effects on cost reduction, engineering culture, compliance, privacy, reputation, production bugs and reliability."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

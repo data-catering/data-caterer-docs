@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Data generation and validation tool use cases"
+title: "Data generation and validation tool use cases"
 description: "Uses cases for data generation and validation tool Data Catering include replicating production data flows, integration testing, scenario testing, debugging and software development."
 image: "https://data.catering/diagrams/diagrams/use_case_replicate_production.svg"
 ---

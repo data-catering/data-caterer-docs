@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Example Validation"
+title: "Example Validation"
 description: "Example of validating data via basic column checks, group by aggregates, across columns, whole dataset or cross dataset."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

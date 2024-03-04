@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Column Validations"
+title: "Column Validations"
 description: "Examples of column level validations for data in files, databases, HTTP APIs or messaging systems via Data Catering."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

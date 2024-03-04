@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Group By/Aggregate Validations"
+title: "Group By/Aggregate Validations"
 description: "Examples of group by/aggregate validations to run for data in files, databases, HTTP APIs or messaging systems via Data Catering."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

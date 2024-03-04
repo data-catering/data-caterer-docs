@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Automated data generation and validation tool"
+title: "Automated data generation and validation tool"
 description: "A synthetic data generation and testing tool that can automatically discover, generate and validate for files, databases, HTTP APIs and messaging systems."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

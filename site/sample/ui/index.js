@@ -302,76 +302,88 @@ validationTypeOptionsMap.set("columnNames", {
 
 const configurationOptionsMap = new Map();
 configurationOptionsMap.set("flag", {
-    enableCount: {
+    Count: {
+        configName: "enableCount",
         default: "true",
         type: "text",
         choice: ["true", "false"],
         help: "Count the number of records generated. Can be disabled to improve performance."
     },
-    enableGenerateData: {
+    "Generate Data": {
+        configName: "enableGenerateData",
         default: "true",
         type: "text",
         choice: ["true", "false"],
         help: "Enable/disable data generation."
     },
-    enableFailOnError: {
+    "Fail On Error": {
+        configName: "enableFailOnError",
         default: "true",
         type: "text",
         choice: ["true", "false"],
         help: "Whilst saving generated data, if there is an error, it will stop any further data from being generated."
     },
-    enableUniqueCheck: {
+    "Unique Check": {
+        configName: "enableUniqueCheck",
         default: "false",
         type: "text",
         choice: ["true", "false"],
         help: "Enable/disable generating unique values for columns marked as unique. Can be disabled to improve performance but not guarantee uniqueness."
     },
-    enableSinkMetadata: {
+    "Sink Metadata": {
+        configName: "enableSinkMetadata",
         default: "false",
         type: "text",
         choice: ["true", "false"],
         help: "Run data profiling for the generated data. Shown in HTML reports if enableSaveSinkMetadata is enabled."
     },
-    enableSaveReports: {
+    "Save Reports": {
+        configName: "enableSaveReports",
         default: "true",
         type: "text",
         choice: ["true", "false"],
         help: "Enable/disable HTML reports summarising data generated, metadata of data generated (if enableSinkMetadata is enabled) and validation results (if enableValidation is enabled)."
     },
-    enableValidation: {
+    Validation: {
+        configName: "enableValidation",
         default: "true",
         type: "text",
         choice: ["true", "false"],
         help: "Run validations as described in plan. Results can be viewed from logs or from HTML report if enableSaveSinkMetadata is enabled."
     },
-    enableAlerts: {
+    Alerts: {
+        configName: "enableAlerts",
         default: "true",
         type: "text",
         choice: ["true", "false"],
         help: "Enable/disable alerts being sent when plan execution is finished (can be configured for success/failure)."
     },
-    enableGenerateValidations: {
+    "Generate Validations": {
+        configName: "enableGenerateValidations",
         default: "false",
         type: "text",
         choice: ["true", "false"],
         paid: "true",
         help: "Enable/disable automatically generating validations based on the data sources defined."
     },
-    enableRecordTracking: {
+    "Record Tracking": {
+        configName: "enableRecordTracking",
         default: "false",
         type: "text",
         choice: ["true", "false"],
         paid: "true",
         help: "Enable/disable tracking of data records generated."
     },
-    enableDeleteGeneratedRecords: {
+    "Delete Generated Records": {
+        configName: "enableDeleteGeneratedRecords",
         default: "false",
         type: "text",
         choice: ["true", "false"],
         paid: "true",
         help: "Delete all generated records based off record tracking (if enableRecordTracking has been set to true whilst generating)."
     },
-    enableGeneratePlanAndTasks: {
+    "Generate Plan And Tasks": {
+        configName: "enableGeneratePlanAndTasks",
         default: "false",
         type: "text",
         choice: ["true", "false"],
@@ -380,39 +392,46 @@ configurationOptionsMap.set("flag", {
     },
 });
 configurationOptionsMap.set("folder", {
-    generatedReportsFolderPath: {
+    "Generated Reports Folder Path": {
+        configName: "generatedReportsFolderPath",
         default: "",
         type: "text",
         help: "Folder path where generated HTML reports will be saved."
     },
-    validationFolderPath: {
+    "Validation Folder Path": {
+        configName: "validationFolderPath",
         default: "",
         type: "text",
         help: "If using YAML validation file(s), folder path that contains all validation files (can have nested directories)."
     },
-    planFilePath: {
+    "Plan File Path": {
+        configName: "planFilePath",
         default: "",
         type: "text",
         help: "If using YAML plan file, path to use when generating and/or validating data."
     },
-    taskFolderPath: {
+    "Task Folder Path": {
+        configName: "taskFolderPath",
         default: "",
         type: "text",
         help: "If using YAML task file(s), folder path that contains all the task files (can have nested directories)."
     },
-    generatedPlanAndTasksFolderPath: {
+    "Generated Plan And Tasks Folder Path": {
+        configName: "generatedPlanAndTasksFolderPath",
         default: "",
         type: "text",
         paid: "true",
         help: "Folder path where generated plan and task files will be saved."
     },
-    recordTrackingFolderPath: {
+    "Record Tracking Folder Path": {
+        configName: "recordTrackingFolderPath",
         default: "",
         type: "text",
         paid: "true",
         help: "Folder path where record tracking files will be saved."
     },
-    recordTrackingForValidationFolderPath: {
+    "Record Tracking For Validation Folder Path": {
+        configName: "recordTrackingForValidationFolderPath",
         default: "",
         type: "text",
         paid: "true",
@@ -420,27 +439,31 @@ configurationOptionsMap.set("folder", {
     },
 });
 configurationOptionsMap.set("metadata", {
-    numGeneratedSamples: {
+    "Generated Samples": {
+        configName: "numGeneratedSamples",
         default: 10,
         type: "number",
         min: 0,
         help: "Number of sample records from generated data to take. Shown in HTML report."
     },
-    numRecordsFromDataSource: {
+    "Records From Data Source": {
+        configName: "numRecordsFromDataSource",
         default: 10000,
         type: "number",
         paid: "true",
         min: 0,
         help: "Number of records read in from the data source that could be used for data profiling."
     },
-    numRecordsForAnalysis: {
+    "Records For Analysis": {
+        configName: "numRecordsForAnalysis",
         default: 10000,
         type: "number",
         paid: "true",
         min: 0,
         help: "Number of records used for data profiling from the records gathered in numRecordsFromDataSource."
     },
-    oneOfDistinctCountVsCountThreshold: {
+    "One-of Distinct Count vs Count Threshold": {
+        configName: "oneOfDistinctCountVsCountThreshold",
         default: 0.2,
         type: "number",
         paid: "true",
@@ -449,7 +472,8 @@ configurationOptionsMap.set("metadata", {
         step: 0.001,
         help: "Threshold ratio to determine if a field is of type oneOf (i.e. a field called status that only contains open or closed. Distinct count = 2, total count = 10, ratio = 2 / 10 = 0.2 therefore marked as oneOf)."
     },
-    oneOfMinCount: {
+    "One-of Min Count": {
+        configName: "oneOfMinCount",
         default: 1000,
         type: "number",
         paid: "true",
@@ -458,25 +482,29 @@ configurationOptionsMap.set("metadata", {
     },
 });
 configurationOptionsMap.set("generation", {
-    numRecordsPerBatch: {
+    "Records Per Batch": {
+        configName: "numRecordsPerBatch",
         default: 100000,
         type: "number",
         min: 0,
         help: "Number of records across all data sources to generate per batch."
     },
-    numRecordsPerStep: {
+    "Records Per Step": {
+        configName: "numRecordsPerStep",
         default: -1,
         type: "number",
         help: "Overrides the count defined in each step with this value if defined (i.e. if set to 1000, for each step, 1000 records will be generated)."
     },
 });
 configurationOptionsMap.set("validation", {
-    numSampleErrorRecords: {
+    "Sample Error Records": {
+        configName: "numSampleErrorRecords",
         default: 5,
         type: "number",
         help: "Number of sample error records to show in HTML report. Useful for debugging."
     },
-    enableDeleteRecordTrackingFiles: {
+    "Delete Record Tracking Files": {
+        configName: "enableDeleteRecordTrackingFiles",
         default: "true",
         type: "text",
         choice: ["true", "false"],
@@ -485,18 +513,21 @@ configurationOptionsMap.set("validation", {
     },
 });
 configurationOptionsMap.set("alert", {
-    triggerOn: {
+    "Trigger On": {
+        configName: "triggerOn",
         default: "all",
         type: "text",
         choice: ["all", "failure", "success", "generation_failure", "validation_failure", "generation_success", "validation_success"],
         help: "Condition for triggering alert."
     },
-    slackToken: {
+    "Slack Token": {
+        configName: "slackToken",
         default: "",
         type: "text",
         help: "Slack token to connect to Slack. Check https://api.slack.com/authentication/token-types for more details."
     },
-    slackChannels: {
+    "Slack Channels": {
+        configName: "slackChannels",
         default: "",
         type: "text",
         help: "Define one or more Slack channels to send alerts to. Comma separated."

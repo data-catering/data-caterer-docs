@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Automated batch and event data generation and validation tool"
+title: "Automated batch and event data generation and validation tool"
 description: "Example of automatically discovering, generating and validating for batch (i.e. CSV file) and event systems (i.e. Kafka)."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

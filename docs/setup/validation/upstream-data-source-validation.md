@@ -1,5 +1,5 @@
 ---
-title: "Data Catering - Upstream Data Source Validations"
+title: "Upstream Data Source Validations"
 description: "Examples of upstream data source validations to run for data in files, databases, HTTP APIs or messaging systems via Data Catering."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
