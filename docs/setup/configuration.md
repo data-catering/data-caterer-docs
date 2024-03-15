@@ -19,6 +19,8 @@ Flags are used to control which processes are executed when you run Data Caterer
 | `enableSaveReports`            | true    | N    | Enable/disable HTML reports summarising data generated, metadata of data generated (if `enableSinkMetadata` is enabled) and validation results (if `enableValidation` is enabled). Sample [**here**](report/html-report.md) |
 | `enableSinkMetadata`           | true    | N    | Run data profiling for the generated data. Shown in HTML reports if `enableSaveSinkMetadata` is enabled                                                                                                                     |
 | `enableValidation`             | false   | N    | Run validations as described in plan. Results can be viewed from logs or from HTML report if `enableSaveSinkMetadata` is enabled. Sample [**here**](validation.md)                                                          |
+| `enableUniqueCheck`            | false   | N    | If enabled, for any `isUnique` fields, will ensure only unique values are generated                                                                                                                                         |
+| `enableAlerts`                 | true    | N    | Enable/disable alerts to be sent                                                                                                                                                                                            |
 | `enableGeneratePlanAndTasks`   | false   | Y    | Enable/disable plan and task auto generation based off data source connections                                                                                                                                              |
 | `enableRecordTracking`         | false   | Y    | Enable/disable which data records have been generated for any data source                                                                                                                                                   |
 | `enableDeleteGeneratedRecords` | false   | Y    | Delete all generated records based off record tracking (if `enableRecordTracking` has been set to true)                                                                                                                     |
@@ -34,6 +36,8 @@ Flags are used to control which processes are executed when you run Data Caterer
       .enableSaveReports(true)
       .enableSinkMetadata(true)
       .enableValidation(false)
+      .enableUniqueCheck(true)
+      .enableAlerts(true)
       .enableGeneratePlanAndTasks(false)
       .enableRecordTracking(false)
       .enableDeleteGeneratedRecords(false)
@@ -50,6 +54,8 @@ Flags are used to control which processes are executed when you run Data Caterer
       .enableSaveReports(true)
       .enableSinkMetadata(true)
       .enableValidation(false)
+      .enableUniqueCheck(true)
+      .enableAlerts(true)
       .enableGeneratePlanAndTasks(false)
       .enableRecordTracking(false)
       .enableDeleteGeneratedRecords(false)
@@ -72,8 +78,18 @@ Flags are used to control which processes are executed when you run Data Caterer
       enableRecordTracking = ${?ENABLE_RECORD_TRACKING}
       enableDeleteGeneratedRecords = false
       enableDeleteGeneratedRecords = ${?ENABLE_DELETE_GENERATED_RECORDS}
+      enableUniqueCheck = true
+      enableUniqueCheck = ${?ENABLE_UNIQUE_CHECK}
+      enableSinkMetadata = true
+      enableSinkMetadata = ${?ENABLE_SINK_METADATA}
+      enableSaveReports = true
+      enableSaveReports = ${?ENABLE_SAVE_REPORTS}
+      enableValidation = false
+      enableValidation = ${?ENABLE_VALIDATION}
       enableGenerateValidations = false
       enableGenerateValidations = ${?ENABLE_GENERATE_VALIDATIONS}
+      enableAlerts = false
+      enableAlerts = ${?ENABLE_ALERTS}
     }
     ```
 
@@ -84,14 +100,15 @@ records generated.
 
 These folder pathways can be defined as a cloud storage pathway (i.e. `s3a://my-bucket/task`).
 
-| Config                           | Default                                 | Paid | Description                                                                                                         |
-|----------------------------------|-----------------------------------------|------|---------------------------------------------------------------------------------------------------------------------|
-| `planFilePath`                   | /opt/app/plan/customer-create-plan.yaml | N    | Plan file path to use when generating and/or validating data                                                        |
-| `taskFolderPath`                 | /opt/app/task                           | N    | Task folder path that contains all the task files (can have nested directories)                                     |
-| `validationFolderPath`           | /opt/app/validation                     | N    | Validation folder path that contains all the validation files (can have nested directories)                         |
-| `generatedReportsFolderPath`     | /opt/app/report                         | N    | Where HTML reports get generated that contain information about data generated along with any validations performed |
-| `generatedPlanAndTaskFolderPath` | /tmp                                    | Y    | Folder path where generated plan and task files will be saved                                                       |
-| `recordTrackingFolderPath`       | /opt/app/record-tracking                | Y    | Where record tracking parquet files get saved                                                                       |
+| Config                                     | Default                                 | Paid | Description                                                                                                         |
+|--------------------------------------------|-----------------------------------------|------|---------------------------------------------------------------------------------------------------------------------|
+| `planFilePath`                             | /opt/app/plan/customer-create-plan.yaml | N    | Plan file path to use when generating and/or validating data                                                        |
+| `taskFolderPath`                           | /opt/app/task                           | N    | Task folder path that contains all the task files (can have nested directories)                                     |
+| `validationFolderPath`                     | /opt/app/validation                     | N    | Validation folder path that contains all the validation files (can have nested directories)                         |
+| `generatedReportsFolderPath`               | /opt/app/report                         | N    | Where HTML reports get generated that contain information about data generated along with any validations performed |
+| `generatedPlanAndTaskFolderPath`           | /tmp                                    | Y    | Folder path where generated plan and task files will be saved                                                       |
+| `recordTrackingFolderPath`                 | /opt/app/record-tracking                | Y    | Where record tracking parquet files get saved                                                                       |
+| `recordTrackingForValidationFolderPath`    | /opt/app/record-tracking-validation     | Y    | Where record tracking parquet files get saved for the purpose of validation                                         |
 
 === "Java"
 
@@ -102,7 +119,8 @@ These folder pathways can be defined as a cloud storage pathway (i.e. `s3a://my-
       .validationFolderPath("/opt/app/custom/validation")
       .generatedReportsFolderPath("/opt/app/custom/report")
       .generatedPlanAndTaskFolderPath("/opt/app/custom/generated")
-      .recordTrackingFolderPath("/opt/app/custom/record-tracking");
+      .recordTrackingFolderPath("/opt/app/custom/record-tracking")
+      .recordTrackingForValidationFolderPath("/opt/app/custom/record-tracking-validation");
     ```
 
 === "Scala"
@@ -115,6 +133,7 @@ These folder pathways can be defined as a cloud storage pathway (i.e. `s3a://my-
       .generatedReportsFolderPath("/opt/app/custom/report")
       .generatedPlanAndTaskFolderPath("/opt/app/custom/generated")
       .recordTrackingFolderPath("/opt/app/custom/record-tracking")
+      .recordTrackingForValidationFolderPath("/opt/app/custom/record-tracking-validation")
     ```
 
 === "application.conf"
@@ -133,6 +152,8 @@ These folder pathways can be defined as a cloud storage pathway (i.e. `s3a://my-
       generatedPlanAndTaskFolderPath = ${?GENERATED_PLAN_AND_TASK_FOLDER_PATH}
       recordTrackingFolderPath = "/opt/app/custom/record-tracking"
       recordTrackingFolderPath = ${?RECORD_TRACKING_FOLDER_PATH}
+      recordTrackingForValidationFolderPath = "/opt/app/custom/record-tracking-validation"
+      recordTrackingForValidationFolderPath = ${?RECORD_TRACKING_VALIDATION_FOLDER_PATH}
     }
     ```
 
@@ -159,7 +180,7 @@ when analysing the generated data if the number of records generated is large.
 
 === "Java"
 
-    ```Java
+    ```java
     configuration()
       .numRecordsFromDataSourceForDataProfiling(10000)
       .numRecordsForAnalysisForDataProfiling(10000)
@@ -203,9 +224,9 @@ batch.
 | `numRecordsPerBatch` | 100000  | N    | Number of records across all data sources to generate per batch                                                                          |
 | `numRecordsPerStep`  | <empty> | N    | Overrides the count defined in each step with this value if defined (i.e. if set to 1000, for each step, 1000 records will be generated) |
 
-=== "Scala"
+=== "Java"
 
-    ```scala
+    ```java
     configuration()
       .numRecordsPerBatch(100000)
       .numRecordsPerStep(1000);
@@ -225,6 +246,40 @@ batch.
     generation {
       numRecordsPerBatch = 100000
       numRecordsPerStep = 1000
+    }
+    ```
+
+## Validation
+
+Configurations to alter how validations are executed.
+
+| Config                            | Default | Paid | Description                                                                                                                              |
+|-----------------------------------|---------|------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `numSampleErrorRecords`           | 5       | N    | Number of error sample records to retrieve and display in generated HTML report. Increase to help debugging data issues                  |
+| `enableDeleteRecordTrackingFiles` | true    | Y    | After validations are complete, delete record tracking files that were used for validation purposes (enabled via `enableRecordTracking`) |
+
+=== "Java"
+
+    ```java
+    configuration()
+      .numSampleErrorRecords(10)
+      .enableDeleteRecordTrackingFiles(false);
+    ```
+
+=== "Scala"
+
+    ```scala
+    configuration
+      .numSampleErrorRecords(10)
+      .enableDeleteRecordTrackingFiles(false)
+    ```
+
+=== "application.conf"
+
+    ```
+    validatoin {
+      numSampleErrorRecords = 10
+      enableDeleteRecordTrackingFiles = false
     }
     ```
 
