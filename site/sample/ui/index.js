@@ -207,7 +207,7 @@ async function createDataConnectionInput(index) {
     baseTaskDiv.append(taskNameFormFloating, dataConnectionCol, iconCol);
 
     //get list of existing data connections
-    await Promise.resolve({"connections":[{"name":"my-cassandra","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"cassandra"},"type":"cassandra"},{"name":"my-data-source-1","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"cassandra"},"type":"cassandra"}]})
+    await Promise.resolve({"connections":[{"name":"my-cassandra","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"***"},"type":"cassandra"},{"name":"my-csv","options":{"path":"/tmp/generated-data/csv"},"type":"csv"},{"name":"my-json","options":{"path":"/tmp/generated-data/json"},"type":"json"}]})
         .then(respJson => {
             if (respJson) {
                 let connections = respJson.connections;
@@ -222,6 +222,7 @@ async function createDataConnectionInput(index) {
 
     // if list of connections is empty, provide button to add new connection
     if (dataConnectionSelect.childElementCount > 0) {
+        $(dataConnectionSelect).selectpicker();
         return baseTaskDiv;
     } else {
         let createNewConnection = document.createElement("a");
@@ -307,10 +308,10 @@ function submitForm() {
     let form = document.getElementById("plan-form");
     let submitPlanButton = document.getElementById("submit-plan");
     submitPlanButton.addEventListener("click", function () {
-        let allCollapsedAccordionButton = $(document).find(".accordion-button.collapsed");
-        allCollapsedAccordionButton.click();
+        expandAllButton.dispatchEvent(new Event("click"));
         let isValid = form.checkValidity();
         if (isValid) {
+            wait(500).then(r => collapseAllButton.dispatchEvent(new Event("click")));
             $(form).submit();
         } else {
             form.reportValidity();
@@ -329,6 +330,18 @@ function submitForm() {
                     createToast(`Plan run ${planName}`, `Failed to run plan ${planName}! Error: ${err}`)
                 ).show();
             })
+            .then(r => {
+                if (r.ok) {
+                    return r.text();
+                } else {
+                    r.text().then(text => {
+                        new bootstrap.Toast(
+                            createToast(`Plan run ${planName}`, `Failed to run plan ${planName}! Error: ${text}`, "fail")
+                        ).show();
+                        throw new Error(text);
+                    });
+                }
+            })
             .then(async r => {
                 const toast = new bootstrap.Toast(createToast("Plan run", `Plan run started! Msg: ${r}`));
                 toast.show();
@@ -341,6 +354,18 @@ function submitForm() {
                             const toast = new bootstrap.Toast(createToast(planName, `Plan ${planName} failed! Error: ${err}`, "fail"));
                             toast.show();
                             reject("Plan run failed");
+                        })
+                        .then(resp => {
+                            if (resp.ok) {
+                                return resp.json();
+                            } else {
+                                resp.text().then(text => {
+                                    new bootstrap.Toast(
+                                        createToast(planName, `Plan ${planName} failed! Error: ${text}`, "fail")
+                                    ).show();
+                                    throw new Error(text);
+                                });
+                            }
                         })
                         .then(respJson => {
                             let latestStatus = respJson.status;
@@ -377,6 +402,18 @@ function savePlan() {
                 console.error(err);
                 new bootstrap.Toast(createToast(planName, `Plan save failed! Error: ${err}`, "fail")).show();
             })
+            .then(r => {
+                if (r.ok) {
+                    return r.text();
+                } else {
+                    r.text().then(text => {
+                        new bootstrap.Toast(
+                            createToast(planName, `Plan ${planName} save failed! Error: ${text}`, "fail")
+                        ).show();
+                        throw new Error(text);
+                    });
+                }
+            })
             .then(resp => {
                 if (resp.includes("fail")) {
                     new bootstrap.Toast(createToast(planName, `Plan ${planName} save failed!`, "fail")).show();
@@ -400,7 +437,7 @@ const currUrlParams = window.location.search.substring(1);
 if (currUrlParams.includes("plan-name=")) {
     // then get the plan details and fill in the form
     let planName = currUrlParams.substring(currUrlParams.indexOf("=") + 1);
-    await Promise.resolve({"configuration":{"alert":{"slackChannels":"","slackToken":"","triggerOn":"all"},"flag":{"enableAlerts":"true","enableUniqueCheck":"false","enableGeneratePlanAndTasks":"false","enableSaveReports":"true","enableDeleteGeneratedRecords":"false","enableCount":"true","enableFailOnError":"true","enableGenerateData":"true","enableGenerateValidations":"false","enableRecordTracking":"false","enableValidation":"true","enableSinkMetadata":"false"},"folder":{"generatedReportsFolderPath":"","recordTrackingForValidationFolderPath":"","generatedPlanAndTasksFolderPath":"","taskFolderPath":"","recordTrackingFolderPath":"","validationFolderPath":"","planFilePath":""},"generation":{"numRecordsPerBatch":"100000","numRecordsPerStep":"-1"},"metadata":{"oneOfDistinctCountVsCountThreshold":"0.2","numGeneratedSamples":"10","numRecordsForAnalysis":"10000","numRecordsFromDataSource":"10000","oneOfMinCount":"1000"},"validation":{"enableDeleteRecordTrackingFiles":"true","numSampleErrorRecords":"5"}},"dataSources":[{"count":{},"fields":[],"name":"my-cassandra","taskName":"task-1","validations":[{"nested":{"validations":[{"options":{"aggCol":"count","aggType":"min","notEqual":"123"},"type":"column"},{"options":{"aggCol":"amount","aggType":"max","equalOrGreaterThan":"321"},"type":"column"}]},"options":{"groupByColumns":"asd"},"type":"groupBy"},{"nested":{"validations":[{"options":{"column":"rtyh"},"type":"column"},{"nested":{"validations":[{"options":{"column":"bserg","unique":"sadas"},"type":"column"}]},"options":{"upstreamTaskName":"erh3"},"type":"upstream"}]},"options":{"joinType":"inner","upstreamTaskName":"fghd"},"type":"upstream"}]}],"foreignKeys":[],"id":"d6abad98-71ff-469c-9d0d-277d5f8af71e","name":"my-plan"})
+    await Promise.resolve({"configuration":{"alert":{"slackChannels":"","slackToken":""},"flag":{"enableUniqueCheck":"false","enableGeneratePlanAndTasks":"false","enableDeleteGeneratedRecords":"false","enableCount":"true","enableFailOnError":"true","enableGenerateData":"true","enableGenerateValidations":"false","enableRecordTracking":"false"},"folder":{"generatedReportsFolderPath":"","recordTrackingForValidationFolderPath":"","generatedPlanAndTasksFolderPath":"","taskFolderPath":"","recordTrackingFolderPath":"","validationFolderPath":"","planFilePath":""},"generation":{"numRecordsPerBatch":"100000","numRecordsPerStep":"-1"},"metadata":{"numRecordsForAnalysis":"10000","numRecordsFromDataSource":"10000","oneOfDistinctCountVsCountThreshold":"0.2","oneOfMinCount":"1000"},"validation":{"enableDeleteRecordTrackingFiles":"true"}},"dataSources":[{"count":{"records":1000},"fields":[{"name":"name","options":{"expression":"#{Name.name}"},"type":"string"},{"name":"age","options":{"max":"100"},"type":"integer"}],"name":"my-json","taskName":"json-task","validations":[{"options":{"column":"name","contains":"a"},"type":"column"},{"nested":{"validations":[{"options":{"aggCol":"name","aggType":"count","greaterThan":"0"},"type":"column"}]},"options":{"groupByColumns":"name"},"type":"groupBy"}]},{"count":{"records":1000},"fields":[{"name":"name","type":"string"},{"name":"age","type":"integer"}],"name":"my-csv","taskName":"csv-task","validations":[]}],"foreignKeys":[{"links":[{"columns":"name,age","taskName":"csv-task"}],"source":{"columns":"name,age","taskName":"json-task"}}],"id":"2f33f549-cf77-4dd1-95c7-60e0ff020343","name":"json-records"})
         .then(async respJson => {
             document.getElementById("plan-name").value = planName;
             // clear out default data source
@@ -411,7 +448,7 @@ if (currUrlParams.includes("plan-name=")) {
                 let newDataSource = await createDataSourceForPlan(numDataSources);
                 tasksDetailsBody.append(newDataSource);
                 $(newDataSource).find(".task-name-field").val(dataSource.taskName);
-                $(newDataSource).find(".data-connection-name").val(dataSource.name);
+                $(newDataSource).find(".data-connection-name").val(dataSource.name).selectpicker("refresh")[0].dispatchEvent(new Event("change"));
 
                 createGenerationElements(dataSource, newDataSource, numDataSources);
                 createCountElementsFromPlan(dataSource, newDataSource);

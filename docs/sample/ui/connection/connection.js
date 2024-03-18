@@ -1,6 +1,6 @@
 import {
     camelize,
-    createAccordionItem,
+    createAccordionItem, createButton, createButtonGroup,
     createCloseButton,
     createFormFloating,
     createInput,
@@ -39,6 +39,15 @@ dataSourcePropertiesMap.set("kafka", {
     Name: "Kafka",
     URL: "localhost:9092",
     Topic: "",
+});
+dataSourcePropertiesMap.set("mysql", {
+    optGroupLabel: "Data Source",
+    Name: "MySQL",
+    URL: "jdbc:mysql://localhost:3306/customer",
+    User: "root",
+    Password: "root",
+    Schema: "",
+    Table: "",
 });
 dataSourcePropertiesMap.set("orc", {
     optGroupLabel: "Data Source",
@@ -143,6 +152,18 @@ submitConnectionButton.addEventListener("click", async function () {
             console.error(err);
             alert(err);
         })
+        .then(r => {
+            if (r.ok) {
+                return r.text();
+            } else {
+                r.text().then(text => {
+                    new bootstrap.Toast(
+                        createToast(`Save connection(s)`, `Failed to save connection(s)! Error: ${text}`, "fail")
+                    ).show();
+                    throw new Error(text);
+                });
+            }
+        })
         .then(async r => {
             await getExistingConnections();
         });
@@ -152,17 +173,28 @@ submitConnectionButton.addEventListener("click", async function () {
 //TODO allow for Slack and metadata source connections to be created here
 async function getExistingConnections() {
     accordionConnections.replaceChildren();
-    Promise.resolve({"connections":[{"name":"my-cassandra","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"cassandra"},"type":"cassandra"},{"name":"my-data-source-1","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"cassandra"},"type":"cassandra"}]})
+    Promise.resolve({"connections":[{"name":"my-cassandra","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"***"},"type":"cassandra"},{"name":"my-csv","options":{"path":"/tmp/generated-data/csv"},"type":"csv"},{"name":"my-json","options":{"path":"/tmp/generated-data/json"},"type":"json"}]})
         .then(respJson => {
             let connections = respJson.connections;
             for (let connection of connections) {
                 numExistingConnections += 1;
-                // remove password from connection details
-                if (connection.options.password) {
-                    connection.options.password = "***";
-                }
                 let jsonConnection = JSON.stringify(connection);
                 let accordionItem = createAccordionItem(numExistingConnections, connection.name, jsonConnection);
+                // add in button to delete connection
+                let deleteButton = createButton(`connection-delete-${connection.name}`, "Connection delete", "btn btn-danger", "Delete");
+
+                deleteButton.addEventListener("click", async function () {
+                    await fetch(`http://localhost:9898/connection/${connection.name}`, {method: "DELETE"});
+                    accordionConnections.removeChild(accordionItem);
+                    createToast(`${connection.name}`, `Connection ${connection.name} deleted!`);
+                });
+
+                let buttonGroup = createButtonGroup(deleteButton);
+                let header = accordionItem.querySelector(".accordion-header");
+                let divContainer = document.createElement("div");
+                divContainer.setAttribute("class", "d-flex align-items-center");
+                divContainer.append(header.firstChild, buttonGroup);
+                header.replaceChildren(divContainer);
                 accordionConnections.append(accordionItem);
             }
         });
@@ -187,7 +219,7 @@ function createDataSourceOptions(element) {
                 optionCol.setAttribute("id", key);
                 if (key !== "Name" && key !== "optGroupLabel") {
                     let newElement = createInput(key, key, "form-control input-field data-source-property", "text", value);
-                    let formFloating = createFormFloating(key, newElement)
+                    let formFloating = createFormFloating(key, newElement);
 
                     if (key === "Password") {
                         // add toggle visibility
@@ -209,10 +241,10 @@ function createDataSourceOptions(element) {
                         });
                         let inputGroup = document.createElement("div");
                         inputGroup.setAttribute("class", "input-group");
-                        inputGroup.append(formFloating, iconHolder);
+                        inputGroup.append(formFloating.firstElementChild, iconHolder);
                         optionCol.append(inputGroup);
                     } else {
-                        optionCol.append(formFloating);
+                        optionCol = formFloating;
                     }
                     dataSourceOptionsRow.append(optionCol);
                     currentDataSourceIndexRow.append(dataSourceOptionsRow);
@@ -243,19 +275,21 @@ function createDataSourceElement(index, hr) {
     let dataSourceGroup = createOptGroup("Data Source");
     let metadataSourceGroup = createOptGroup("Metadata Source");
     let alertGroup = createOptGroup("Alert");
-    dataSourceSelect.append(dataSourceGroup, metadataSourceGroup, alertGroup);
+    if (dataSourceSelect.childElementCount === 0) {
+        dataSourceSelect.append(dataSourceGroup, metadataSourceGroup, alertGroup);
 
-    for (const key of dataSourcePropertiesMap.keys()) {
-        let selectOption = document.createElement("option");
-        selectOption.setAttribute("value", key);
-        selectOption.innerText = dataSourcePropertiesMap.get(key).Name;
-        let optGroupLabel = dataSourcePropertiesMap.get(key).optGroupLabel;
-        if (optGroupLabel === "Data Source") {
-            dataSourceGroup.append(selectOption);
-        } else if (optGroupLabel === "Metadata Source") {
-            metadataSourceGroup.append(selectOption);
-        } else if (optGroupLabel === "Alert") {
-            alertGroup.append(selectOption);
+        for (const key of dataSourcePropertiesMap.keys()) {
+            let selectOption = document.createElement("option");
+            selectOption.setAttribute("value", key);
+            selectOption.innerText = dataSourcePropertiesMap.get(key).Name;
+            let optGroupLabel = dataSourcePropertiesMap.get(key).optGroupLabel;
+            if (optGroupLabel === "Data Source") {
+                dataSourceGroup.append(selectOption);
+            } else if (optGroupLabel === "Metadata Source") {
+                metadataSourceGroup.append(selectOption);
+            } else if (optGroupLabel === "Alert") {
+                alertGroup.append(selectOption);
+            }
         }
     }
     let closeButton = createCloseButton(divContainer);
@@ -263,7 +297,7 @@ function createDataSourceElement(index, hr) {
     createDataSourceOptions(dataSourceSelect);
     colName.append(formFloatingName);
     colSelect.append(dataSourceSelect);
-    $(dataSourceSelect).selectpicker();
+    $(dataSourceSelect).val("").selectpicker();
     if (hr) {
         divContainer.append(hr);
     }
