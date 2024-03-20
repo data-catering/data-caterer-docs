@@ -8,8 +8,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 ## Quick start
 
-Ensure you have `docker` installed and running.
-
 1. [Mac download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-mac.zip)
 2. [Windows download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-windows.zip)
 3. Docker
