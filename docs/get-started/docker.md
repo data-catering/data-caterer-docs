@@ -1,5 +1,5 @@
 ---
-title: "Quick start for data generation and validation tool"
+title: "Quick start"
 description: "Quick start for Data Catering data generation and testing tool that can automatically discover, generate and validate for files, databases, HTTP APIs and messaging systems."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
@@ -9,6 +9,16 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ## Quick start
 
 Ensure you have `docker` installed and running.
+
+1. [Mac download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-mac.zip)
+2. [Windows download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-windows.zip)
+3. Docker
+   ```shell
+   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.7.0
+   ```
+   [Open localhost:9898](http://localhost:9898).
+
+### Run Scala/Java examples
 
 ```shell
 git clone git@github.com:data-catering/data-caterer-example.git

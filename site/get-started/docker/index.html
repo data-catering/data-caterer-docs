@@ -27,7 +27,7 @@
     
     
       
-        <title>Quick start for data generation and validation tool - Data Catering</title>
+        <title>Quick start - Data Catering</title>
       
     
     
@@ -73,7 +73,7 @@
     
   
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Quick start for data generation and validation tool - Data Catering" />
+<meta property="og:title" content="Quick start - Data Catering" />
 <meta property="og:description" content="Quick start for Data Catering data generation and testing tool that can automatically discover, generate and validate for files, databases, HTTP APIs and messaging systems." />
 <meta property="og:image" content="https://data.catering/assets/images/social/get-started/docker.png" />
 <meta property="og:image:type" content="image/png" />
@@ -81,7 +81,7 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:url" content="https://data.catering/get-started/docker/" />
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter.title" content="Quick start for data generation and validation tool - Data Catering" />
+<meta property="twitter.title" content="Quick start - Data Catering" />
 <meta property="twitter:description" content="Quick start for Data Catering data generation and testing tool that can automatically discover, generate and validate for files, databases, HTTP APIs and messaging systems." />
 <meta property="twitter:image" content="https://data.catering/assets/images/social/get-started/docker.png" />
 </head>
@@ -136,7 +136,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Quick start for data generation and validation tool
+              Quick start
             
           </span>
         </div>
@@ -483,6 +483,17 @@
   
     <nav class="md-nav" aria-label="Quick start">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-scalajava-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run Scala/Java examples
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#report" class="md-nav__link">
@@ -2161,6 +2172,15 @@
 <h1 id="run-data-caterer">Run Data Caterer</h1>
 <h2 id="quick-start">Quick start</h2>
 <p>Ensure you have <code>docker</code> installed and running.</p>
+<ol>
+<li><a href="https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-mac.zip">Mac download</a></li>
+<li><a href="https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-windows.zip">Windows download</a></li>
+<li>Docker
+   <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-i<span class="w"> </span>-p<span class="w"> </span><span class="m">9898</span>:9898<span class="w"> </span>-e<span class="w"> </span><span class="nv">DEPLOY_MODE</span><span class="o">=</span>standalone<span class="w"> </span>--name<span class="w"> </span>datacaterer<span class="w"> </span>datacatering/data-caterer:0.7.0
+</code></pre></div>
+   <a href="http://localhost:9898">Open localhost:9898</a>.</li>
+</ol>
+<h3 id="run-scalajava-examples">Run Scala/Java examples</h3>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:data-catering/data-caterer-example.git
 <span class="nb">cd</span><span class="w"> </span>data-caterer-example<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./run.sh
 <span class="c1">#check results under docker/sample/report/index.html folder</span>
