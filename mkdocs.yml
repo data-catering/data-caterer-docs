@@ -100,7 +100,7 @@ nav:
       - Foreign Keys: 'setup/foreign-key.md'
       - Deployment: 'setup/deployment.md'
       - Advanced: 'setup/advanced.md'
-  - Use Case and Comparison:
+  - Use Case:
       - 'use-case.md'
       - Business Value: 'use-case/business-value.md'
       - Comparison: 'use-case/comparison.md'
