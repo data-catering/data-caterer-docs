@@ -1,4 +1,11 @@
-import {createAccordionItem, createButton, createButtonGroup, createToast} from "../shared.js";
+import {
+    createAccordionItem,
+    createButton,
+    createButtonGroup,
+    createToast,
+    executePlan,
+    syntaxHighlight
+} from "../shared.js";
 
 const planList = document.getElementById("plan-list");
 let numPlans = 0;
@@ -11,14 +18,23 @@ function getExistingPlans() {
             let plans = respJson.plans;
             for (let plan of plans) {
                 numPlans += 1;
-                let accordionItem = createAccordionItem(numPlans, plan.name, JSON.stringify(plan));
+                let accordionItem = createAccordionItem(numPlans, plan.name, "", syntaxHighlight(plan));
 
                 let editButton = createButton(`plan-edit-${numPlans}`, "Plan edit", "btn btn-primary", "Edit");
                 let executeButton = createButton(`plan-execute-${numPlans}`, "Plan execute", "btn btn-primary", "Execute");
                 let deleteButton = createButton(`plan-delete-${numPlans}`, "Plan delete", "btn btn-danger", "Delete");
 
                 editButton.addEventListener("click", function() {
-                    location.href = `http://localhost:9898/?plan-name=${plan.name}`;
+                    location.href = `https://data.catering/sample/ui/index.html?plan-name=${plan.name}`;
+                });
+                executeButton.addEventListener("click", function () {
+                    let runId = crypto.randomUUID();
+                    plan.id = runId;
+                    executePlan(plan, plan.name, runId);
+                });
+                deleteButton.addEventListener("click", async function () {
+                    createToast(plan.name, `Plan ${plan.name} deleted!`);
+                    planList.removeChild(accordionItem);
                 });
 
                 let buttonGroup = createButtonGroup(editButton, executeButton, deleteButton);

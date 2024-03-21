@@ -89,7 +89,7 @@ async function createNestedValidations(dataSource, manualValidation) {
         numValidations += 1;
         let newValidation = await createValidation(numValidations);
         $(manualValidation).children(".accordion").append(newValidation);
-        $(newValidation).find("select[class~=validation-type]").val(validation.type).selectpicker("refresh")[0].dispatchEvent(new Event("change"));
+        $(newValidation).find("select[class~=validation-type]").selectpicker("val", validation.type)[0].dispatchEvent(new Event("change"));
         let validationOpts = validation.options;
         let mainContainer = $(newValidation).find(".data-validation-container")[0];
 
@@ -218,8 +218,6 @@ export function addColumnValidationBlock(newAttributeRow, mainContainer, attribu
     let cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body data-validation-container");
     cardBody.append(newAttributeRow);
-    let closeButton = createCloseButton(cardDiv);
-    newAttributeRow.insertBefore(closeButton, newAttributeRow.firstChild);
     cardDiv.append(cardBody);
     mainContainer.append(cardDiv);
 
@@ -227,6 +225,8 @@ export function addColumnValidationBlock(newAttributeRow, mainContainer, attribu
     let {buttonWithMenuDiv, addAttributeButton, menu} = createButtonWithMenu(mainContainer);
     addItemsToAttributeMenu(validationTypeOptionsMap.get("column"), menu);
     newAttributeRow.append(buttonWithMenuDiv);
+    let closeButton = createCloseButton(cardDiv);
+    newAttributeRow.append(closeButton);
     menu.addEventListener("click", (event) => {
         let attribute = event.target.getAttribute("value");
         // check if attribute already exists

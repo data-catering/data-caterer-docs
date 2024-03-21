@@ -19,7 +19,7 @@ import {
     createFormFloating,
     createInput,
     createSelect,
-    createToast
+    createToast, executePlan, wait
 } from "./shared.js";
 import {createForeignKeys, createForeignKeysFromPlan, getForeignKeys} from "./helper-foreign-keys.js";
 import {
@@ -31,7 +31,7 @@ import {
 import {createGenerationElements, createManualSchema, getGeneration} from "./helper-generation.js";
 import {createManualValidation, createValidationFromPlan, getValidations} from "./helper-validation.js";
 import {createCountElementsFromPlan, getRecordCount} from "./helper-record-count.js";
-import {reportOptionsMap} from "./configuration-data.js";
+import {configurationOptionsMap, reportConfigKeys, reportOptionsMap} from "./configuration-data.js";
 
 const addTaskButton = document.getElementById("add-task-button");
 const tasksDiv = document.getElementById("tasks-details-body");
@@ -260,13 +260,16 @@ async function createDataSourceConfiguration(index, closeButton, divider) {
 
 function createReportConfiguration() {
     let reportDetailsBody = document.getElementById("report-details-body");
-    for (let [key, value] of reportOptionsMap.entries()) {
-        let configRow = createNewConfigRow("report", key, value);
+    let configOptionsContainer = document.createElement("div");
+    configOptionsContainer.setAttribute("class", "m-1 configuration-options-container");
+    reportDetailsBody.append(configOptionsContainer);
+    for (let [idx, entry] of Object.entries(reportConfigKeys)) {
+        let configRow = createNewConfigRow(entry[0], entry[1], configurationOptionsMap.get(entry[0])[entry[1]]);
         let inputVal = $(configRow).find("input, select")[0];
         if (inputVal) {
             inputVal.id = inputVal.id + "-report";
         }
-        reportDetailsBody.append(configRow);
+        configOptionsContainer.append(configRow);
     }
 }
 
@@ -322,72 +325,7 @@ function submitForm() {
         e.preventDefault();
         // collect all the user inputs
         let {planName, runId, requestBody} = getPlanDetails(form);
-        console.log(JSON.stringify(requestBody));
-        Promise.resolve()
-            .catch(err => {
-                console.error(err);
-                new bootstrap.Toast(
-                    createToast(`Plan run ${planName}`, `Failed to run plan ${planName}! Error: ${err}`)
-                ).show();
-            })
-            .then(r => {
-                if (r.ok) {
-                    return r.text();
-                } else {
-                    r.text().then(text => {
-                        new bootstrap.Toast(
-                            createToast(`Plan run ${planName}`, `Failed to run plan ${planName}! Error: ${text}`, "fail")
-                        ).show();
-                        throw new Error(text);
-                    });
-                }
-            })
-            .then(async r => {
-                const toast = new bootstrap.Toast(createToast("Plan run", `Plan run started! Msg: ${r}`));
-                toast.show();
-                // poll every 1 second for status of plan run
-                let currentStatus = "started";
-                while (currentStatus !== "finished" && currentStatus !== "failed") {
-                    await Promise.resolve()
-                        .catch(err => {
-                            console.error(err);
-                            const toast = new bootstrap.Toast(createToast(planName, `Plan ${planName} failed! Error: ${err}`, "fail"));
-                            toast.show();
-                            reject("Plan run failed");
-                        })
-                        .then(resp => {
-                            if (resp.ok) {
-                                return resp.json();
-                            } else {
-                                resp.text().then(text => {
-                                    new bootstrap.Toast(
-                                        createToast(planName, `Plan ${planName} failed! Error: ${text}`, "fail")
-                                    ).show();
-                                    throw new Error(text);
-                                });
-                            }
-                        })
-                        .then(respJson => {
-                            let latestStatus = respJson.status;
-                            if (latestStatus !== currentStatus) {
-                                currentStatus = latestStatus;
-                                let type = "running";
-                                let msg = `Plan ${planName} update, status: ${latestStatus}`;
-                                if (currentStatus === "finished") {
-                                    type = "success";
-                                    msg = `Successfully completed ${planName}.`;
-                                } else if (currentStatus === "failed") {
-                                    type = "fail";
-                                    let failReason = respJson.failedReason.length > 200 ? respJson.failedReason.substring(0, 200) + "..." : respJson.failedReason;
-                                    msg = `Plan ${planName} failed! Error: ${failReason}`;
-                                }
-                                const toast = new bootstrap.Toast(createToast(planName, msg, type));
-                                toast.show();
-                            }
-                        });
-                    await wait(500);
-                }
-            });
+        executePlan(requestBody, planName, runId);
     });
 }
 
@@ -398,38 +336,15 @@ function savePlan() {
         let {planName, requestBody} = getPlanDetails(form);
         console.log(JSON.stringify(requestBody));
         Promise.resolve()
-            .catch(err => {
-                console.error(err);
-                new bootstrap.Toast(createToast(planName, `Plan save failed! Error: ${err}`, "fail")).show();
-            })
-            .then(r => {
-                if (r.ok) {
-                    return r.text();
-                } else {
-                    r.text().then(text => {
-                        new bootstrap.Toast(
-                            createToast(planName, `Plan ${planName} save failed! Error: ${text}`, "fail")
-                        ).show();
-                        throw new Error(text);
-                    });
-                }
-            })
             .then(resp => {
                 if (resp.includes("fail")) {
-                    new bootstrap.Toast(createToast(planName, `Plan ${planName} save failed!`, "fail")).show();
+                    createToast(planName, `Plan ${planName} save failed!`, "fail");
                 } else {
-                    new bootstrap.Toast(createToast(planName, `Plan ${planName} saved.`, "success")).show();
+                    createToast(planName, `Plan ${planName} saved.`, "success");
                 }
             })
     });
 }
-
-
-const wait = function (ms = 1000) {
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
-};
 
 // check if sent over from edit plan with plan-name
 const currUrlParams = window.location.search.substring(1);
@@ -448,7 +363,7 @@ if (currUrlParams.includes("plan-name=")) {
                 let newDataSource = await createDataSourceForPlan(numDataSources);
                 tasksDetailsBody.append(newDataSource);
                 $(newDataSource).find(".task-name-field").val(dataSource.taskName);
-                $(newDataSource).find(".data-connection-name").val(dataSource.name).selectpicker("refresh")[0].dispatchEvent(new Event("change"));
+                $(newDataSource).find(".data-connection-name").selectpicker("val", dataSource.name)[0].dispatchEvent(new Event("change"));
 
                 createGenerationElements(dataSource, newDataSource, numDataSources);
                 createCountElementsFromPlan(dataSource, newDataSource);
@@ -456,9 +371,6 @@ if (currUrlParams.includes("plan-name=")) {
             }
             createForeignKeysFromPlan(respJson);
             createConfigurationFromPlan(respJson);
+            wait(500).then(r => $(document).find('button[aria-controls="report-body"]:not(.collapsed),button[aria-controls="configuration-body"]:not(.collapsed)').click());
         });
 }
-
-$(function () {
-    $(".selectpicker").selectpicker();
-});

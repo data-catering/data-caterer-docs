@@ -24,6 +24,9 @@ const tableHeaders = [{
     field: "validationSummary",
     title: "Data Validated",
 }, {
+    field: "failedReason",
+    title: "Fail Reason",
+}, {
     field: "reportLink",
     title: "Report",
 }];

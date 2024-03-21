@@ -31,7 +31,6 @@ export function createManualSchema(index, additionalName) {
         numFields += 1;
         let newField = createSchemaField(numFields);
         schemaAccordion.append(newField);
-        $(".selectpicker").selectpicker();
     });
 
     divContainer.append(addFieldButton, schemaAccordion);
@@ -93,7 +92,7 @@ function createGenerationFields(dataSource, manualSchema) {
         let newField = createSchemaField(numFields);
         $(manualSchema).find(".accordion").first().append(newField);
         $(newField).find("[id^=field-name]").val(field.name)[0].dispatchEvent(new Event("input"));
-        $(newField).find("select[class~=field-type]").val(field.type).selectpicker("refresh")[0].dispatchEvent(new Event("change"));
+        $(newField).find("select[class~=field-type]").selectpicker("val", field.type)[0].dispatchEvent(new Event("change"));
 
         if (field.options) {
             for (const [optKey, optVal] of Object.entries(field.options)) {
@@ -106,12 +105,9 @@ function createGenerationFields(dataSource, manualSchema) {
         }
         // there are nested fields
         if (field.nested && field.nested.fields) {
-            for (const nestedField of field.nested.fields) {
-                numFields += 1;
-                let newFieldBox = createManualSchema(numFields, "struct-schema");
-                $(newField).find(".accordion-body").append(newFieldBox);
-                createGenerationFields(field.nested, newFieldBox);
-            }
+            let newFieldBox = createManualSchema(numFields, "struct-schema");
+            $(newField).find(".accordion-body").append(newFieldBox);
+            createGenerationFields(field.nested, newFieldBox);
         }
     }
     let collapseShow = $(document).find(".accordion-button.collapse.show");
@@ -127,7 +123,6 @@ export function createGenerationElements(dataSource, newDataSource, numDataSourc
 
         createGenerationFields(dataSource, manualSchema);
     }
-    $(".selectpicker").selectpicker();
 }
 
 function getGenerationSchema(dataSourceSchemaContainer) {
