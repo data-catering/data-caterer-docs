@@ -26,17 +26,6 @@ This is inspired by the [mkdocs-material project](https://github.com/squidfunk/m
 - :material-animation-play-outline: Run as many times as you want, not charged by usage
 - [Plus more to come](use-case/roadmap.md)
 
-## Tiers
-
-<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-<stripe-pricing-table pricing-table-id="prctbl_1OH0g0JLcXz3QuJfOLZEAh1j"
-publishable-key="pk_live_51Nt1GMJLcXz3QuJfivqD6tl8fF3VZdzHgSOl9AGTWn3qD0neSI2UTHoD3iVwi6As2lVMhGeZEieFW6Jdeoan4Rqb00WigQVrLa">
-</stripe-pricing-table>
-
-## Manage Subscription
-
-[Manage via this link](https://billing.stripe.com/p/login/28oaIGdfreH7eXufYY)
-
 ## Contact
 
 Please contact Peter Flook
