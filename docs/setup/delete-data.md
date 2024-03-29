@@ -32,26 +32,26 @@ will occur whilst deleting data.
 ``` mermaid
 graph LR
   subgraph plan [Plan/Scenario]
-  postgresAccount [Postgres accounts]
-  postgresTransaction [Postgres transactions]
+    postgresAccount [Postgres accounts]
+    postgresTransaction [Postgres transactions]
   end
   
   subgraph dataProcessor [Processor]
-  dataCaterer [Data Caterer]
+    dataCaterer [Data Caterer]
   end
   
   subgraph postgres [Postgres]
-  subgraph postgresAccTable [Accounts table]
-  account1 [ACC12345,2024-01-01]
-  account2 [ACC98765,2024-01-23]
-  account3 [...]
-  end
-  subgraph postgresTxnTable [Transactions table]
-  account1Txn [ACC12345,10.23]
-  account2Txn [ACC98765,93.51]
-  account3Txn [ACC98765,5.72]
-  account4Txn [...]
-  end
+    subgraph postgresAccTable [Accounts table]
+      account1 [ACC12345,2024-01-01]
+      account2 [ACC98765,2024-01-23]
+      account3 [...]
+    end
+    subgraph postgresTxnTable [Transactions table]
+      account1Txn [ACC12345,10.23]
+      account2Txn [ACC98765,93.51]
+      account3Txn [ACC98765,5.72]
+      account4Txn [...]
+    end
   end
   
   postgresAccount --> dataCaterer
