@@ -1,3 +1,9 @@
+---
+title: "Design"
+description: "Details about the design of Data Caterer."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Design
 
 This document shows the thought process behind the design of Data Caterer to help give you insights as to how and why

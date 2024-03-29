@@ -1,3 +1,8 @@
+---
+title: "Data Generation"
+description: "Data Caterer can generate all kinds of data structures including simple fields, nested fields, reference other fields in calculating values. It can also connect to metadata sources such as OpenMetadata or OpenAPI/Swagger to retrieve schema information to generate data."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
 # Data Generators
 
 ## Data Types
@@ -38,13 +43,13 @@ descriptions:
 
 ### String
 
-| Option            | Default | Example                                                                                      | Description                                                                                                                                                                                                                |
-|-------------------|---------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `minLen`          | 1       | `minLen: "2"`                                                                                | Ensures that all generated strings have at least length `minLen`                                                                                                                                                           |
-| `maxLen`          | 10      | `maxLen: "15"`                                                                               | Ensures that all generated strings have at most length `maxLen`                                                                                                                                                            |
+| Option            | Default | Example                                                                                      | Description                                                                                                                                                                                                                    |
+|-------------------|---------|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `minLen`          | 1       | `minLen: "2"`                                                                                | Ensures that all generated strings have at least length `minLen`                                                                                                                                                               |
+| `maxLen`          | 10      | `maxLen: "15"`                                                                               | Ensures that all generated strings have at most length `maxLen`                                                                                                                                                                |
 | `expression`      | <empty> | `expression: "#{Name.name}"`<br/>`expression:"#{Address.city}/#{Demographic.maritalStatus}"` | Will generate a string based on the faker expression provided. All possible faker expressions can be found [**here**](../../sample/datafaker/expressions.txt)<br/> Expression has to be in format `#{<faker expression name>}` |
-| `enableNull`      | false   | `enableNull: "true"`                                                                         | Enable/disable null values being generated                                                                                                                                                                                 |
-| `nullProbability` | 0.0     | `nullProb: "0.1"`                                                                            | Probability to generate null values if `enableNull` is true                                                                                                                                                                |
+| `enableNull`      | false   | `enableNull: "true"`                                                                         | Enable/disable null values being generated                                                                                                                                                                                     |
+| `nullProbability` | 0.0     | `nullProb: "0.1"`                                                                            | Probability to generate null values if `enableNull` is true                                                                                                                                                                    |
 
 **Edge cases**: ("", "\n", "\r", "\t", " ", "\\u0000", "\\ufff", "İyi günler", "Спасибо", "Καλημέρα", "صباح الخير", "
 Förlåt", "你好吗", "Nhà vệ sinh ở đâu", "こんにちは", "नमस्ते", "Բարեւ", "Здравейте")

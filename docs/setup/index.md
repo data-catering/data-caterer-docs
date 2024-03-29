@@ -1,3 +1,9 @@
+---
+title: "Setup"
+description: "How to set up and configure Data Caterer to run the way you want via configurations, connections, generators, validations, foreign keys and deployment options."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Setup
 
 All the configurations and customisation related to Data Caterer can be found under here.

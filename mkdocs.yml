@@ -98,6 +98,7 @@ nav:
           - HTML Report: 'setup/report/html-report.md'
           - Alert: 'setup/report/alert.md'
       - Foreign Keys: 'setup/foreign-key.md'
+      - Delete Data: 'setup/delete-data.md'
       - Deployment: 'setup/deployment.md'
       - Advanced: 'setup/advanced.md'
   - Use Case:

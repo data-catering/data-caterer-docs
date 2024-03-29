@@ -6,15 +6,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="How to generate data and clean it up after using it via Data Caterer. Includes deleting data with foreign keys/relationships or data pushed to other data sources from consuming generated data via a service or job.">
       
       
-        <link rel="canonical" href="https://data.catering/setup/advanced/">
+      
+        <link rel="canonical" href="https://data.catering/setup/delete-data/">
       
       
-        <link rel="prev" href="../deployment/">
+        <link rel="prev" href="../foreign-key/">
       
       
-        <link rel="next" href="../../use-case/">
+        <link rel="next" href="../deployment/">
       
       
         
@@ -25,7 +27,7 @@
     
     
       
-        <title>Advanced - Data Catering</title>
+        <title>Delete generated data from data sources - Data Catering</title>
       
     
     
@@ -71,15 +73,17 @@
     
   
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Advanced - Data Catering" />
-<meta property="og:image" content="https://data.catering/assets/images/social/setup/advanced.png" />
+<meta property="og:title" content="Delete generated data from data sources - Data Catering" />
+<meta property="og:description" content="How to generate data and clean it up after using it via Data Caterer. Includes deleting data with foreign keys/relationships or data pushed to other data sources from consuming generated data via a service or job." />
+<meta property="og:image" content="https://data.catering/assets/images/social/setup/delete-data.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:url" content="https://data.catering/setup/advanced/" />
+<meta property="og:url" content="https://data.catering/setup/delete-data/" />
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter.title" content="Advanced - Data Catering" />
-<meta property="twitter:image" content="https://data.catering/assets/images/social/setup/advanced.png" />
+<meta property="twitter.title" content="Delete generated data from data sources - Data Catering" />
+<meta property="twitter:description" content="How to generate data and clean it up after using it via Data Caterer. Includes deleting data with foreign keys/relationships or data pushed to other data sources from consuming generated data via a service or job." />
+<meta property="twitter:image" content="https://data.catering/assets/images/social/setup/delete-data.png" />
 </head>
   
   
@@ -99,7 +103,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#advanced-use-cases" class="md-skip">
+        <a href="#delete-generated-data" class="md-skip">
           Skip to content
         </a>
       
@@ -132,7 +136,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Advanced
+              Delete generated data from data sources
             
           </span>
         </div>
@@ -1601,9 +1605,35 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../delete-data/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    
+  
+    Delete Data
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1618,6 +1648,65 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#foreign-keysrelationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Foreign Keys/Relationships
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Foreign Keys/Relationships">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1653,35 +1742,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    
-  
-    Advanced
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../advanced/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1696,109 +1759,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#special-data-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Special data formats
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#foreign-keys-across-data-sets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Foreign keys across data sets
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#edge-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Edge cases
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scenario-testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scenario testing
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cloud-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cloud storage
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Cloud storage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#data-source" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data source
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#storing-plantasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Storing plan/task(s)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2253,205 +2213,58 @@
   
 
 
-<h1 id="advanced-use-cases">Advanced use cases</h1>
-<h2 id="special-data-formats">Special data formats</h2>
-<p>There are many options available for you to use when you have a scenario when data has to be a certain format.</p>
+<h1 id="delete-generated-data">Delete Generated Data</h1>
+<div class="admonition example">
+<p class="admonition-title">Info</p>
+<p>Deleting generated data is a paid feature. Try the free trial <a href="../../get-started/docker/">here</a>.</p>
+</div>
+<p>As you generate and validate data, you may want to clean up the data that has been generated. This helps you:</p>
 <ol>
-<li>Create expression <a href="https://www.datafaker.net/documentation/expressions/">datafaker</a><ol>
-<li>Can be used to create names, addresses, or anything that can be found
-   under <a href="../../sample/datafaker/expressions.txt"><strong>here</strong></a></li>
+<li>Keep your test environments clean</li>
+<li>Reduce chance of existing data interacting with your validations</li>
+<li>Creates a simple workflow for developers and testers to follow</li>
 </ol>
-</li>
-<li>Create regex</li>
-</ol>
-<h2 id="foreign-keys-across-data-sets">Foreign keys across data sets</h2>
-<p><img alt="Multiple data source foreign key example" src="../../diagrams/foreign_keys.drawio.png" title="Multiple data source foreign keys" /></p>
-<p>Details for how you can configure foreign keys can be found <a href="../foreign-key/"><strong>here</strong></a>.</p>
-<h2 id="edge-cases">Edge cases</h2>
-<p>For each given data type, there are edge cases which can cause issues when your application processes the data.
-This can be controlled at a column level by including the following flag in the generator options:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Java</label><label for="__tabbed_1_2">Scala</label><label for="__tabbed_1_3">YAML</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">field</span><span class="p">()</span>
-<span class="w">  </span><span class="p">.</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;amount&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">type</span><span class="p">(</span><span class="n">DoubleType</span><span class="p">.</span><span class="na">instance</span><span class="p">())</span>
-<span class="w">  </span><span class="p">.</span><span class="na">enableEdgeCases</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">edgeCaseProbability</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">field</span>
-<span class="w">  </span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;amount&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">`type`</span><span class="p">(</span><span class="nc">DoubleType</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">enableEdgeCases</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">edgeCaseProbability</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">fields</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount&quot;</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;double&quot;</span>
-<span class="w">    </span><span class="nt">generator</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;random&quot;</span>
-<span class="w">      </span><span class="nt">options</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">enableEdgeCases</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">        </span><span class="nt">edgeCaseProb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<p>If you want to know all the possible edge cases for each data
-type, <a href="../generator/data-generator/">can check the documentation here</a>.</p>
-<h2 id="scenario-testing">Scenario testing</h2>
-<p>You can create specific scenarios by adjusting the metadata found in the plan and tasks to your liking.<br />
-For example, if you had two data sources, a Postgres database and a parquet file, and you wanted to save account data
-into Postgres and transactions related to those accounts into a parquet file.
-You can alter the <code>status</code> column in the account data to only generate <code>open</code> accounts
-and define a foreign key between Postgres and parquet to ensure the same <code>account_id</code> is being used.<br />
-Then in the parquet task, define 1 to 10 transactions per <code>account_id</code> to be generated.</p>
-<p><a href="https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/jdbc/postgres/postgres-account-task.yaml">Postgres account generation example task</a><br />
-<a href="https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/file/parquet/parquet-transaction-task.yaml">Parquet transaction generation example task</a><br />
-<a href="https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/plan/scenario-based.yaml">Plan</a></p>
-<h2 id="cloud-storage">Cloud storage</h2>
-<h3 id="data-source">Data source</h3>
-<p>If you want to save the file types CSV, JSON, Parquet or ORC into cloud storage, you can do so via adding extra
-configurations. Below is an example for S3.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Java</label><label for="__tabbed_2_2">Scala</label><label for="__tabbed_2_3">YAML</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="n">csvTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csv</span><span class="p">(</span><span class="s">&quot;my_csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;s3a://my-bucket/csv/accounts&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">schema</span><span class="p">(</span>
-<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">),</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">);</span>
+<h2 id="foreign-keysrelationships">Foreign Keys/Relationships</h2>
+<p>You can either define a foreign key for data generation (i.e. create same account numbers across accounts and transactions table)
+or for data deletion (i.e. account numbers generated in Postgres are consumed by a job and pushed into a Parquet file, you 
+can delete the Postgres and Parquet data via the account numbers generated).</p>
+<h3 id="generate">Generate</h3>
+<p>In scenarios where you have defined foreign keys for multiple data sources, when data is generated, Data Caterer will ensure
+that the values generated in one data source, will be the same in the other. When you want to delete the data, data will
+be deleted in reverse order of how the data was inserted. This ensures that for data sources, such as Postgres, no errors
+will occur whilst deleting data.</p>
+<pre class="mermaid"><code>graph LR
+  subgraph plan [Plan/Scenario]
+  postgresAccount [Postgres accounts]
+  postgresTransaction [Postgres transactions]
+  end
 
-<span class="kd">var</span><span class="w"> </span><span class="n">s3Configuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">configuration</span><span class="p">()</span>
-<span class="w">  </span><span class="p">.</span><span class="na">runtimeConfig</span><span class="p">(</span><span class="n">Map</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.directory.marker.retention&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;keep&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.bucket.all.committer.magic.enabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.defaultFS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;s3a://my-bucket&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="c1">//can change to other credential providers as shown here</span>
-<span class="w">    </span><span class="c1">//https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/index.html#Changing_Authentication_Providers</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.aws.credentials.provider&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.access.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;access_key&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.secret.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;secret_key&quot;</span>
-<span class="w">  </span><span class="p">));</span>
+  subgraph dataProcessor [Processor]
+  dataCaterer [Data Caterer]
+  end
 
-<span class="n">execute</span><span class="p">(</span><span class="n">s3Configuration</span><span class="p">,</span><span class="w"> </span><span class="n">csvTask</span><span class="p">);</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">csvTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csv</span><span class="p">(</span><span class="s">&quot;my_csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;s3a://my-bucket/csv/accounts&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">schema</span><span class="p">(</span>
-<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">),</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">  </span><span class="p">)</span>
+  subgraph postgres [Postgres]
+  subgraph postgresAccTable [Accounts table]
+  account1 [ACC12345,2024-01-01]
+  account2 [ACC98765,2024-01-23]
+  account3 [...]
+  end
+  subgraph postgresTxnTable [Transactions table]
+  account1Txn [ACC12345,10.23]
+  account2Txn [ACC98765,93.51]
+  account3Txn [ACC98765,5.72]
+  account4Txn [...]
+  end
+  end
 
-<span class="kd">val</span><span class="w"> </span><span class="n">s3Configuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">configuration</span>
-<span class="w">  </span><span class="p">.</span><span class="n">runtimeConfig</span><span class="p">(</span><span class="nc">Map</span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.directory.marker.retention&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;keep&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.bucket.all.committer.magic.enabled&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.defaultFS&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;s3a://my-bucket&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="c1">//can change to other credential providers as shown here</span>
-<span class="w">    </span><span class="c1">//https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/index.html#Changing_Authentication_Providers</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.aws.credentials.provider&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.access.key&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;access_key&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.secret.key&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;secret_key&quot;</span>
-<span class="w">  </span><span class="p">))</span>
+  postgresAccount --&gt; dataCaterer
+  postgresTransaction --&gt; dataCaterer
+  dataCaterer --&gt; postgresAccTable
+  dataCaterer --&gt; postgresTxnTable</code></pre>
+<h3 id="delete">Delete</h3>
 
-<span class="n">execute</span><span class="p">(</span><span class="n">s3Configuration</span><span class="p">,</span><span class="w"> </span><span class="n">csvTask</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">folders {</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">generatedPlanAndTaskFolderPath = &quot;s3a://my-bucket/data-caterer/generated&quot;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">planFilePath = &quot;s3a://my-bucket/data-caterer/generated/plan/customer-create-plan.yaml&quot;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">taskFolderPath = &quot;s3a://my-bucket/data-caterer/generated/task&quot;</span>
-<span class="l l-Scalar l-Scalar-Plain">}</span>
-
-<span class="l l-Scalar l-Scalar-Plain">runtime {</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">config {</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">#S3</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.directory.marker.retention&quot; = &quot;keep&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.bucket.all.committer.magic.enabled&quot; = &quot;true&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.defaultFS&quot; = &quot;s3a://my-bucket&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">#can change to other credential providers as shown here</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">#https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/index.html#Changing_Authentication_Providers</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.aws.credentials.provider&quot; = &quot;org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.access.key&quot; = &quot;access_key&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.secret.key&quot; = &quot;secret_key&quot;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="l l-Scalar l-Scalar-Plain">}</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h3 id="storing-plantasks">Storing plan/task(s)</h3>
-<p>You can generate and store the plan/task files inside either AWS S3, Azure Blob Storage or Google GCS.
-This can be controlled via configuration set in the <code>application.conf</code> file where you can set something like the below:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Java</label><label for="__tabbed_3_2">Scala</label><label for="__tabbed_3_3">YAML</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">configuration</span><span class="p">()</span>
-<span class="w">  </span><span class="p">.</span><span class="na">generatedReportsFolderPath</span><span class="p">(</span><span class="s">&quot;s3a://my-bucket/data-caterer/generated&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">planFilePath</span><span class="p">(</span><span class="s">&quot;s3a://my-bucket/data-caterer/generated/plan/customer-create-plan.yaml&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">taskFolderPath</span><span class="p">(</span><span class="s">&quot;s3a://my-bucket/data-caterer/generated/task&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="na">runtimeConfig</span><span class="p">(</span><span class="n">Map</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.directory.marker.retention&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;keep&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.bucket.all.committer.magic.enabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.defaultFS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;s3a://my-bucket&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="c1">//can change to other credential providers as shown here</span>
-<span class="w">    </span><span class="c1">//https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/index.html#Changing_Authentication_Providers</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.aws.credentials.provider&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.access.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;access_key&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.secret.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;secret_key&quot;</span>
-<span class="w">  </span><span class="p">));</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">configuration</span>
-<span class="w">  </span><span class="p">.</span><span class="n">generatedReportsFolderPath</span><span class="p">(</span><span class="s">&quot;s3a://my-bucket/data-caterer/generated&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">planFilePath</span><span class="p">(</span><span class="s">&quot;s3a://my-bucket/data-caterer/generated/plan/customer-create-plan.yaml&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">taskFolderPath</span><span class="p">(</span><span class="s">&quot;s3a://my-bucket/data-caterer/generated/task&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="p">.</span><span class="n">runtimeConfig</span><span class="p">(</span><span class="nc">Map</span><span class="p">(</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.directory.marker.retention&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;keep&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.bucket.all.committer.magic.enabled&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.defaultFS&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;s3a://my-bucket&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="c1">//can change to other credential providers as shown here</span>
-<span class="w">    </span><span class="c1">//https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/index.html#Changing_Authentication_Providers</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.aws.credentials.provider&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.access.key&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;access_key&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s">&quot;spark.hadoop.fs.s3a.secret.key&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;secret_key&quot;</span>
-<span class="w">  </span><span class="p">))</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">folders {</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">generatedPlanAndTaskFolderPath = &quot;s3a://my-bucket/data-caterer/generated&quot;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">planFilePath = &quot;s3a://my-bucket/data-caterer/generated/plan/customer-create-plan.yaml&quot;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">taskFolderPath = &quot;s3a://my-bucket/data-caterer/generated/task&quot;</span>
-<span class="l l-Scalar l-Scalar-Plain">}</span>
-
-<span class="l l-Scalar l-Scalar-Plain">runtime {</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">config {</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">#S3</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.directory.marker.retention&quot; = &quot;keep&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.bucket.all.committer.magic.enabled&quot; = &quot;true&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.defaultFS&quot; = &quot;s3a://my-bucket&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">#can change to other credential providers as shown here</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">#https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/index.html#Changing_Authentication_Providers</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.aws.credentials.provider&quot; = &quot;org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.access.key&quot; = &quot;access_key&quot;</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">&quot;spark.hadoop.fs.s3a.secret.key&quot; = &quot;secret_key&quot;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">}</span>
-<span class="l l-Scalar l-Scalar-Plain">}</span>
-</code></pre></div>
-</div>
-</div>
-</div>
+  
+  
 
 
 
@@ -2485,7 +2298,7 @@ This can be controlled via configuration set in the <code>application.conf</code
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../deployment/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Deployment">
+          <a href="../foreign-key/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Foreign Keys">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -2495,20 +2308,20 @@ This can be controlled via configuration set in the <code>application.conf</code
                 Previous
               </span>
               <div class="md-ellipsis">
-                Deployment
+                Foreign Keys
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../use-case/" class="md-footer__link md-footer__link--next" aria-label="Next: Data generation and validation tool use cases">
+          <a href="../deployment/" class="md-footer__link md-footer__link--next" aria-label="Next: Deployment">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Data generation and validation tool use cases
+                Deployment
               </div>
             </div>
             <div class="md-footer__button md-icon">

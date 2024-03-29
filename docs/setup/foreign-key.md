@@ -1,13 +1,19 @@
-# Foreign Keys
+---
+title: "Foreign Keys/Relationships"
+description: "Foreign keys/relationships can be defined within Data Caterer to help generate data that requires the same values to be used. Can be simple, compound or complex relationships that reference other fields with transformations."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
+# Foreign Keys/Relationships
 
 ![Multiple data source foreign key example](../diagrams/foreign_keys.drawio.png "Multiple data source foreign keys")
 
 Foreign keys can be defined to represent the relationships between datasets where values are required to match for
-particular columns.
+particular fields.
 
-## Single column
+## Single field
 
-Define a column in one data source to match against another column.  
+Define a field in one data source to match against another field.  
 Below example shows a `postgres` data source with two tables, `accounts` and `transactions` that have a foreign key
 for `account_id`.
 
@@ -94,9 +100,9 @@ for `account_id`.
           - "postgres.transactions.account_id"
     ```
 
-## Multiple columns
+## Multiple fields
 
-You may have a scenario where multiple columns need to be aligned. From the same example, we want `account_id`
+You may have a scenario where multiple fields need to be aligned. From the same example, we want `account_id`
 and `name` from `accounts` to match with `account_id` and `full_name` to match in `transactions` respectively.
 
 === "Java"
@@ -182,13 +188,116 @@ and `name` from `accounts` to match with `account_id` and `full_name` to match i
           - "my_postgres.transactions.account_id,full_name"
     ```
 
-## Nested column
+## Transformed field
+
+Scenarios exist where there are relationships defined by certain transformations being applied to the source data.
+
+For example, there may be accounts created with a field `account_number` that contains records like `123456`. Then another
+data source contains `account_id` which is a concatenation of `ACC` with `account_number` to have values like `ACC123456`.
+
+=== "Java"
+
+    ```java
+    var postgresAcc = postgres("my_postgres", "jdbc:...")
+      .table("public.accounts")
+      .schema(
+        field().name("account_number"),
+        field().name("name"),
+        ...
+      );
+    var jsonTask = json("my_json", "/tmp/json")
+      .schema(
+        field().name("account_id").sql("CONCAT('ACC', account_number)"),
+        field().name("account_number").omit(true),  #using this field for intermediate calculation, not included in final result with omit=true
+        ...
+      );
+    
+    plan().addForeignKeyRelationship(
+      postgresAcc, List.of("account_number"),
+      List.of(Map.entry(jsonTask, List.of("account_number")))
+    );
+    ```
+
+=== "Scala"
+
+    ```scala
+    val postgresAcc = postgres("my_postgres", "jdbc:...")
+      .table("public.accounts")
+      .schema(
+        field.name("account_number"),
+        field.name("name"),
+        ...
+      )
+    var jsonTask = json("my_json", "/tmp/json")
+      .schema(
+        field.name("account_id").sql("CONCAT('ACC', account_number)"),
+        field.name("account_number").omit(true),  #using this field for intermediate calculation, not included in final result with omit=true
+        ...
+      )
+
+    plan.addForeignKeyRelationship(
+      postgresAcc, List("account_number"),
+      List(jsonTask -> List("account_number"))
+    )
+    ```
+
+=== "YAML"
+
+    ```yaml
+    ---
+    #postgres task yaml
+    name: "postgres_data"
+    steps:
+      - name: "accounts"
+        type: "postgres"
+        options:
+          dbtable: "account.accounts"
+        schema:
+          fields:
+            - name: "account_number"
+            - name: "name"
+    ---
+    #json task yaml
+    name: "json_data"
+    steps:
+      - name: "transactions"
+        type: "json"
+        options:
+          dbtable: "account.transactions"
+        schema:
+          fields:
+            - name: "account_id"
+              generator:
+                options:
+                  sql: "CONCAT('ACC', account_number)"
+            - name: "account_number"
+              generator:
+                options:
+                  omit: true
+
+    ---
+    #plan yaml
+    name: "customer_create_plan"
+    description: "Create customers in JDBC"
+    tasks:
+      - name: "postgres_data"
+        dataSourceName: "my_postgres"
+      - name: "json_data"
+        dataSourceName: "my_json"
+
+    sinkOptions:
+      foreignKeys:
+        "my_postgres.accounts.account_number":
+          - "my_json.transactions.account_number"
+    ```
+
+## Nested field
 
 Your schema structure can have nested fields which can also be referenced as foreign keys. But to do so, you need to
 create a proxy field that gets omitted from the final saved data.
   
 In the example below, the nested `customer_details.name` field inside the `json` task needs to match with `name`
-from `postgres`. A new field in the `json` called `_txn_name` is used as a temporary column to facilitate the foreign
+from `postgres`. A new field in the `json` called `_txn_name` is used as a temporary field to facilitate the foreign
 key definition.
 
 === "Java"

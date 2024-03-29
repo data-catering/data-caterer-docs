@@ -1,3 +1,9 @@
+---
+title: "Data source connections"
+description: "Data Caterer can connect to databases, file and messaging systems, HTTP APIs and metadata services."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Data Source Connections
 
 Details of all the connection configuration supported can be found in the below subsections for each type of connection.

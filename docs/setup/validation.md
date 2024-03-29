@@ -1,3 +1,9 @@
+---
+title: "Data Validations"
+description: "Data Caterer can execute complex validations including column level, aggregate/group by, upstream data source and column name validations. It can also retrieve existing data quality/validation rules from sources such as Great Expectations or OpenMetadata."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Validations
 
 Validations can be used to run data checks after you have run the data generator or even as a standalone task. A report

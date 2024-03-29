@@ -1,3 +1,9 @@
+---
+title: "Record count"
+description: "Data Caterer generate records based on your desired scenario. Large numbers of records for performance testing, different distributions to reflect long-tailed data distributions or production-like data, or multiple records per set of unique field values."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Record Count
 
 There are options related to controlling the number of records generated that can help in generating the scenarios or data required.

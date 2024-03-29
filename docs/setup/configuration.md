@@ -1,3 +1,9 @@
+---
+title: "Configurations"
+description: "Data Caterer offers flags and configuration to tune and customise the way your generate, validate or delete data."
+image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
+---
+
 # Configuration
 
 A number of configurations can be made and customised within Data Caterer to help control what gets run and/or where any

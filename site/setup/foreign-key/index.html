@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Foreign keys/relationships can be defined within Data Caterer to help generate data that requires the same values to be used. Can be simple, compound or complex relationships that reference other fields with transformations.">
+      
       
       
         <link rel="canonical" href="https://data.catering/setup/foreign-key/">
@@ -14,7 +16,7 @@
         <link rel="prev" href="../report/alert/">
       
       
-        <link rel="next" href="../deployment/">
+        <link rel="next" href="../delete-data/">
       
       
         
@@ -25,7 +27,7 @@
     
     
       
-        <title>Foreign Keys - Data Catering</title>
+        <title>Foreign Keys/Relationships - Data Catering</title>
       
     
     
@@ -71,14 +73,16 @@
     
   
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Foreign Keys - Data Catering" />
+<meta property="og:title" content="Foreign Keys/Relationships - Data Catering" />
+<meta property="og:description" content="Foreign keys/relationships can be defined within Data Caterer to help generate data that requires the same values to be used. Can be simple, compound or complex relationships that reference other fields with transformations." />
 <meta property="og:image" content="https://data.catering/assets/images/social/setup/foreign-key.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:url" content="https://data.catering/setup/foreign-key/" />
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter.title" content="Foreign Keys - Data Catering" />
+<meta property="twitter.title" content="Foreign Keys/Relationships - Data Catering" />
+<meta property="twitter:description" content="Foreign keys/relationships can be defined within Data Caterer to help generate data that requires the same values to be used. Can be simple, compound or complex relationships that reference other fields with transformations." />
 <meta property="twitter:image" content="https://data.catering/assets/images/social/setup/foreign-key.png" />
 </head>
   
@@ -99,7 +103,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#foreign-keys" class="md-skip">
+        <a href="#foreign-keysrelationships" class="md-skip">
           Skip to content
         </a>
       
@@ -132,7 +136,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Foreign Keys
+              Foreign Keys/Relationships
             
           </span>
         </div>
@@ -1310,7 +1314,7 @@
   <span class="md-ellipsis">
     
   
-    Validations
+    Data Validations
   
 
     
@@ -1635,10 +1639,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#single-column" class="md-nav__link">
+  <a href="#single-field" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Single column
+        Single field
       
     </span>
   </a>
@@ -1646,10 +1650,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multiple-columns" class="md-nav__link">
+  <a href="#multiple-fields" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Multiple columns
+        Multiple fields
       
     </span>
   </a>
@@ -1657,10 +1661,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#nested-column" class="md-nav__link">
+  <a href="#transformed-field" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Nested column
+        Transformed field
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nested-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nested field
       
     </span>
   </a>
@@ -1671,6 +1686,32 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delete-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Delete Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2177,12 +2218,12 @@
   
 
 
-<h1 id="foreign-keys">Foreign Keys</h1>
+<h1 id="foreign-keysrelationships">Foreign Keys/Relationships</h1>
 <p><img alt="Multiple data source foreign key example" src="../../diagrams/foreign_keys.drawio.png" title="Multiple data source foreign keys" /></p>
 <p>Foreign keys can be defined to represent the relationships between datasets where values are required to match for
-particular columns.</p>
-<h2 id="single-column">Single column</h2>
-<p>Define a column in one data source to match against another column.<br />
+particular fields.</p>
+<h2 id="single-field">Single field</h2>
+<p>Define a field in one data source to match against another field.<br />
 Below example shows a <code>postgres</code> data source with two tables, <code>accounts</code> and <code>transactions</code> that have a foreign key
 for <code>account_id</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Java</label><label for="__tabbed_1_2">Scala</label><label for="__tabbed_1_3">YAML</label></div>
@@ -2266,8 +2307,8 @@ for <code>account_id</code>.</p>
 </div>
 </div>
 </div>
-<h2 id="multiple-columns">Multiple columns</h2>
-<p>You may have a scenario where multiple columns need to be aligned. From the same example, we want <code>account_id</code>
+<h2 id="multiple-fields">Multiple fields</h2>
+<p>You may have a scenario where multiple fields need to be aligned. From the same example, we want <code>account_id</code>
 and <code>name</code> from <code>accounts</code> to match with <code>account_id</code> and <code>full_name</code> to match in <code>transactions</code> respectively.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Java</label><label for="__tabbed_2_2">Scala</label><label for="__tabbed_2_3">YAML</label></div>
 <div class="tabbed-content">
@@ -2350,13 +2391,111 @@ and <code>name</code> from <code>accounts</code> to match with <code>account_id<
 </div>
 </div>
 </div>
-<h2 id="nested-column">Nested column</h2>
+<h2 id="transformed-field">Transformed field</h2>
+<p>Scenarios exist where there are relationships defined by certain transformations being applied to the source data.</p>
+<p>For example, there may be accounts created with a field <code>account_number</code> that contains records like <code>123456</code>. Then another
+data source contains <code>account_id</code> which is a concatenation of <code>ACC</code> with <code>account_number</code> to have values like <code>ACC123456</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Java</label><label for="__tabbed_3_2">Scala</label><label for="__tabbed_3_3">YAML</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="n">postgresAcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="s">&quot;my_postgres&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:...&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">table</span><span class="p">(</span><span class="s">&quot;public.accounts&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;account_number&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="n">jsonTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">(</span><span class="s">&quot;my_json&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/tmp/json&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">).</span><span class="na">sql</span><span class="p">(</span><span class="s">&quot;CONCAT(&#39;ACC&#39;, account_number)&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;account_number&quot;</span><span class="p">).</span><span class="na">omit</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span><span class="w">  </span><span class="err">#</span><span class="n">using</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">intermediate</span><span class="w"> </span><span class="n">calculation</span><span class="p">,</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">included</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">omit</span><span class="o">=</span><span class="kc">true</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="n">plan</span><span class="p">().</span><span class="na">addForeignKeyRelationship</span><span class="p">(</span>
+<span class="w">  </span><span class="n">postgresAcc</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;account_number&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Map</span><span class="p">.</span><span class="na">entry</span><span class="p">(</span><span class="n">jsonTask</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;account_number&quot;</span><span class="p">)))</span>
+<span class="p">);</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">postgresAcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="s">&quot;my_postgres&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:...&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">table</span><span class="p">(</span><span class="s">&quot;public.accounts&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;account_number&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="kd">var</span><span class="w"> </span><span class="n">jsonTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">(</span><span class="s">&quot;my_json&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/tmp/json&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">).</span><span class="n">sql</span><span class="p">(</span><span class="s">&quot;CONCAT(&#39;ACC&#39;, account_number)&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;account_number&quot;</span><span class="p">).</span><span class="n">omit</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span><span class="w">  </span><span class="n">#using</span><span class="w"> </span><span class="bp">this</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">intermediate</span><span class="w"> </span><span class="n">calculation</span><span class="p">,</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">included</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="k">final</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">omit</span><span class="o">=</span><span class="kc">true</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="n">plan</span><span class="p">.</span><span class="n">addForeignKeyRelationship</span><span class="p">(</span>
+<span class="w">  </span><span class="n">postgresAcc</span><span class="p">,</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="s">&quot;account_number&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="nc">List</span><span class="p">(</span><span class="n">jsonTask</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="s">&quot;account_number&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="c1">#postgres task yaml</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres_data&quot;</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;accounts&quot;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">dbtable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account.accounts&quot;</span>
+<span class="w">    </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account_number&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;name&quot;</span>
+<span class="nn">---</span>
+<span class="c1">#json task yaml</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json_data&quot;</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;transactions&quot;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">dbtable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account.transactions&quot;</span>
+<span class="w">    </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span>
+<span class="w">          </span><span class="nt">generator</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">sql</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;CONCAT(&#39;ACC&#39;,</span><span class="nv"> </span><span class="s">account_number)&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account_number&quot;</span>
+<span class="w">          </span><span class="nt">generator</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">omit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nn">---</span>
+<span class="c1">#plan yaml</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;customer_create_plan&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create</span><span class="nv"> </span><span class="s">customers</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">JDBC&quot;</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres_data&quot;</span>
+<span class="w">    </span><span class="nt">dataSourceName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_postgres&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json_data&quot;</span>
+<span class="w">    </span><span class="nt">dataSourceName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_json&quot;</span>
+
+<span class="nt">sinkOptions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">foreignKeys</span><span class="p">:</span>
+<span class="w">    </span><span class="s">&quot;my_postgres.accounts.account_number&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_json.transactions.account_number&quot;</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="nested-field">Nested field</h2>
 <p>Your schema structure can have nested fields which can also be referenced as foreign keys. But to do so, you need to
 create a proxy field that gets omitted from the final saved data.</p>
 <p>In the example below, the nested <code>customer_details.name</code> field inside the <code>json</code> task needs to match with <code>name</code>
-from <code>postgres</code>. A new field in the <code>json</code> called <code>_txn_name</code> is used as a temporary column to facilitate the foreign
+from <code>postgres</code>. A new field in the <code>json</code> called <code>_txn_name</code> is used as a temporary field to facilitate the foreign
 key definition.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Java</label><label for="__tabbed_3_2">Scala</label><label for="__tabbed_3_3">YAML</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Java</label><label for="__tabbed_4_2">Scala</label><label for="__tabbed_4_3">YAML</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="n">postgresAcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="s">&quot;my_postgres&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:...&quot;</span><span class="p">)</span>
@@ -2464,6 +2603,9 @@ key definition.</p>
 </div>
 </div>
 
+  
+  
+
 
 
   
@@ -2513,13 +2655,13 @@ key definition.</p>
         
         
           
-          <a href="../deployment/" class="md-footer__link md-footer__link--next" aria-label="Next: Deployment">
+          <a href="../delete-data/" class="md-footer__link md-footer__link--next" aria-label="Next: Delete Data">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Deployment
+                Delete Data
               </div>
             </div>
             <div class="md-footer__button md-icon">
