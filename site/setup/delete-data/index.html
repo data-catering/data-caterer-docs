@@ -2245,15 +2245,15 @@ will occur whilst deleting data.</p>
 
   subgraph postgres [Postgres]
     subgraph postgresAccTable [Accounts table]
-      account1 [ACC12345,2024-01-01]
-      account2 [ACC98765,2024-01-23]
-      account3 [...]
+      accountA [ACC12345,2024-01-01]
+      accountB [ACC98765,2024-01-23]
+      accountC [...]
     end
     subgraph postgresTxnTable [Transactions table]
-      account1Txn [ACC12345,10.23]
-      account2Txn [ACC98765,93.51]
-      account3Txn [ACC98765,5.72]
-      account4Txn [...]
+      accountATxn [ACC12345,10.23]
+      accountBTxn [ACC98765,93.51]
+      accountCTxn [ACC98765,5.72]
+      accountDTxn [...]
     end
   end
 
