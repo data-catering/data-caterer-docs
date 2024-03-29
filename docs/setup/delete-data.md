@@ -31,26 +31,24 @@ will occur whilst deleting data.
 
 ``` mermaid
 graph LR
-  subgraph plan [Plan/Scenario]
-    postgresAccount [Postgres accounts]
-    postgresTransaction [Postgres transactions]
+  subgraph plan ["Plan/Scenario"]
+    postgresAccount["Generate Postgres accounts"]
+    postgresTransaction["Generate Postgres transactions"]
   end
   
-  subgraph dataProcessor [Processor]
-    dataCaterer [Data Caterer]
-  end
+  dataCaterer["Data Caterer"]
   
-  subgraph postgres [Postgres]
-    subgraph postgresAccTable [Accounts table]
-      accountA [ACC12345,2024-01-01]
-      accountB [ACC98765,2024-01-23]
-      accountC [...]
+  subgraph postgres ["Postgres"]
+    subgraph postgresAccTable ["Accounts table"]
+      accountA["ACC12345,2024-01-01"]
+      accountB["ACC98765,2024-01-23"]
+      accountC["..."]
     end
-    subgraph postgresTxnTable [Transactions table]
-      accountATxn [ACC12345,10.23]
-      accountBTxn [ACC98765,93.51]
-      accountCTxn [ACC98765,5.72]
-      accountDTxn [...]
+    subgraph postgresTxnTable ["Transactions table"]
+      accountATxn["ACC12345,10.23"]
+      accountBTxn["ACC98765,93.51"]
+      accountCTxn["ACC98765,5.72"]
+      accountDTxn["..."]
     end
   end
   
@@ -61,3 +59,31 @@ graph LR
 ```
 
 ### Delete
+
+``` mermaid
+graph LR
+  subgraph plan ["Plan/Scenario"]
+    postgresAccount["Generate Postgres accounts"]
+  end
+  
+  dataCaterer["Data Caterer"]
+  
+  subgraph postgresAccTable ["Postgres accounts table"]
+    accountA["ACC12345,2024-01-01"]
+    accountB["ACC98765,2024-01-23"]
+    accountC["..."]
+  end
+  
+  consumerJob["Consumer"]
+  
+  subgraph parquetAcc ["Parquet accounts file"]
+    accountA["ACC12345,2024-01-01"]
+    accountB["ACC98765,2024-01-23"]
+    accountC["..."]
+  end
+  
+  postgresAccount --> dataCaterer
+  dataCaterer --> postgresAccTable
+  consumerJob --> postgresAccTable
+  consumerJob --> parquetAcc
+```
