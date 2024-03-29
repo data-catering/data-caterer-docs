@@ -69,21 +69,27 @@ graph LR
   dataCaterer["Data Caterer"]
   
   subgraph postgresAccTable ["Postgres accounts table"]
-    accountA["ACC12345,2024-01-01"]
-    accountB["ACC98765,2024-01-23"]
-    accountC["..."]
+    subgraph table
+      direction TB
+      accountA["ACC12345,2024-01-01"]
+      accountB["ACC98765,2024-01-23"]
+      accountC["..."]
+    end
   end
   
   consumerJob["Consumer"]
   
   subgraph parquetAcc ["Parquet accounts file"]
-    accountParquetA["ACC12345,2024-01-01"]
-    accountParquetB["ACC98765,2024-01-23"]
-    accountParquetC["..."]
+    subgraph parquet
+      direction TB
+      accountParquetA["ACC12345,2024-01-01"]
+      accountParquetB["ACC98765,2024-01-23"]
+      accountParquetC["..."]
+    end
   end
   
   postgresAccount --> dataCaterer
   dataCaterer --> postgresAccTable
-  postgresAccTable <-- consumerJob
+  consumerJob --> postgresAccTable
   consumerJob --> parquetAcc
 ```
