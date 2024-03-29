@@ -77,13 +77,13 @@ graph LR
   consumerJob["Consumer"]
   
   subgraph parquetAcc ["Parquet accounts file"]
-    accountA["ACC12345,2024-01-01"]
-    accountB["ACC98765,2024-01-23"]
-    accountC["..."]
+    accountParquetA["ACC12345,2024-01-01"]
+    accountParquetB["ACC98765,2024-01-23"]
+    accountParquetC["..."]
   end
   
   postgresAccount --> dataCaterer
   dataCaterer --> postgresAccTable
-  consumerJob --> postgresAccTable
+  postgresAccTable <-- consumerJob
   consumerJob --> parquetAcc
 ```
