@@ -153,10 +153,13 @@ export function createAccordionItem(index, buttonText, bodyText, bodyContainer, 
     return accordionItem;
 }
 
-export function createRadioButtons(index, name, options) {
+export function createRadioButtons(index, name, options, classes) {
     let radioButtonContainer = document.createElement("div");
     radioButtonContainer.setAttribute("id", `${name}-${index}`);
     radioButtonContainer.setAttribute("radioGroup", `${name}-${index}`);
+    if (classes) {
+        radioButtonContainer.setAttribute("class", classes);
+    }
     for (const [i, option] of options.entries()) {
         let snakeCaseOption = option.text.toLowerCase().replaceAll(" ", "-");
         let formCheck = document.createElement("div");
@@ -639,6 +642,75 @@ export function syntaxHighlight(json) {
     let preElement = document.createElement("pre");
     preElement.innerHTML = highlightedJson;
     return preElement;
+}
+
+export async function getDataConnectionsAndAddToSelect(dataConnectionSelect, baseTaskDiv, groupType) {
+    //get list of existing data connections
+    let connections;
+    if (groupType === "dataSource") {
+        connections = Promise.resolve({"connections":[{"groupType":"dataSource","name":"account-json","options":{"partitions":"1","path":"/tmp/generated-data/account-json"},"type":"json"},{"groupType":"dataSource","name":"downstream-delete-csv","options":{"partitions":"1","path":"/tmp/generated-data/downstream-delete-csv"},"type":"csv"},{"groupType":"dataSource","name":"downstream-delete-json","options":{"partitions":"1","path":"/tmp/generated-data/downstream-delete-json"},"type":"json"},{"groupType":"dataSource","name":"downstream-delete-json-2","options":{"partitions":"1","path":"/tmp/generated-data/downstream-delete-json-2"},"type":"json"},{"groupType":"dataSource","name":"my-cassandra","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"***"},"type":"cassandra"},{"groupType":"dataSource","name":"my-csv","options":{"partitions":"1","path":"/tmp/generated-data/csv"},"type":"csv"},{"groupType":"dataSource","name":"my-json","options":{"partitions":"1","path":"/tmp/generated-data/json"},"type":"json"},{"groupType":"dataSource","name":"my-orc","options":{"partitions":"1","path":"/tmp/generated-data/orc"},"type":"orc"},{"groupType":"dataSource","name":"my-parquet","options":{"partitions":"1","path":"/tmp/generated-data/parquet"},"type":"parquet"},{"groupType":"dataSource","name":"my-postgres","options":{"password":"***","url":"jdbc:postgres://localhost:5432/customer","username":"postgres"},"type":"postgres"},{"groupType":"dataSource","name":"nested-json","options":{"path":"/tmp/generated-data/nested-json"},"type":"json"},{"groupType":"dataSource","name":"test-json","options":{"partitions":"1","path":"/tmp/generated-data/json"},"type":"json"},{"groupType":"dataSource","name":"transaction-csv","options":{"path":"/tmp/generated-data/transaction-csv"},"type":"csv"},{"groupType":"dataSource","name":"transaction-json","options":{"partitions":"1","path":"/tmp/generated-data/transaction-json"},"type":"json"}]});
+    } else {
+        connections = Promise.resolve({"connections":[{"groupType":"metadata","name":"my-data-source-1","options":{"url":"http://localhost:5001"},"type":"marquez"},{"groupType":"metadata","name":"my-marquez","options":{"namespace":"hello","url":"http://localhost:5001"},"type":"marquez"},{"groupType":"metadata","name":"petstore-api","options":{"schemaLocation":"/tmp/sample/http/openapi/petstore.json"},"type":"open_api"}]});
+    }
+    return connections
+        .then(respJson => {
+            if (respJson) {
+                let connections = respJson.connections;
+                for (let connection of connections) {
+                    let option = document.createElement("option");
+                    option.setAttribute("value", connection.name);
+                    option.innerText = connection.name;
+                    dataConnectionSelect.append(option);
+                }
+            }
+
+            // if list of connections is empty, provide button to add new connection
+            if (respJson.connections.length === 0) {
+                let buttonContainer = document.createElement("div");
+                buttonContainer.setAttribute("class", "col-md-auto");
+                let createNewConnection = document.createElement("a");
+                createNewConnection.setAttribute("type", "button");
+                createNewConnection.setAttribute("class", "btn btn-primary");
+                createNewConnection.setAttribute("href", "/connection");
+                createNewConnection.innerText = "Create new connection";
+                buttonContainer.append(createNewConnection);
+                return buttonContainer;
+            } else {
+                $(dataConnectionSelect).selectpicker();
+                return baseTaskDiv;
+            }
+        });
+}
+
+export function createIconWithConnectionTooltip(dataConnectionSelect) {
+    let iconDiv = document.createElement("i");
+    iconDiv.setAttribute("class", "bi bi-info-circle");
+    iconDiv.setAttribute("data-bs-toggle", "tooltip");
+    iconDiv.setAttribute("data-bs-placement", "top");
+    iconDiv.setAttribute("data-bs-container", "body");
+    iconDiv.setAttribute("data-bs-html", "true");
+    iconDiv.setAttribute("data-bs-title", "Connection options");
+    new bootstrap.Tooltip(iconDiv);
+    // on select change, update icon title
+    dataConnectionSelect.addEventListener("change", (event) => {
+        let connectionName = event.target.value;
+        Promise.resolve({"groupType":"dataSource","name":"my-cassandra","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"***"},"type":"cassandra"})
+            .then(respJson => {
+                if (respJson) {
+                    let optionsToShow = {};
+                    optionsToShow["type"] = respJson.type;
+                    for (let [key, value] of Object.entries(respJson.options)) {
+                        if (key !== "user" && key !== "password") {
+                            optionsToShow[key] = value;
+                        }
+                    }
+                    let summary = Object.entries(optionsToShow).map(kv => `${kv[0]}: ${kv[1]}`).join("<br>");
+                    iconDiv.setAttribute("data-bs-title", summary);
+                    new bootstrap.Tooltip(iconDiv);
+                }
+            });
+    });
+    return iconDiv;
 }
 
 export const wait = function (ms = 1000) {

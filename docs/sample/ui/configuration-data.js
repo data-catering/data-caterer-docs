@@ -56,7 +56,7 @@ const defaultDataTypeOptions = {
         default: "false",
         type: "text",
         choice: ["true", "false"],
-        help: "Exclude the column from the final output. Can be used for intermediate data generation."
+        help: "Exclude the field from the final output. Can be used for intermediate data generation."
     },
 };
 
@@ -64,14 +64,14 @@ function getNumberOptions(min, max) {
     let minMaxOpt = min && max ? {min: min, max: max} : {};
     return {
         min: {
-            displayName: "Max",
+            displayName: "Min",
             default: 0,
             type: "number", ...minMaxOpt,
             help: "Minimum generated value.",
             required: ""
         },
         max: {
-            displayName: "Min",
+            displayName: "Max",
             default: 1000,
             type: "number", ...minMaxOpt,
             help: "Maximum generated value.",
@@ -261,7 +261,11 @@ dataTypeOptionsMap.set("array", {
 });
 dataTypeOptionsMap.set("struct", {...defaultDataTypeOptions, addBlock: {type: "field"}});
 
-
+export const validationTypeDisplayNameMap = new Map();
+validationTypeDisplayNameMap.set("column", "Field");
+validationTypeDisplayNameMap.set("groupBy", "Group By/Aggregate");
+validationTypeDisplayNameMap.set("upstream", "Upstream");
+validationTypeDisplayNameMap.set("columnNames", "Field Names");
 export const validationTypeOptionsMap = new Map();
 const defaultValidationOptions = {
     description: {
@@ -280,7 +284,7 @@ const defaultValidationOptions = {
 }
 validationTypeOptionsMap.set("column", {
     ...defaultValidationOptions,
-    defaultChildColumn: {displayName: "Column", default: "", type: "text", required: "", help: "Column to validate."},
+    defaultChildField: {displayName: "Field", default: "", type: "text", required: "", help: "Field to validate."},
     equal: {
         displayName: "Equal",
         default: "",
@@ -403,24 +407,24 @@ validationTypeOptionsMap.set("column", {
 validationTypeOptionsMap.set("groupBy", {
     ...defaultValidationOptions,
     defaultChildGroupByColumns: {
-        displayName: "Group By Column(s)",
+        displayName: "Group By Field(s)",
         default: "",
         type: "text",
         required: "",
-        help: "Column name(s) to group by. Comma separated."
+        help: "Field name(s) to group by. Comma separated."
     },
     count: {
         displayName: "Count",
         default: "",
         type: "text",
-        help: "Column name to count number of groups after group by.",
+        help: "Field name to count number of groups after group by.",
         addBlock: {type: "column"}
     },
     sum: {
         displayName: "Sum",
         default: "",
         type: "text",
-        help: "Column name of values to sum after group by.",
+        help: "Field name of values to sum after group by.",
         addBlock: {type: "column"},
         required: ""
     },
@@ -428,7 +432,7 @@ validationTypeOptionsMap.set("groupBy", {
         displayName: "Min",
         default: "",
         type: "text",
-        help: "Column name to find minimum value after group by.",
+        help: "Field name to find minimum value after group by.",
         addBlock: {type: "column"},
         required: ""
     },
@@ -436,7 +440,7 @@ validationTypeOptionsMap.set("groupBy", {
         displayName: "Max",
         default: "",
         type: "text",
-        help: "Column name to find maximum value after group by.",
+        help: "Field name to find maximum value after group by.",
         addBlock: {type: "column"},
         required: ""
     },
@@ -444,7 +448,7 @@ validationTypeOptionsMap.set("groupBy", {
         displayName: "Average",
         default: "",
         type: "text",
-        help: "Column name to find average value after group by.",
+        help: "Field name to find average value after group by.",
         addBlock: {type: "column"},
         required: ""
     },
@@ -452,7 +456,7 @@ validationTypeOptionsMap.set("groupBy", {
         displayName: "Standard Deviation",
         default: "",
         type: "text",
-        help: "Column name to find standard deviation value after group by.",
+        help: "Field name to find standard deviation value after group by.",
         addBlock: {type: "column"},
         required: ""
     },
@@ -468,7 +472,7 @@ validationTypeOptionsMap.set("upstream", {
         help: "Name of upstream data generation task."
     },
     addBlock: {type: "validation"},
-    joinColumns: {displayName: "Join Column(s)", default: "", type: "text", help: "Column name(s) to join by.", required: ""},
+    joinColumns: {displayName: "Join Field(s)", default: "", type: "text", help: "Field name(s) to join by.", required: ""},
     joinType: {
         displayName: "Join Type",
         default: "outer",
@@ -480,26 +484,26 @@ validationTypeOptionsMap.set("upstream", {
 });
 validationTypeOptionsMap.set("columnNames", {
     ...defaultValidationOptions,
-    countEqual: {displayName: "Count Equal", default: 0, type: "number", help: "Number of columns has to equal value.", required: ""},
+    countEqual: {displayName: "Count Equal", default: 0, type: "number", help: "Number of fields has to equal value.", required: ""},
     countBetween: {
         displayName: "Count Between",
         default: 0,
         type: "min-max",
-        help: "Number of columns has to be between min and max value (inclusive).",
+        help: "Number of field has to be between min and max value (inclusive).",
         required: ""
     },
     matchOrder: {
         displayName: "Match Order",
         default: "",
         type: "text",
-        help: "All column names match particular ordering and is complete. Comma separated.",
+        help: "All field names match particular ordering and is complete. Comma separated.",
         required: ""
     },
     matchSet: {
         displayName: "Match Set",
         default: "",
         type: "text",
-        help: "Column names contains set of expected names. Order is not checked. Comma separated.",
+        help: "Field names contains set of expected names. Order is not checked. Comma separated.",
         required: ""
     },
 });
@@ -537,7 +541,7 @@ configurationOptionsMap.set("flag", {
         default: "false",
         type: "text",
         choice: ["true", "false"],
-        help: "Enable/disable generating unique values for columns marked as unique. Can be disabled to improve performance but not guarantee uniqueness."
+        help: "Enable/disable generating unique values for fields marked as unique. Can be disabled to improve performance but not guarantee uniqueness."
     },
     "enableSinkMetadata": {
         configName: "enableSinkMetadata",
@@ -794,3 +798,457 @@ export const reportConfigKeys = [["flag", "enableSaveReports"],
     ["metadata", "numGeneratedSamples"],
     ["validation", "numSampleErrorRecords"]];
 reportConfigKeys.forEach(key => reportOptionsMap.set(key[1], configurationOptionsMap.get(key[0])[key[1]]));
+
+
+export const dataSourcePropertiesMap = new Map();
+// Data Source
+dataSourcePropertiesMap.set("cassandra", {
+    optGroupLabel: "Data Source",
+    Name: "Cassandra",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "localhost:9042",
+            type: "text",
+            help: "Hostname and port to connect to Cassandra.",
+            required: ""
+        },
+        username: {
+            displayName: "Username",
+            default: "cassandra",
+            type: "text",
+            help: "Username to connect to Cassandra.",
+            required: ""
+        },
+        password: {
+            displayName: "Password",
+            default: "cassandra",
+            type: "password",
+            help: "Password to connect to Cassandra.",
+            required: ""
+        },
+        keyspace: {
+            displayName: "Keyspace",
+            default: "",
+            type: "text",
+            help: "Keyspace to generate/validate data to/from.",
+            override: "true"
+        },
+        table: {
+            displayName: "Table",
+            default: "",
+            type: "text",
+            help: "Table to generate/validate data to/from.",
+            override: "true"
+        }
+    }
+});
+dataSourcePropertiesMap.set("csv", {
+    optGroupLabel: "Data Source",
+    Name: "CSV",
+    properties: {
+        path: {
+            displayName: "Path",
+            default: "/tmp/generated-data/csv",
+            type: "text",
+            help: "File pathway to save CSV.",
+            required: ""
+        },
+        partitions: {
+            displayName: "Num Partitions",
+            default: "1",
+            type: "number",
+            help: "Number of file partitions.",
+            override: "true"
+        },
+        partitionBy: {
+            displayName: "Partition By",
+            default: "",
+            type: "text",
+            help: "Column name(s) to partition by (comma separated).",
+            override: "true"
+        }
+    }
+});
+dataSourcePropertiesMap.set("http", {
+    optGroupLabel: "Data Source",
+    Name: "HTTP",
+    disabled: "",
+    properties: {
+        username: {
+            displayName: "Username",
+            default: "",
+            type: "text",
+            help: "Username to connect to HTTP API."
+        },
+        password: {
+            displayName: "Password",
+            default: "",
+            type: "password",
+            help: "Password to connect to HTTP API."
+        },
+    }
+});
+dataSourcePropertiesMap.set("json", {
+    optGroupLabel: "Data Source",
+    Name: "JSON",
+    properties: {
+        path: {
+            displayName: "Path",
+            default: "/tmp/generated-data/json",
+            type: "text",
+            help: "File pathway to save JSON.",
+            required: ""
+        },
+        partitions: {
+            displayName: "Num Partitions",
+            default: "1",
+            type: "number",
+            help: "Number of file partitions.",
+            override: "true"
+        },
+        partitionBy: {
+            displayName: "Partition By",
+            default: "",
+            type: "text",
+            help: "Column name(s) to partition by (comma separated).",
+            override: "true"
+        }
+    }
+});
+dataSourcePropertiesMap.set("kafka", {
+    optGroupLabel: "Data Source",
+    Name: "Kafka",
+    disabled: "",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "localhost:9092",
+            type: "text",
+            help: "URL to connect to Kafka.",
+            required: ""
+        },
+        topic: {
+            displayName: "Topic",
+            default: "",
+            type: "text",
+            help: "Topic to generate/validate data to/from.",
+            required: "",
+            override: "true"
+        },
+    }
+});
+dataSourcePropertiesMap.set("mysql", {
+    optGroupLabel: "Data Source",
+    Name: "MySQL",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "jdbc:mysql://localhost:3306/customer",
+            type: "text",
+            help: "URL to connect to MySQL.",
+            required: ""
+        },
+        username: {
+            displayName: "Username",
+            default: "root",
+            type: "text",
+            help: "Username to connect to MySQL.",
+            required: ""
+        },
+        password: {
+            displayName: "Password",
+            default: "root",
+            type: "password",
+            help: "Password to connect to MySQL.",
+            required: ""
+        },
+        schema: {
+            displayName: "Schema",
+            default: "",
+            type: "text",
+            help: "Schema to generate/validate data to/from.",
+            override: "true"
+        },
+        table: {
+            displayName: "Table",
+            default: "",
+            type: "text",
+            help: "Table to generate/validate data to/from.",
+            override: "true"
+        }
+    }
+});
+dataSourcePropertiesMap.set("orc", {
+    optGroupLabel: "Data Source",
+    Name: "ORC",
+    properties: {
+        path: {
+            displayName: "Path",
+            default: "/tmp/generated-data/orc",
+            type: "text",
+            help: "File pathway to save ORC.",
+            required: ""
+        },
+        partitions: {
+            displayName: "Num Partitions",
+            default: "1",
+            type: "number",
+            help: "Number of file partitions.",
+            override: "true"
+        },
+        partitionBy: {
+            displayName: "Partition By",
+            default: "",
+            type: "text",
+            help: "Column name(s) to partition by (comma separated).",
+            override: "true"
+        }
+    }
+});
+dataSourcePropertiesMap.set("parquet", {
+    optGroupLabel: "Data Source",
+    Name: "Parquet",
+    properties: {
+        path: {
+            displayName: "Path",
+            default: "/tmp/generated-data/parquet",
+            type: "text",
+            help: "File pathway to save Parquet.",
+            required: ""
+        },
+        partitions: {
+            displayName: "Num Partitions",
+            default: "1",
+            type: "number",
+            help: "Number of file partitions.",
+            override: "true"
+        },
+        partitionBy: {
+            displayName: "Partition By",
+            default: "",
+            type: "text",
+            help: "Column name(s) to partition by (comma separated).",
+            override: "true"
+        }
+    }
+});
+dataSourcePropertiesMap.set("postgres", {
+    optGroupLabel: "Data Source",
+    Name: "Postgres",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "jdbc:postgres://localhost:5432/customer",
+            type: "text",
+            help: "URL to connect to Postgres.",
+            required: ""
+        },
+        username: {
+            displayName: "Username",
+            default: "postgres",
+            type: "text",
+            help: "Username to connect to Postgres.",
+            required: ""
+        },
+        password: {
+            displayName: "Password",
+            default: "postgres",
+            type: "password",
+            help: "Password to connect to Postgres.",
+            required: ""
+        },
+        schema: {
+            displayName: "Schema",
+            default: "",
+            type: "text",
+            help: "Schema to generate/validate data to/from.",
+            override: "true"
+        },
+        table: {
+            displayName: "Table",
+            default: "",
+            type: "text",
+            help: "Table to generate/validate data to/from.",
+            override: "true"
+        }
+    }
+});
+dataSourcePropertiesMap.set("solace", {
+    optGroupLabel: "Data Source",
+    Name: "Solace",
+    disabled: "",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "smf://host.docker.internal:55554",
+            type: "text",
+            help: "URL to connect to Solace.",
+            required: ""
+        },
+        destination: {
+            displayName: "Destination",
+            default: "/JNDI/Q/test_queue",
+            type: "text",
+            help: "JNDI destination to generate/validate data to/from.",
+            required: "",
+            override: "true"
+        }
+    }
+});
+
+// Metadata Source
+dataSourcePropertiesMap.set("amundsen", {
+    optGroupLabel: "Metadata Source",
+    Name: "Amundsen",
+    disabled: "",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "",
+            type: "text",
+            help: "URL to connect to Amundsen API.",
+            required: ""
+        }
+    }
+});
+dataSourcePropertiesMap.set("datahub", {
+    optGroupLabel: "Metadata Source",
+    Name: "Datahub",
+    disabled: "",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "",
+            type: "text",
+            help: "URL to connect to Datahub API.",
+            required: ""
+        }
+    }
+});
+dataSourcePropertiesMap.set("great_expectations", {
+    optGroupLabel: "Metadata Source",
+    Name: "Great Expectations",
+    disabled: "",
+    properties: {
+        path: {
+            displayName: "Expectations File",
+            default: "",
+            type: "text",
+            help: "File path to expectations file.",
+            required: ""
+        }
+    }
+});
+dataSourcePropertiesMap.set("marquez", {
+    optGroupLabel: "Metadata Source",
+    Name: "Marquez",
+    disabled: "",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "http://localhost:5001",
+            type: "text",
+            help: "API URL to connect to Marquez.",
+            required: ""
+        },
+        namespace: {
+            displayName: "Namespace",
+            default: "",
+            type: "text",
+            help: "Namespace to gather metadata from.",
+            override: "true"
+        },
+        dataset: {
+            displayName: "Dataset",
+            default: "",
+            type: "text",
+            help: "Dataset to gather metadata from.",
+            override: "true"
+        }
+    }
+});
+dataSourcePropertiesMap.set("open_api", {
+    optGroupLabel: "Metadata Source",
+    Name: "OpenAPI/Swagger",
+    disabled: "",
+    properties: {
+        schemaLocation: {
+            displayName: "Schema Location",
+            default: "",
+            type: "text",
+            help: "Path/URL to gather metadata from.",
+            required: ""
+        }
+    }
+});
+dataSourcePropertiesMap.set("open_data_contract_standard", {
+    optGroupLabel: "Metadata Source",
+    Name: "ODCS",
+    disabled: "",
+    properties: {
+        path: {
+            displayName: "Contract File",
+            default: "",
+            type: "text",
+            help: "File path to ODCS file.",
+            required: ""
+        }
+    }
+});
+dataSourcePropertiesMap.set("open_metadata", {
+    optGroupLabel: "Metadata Source",
+    Name: "Open Metadata",
+    disabled: "",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "http://localhost:8585/api",
+            type: "text",
+            help: "API URL to connect to OpenMetadata.",
+            required: ""
+        },
+        authType: {
+            displayName: "Auth Type",
+            default: "openmetadata",
+            type: "text",
+            help: "Authentication mechanism used to connect to OpenMetadata.",
+            required: ""
+        },
+        jwt: {
+            displayName: "JWT",
+            default: "",
+            type: "password",
+            help: "JWT token."
+        },
+        tableFQN: {
+            displayName: "Table FQN",
+            default: "",
+            type: "text",
+            help: "Table FQN to gather metadata from.",
+            override: "true"
+        }
+    }
+});
+
+// Alert
+dataSourcePropertiesMap.set("slack", {
+    optGroupLabel: "Alert",
+    Name: "Slack",
+    properties: {
+        token: {
+            displayName: "Token",
+            default: "",
+            type: "password",
+            help: "Token to authenticate with Slack.",
+            required: ""
+        },
+        channels: {
+            displayName: "Channels",
+            default: "",
+            type: "text",
+            help: "Channel(s) to send alerts to (comma separated).",
+            required: ""
+        }
+    }
+});

@@ -19,15 +19,18 @@ import {
     createSelect,
     findNextLevelNodesByClass
 } from "./shared.js";
-import {validationTypeOptionsMap} from "./configuration-data.js";
+import {validationTypeDisplayNameMap, validationTypeOptionsMap} from "./configuration-data.js";
 
 export let numValidations = 0;
 
 export function createManualValidation(index, additionalName) {
-    let divName = additionalName ? `data-source-validation-container-${additionalName}` : "data-source-validation-container";
+    let divName = additionalName ? `data-source-validation-container-${additionalName}` : `data-source-validation-container-${index}`;
     let divContainer = document.createElement("div");
-    divContainer.setAttribute("class", divName);
+    divContainer.setAttribute("class", `card card-body ${divName}`);
     divContainer.setAttribute("id", divName);
+    divContainer.style.display = "inherit";
+    let manualValidationHeader = document.createElement("h5");
+    manualValidationHeader.innerText = "Manual Validation";
     let validationAccordion = document.createElement("div");
     validationAccordion.setAttribute("class", "accordion m-2");
     validationAccordion.setAttribute("style", "--bs-accordion-active-bg: blanchedalmond");
@@ -37,10 +40,9 @@ export function createManualValidation(index, additionalName) {
         numValidations += 1;
         let newValidation = createValidation(numValidations);
         validationAccordion.append(newValidation);
-        $(".selectpicker").selectpicker();
     });
 
-    divContainer.append(addValidationButton, validationAccordion);
+    divContainer.append(manualValidationHeader, addValidationButton, validationAccordion);
     return divContainer;
 }
 
@@ -94,7 +96,7 @@ async function createNestedValidations(dataSource, manualValidation) {
         let mainContainer = $(newValidation).find(".data-validation-container")[0];
 
         if (validation.type === "column" && validationOpts.column) {
-            $(newValidation).find("[aria-label=Column]").val(validationOpts.column)[0].dispatchEvent(new Event("input"));
+            $(newValidation).find("[aria-label=Field]").val(validationOpts.column)[0].dispatchEvent(new Event("input"));
         } else if (validation.type === "groupBy" && validationOpts.groupByColumns) {
             createGroupByValidationFromPlan(newValidation, validationOpts, validation);
         } else if (validation.type === "upstream" && validationOpts.upstreamTaskName) {
@@ -117,11 +119,11 @@ async function createNestedValidations(dataSource, manualValidation) {
 }
 
 export async function createValidationFromPlan(dataSource, newDataSource) {
-    if (dataSource.validations) {
+    if (dataSource.validations && dataSource.validations.length > 0) {
         let manualValidation = createManualValidation(numValidations);
         let dataSourceGenContainer = $(newDataSource).find("#data-source-validation-config-container");
         dataSourceGenContainer.append(manualValidation);
-        $(dataSourceGenContainer).find("#manual-validation-checkbox").prop("checked", true);
+        $(dataSourceGenContainer).find("[id^=manual-validation-checkbox]").prop("checked", true);
 
         await createNestedValidations(dataSource, manualValidation);
     }
@@ -256,7 +258,7 @@ function updateValidationAccordionHeaderOnInput(validationContainerHeadRow, acco
 function createValidation(index) {
     let validationContainer = document.createElement("div");
     validationContainer.setAttribute("class", "data-validation-container");
-    validationContainer.setAttribute("id", "data-validation-container-" + index);
+    validationContainer.setAttribute("id", `data-validation-container-${index}`);
     let validationContainerHeadRow = document.createElement("div");
     validationContainerHeadRow.setAttribute("class", "row g-3 m-1 align-items-center");
     validationContainerHeadRow.setAttribute("id", `validation-head-row-${index}`);
@@ -272,7 +274,7 @@ function createValidation(index) {
     for (const key of validationTypeOptionsMap.keys()) {
         let selectOption = document.createElement("option");
         selectOption.setAttribute("value", key);
-        selectOption.innerText = key;
+        selectOption.innerText = validationTypeDisplayNameMap.get(key);
         validationTypeSelect.append(selectOption);
     }
 
@@ -286,7 +288,7 @@ function createValidation(index) {
     // on select change and input of default-attribute, update accordion button
     let accordionButton = $(accordionItem).find(".accordion-button")[0];
     validationTypeSelect.addEventListener("change", (event) => {
-        accordionButton.innerText = event.target.value;
+        accordionButton.innerText = event.target.options[event.target.selectedIndex].innerText;
         updateValidationAccordionHeaderOnInput(validationContainerHeadRow, accordionButton);
     });
     updateValidationAccordionHeaderOnInput(validationContainerHeadRow, accordionButton);

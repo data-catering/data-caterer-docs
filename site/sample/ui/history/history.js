@@ -1,4 +1,4 @@
-import {createAccordionItem, createToast} from "../shared.js";
+import {createAccordionItem, createButton, createButtonGroup, createToast} from "../shared.js";
 
 let historyContainer = document.getElementById("history-container");
 const tableHeaders = [{
@@ -50,7 +50,6 @@ Promise.resolve({"planExecutionByPlan":[{"executions":[{"id":"1cbd6ab2-a59e-4e60
             for (const runUpdatesById of planHistoryByIdValues) {
                 let runUpdates = runUpdatesById.runs;
                 let latestRunUpdate = runUpdates[runUpdates.length - 1];
-                console.log(runUpdates);
                 latestRunUpdate["createdTs"] = latestRunUpdate["createdTs"].replace("T", " ").replace(/\+.*/, "");
                 latestRunUpdate["updatedTs"] = latestRunUpdate["updatedTs"].replace("T", " ").replace(/\+.*/, "");
                 let reportHref = `https://data.catering/sample/report/html/`;
@@ -66,12 +65,23 @@ Promise.resolve({"planExecutionByPlan":[{"executions":[{"id":"1cbd6ab2-a59e-4e60
                     .join("<br>");
                 latestRunUpdate["validationSummary"] = validationSummary.length > 0 ? validationSummary : "";
                 latestRunUpdate["failedReason"] = latestRunUpdate["failedReason"].length > 500 ? latestRunUpdate["failedReason"].slice(0, 500) : latestRunUpdate["failedReason"];
-                console.log(latestRunUpdate);
                 lastUpdatePerId.push(latestRunUpdate);
             }
 
             let planHistoryContainer = createAccordionItem(planName, planName, "", planRunsByIdTable);
+
+            let editButton = createButton(`plan-edit-${planRunsByIdTableId}`, "Plan edit", "btn btn-primary", "Edit");
+            editButton.addEventListener("click", function() {
+                location.href = `http://localhost:9898/?plan-name=${planName}`;
+            });
+            let buttonGroup = createButtonGroup(editButton);
+            let header = planHistoryContainer.querySelector(".accordion-header");
+            let divContainer = document.createElement("div");
+            divContainer.setAttribute("class", "d-flex align-items-center");
+            divContainer.append(header.firstChild, buttonGroup);
+            header.replaceChildren(divContainer);
             historyContainer.append(planHistoryContainer);
+
             $(planRunsByIdTable).bootstrapTable({
                 sortStable: true,
                 columns: tableHeaders,

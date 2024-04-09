@@ -17,9 +17,13 @@ import {
     createCloseButton,
     createFieldValidationCheck,
     createFormFloating,
+    createIconWithConnectionTooltip,
     createInput,
     createSelect,
-    createToast, executePlan, wait
+    createToast,
+    executePlan,
+    getDataConnectionsAndAddToSelect,
+    wait
 } from "./shared.js";
 import {createForeignKeys, createForeignKeysFromPlan, getForeignKeys} from "./helper-foreign-keys.js";
 import {
@@ -28,10 +32,10 @@ import {
     createNewConfigRow,
     getConfiguration
 } from "./helper-configuration.js";
-import {createGenerationElements, createManualSchema, getGeneration} from "./helper-generation.js";
+import {createAutoSchema, createGenerationElements, createManualSchema, getGeneration} from "./helper-generation.js";
 import {createManualValidation, createValidationFromPlan, getValidations} from "./helper-validation.js";
-import {createCountElementsFromPlan, getRecordCount} from "./helper-record-count.js";
-import {configurationOptionsMap, reportConfigKeys, reportOptionsMap} from "./configuration-data.js";
+import {createCountElementsFromPlan, createRecordCount, getRecordCount} from "./helper-record-count.js";
+import {configurationOptionsMap, reportConfigKeys} from "./configuration-data.js";
 
 const addTaskButton = document.getElementById("add-task-button");
 const tasksDiv = document.getElementById("tasks-details-body");
@@ -101,12 +105,12 @@ function createDataConfigElement(index, name) {
     dataConfigContainer.setAttribute("id", `data-source-${name}-config-container`);
     dataConfigContainer.setAttribute("class", "mt-1");
 
-    let checkboxOptions = ["auto", "manual"];
+    let checkboxOptions = ["auto", "auto-from-metadata-source", "manual"];
     for (let checkboxOption of checkboxOptions) {
         let formCheck = document.createElement("div");
-        formCheck.setAttribute("class", "form-check");
+        formCheck.setAttribute("class", `form-check ${checkboxOption}`);
         let checkboxInput = document.createElement("input");
-        let checkboxId = `${checkboxOption}-${name}-checkbox`;
+        let checkboxId = `${checkboxOption}-${name}-checkbox-${index}`;
         checkboxInput.setAttribute("class", "form-check-input");
         checkboxInput.setAttribute("type", "checkbox");
         checkboxInput.setAttribute("value", checkboxOption);
@@ -116,31 +120,69 @@ function createDataConfigElement(index, name) {
         let label = document.createElement("label");
         label.setAttribute("class", "form-check-label");
         label.setAttribute("for", checkboxId);
-        label.innerText = checkboxOption.charAt(0).toUpperCase() + checkboxOption.slice(1);
+        label.innerText = checkboxOption.charAt(0).toUpperCase() + checkboxOption.replaceAll("-", " ").slice(1);
 
         formCheck.append(checkboxInput, label);
         dataConfigContainer.append(formCheck);
         addDataConfigCheckboxListener(index, checkboxInput, name);
     }
-    return createAccordionItem(`${index}-${name}`, nameCapitalize, "", dataConfigContainer);
+
+    // generation accordion item
+    let accordionItem = createAccordionItem(`${index}-${name}`, nameCapitalize, "", dataConfigContainer);
+    // if generation, then add in record count
+    if (name === "generation") {
+        dataConfigContainer.append(createRecordCount(index));
+    }
+
+    return accordionItem;
 }
 
 function addDataConfigCheckboxListener(index, element, name) {
     let configContainer = element.parentElement.parentElement;
-    if (element.getAttribute("value") === "manual") {
-        element.addEventListener("change", (event) => {
-            manualCheckboxListenerDisplay(index, event, configContainer, name);
-        });
-    }
+    let autoOrManualValue = element.getAttribute("value");
+    element.addEventListener("change", async (event) => {
+        await checkboxListenerDisplay(index, event, configContainer, name, autoOrManualValue);
+    });
 }
 
-function manualCheckboxListenerDisplay(index, event, configContainer, name) {
-    let querySelector = name === "generation" ? "#data-source-schema-container" : "#data-source-validation-container";
+async function checkboxListenerDisplay(index, event, configContainer, name, autoOrManualValue) {
+    let querySelector;
+    let newElement;
+
+    function setEnableAutoGeneratePlanAndTasks() {
+        //set auto generate plan and tasks to true in advanced config
+        if (event.target.checked) {
+            $(document).find("[configuration=enableGeneratePlanAndTasks]").prop("checked", true);
+        } else {
+            $(document).find("[configuration=enableGeneratePlanAndTasks]").prop("checked", false);
+        }
+    }
+
+    if (name === "generation" && autoOrManualValue === "manual") {
+        querySelector = `#data-source-schema-container-${index}`;
+        newElement = createManualSchema(index);
+    } else if (name === "generation" && autoOrManualValue === "auto-from-metadata-source") {
+        querySelector = `#data-source-auto-schema-container-${index}`;
+        newElement = await createAutoSchema(index);
+    } else if (name === "validation" && autoOrManualValue === "manual") {
+        querySelector = `#data-source-validation-container-${index}`;
+        newElement = createManualValidation(index);
+    } else if (name === "validation" && autoOrManualValue === "auto-from-metadata-source") {
+        querySelector = `#data-source-auto-validation-container-${index}`;
+        newElement = createManualValidation(index);
+    } else {
+        querySelector = "unknown";
+        setEnableAutoGeneratePlanAndTasks();
+    }
     let schemaContainer = configContainer.querySelector(querySelector);
-    if (event.currentTarget.checked) {
-        if (schemaContainer === null) {
-            let newElement = name === "generation" ? createManualSchema(index) : createManualValidation(index);
-            configContainer.append(newElement);
+
+    if (event.target.checked) {
+        if (schemaContainer === null && newElement) {
+            if (name === "generation" && autoOrManualValue === "manual") {
+                configContainer.insertBefore(newElement, configContainer.lastElementChild);
+            } else {
+                $(configContainer).find(".manual").after(newElement);
+            }
         } else {
             schemaContainer.style.display = "inherit";
         }
@@ -149,37 +191,6 @@ function manualCheckboxListenerDisplay(index, event, configContainer, name) {
             schemaContainer.style.display = "none";
         }
     }
-}
-
-function createIconWithConnectionTooltip(dataConnectionSelect) {
-    let iconDiv = document.createElement("i");
-    iconDiv.setAttribute("class", "bi bi-info-circle");
-    iconDiv.setAttribute("data-bs-toggle", "tooltip");
-    iconDiv.setAttribute("data-bs-placement", "top");
-    iconDiv.setAttribute("data-bs-container", "body");
-    iconDiv.setAttribute("data-bs-html", "true");
-    iconDiv.setAttribute("data-bs-title", "Connection options");
-    new bootstrap.Tooltip(iconDiv);
-    // on select change, update icon title
-    dataConnectionSelect.addEventListener("change", (event) => {
-        let connectionName = event.target.value;
-        Promise.resolve({"name":"my-cassandra","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"***"},"type":"cassandra"})
-            .then(respJson => {
-                if (respJson) {
-                    let optionsToShow = {};
-                    optionsToShow["type"] = respJson.type;
-                    for (let [key, value] of Object.entries(respJson.options)) {
-                        if (key !== "user" && key !== "password") {
-                            optionsToShow[key] = value;
-                        }
-                    }
-                    let summary = Object.entries(optionsToShow).map(kv => `${kv[0]}: ${kv[1]}`).join("<br>");
-                    iconDiv.setAttribute("data-bs-title", summary);
-                    new bootstrap.Tooltip(iconDiv);
-                }
-            });
-    });
-    return iconDiv;
 }
 
 async function createDataConnectionInput(index) {
@@ -206,32 +217,7 @@ async function createDataConnectionInput(index) {
     // $(inputGroup).find(".input-group").addClass("align-items-center");
     baseTaskDiv.append(taskNameFormFloating, dataConnectionCol, iconCol);
 
-    //get list of existing data connections
-    await Promise.resolve({"connections":[{"name":"my-cassandra","options":{"url":"localhost:9042","keyspace":"","user":"cassandra","table":"","password":"***"},"type":"cassandra"},{"name":"my-csv","options":{"path":"/tmp/generated-data/csv"},"type":"csv"},{"name":"my-json","options":{"path":"/tmp/generated-data/json"},"type":"json"}]})
-        .then(respJson => {
-            if (respJson) {
-                let connections = respJson.connections;
-                for (let connection of connections) {
-                    let option = document.createElement("option");
-                    option.setAttribute("value", connection.name);
-                    option.innerText = connection.name;
-                    dataConnectionSelect.append(option);
-                }
-            }
-        });
-
-    // if list of connections is empty, provide button to add new connection
-    if (dataConnectionSelect.childElementCount > 0) {
-        $(dataConnectionSelect).selectpicker();
-        return baseTaskDiv;
-    } else {
-        let createNewConnection = document.createElement("a");
-        createNewConnection.setAttribute("type", "button");
-        createNewConnection.setAttribute("class", "btn btn-primary");
-        createNewConnection.setAttribute("href", "/connection");
-        createNewConnection.innerText = "Create new connection";
-        return createNewConnection;
-    }
+    return await getDataConnectionsAndAddToSelect(dataConnectionSelect, baseTaskDiv, "dataSource");
 }
 
 /*
@@ -254,6 +240,7 @@ async function createDataSourceConfiguration(index, closeButton, divider) {
     if (divider) {
         divContainer.append(divider);
     }
+    dataConnectionFormFloating.append(closeButton);
     divContainer.append(dataConnectionFormFloating, dataConfigAccordion);
     return divContainer;
 }
@@ -276,6 +263,7 @@ function createReportConfiguration() {
 createReportConfiguration();
 submitForm();
 savePlan();
+deleteDataRun();
 
 function getPlanDetails(form) {
     let planName = form.querySelector("#plan-name").value;
@@ -307,25 +295,45 @@ function getPlanDetails(form) {
     return {planName, runId, requestBody};
 }
 
+function checkFormValidity(form) {
+    expandAllButton.dispatchEvent(new Event("click"));
+    let isValid = form.checkValidity();
+    if (isValid) {
+        wait(500).then(r => collapseAllButton.dispatchEvent(new Event("click")));
+        return true;
+    } else {
+        form.reportValidity();
+        return false;
+    }
+}
+
+function getPlanDetailsAndRun(form) {
+    // collect all the user inputs
+    let {planName, runId, requestBody} = getPlanDetails(form);
+    console.log(JSON.stringify(requestBody));
+    executePlan(requestBody, planName, runId);
+}
+
 function submitForm() {
     let form = document.getElementById("plan-form");
     let submitPlanButton = document.getElementById("submit-plan");
     submitPlanButton.addEventListener("click", function () {
-        expandAllButton.dispatchEvent(new Event("click"));
-        let isValid = form.checkValidity();
-        if (isValid) {
-            wait(500).then(r => collapseAllButton.dispatchEvent(new Event("click")));
-            $(form).submit();
-        } else {
-            form.reportValidity();
+        let isValidForm = checkFormValidity(form);
+        if (isValidForm) {
+            getPlanDetailsAndRun(form);
         }
     });
+}
 
-    $(form).submit(async function (e) {
-        e.preventDefault();
-        // collect all the user inputs
-        let {planName, runId, requestBody} = getPlanDetails(form);
-        executePlan(requestBody, planName, runId);
+function deleteDataRun() {
+    let form = document.getElementById("plan-form");
+    let deleteDataButton = document.getElementById("delete-data");
+    deleteDataButton.addEventListener("click", function () {
+        let isValidForm = checkFormValidity(form);
+        if (isValidForm) {
+            let {planName, runId, requestBody} = getPlanDetails(form);
+            executePlan(requestBody, planName, runId, "delete");
+        }
     });
 }
 
@@ -352,7 +360,7 @@ const currUrlParams = window.location.search.substring(1);
 if (currUrlParams.includes("plan-name=")) {
     // then get the plan details and fill in the form
     let planName = currUrlParams.substring(currUrlParams.indexOf("=") + 1);
-    await Promise.resolve({"configuration":{"alert":{"slackChannels":"","slackToken":""},"flag":{"enableUniqueCheck":"false","enableGeneratePlanAndTasks":"false","enableDeleteGeneratedRecords":"false","enableCount":"true","enableFailOnError":"true","enableGenerateData":"true","enableGenerateValidations":"false","enableRecordTracking":"false"},"folder":{"generatedReportsFolderPath":"","recordTrackingForValidationFolderPath":"","generatedPlanAndTasksFolderPath":"","taskFolderPath":"","recordTrackingFolderPath":"","validationFolderPath":"","planFilePath":""},"generation":{"numRecordsPerBatch":"100000","numRecordsPerStep":"-1"},"metadata":{"numRecordsForAnalysis":"10000","numRecordsFromDataSource":"10000","oneOfDistinctCountVsCountThreshold":"0.2","oneOfMinCount":"1000"},"validation":{"enableDeleteRecordTrackingFiles":"true"}},"dataSources":[{"count":{"records":1000},"fields":[{"name":"name","options":{"expression":"#{Name.name}"},"type":"string"},{"name":"age","options":{"max":"100"},"type":"integer"}],"name":"my-json","taskName":"json-task","validations":[{"options":{"column":"name","contains":"a"},"type":"column"},{"nested":{"validations":[{"options":{"aggCol":"name","aggType":"count","greaterThan":"0"},"type":"column"}]},"options":{"groupByColumns":"name"},"type":"groupBy"}]},{"count":{"records":1000},"fields":[{"name":"name","type":"string"},{"name":"age","type":"integer"}],"name":"my-csv","taskName":"csv-task","validations":[]}],"foreignKeys":[{"links":[{"columns":"name,age","taskName":"csv-task"}],"source":{"columns":"name,age","taskName":"json-task"}}],"id":"2f33f549-cf77-4dd1-95c7-60e0ff020343","name":"json-records"})
+    await Promise.resolve({"configuration":{"alert":{"slackChannels":"","slackToken":""},"flag":{"enableUniqueCheck":"false","enableGeneratePlanAndTasks":"false","enableDeleteGeneratedRecords":"false","enableCount":"true","enableFailOnError":"true","enableGenerateData":"true","enableGenerateValidations":"false","enableRecordTracking":"false"},"folder":{"generatedReportsFolderPath":"","recordTrackingForValidationFolderPath":"","generatedPlanAndTasksFolderPath":"","taskFolderPath":"","recordTrackingFolderPath":"","validationFolderPath":"","planFilePath":""},"generation":{"numRecordsPerBatch":"100000","numRecordsPerStep":"-1"},"metadata":{"numRecordsForAnalysis":"10000","numRecordsFromDataSource":"10000","oneOfDistinctCountVsCountThreshold":"0.2","oneOfMinCount":"1000"},"validation":{"enableDeleteRecordTrackingFiles":"true"}},"dataSources":[{"count":{"records":1000},"fields":{"optFields":[{"name":"name","options":{"expression":"#{Name.name}"},"type":"string"},{"name":"age","options":{"max":"100"},"type":"integer"}]},"name":"my-json","taskName":"json-task","validations":[{"options":{"column":"name","contains":"a"},"type":"column"},{"nested":{"validations":[{"options":{"aggCol":"name","aggType":"count","greaterThan":"0"},"type":"column"}]},"options":{"groupByColumns":"name"},"type":"groupBy"}]},{"count":{"records":1000},"fields":{"optFields":[{"name":"name","type":"string"},{"name":"age","type":"integer"}]},"name":"my-csv","taskName":"csv-task","validations":[]}],"foreignKeys":[{"generationLinks":[{"columns":"name,age","taskName":"csv-task"}],"source":{"columns":"name,age","taskName":"json-task"}}],"id":"2f33f549-cf77-4dd1-95c7-60e0ff020343","name":"json-records"})
         .then(async respJson => {
             document.getElementById("plan-name").value = planName;
             // clear out default data source
@@ -365,11 +373,11 @@ if (currUrlParams.includes("plan-name=")) {
                 $(newDataSource).find(".task-name-field").val(dataSource.taskName);
                 $(newDataSource).find(".data-connection-name").selectpicker("val", dataSource.name)[0].dispatchEvent(new Event("change"));
 
-                createGenerationElements(dataSource, newDataSource, numDataSources);
+                await createGenerationElements(dataSource, newDataSource, numDataSources);
                 createCountElementsFromPlan(dataSource, newDataSource);
                 await createValidationFromPlan(dataSource, newDataSource);
             }
-            createForeignKeysFromPlan(respJson);
+            await createForeignKeysFromPlan(respJson);
             createConfigurationFromPlan(respJson);
             wait(500).then(r => $(document).find('button[aria-controls="report-body"]:not(.collapsed),button[aria-controls="configuration-body"]:not(.collapsed)').click());
         });
