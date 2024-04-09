@@ -28,11 +28,9 @@ can delete the Postgres and Parquet data via the account numbers generated).
 ### Generate
 
 In scenarios where you have defined foreign keys for multiple data sources, when data is generated, Data Caterer will
-ensure
-that the values generated in one data source, will be the same in the other. When you want to delete the data, data will
-be deleted in reverse order of how the data was inserted. This ensures that for data sources, such as Postgres, no
-errors
-will occur whilst deleting data.
+ensure that the values generated in one data source, will be the same in the other. When you want to delete the data, 
+data will be deleted in reverse order of how the data was inserted. This ensures that for data sources, such as 
+Postgres, no errors will occur whilst deleting data.
 
 ``` mermaid
 graph LR
@@ -63,7 +61,116 @@ graph LR
   dataCaterer --> postgresTxnTable
 ```
 
+#### Configuration
+
+To define the generated data that should be deleted, follow the below configurations:
+
+=== "Java"
+
+    ```java
+    var postgresAcc = postgres("my_postgres", "jdbc:...")
+      .table("public.accounts")
+      .schema(
+        field().name("account_id"),
+        field().name("name"),
+        ...
+      );
+    var postgresTxn = postgres(postgresAcc)
+      .table("public.transactions")
+      .schema(
+        field().name("account_id"),
+        field().name("full_name"),
+        ...
+      );
+    
+    var deletePlan = plan().addForeignKeyRelationship(
+      postgresAcc, "account_id",
+      List.of(Map.entry(postgresTxn, "account_id"))
+    );
+
+    var deleteConfig = configuration()
+      .enableRecordTracking(true)
+      .enableDeleteGeneratedRecords(true)
+      .enableGenerateData(false);
+
+    execute(deletePlan, deleteConfig, postgresAcc, postgresTxn);
+    ```
+
+=== "Scala"
+
+    ```scala
+    val postgresAcc = postgres("my_postgres", "jdbc:...")
+      .table("public.accounts")
+      .schema(
+        field.name("account_id"),
+        field.name("name"),
+        ...
+      )
+    val postgresTxn = postgres(postgresAcc)
+      .table("public.transactions")
+      .schema(
+        field.name("account_id"),
+        field.name("full_name"),
+        ...
+      )
+
+    val deletePlan = plan.addForeignKeyRelationship(
+      postgresAcc, "account_id",
+      List(postgresTxn -> "account_id")
+    )
+
+    val deleteConfig = configuration
+      .enableRecordTracking(true)
+      .enableDeleteGeneratedRecords(true)
+      .enableGenerateData(false)
+
+    execute(deletePlan, deleteConfig, postgresAcc, postgresTxn)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    ---
+    name: "postgres_data"
+    steps:
+      - name: "accounts"
+        type: "postgres"
+        options:
+          dbtable: "account.accounts"
+        schema:
+          fields:
+            - name: "account_id"
+            - name: "name"
+      - name: "transactions"
+        type: "postgres"
+        options:
+          dbtable: "account.transactions"
+        schema:
+          fields:
+            - name: "account_id"
+            - name: "full_name"
+    ---
+    name: "customer_create_plan"
+    description: "Create customers in JDBC"
+    tasks:
+      - name: "postgres_data"
+        dataSourceName: "my_postgres"
+
+    sinkOptions:
+      foreignKeys:
+        - - "postgres.accounts.account_id"
+          - - "postgres.transactions.account_id"
+          - []
+    ```
+
+##### UI
+
+![Generate relationship in UI](../diagrams/ui/data-caterer-ui-generate-relationship.png)
+
 ### Delete
+
+Once you have generated data, you may consume it via a job or service and push that data down into other data sources.
+You can choose to also delete the data that is pushed down into the other data sources by defining a delete relationship.
 
 ``` mermaid
 graph LR
@@ -94,3 +201,99 @@ graph LR
   consumerJob --> postgresAccTable
   consumerJob --> parquetAcc
 ```
+
+#### Configuration
+
+We will use the scenario that we generate data for `accounts` table in Postgres and a job will insert a record into the 
+`balances` table for each record generated. To define the consumed data that should also be deleted, 
+follow the below example:
+
+=== "Java"
+
+    ```java
+    var postgresAcc = postgres("my_postgres", "jdbc:...")
+      .table("public.accounts")
+      .schema(
+        field().name("account_id"),
+        field().name("name"),
+        ...
+      );
+    var postgresBal = postgres(postgresAcc)
+      .table("public.balances");
+    
+    var deletePlan = plan().addForeignKeyRelationship(
+      postgresAcc, "account_id",
+      List.of(),
+      List.of(Map.entry(postgresBal, "account_id"))
+    );
+
+    var deleteConfig = configuration()
+      .enableRecordTracking(true)
+      .enableDeleteGeneratedRecords(true)
+      .enableGenerateData(false);
+
+    execute(deletePlan, deleteConfig, postgresAcc);
+    ```
+
+=== "Scala"
+
+    ```scala
+    val postgresAcc = postgres("my_postgres", "jdbc:...")
+      .table("public.accounts")
+      .schema(
+        field.name("account_id"),
+        field.name("name"),
+        ...
+      )
+    val postgresBal = postgres(postgresAcc)
+      .table("public.balances")
+
+    val deletePlan = plan.addForeignKeyRelationship(
+      postgresAcc, "account_id",
+      List(),
+      List(postgresBal -> "account_id")
+    )
+
+    val deleteConfig = configuration
+      .enableRecordTracking(true)
+      .enableDeleteGeneratedRecords(true)
+      .enableGenerateData(false)
+
+    execute(deletePlan, deleteConfig, postgresAcc)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    ---
+    name: "postgres_data"
+    steps:
+      - name: "accounts"
+        type: "postgres"
+        options:
+          dbtable: "account.accounts"
+        schema:
+          fields:
+            - name: "account_id"
+            - name: "name"
+      - name: "balances"
+        type: "postgres"
+        options:
+          dbtable: "account.balances"
+    ---
+    name: "customer_create_plan"
+    description: "Create customers in JDBC"
+    tasks:
+      - name: "postgres_data"
+        dataSourceName: "my_postgres"
+
+    sinkOptions:
+      foreignKeys:
+        - - "postgres.accounts.account_id"
+          - []
+          - - "postgres.balances.account_id"
+    ```
+
+##### UI
+
+![Delete relationship in UI](../diagrams/ui/data-caterer-ui-delete-relationship.png)

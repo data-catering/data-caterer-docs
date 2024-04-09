@@ -96,8 +96,9 @@ for `account_id`.
 
     sinkOptions:
       foreignKeys:
-        "postgres.accounts.account_id":
-          - "postgres.transactions.account_id"
+        - - "postgres.accounts.account_id"
+          - - "postgres.transactions.account_id"
+          - []
     ```
 
 ## Multiple fields
@@ -184,8 +185,9 @@ and `name` from `accounts` to match with `account_id` and `full_name` to match i
 
     sinkOptions:
       foreignKeys:
-        "my_postgres.accounts.account_id,name":
-          - "my_postgres.transactions.account_id,full_name"
+        - - "my_postgres.accounts.account_id,name"
+          - - "my_postgres.transactions.account_id,full_name"
+          - []
     ```
 
 ## Transformed field
@@ -287,8 +289,9 @@ data source contains `account_id` which is a concatenation of `ACC` with `accoun
 
     sinkOptions:
       foreignKeys:
-        "my_postgres.accounts.account_number":
-          - "my_json.transactions.account_number"
+        - - "my_postgres.accounts.account_number"
+          - - "my_json.transactions.account_number"
+          - []
     ```
 
 ## Nested field
@@ -405,6 +408,7 @@ key definition.
 
     sinkOptions:
       foreignKeys:
-        "my_postgres.accounts.account_id,name":
-          - "my_json.transactions.account_id,_txn_name"
+        - - "my_postgres.accounts.account_id,name"
+          - - "my_json.transactions.account_id,_txn_name"
+          - []
     ```

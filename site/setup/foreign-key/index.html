@@ -2301,8 +2301,9 @@ for <code>account_id</code>.</p>
 
 <span class="nt">sinkOptions</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">foreignKeys</span><span class="p">:</span>
-<span class="w">    </span><span class="s">&quot;postgres.accounts.account_id&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;postgres.transactions.account_id&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;postgres.accounts.account_id&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;postgres.transactions.account_id&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 </code></pre></div>
 </div>
 </div>
@@ -2385,8 +2386,9 @@ and <code>name</code> from <code>accounts</code> to match with <code>account_id<
 
 <span class="nt">sinkOptions</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">foreignKeys</span><span class="p">:</span>
-<span class="w">    </span><span class="s">&quot;my_postgres.accounts.account_id,name&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_postgres.transactions.account_id,full_name&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_postgres.accounts.account_id,name&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_postgres.transactions.account_id,full_name&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 </code></pre></div>
 </div>
 </div>
@@ -2483,8 +2485,9 @@ data source contains <code>account_id</code> which is a concatenation of <code>A
 
 <span class="nt">sinkOptions</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">foreignKeys</span><span class="p">:</span>
-<span class="w">    </span><span class="s">&quot;my_postgres.accounts.account_number&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_json.transactions.account_number&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_postgres.accounts.account_number&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_json.transactions.account_number&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 </code></pre></div>
 </div>
 </div>
@@ -2596,8 +2599,9 @@ key definition.</p>
 
 <span class="nt">sinkOptions</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">foreignKeys</span><span class="p">:</span>
-<span class="w">    </span><span class="s">&quot;my_postgres.accounts.account_id,name&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_json.transactions.account_id,_txn_name&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_postgres.accounts.account_id,name&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_json.transactions.account_id,_txn_name&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 </code></pre></div>
 </div>
 </div>

@@ -1685,6 +1685,40 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Generate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1695,6 +1729,40 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Delete">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ui_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2232,11 +2300,9 @@ you
 can delete the Postgres and Parquet data via the account numbers generated).</p>
 <h3 id="generate">Generate</h3>
 <p>In scenarios where you have defined foreign keys for multiple data sources, when data is generated, Data Caterer will
-ensure
-that the values generated in one data source, will be the same in the other. When you want to delete the data, data will
-be deleted in reverse order of how the data was inserted. This ensures that for data sources, such as Postgres, no
-errors
-will occur whilst deleting data.</p>
+ensure that the values generated in one data source, will be the same in the other. When you want to delete the data, 
+data will be deleted in reverse order of how the data was inserted. This ensures that for data sources, such as 
+Postgres, no errors will occur whilst deleting data.</p>
 <pre class="mermaid"><code>graph LR
   subgraph plan ["Plan/Scenario"]
     postgresAccount["Generate Postgres accounts"]
@@ -2263,7 +2329,109 @@ will occur whilst deleting data.</p>
   postgresTransaction --&gt; dataCaterer
   dataCaterer --&gt; postgresAccTable
   dataCaterer --&gt; postgresTxnTable</code></pre>
+<h4 id="configuration">Configuration</h4>
+<p>To define the generated data that should be deleted, follow the below configurations:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Java</label><label for="__tabbed_1_2">Scala</label><label for="__tabbed_1_3">YAML</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="n">postgresAcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="s">&quot;my_postgres&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:...&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">table</span><span class="p">(</span><span class="s">&quot;public.accounts&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="n">postgresTxn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="n">postgresAcc</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">table</span><span class="p">(</span><span class="s">&quot;public.transactions&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;full_name&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="kd">var</span><span class="w"> </span><span class="n">deletePlan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plan</span><span class="p">().</span><span class="na">addForeignKeyRelationship</span><span class="p">(</span>
+<span class="w">  </span><span class="n">postgresAcc</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Map</span><span class="p">.</span><span class="na">entry</span><span class="p">(</span><span class="n">postgresTxn</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span><span class="p">))</span>
+<span class="p">);</span>
+
+<span class="kd">var</span><span class="w"> </span><span class="n">deleteConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">configuration</span><span class="p">()</span>
+<span class="w">  </span><span class="p">.</span><span class="na">enableRecordTracking</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">enableDeleteGeneratedRecords</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">enableGenerateData</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="n">execute</span><span class="p">(</span><span class="n">deletePlan</span><span class="p">,</span><span class="w"> </span><span class="n">deleteConfig</span><span class="p">,</span><span class="w"> </span><span class="n">postgresAcc</span><span class="p">,</span><span class="w"> </span><span class="n">postgresTxn</span><span class="p">);</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">postgresAcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="s">&quot;my_postgres&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:...&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">table</span><span class="p">(</span><span class="s">&quot;public.accounts&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">postgresTxn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="n">postgresAcc</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">table</span><span class="p">(</span><span class="s">&quot;public.transactions&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;full_name&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="kd">val</span><span class="w"> </span><span class="n">deletePlan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plan</span><span class="p">.</span><span class="n">addForeignKeyRelationship</span><span class="p">(</span>
+<span class="w">  </span><span class="n">postgresAcc</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nc">List</span><span class="p">(</span><span class="n">postgresTxn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="kd">val</span><span class="w"> </span><span class="n">deleteConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">configuration</span>
+<span class="w">  </span><span class="p">.</span><span class="n">enableRecordTracking</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">enableDeleteGeneratedRecords</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">enableGenerateData</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+
+<span class="n">execute</span><span class="p">(</span><span class="n">deletePlan</span><span class="p">,</span><span class="w"> </span><span class="n">deleteConfig</span><span class="p">,</span><span class="w"> </span><span class="n">postgresAcc</span><span class="p">,</span><span class="w"> </span><span class="n">postgresTxn</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres_data&quot;</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;accounts&quot;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">dbtable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account.accounts&quot;</span>
+<span class="w">    </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;name&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;transactions&quot;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">dbtable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account.transactions&quot;</span>
+<span class="w">    </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;full_name&quot;</span>
+<span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;customer_create_plan&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create</span><span class="nv"> </span><span class="s">customers</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">JDBC&quot;</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres_data&quot;</span>
+<span class="w">    </span><span class="nt">dataSourceName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_postgres&quot;</span>
+
+<span class="nt">sinkOptions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">foreignKeys</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;postgres.accounts.account_id&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;postgres.transactions.account_id&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h5 id="ui">UI</h5>
+<p><img alt="Generate relationship in UI" src="../../diagrams/ui/data-caterer-ui-generate-relationship.png" /></p>
 <h3 id="delete">Delete</h3>
+<p>Once you have generated data, you may consume it via a job or service and push that data down into other data sources.
+You can choose to also delete the data that is pushed down into the other data sources by defining a delete relationship.</p>
 <pre class="mermaid"><code>graph LR
   subgraph plan ["Plan/Scenario"]
     postgresAccount["Generate Postgres accounts"]
@@ -2291,6 +2459,96 @@ will occur whilst deleting data.</p>
   dataCaterer --&gt; postgresAccTable
   consumerJob --&gt; postgresAccTable
   consumerJob --&gt; parquetAcc</code></pre>
+<h4 id="configuration_1">Configuration</h4>
+<p>We will use the scenario that we generate data for <code>accounts</code> table in Postgres and a job will insert a record into the 
+<code>balances</code> table for each record generated. To define the consumed data that should also be deleted, 
+follow the below example:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Java</label><label for="__tabbed_2_2">Scala</label><label for="__tabbed_2_3">YAML</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="n">postgresAcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="s">&quot;my_postgres&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:...&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">table</span><span class="p">(</span><span class="s">&quot;public.accounts&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">().</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="n">postgresBal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="n">postgresAcc</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">table</span><span class="p">(</span><span class="s">&quot;public.balances&quot;</span><span class="p">);</span>
+
+<span class="kd">var</span><span class="w"> </span><span class="n">deletePlan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plan</span><span class="p">().</span><span class="na">addForeignKeyRelationship</span><span class="p">(</span>
+<span class="w">  </span><span class="n">postgresAcc</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(),</span>
+<span class="w">  </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Map</span><span class="p">.</span><span class="na">entry</span><span class="p">(</span><span class="n">postgresBal</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span><span class="p">))</span>
+<span class="p">);</span>
+
+<span class="kd">var</span><span class="w"> </span><span class="n">deleteConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">configuration</span><span class="p">()</span>
+<span class="w">  </span><span class="p">.</span><span class="na">enableRecordTracking</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">enableDeleteGeneratedRecords</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="na">enableGenerateData</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="n">execute</span><span class="p">(</span><span class="n">deletePlan</span><span class="p">,</span><span class="w"> </span><span class="n">deleteConfig</span><span class="p">,</span><span class="w"> </span><span class="n">postgresAcc</span><span class="p">);</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">postgresAcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="s">&quot;my_postgres&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:...&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">table</span><span class="p">(</span><span class="s">&quot;public.accounts&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">schema</span><span class="p">(</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;account_id&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">postgresBal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">postgres</span><span class="p">(</span><span class="n">postgresAcc</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">table</span><span class="p">(</span><span class="s">&quot;public.balances&quot;</span><span class="p">)</span>
+
+<span class="kd">val</span><span class="w"> </span><span class="n">deletePlan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plan</span><span class="p">.</span><span class="n">addForeignKeyRelationship</span><span class="p">(</span>
+<span class="w">  </span><span class="n">postgresAcc</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nc">List</span><span class="p">(),</span>
+<span class="w">  </span><span class="nc">List</span><span class="p">(</span><span class="n">postgresBal</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="kd">val</span><span class="w"> </span><span class="n">deleteConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">configuration</span>
+<span class="w">  </span><span class="p">.</span><span class="n">enableRecordTracking</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">enableDeleteGeneratedRecords</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">  </span><span class="p">.</span><span class="n">enableGenerateData</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+
+<span class="n">execute</span><span class="p">(</span><span class="n">deletePlan</span><span class="p">,</span><span class="w"> </span><span class="n">deleteConfig</span><span class="p">,</span><span class="w"> </span><span class="n">postgresAcc</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres_data&quot;</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;accounts&quot;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">dbtable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account.accounts&quot;</span>
+<span class="w">    </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account_id&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;name&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;balances&quot;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">dbtable</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account.balances&quot;</span>
+<span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;customer_create_plan&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create</span><span class="nv"> </span><span class="s">customers</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">JDBC&quot;</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgres_data&quot;</span>
+<span class="w">    </span><span class="nt">dataSourceName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_postgres&quot;</span>
+
+<span class="nt">sinkOptions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">foreignKeys</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;postgres.accounts.account_id&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;postgres.balances.account_id&quot;</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h5 id="ui_1">UI</h5>
+<p><img alt="Delete relationship in UI" src="../../diagrams/ui/data-caterer-ui-delete-relationship.png" /></p>
 
   
   
