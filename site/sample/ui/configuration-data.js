@@ -587,7 +587,7 @@ configurationOptionsMap.set("flag", {
     "enableRecordTracking": {
         configName: "enableRecordTracking",
         displayName: "Record Tracking",
-        default: "false",
+        default: "true",
         type: "text",
         choice: ["true", "false"],
         paid: "true",
@@ -813,7 +813,7 @@ dataSourcePropertiesMap.set("cassandra", {
             help: "Hostname and port to connect to Cassandra.",
             required: ""
         },
-        username: {
+        user: {
             displayName: "Username",
             default: "cassandra",
             type: "text",
@@ -873,9 +873,8 @@ dataSourcePropertiesMap.set("csv", {
 dataSourcePropertiesMap.set("http", {
     optGroupLabel: "Data Source",
     Name: "HTTP",
-    disabled: "",
     properties: {
-        username: {
+        user: {
             displayName: "Username",
             default: "",
             type: "text",
@@ -919,7 +918,6 @@ dataSourcePropertiesMap.set("json", {
 dataSourcePropertiesMap.set("kafka", {
     optGroupLabel: "Data Source",
     Name: "Kafka",
-    disabled: "",
     properties: {
         url: {
             displayName: "URL",
@@ -949,7 +947,7 @@ dataSourcePropertiesMap.set("mysql", {
             help: "URL to connect to MySQL.",
             required: ""
         },
-        username: {
+        user: {
             displayName: "Username",
             default: "root",
             type: "text",
@@ -1039,12 +1037,12 @@ dataSourcePropertiesMap.set("postgres", {
     properties: {
         url: {
             displayName: "URL",
-            default: "jdbc:postgres://localhost:5432/customer",
+            default: "jdbc:postgresql://localhost:5432/customer",
             type: "text",
             help: "URL to connect to Postgres.",
             required: ""
         },
-        username: {
+        user: {
             displayName: "Username",
             default: "postgres",
             type: "text",
@@ -1077,7 +1075,6 @@ dataSourcePropertiesMap.set("postgres", {
 dataSourcePropertiesMap.set("solace", {
     optGroupLabel: "Data Source",
     Name: "Solace",
-    disabled: "",
     properties: {
         url: {
             displayName: "URL",
@@ -1101,7 +1098,6 @@ dataSourcePropertiesMap.set("solace", {
 dataSourcePropertiesMap.set("amundsen", {
     optGroupLabel: "Metadata Source",
     Name: "Amundsen",
-    disabled: "",
     properties: {
         url: {
             displayName: "URL",
@@ -1115,7 +1111,6 @@ dataSourcePropertiesMap.set("amundsen", {
 dataSourcePropertiesMap.set("datahub", {
     optGroupLabel: "Metadata Source",
     Name: "Datahub",
-    disabled: "",
     properties: {
         url: {
             displayName: "URL",
@@ -1129,7 +1124,6 @@ dataSourcePropertiesMap.set("datahub", {
 dataSourcePropertiesMap.set("great_expectations", {
     optGroupLabel: "Metadata Source",
     Name: "Great Expectations",
-    disabled: "",
     properties: {
         path: {
             displayName: "Expectations File",
@@ -1143,7 +1137,6 @@ dataSourcePropertiesMap.set("great_expectations", {
 dataSourcePropertiesMap.set("marquez", {
     optGroupLabel: "Metadata Source",
     Name: "Marquez",
-    disabled: "",
     properties: {
         url: {
             displayName: "URL",
@@ -1171,7 +1164,6 @@ dataSourcePropertiesMap.set("marquez", {
 dataSourcePropertiesMap.set("open_api", {
     optGroupLabel: "Metadata Source",
     Name: "OpenAPI/Swagger",
-    disabled: "",
     properties: {
         schemaLocation: {
             displayName: "Schema Location",
@@ -1185,7 +1177,6 @@ dataSourcePropertiesMap.set("open_api", {
 dataSourcePropertiesMap.set("open_data_contract_standard", {
     optGroupLabel: "Metadata Source",
     Name: "ODCS",
-    disabled: "",
     properties: {
         path: {
             displayName: "Contract File",
@@ -1199,7 +1190,6 @@ dataSourcePropertiesMap.set("open_data_contract_standard", {
 dataSourcePropertiesMap.set("open_metadata", {
     optGroupLabel: "Metadata Source",
     Name: "Open Metadata",
-    disabled: "",
     properties: {
         url: {
             displayName: "URL",

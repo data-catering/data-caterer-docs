@@ -52,7 +52,7 @@ Promise.resolve({"planExecutionByPlan":[{"executions":[{"id":"1cbd6ab2-a59e-4e60
                 let latestRunUpdate = runUpdates[runUpdates.length - 1];
                 latestRunUpdate["createdTs"] = latestRunUpdate["createdTs"].replace("T", " ").replace(/\+.*/, "");
                 latestRunUpdate["updatedTs"] = latestRunUpdate["updatedTs"].replace("T", " ").replace(/\+.*/, "");
-                let reportHref = `https://data.catering/sample/report/html/`;
+                let reportHref = `http://localhost:9898/report/${latestRunUpdate["id"]}/index.html`;
                 latestRunUpdate["reportLink"] = latestRunUpdate["reportLink"] === "" ? "" : `<a href=${reportHref} target="_blank" rel="noopener noreferrer">Report</a>`;
                 let generationSummary = Array.from(latestRunUpdate["generationSummary"])
                     .filter(g => g.length > 3 && g[0] !== "")
