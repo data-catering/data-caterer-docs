@@ -125,6 +125,10 @@ extra:
       link: https://www.linkedin.com/in/peter-flook/
     - icon: fontawesome/solid/paper-plane
       link: mailto:peter.flook@data.catering
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/channel/UCNJACecY00X3JuV99UOySqQ
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/u/datacatering
   consent:
     title: Cookie consent
     description: >-
