@@ -127,6 +127,8 @@ extra:
       link: mailto:peter.flook@data.catering
     - icon: fontawesome/brands/youtube
       link: https://www.youtube.com/channel/UCNJACecY00X3JuV99UOySqQ
+    - icon: fontawesome/brands/x-twitter
+      link: https://twitter.com/datacatering
     - icon: fontawesome/brands/docker
       link: https://hub.docker.com/u/datacatering
   consent:
