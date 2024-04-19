@@ -2,7 +2,7 @@
 
 To have access to all the features of Data Caterer, you can subscribe according to your situation. You will not be
 charged by usage. As you continue to subscribe, you will have access to the latest version of Data Caterer as new
-bug fixes and features get published.
+bug fixes and features get published. You will also get priority on any feature requests.
 
 This has been a passion project of mine where I have spent countless hours thinking of the idea, implementing, 
 maintaining, documenting and updating it. I hope that it will help with developers and companies with their testing 
@@ -25,6 +25,17 @@ This is inspired by the [mkdocs-material project](https://github.com/squidfunk/m
 - :material-delete-sweep: [Clean up generated data](setup/guide/scenario/delete-generated-data.md)
 - :material-animation-play-outline: Run as many times as you want, not charged by usage
 - [Plus more to come](use-case/roadmap.md)
+
+## Tiers
+
+<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1OH0g0JLcXz3QuJfOLZEAh1j"
+publishable-key="pk_live_51Nt1GMJLcXz3QuJfivqD6tl8fF3VZdzHgSOl9AGTWn3qD0neSI2UTHoD3iVwi6As2lVMhGeZEieFW6Jdeoan4Rqb00WigQVrLa">
+</stripe-pricing-table>
+
+## Manage Subscription
+
+[Manage via this link](https://billing.stripe.com/p/login/28oaIGdfreH7eXufYY)
 
 ## Contact
 
