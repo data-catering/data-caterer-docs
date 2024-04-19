@@ -17,7 +17,8 @@ to ensure your systems have ingested it as expected, then clean up the data afte
 <h2 align="center">Take away the pain and complexity of your data landscape and let Data Caterer handle it</h2>
 
 <span class="center-content">
-[Try now](get-started/docker.md){ .md-button .md-button--primary }
+[Try now](get-started/docker.md){ .md-button .md-button--primary .button-spaced }
+[Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>
 
 <h1 class="content-spaced" align="center">Data testing is difficult and fragmented</h1>
@@ -38,7 +39,8 @@ to ensure your systems have ingested it as expected, then clean up the data afte
 - Observability pushes towards being reactive rather than proactive
 
 <span class="center-content">
-[Try now](get-started/docker.md){ .md-button .md-button--primary }
+[Try now](get-started/docker.md){ .md-button .md-button--primary .button-spaced }
+[Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>
 
 <h1 class="content-spaced" align="center">What you need is a reliable tool that can handle changes to your data landscape</h1> 
@@ -58,7 +60,8 @@ With Data Caterer, you get:
 - Configurability to run the way you want
 
 <span class="center-content">
-[Try now](get-started/docker.md){ .md-button .md-button--primary }
+[Try now](get-started/docker.md){ .md-button .md-button--primary .button-spaced }
+[Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>
 
 ## Tech Summary
@@ -137,7 +140,8 @@ Main features include:
 </div>
 
 <span class="center-content">
-[Try now](get-started/docker.md){ .md-button .md-button--primary }
+[Try now](get-started/docker.md){ .md-button .md-button--primary .button-spaced }
+[Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>
 
 <h1 class="content-spaced" align="center">Data Catering vs Other tools vs In-house</h1>
