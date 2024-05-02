@@ -29,9 +29,11 @@ This is inspired by the [mkdocs-material project](https://github.com/squidfunk/m
 ## Tiers
 
 <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-<stripe-pricing-table pricing-table-id="prctbl_1OH0g0JLcXz3QuJfOLZEAh1j"
-publishable-key="pk_live_51Nt1GMJLcXz3QuJfivqD6tl8fF3VZdzHgSOl9AGTWn3qD0neSI2UTHoD3iVwi6As2lVMhGeZEieFW6Jdeoan4Rqb00WigQVrLa">
-</stripe-pricing-table>
+<div>
+  <stripe-pricing-table pricing-table-id="prctbl_1OH0g0JLcXz3QuJfOLZEAh1j"
+  publishable-key="pk_live_51Nt1GMJLcXz3QuJfivqD6tl8fF3VZdzHgSOl9AGTWn3qD0neSI2UTHoD3iVwi6As2lVMhGeZEieFW6Jdeoan4Rqb00WigQVrLa">
+  </stripe-pricing-table>
+</div>
 
 ## Manage Subscription
 
