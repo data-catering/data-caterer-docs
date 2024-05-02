@@ -8,6 +8,11 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 <h1 align="center" style="padding-top: 25px;"><b>Never manually generate or validate data again.</b></h1>
 <h3 align="center" style="padding-bottom: 25px">Create simple managed flows for data generation, validation and cleanup.</h3>
 
+<span class="center-content">
+[Try now](get-started/docker.md){ .md-button .md-button--primary .button-spaced }
+[Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
+</span>
+
 <div class="left-side-description-container">
 <div class="description-text-container">
 <b class="description-header">Data Connections</b><br>Connect to databases, messaging systems, HTTP APIs, file systems, data catalogs and
