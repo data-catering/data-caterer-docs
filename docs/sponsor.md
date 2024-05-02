@@ -1,4 +1,4 @@
-# Sponsor
+# Pricing
 
 To have access to all the features of Data Caterer, you can subscribe according to your situation. You will not be
 charged by usage. As you continue to subscribe, you will have access to the latest version of Data Caterer as new
@@ -17,23 +17,21 @@ This is inspired by the [mkdocs-material project](https://github.com/squidfunk/m
 
 ## Features
 
-- :material-card-search: Metadata discovery
-- :material-connection: All data sources (see [here for all data sources](setup/connection.md))
+- :material-connection: Connect to all data sources (see [here for all data sources](setup/connection.md))
 - :material-file: Batch and :material-circle-multiple: Event generation
 - :material-auto-fix: [Auto generation from data connections or metadata sources](setup/guide/scenario/auto-generate-connection.md)
 - :material-test-tube: Suggest data validations
 - :material-delete-sweep: [Clean up generated data](setup/guide/scenario/delete-generated-data.md)
 - :material-animation-play-outline: Run as many times as you want, not charged by usage
+- :material-card-search: Metadata discovery
 - [Plus more to come](use-case/roadmap.md)
 
 ## Tiers
 
-<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-<div>
-  <stripe-pricing-table pricing-table-id="prctbl_1OH0g0JLcXz3QuJfOLZEAh1j"
-  publishable-key="pk_live_51Nt1GMJLcXz3QuJfivqD6tl8fF3VZdzHgSOl9AGTWn3qD0neSI2UTHoD3iVwi6As2lVMhGeZEieFW6Jdeoan4Rqb00WigQVrLa">
-  </stripe-pricing-table>
-</div>
+<script src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1OH0g0JLcXz3QuJfOLZEAh1j"
+publishable-key="pk_live_51Nt1GMJLcXz3QuJfivqD6tl8fF3VZdzHgSOl9AGTWn3qD0neSI2UTHoD3iVwi6As2lVMhGeZEieFW6Jdeoan4Rqb00WigQVrLa">
+</stripe-pricing-table>
 
 ## Manage Subscription
 

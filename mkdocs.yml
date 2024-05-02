@@ -110,7 +110,7 @@ nav:
           - Shift Left Data Quality: 'use-case/blog/shift-left-data-quality.md'
   - About:
       - 'about.md'
-      - Sponsor: 'sponsor.md'
+      - Pricing: 'sponsor.md'
       - Terms of service: 'legal/terms-of-service.md'
       - Privacy policy: 'legal/privacy-policy.md'
   - Demo: 'demo.md'
