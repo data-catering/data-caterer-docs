@@ -21,3 +21,26 @@
 .red-cross {
     color: #d9534f;
 }
+
+.description-header {
+    font-size: 1.0rem;
+}
+
+.description-text-container {
+    padding: 10px;
+    align-content: center;
+    min-width: 280px;
+    max-width: 50%;
+}
+
+.left-side-description-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.right-side-description-container {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-evenly;
+}
