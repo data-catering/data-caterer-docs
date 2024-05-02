@@ -18,14 +18,14 @@ metadata sources to automatically generate and validate data.
 </td>
 <td>
 
-<img src="diagrams/index/data_connections.gif">
+<img src="diagrams/index/data_connections.gif" alt="Define your data connections for data sources, metadata sources and alerts.">
 
 </td>
 </tr>
 <tr>
 <td>
 
-<img src="diagrams/index/data_relationship.gif">
+<img src="diagrams/index/data_relationship.gif" alt="Create relationships between any data sources.">
 
 </td>
 <td>
@@ -43,14 +43,15 @@ that can be powered by the data generated.
 </td>
 <td>
 
-<img src="diagrams/index/data_validations.gif">
+<img src="diagrams/index/data_validations.gif" alt="Define specific field, group by/aggregate, column name or upstream 
+data source validations.">
 
 </td>
 </tr>
 <tr>
 <td>
 
-<img src="diagrams/index/delete_data.gif">
+<img src="diagrams/index/delete_data.gif" alt="Remove all generated and consumed data from data sources.">
 
 </td>
 <td>
