@@ -18,7 +18,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 3. [Linux download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-linux.zip)
 4. Docker
    ```shell
-   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer-basic:0.7.0
+   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer-basic:0.9.2
    ```
    [Open localhost:9898](http://localhost:9898).
 
@@ -35,19 +35,6 @@ cd data-caterer-example && ./run.sh
 Check the report generated under `docker/data/custom/report/index.html`.
 
 Sample report can also be seen [**here**](../sample/report/html/index.html)
-
-## Paid Version Trial
-
-30 day trial of the paid version can be accessed via these steps:
-
-1. Join the [Slack Data Catering Slack group here](https://join.slack.com/t/data-catering/shared_invite/zt-2664ylbpi-w3n7lWAO~PHeOG9Ujpm~~w)
-2. Get an API_KEY by using slash command `/token` in the Slack group (will only be visible to you)
-3. 
-        git clone git@github.com:data-catering/data-caterer-example.git
-        cd data-caterer-example && export DATA_CATERING_API_KEY=<insert api key>
-        ./run.sh
-
-If you want to check how long your trial has left, you can check back in the Slack group or type `/token` again.
 
 ## Guided tour
 

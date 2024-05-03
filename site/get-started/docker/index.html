@@ -529,17 +529,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#paid-version-trial" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Paid Version Trial
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#guided-tour" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2277,7 +2266,7 @@
 </li>
 <li><a href="https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-linux.zip">Linux download</a></li>
 <li>Docker
-   <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-i<span class="w"> </span>-p<span class="w"> </span><span class="m">9898</span>:9898<span class="w"> </span>-e<span class="w"> </span><span class="nv">DEPLOY_MODE</span><span class="o">=</span>standalone<span class="w"> </span>--name<span class="w"> </span>datacaterer<span class="w"> </span>datacatering/data-caterer-basic:0.7.0
+   <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-i<span class="w"> </span>-p<span class="w"> </span><span class="m">9898</span>:9898<span class="w"> </span>-e<span class="w"> </span><span class="nv">DEPLOY_MODE</span><span class="o">=</span>standalone<span class="w"> </span>--name<span class="w"> </span>datacaterer<span class="w"> </span>datacatering/data-caterer-basic:0.9.2
 </code></pre></div>
    <a href="http://localhost:9898">Open localhost:9898</a>.</li>
 </ol>
@@ -2289,19 +2278,6 @@
 <h3 id="report">Report</h3>
 <p>Check the report generated under <code>docker/data/custom/report/index.html</code>.</p>
 <p>Sample report can also be seen <a href="../../sample/report/html/"><strong>here</strong></a></p>
-<h2 id="paid-version-trial">Paid Version Trial</h2>
-<p>30 day trial of the paid version can be accessed via these steps:</p>
-<ol>
-<li>Join the <a href="https://join.slack.com/t/data-catering/shared_invite/zt-2664ylbpi-w3n7lWAO~PHeOG9Ujpm~~w">Slack Data Catering Slack group here</a></li>
-<li>Get an API_KEY by using slash command <code>/token</code> in the Slack group (will only be visible to you)</li>
-<li>
-<pre><code>git clone git@github.com:data-catering/data-caterer-example.git
-cd data-caterer-example &amp;&amp; export DATA_CATERING_API_KEY=&lt;insert api key&gt;
-./run.sh
-</code></pre>
-</li>
-</ol>
-<p>If you want to check how long your trial has left, you can check back in the Slack group or type <code>/token</code> again.</p>
 <h2 id="guided-tour">Guided tour</h2>
 <p>Check out the starter guide <a href="../../setup/guide/scenario/first-data-generation/"><strong>here</strong></a> that will take your through
 step by step. You can also check the other guides <a href="../../setup/guide/"><strong>here</strong></a> to see the other possibilities of
