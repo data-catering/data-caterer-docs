@@ -44,3 +44,8 @@
     flex-wrap: wrap-reverse;
     justify-content: space-evenly;
 }
+
+.front-page-gif {
+    max-width: 50%;
+    min-width: 250px;
+}
