@@ -1463,6 +1463,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pre-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-filter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#basic-join" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2324,6 +2335,9 @@ column in Postgres. The validations can be chained with basic and group by valid
 sources, to cover any complex validations.</p>
 <p><img alt="Generate and validate flow with upstream validations" src="../../../diagrams/validation_generation_run.gif" /></p>
 <p><img alt="Validation report" src="../../../diagrams/upstream_validation_report.png" /></p>
+<h2 id="pre-filter">Pre-filter</h2>
+<p>If you want to only run the validation on a specific subset of data, you can define pre-filter conditions. <a href="../#pre-filter-data">Find more
+details here</a>.</p>
 <h2 id="basic-join">Basic join</h2>
 <p>Join across datasets by particular columns. Then run validations on the joined dataset. You will notice that the data
 source name is appended onto the column names when joined (i.e. <code>my_first_json_customer_details</code>), to ensure column

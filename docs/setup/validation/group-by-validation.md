@@ -10,6 +10,11 @@ If you want to run aggregations based on a particular set of columns or just the
 by validations. An example would be checking that the sum of `amount` is less than 1000 per `account_id, year`. The
 validations applied can be one of the validations from the [basic validation set found here](basic-validation.md).
 
+## Pre-filter
+
+If you want to only run the validation on a specific subset of data, you can define pre-filter conditions. [Find more
+details here](../validation.md#pre-filter-data).
+
 ## Record count
 
 Check the number of records across the whole dataset.

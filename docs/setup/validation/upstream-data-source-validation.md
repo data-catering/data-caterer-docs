@@ -16,6 +16,11 @@ sources, to cover any complex validations.
 
 ![Validation report](../../diagrams/upstream_validation_report.png)
 
+## Pre-filter
+
+If you want to only run the validation on a specific subset of data, you can define pre-filter conditions. [Find more
+details here](../validation.md#pre-filter-data).
+
 ## Basic join
 
 Join across datasets by particular columns. Then run validations on the joined dataset. You will notice that the data

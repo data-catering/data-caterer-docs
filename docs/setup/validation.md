@@ -28,15 +28,15 @@ summarising the success or failure of the validations is produced and can be exa
 
 ## Define Validations
 
-Full example validation can be found below. For more details, check out each of the subsections defined further below.
+Full example validations can be found below. For more details, check out each of the subsections defined further below.
 
 === "Java"
 
     ```java
-    var csvTxns = csv("transactions", "/tmp/csv", Map.of("header", "true"))
+    var csvTxns = csv("transactions", "/tmp/csv")
       .validations(
         validation().col("amount").lessThan(100),
-        validation().col("year").isEqual(2021).errorThreshold(0.1),  //equivalent to if error percentage is > 10%, then fail
+        validation().col("year").isEqual(2021).errorThreshold(0.1),       //equivalent to if error percentage is > 10%, then fail
         validation().col("name").matches("Peter .*").errorThreshold(200)  //equivalent to if number of errors is > 200, then fail
       )
       .validationWait(waitCondition().pause(1));
@@ -47,10 +47,10 @@ Full example validation can be found below. For more details, check out each of 
 === "Scala"
 
     ```scala
-    val csvTxns = csv("transactions", "/tmp/csv", Map("header" -> "true"))
+    val csvTxns = csv("transactions", "/tmp/csv")
       .validations(
         validation.col("amount").lessThan(100),
-        validation.col("year").isEqual(2021).errorThreshold(0.1),  //equivalent to if error percentage is > 10%, then fail
+        validation.col("year").isEqual(2021).errorThreshold(0.1),       //equivalent to if error percentage is > 10%, then fail
         validation.col("name").matches("Peter .*").errorThreshold(200)  //equivalent to if number of errors is > 200, then fail
       )  
       .validationWait(waitCondition.pause(1))
@@ -68,14 +68,55 @@ Full example validation can be found below. For more details, check out each of 
         options:
           path: "/tmp/csv"
         validations:
-          - expr: "amount < 100"
-          - expr: "year == 2021"
+          - whereExpr: "amount < 100"
+          - whereExpr: "year == 2021"
             errorThreshold: 0.1   #equivalent to if error percentage is > 10%, then fail
-          - expr: "REGEXP_LIKE(name, 'Peter .*')"
+          - whereExpr: "REGEXP_LIKE(name, 'Peter .*')"
             errorThreshold: 200   #equivalent to if number of errors is > 200, then fail
             description: "Should be lots of Peters"
+          - whereExpr: "amount > 100"
+            preFilterExpr: "STARTSWITH(account_id, 'ACC')"
+          - whereExpr: "ISNOTNULL(name)"
+            preFilterExpr: "STARTSWITH(account_id, 'ACC') AND ISNOTNULL(merchant)"
         waitCondition:
           pauseInSeconds: 1
+    ```
+
+## Pre-filter Data
+
+If you need to run data validations on a subset of data, then you can define pre-filter conditions. An example would be 
+when you want to check that for all records with `status=closed`, that `balance=0`, you would define a pre-filter like below:
+
+=== "Java"
+
+    ```java
+    var csvTxns = csv("transactions", "/tmp/csv")
+      .validations(
+        validation().preFilter(columnPreFilter("status").isEqual("closed")).col("balance").isEqual(0)
+      );
+    ```
+
+=== "Scala"
+
+    ```scala
+    val csvTxns = csv("transactions", "/tmp/csv")
+      .validations(
+        validation.preFilter(columnPreFilter("status").isEqual("closed")).col("balance").isEqual(0)
+      )  
+    ```
+
+=== "YAML"
+
+    ```yaml
+    ---
+    name: "account_checks"
+    dataSources:
+      transactions:
+        options:
+          path: "/tmp/csv"
+        validations:
+          - whereExpr: "balance == 0"
+            preFilterExpr: "status == 'closed'"
     ```
 
 ## Wait Condition
@@ -93,14 +134,14 @@ validations. This can be via:
 === "Java"
 
     ```java
-    var csvTxns = csv("transactions", "/tmp/csv", Map.of("header", "true"))
+    var csvTxns = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition().pause(1));
     ```
 
 === "Scala"
 
     ```scala
-    val csvTxns = csv("transactions", "/tmp/csv", Map("header" -> "true"))
+    val csvTxns = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition.pause(1))
     ```
 
@@ -122,14 +163,14 @@ validations. This can be via:
 === "Java"
 
     ```java
-    var csvTxns = csv("transactions", "/tmp/csv", Map.of("header", "true"))
+    var csvTxns = csv("transactions", "/tmp/csv")
       .validationWaitDataExists("updated_date > DATE('2023-01-01')");
     ```
 
 === "Scala"
 
     ```scala
-    val csvTxns = csv("transactions", "/tmp/csv", Map("header" -> "true"))
+    val csvTxns = csv("transactions", "/tmp/csv")
       .validationWaitDataExists("updated_date > DATE('2023-01-01')")
     ```
 
@@ -154,34 +195,34 @@ validations. This can be via:
 === "Java"
 
     ```java
-    var csvTxns = csv("transactions", "/tmp/csv", Map.of("header", "true"))
+    var csvTxns = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition().webhook("http://localhost:8080/finished")); //by default, GET request successful when 200 status code
     
     //or
     
-    var csvTxnsWithStatusCodes = csv("transactions", "/tmp/csv", Map.of("header", "true"))
+    var csvTxnsWithStatusCodes = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition().webhook("http://localhost:8080/finished", "GET", 200, 202));  //successful if 200 or 202 status code
 
     //or
     
-    var csvTxnsWithExistingHttpConnection = csv("transactions", "/tmp/csv", Map.of("header", "true"))
+    var csvTxnsWithExistingHttpConnection = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition().webhook("my_http", "http://localhost:8080/finished"));  //use connection configuration from existing 'my_http' connection definition
     ```
 
 === "Scala"
 
     ```scala
-    val csvTxns = csv("transactions", "/tmp/csv", Map("header" -> "true"))
+    val csvTxns = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition.webhook("http://localhost:8080/finished"))  //by default, GET request successful when 200 status code
 
     //or
 
-    val csvTxnsWithStatusCodes = csv("transactions", "/tmp/csv", Map("header" -> "true"))
+    val csvTxnsWithStatusCodes = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition.webhook("http://localhost:8080/finished", "GET", 200, 202)) //successful if 200 or 202 status code
 
     //or
 
-    val csvTxnsWithExistingHttpConnection = csv("transactions", "/tmp/csv", Map("header" -> "true"))
+    val csvTxnsWithExistingHttpConnection = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition.webhook("my_http", "http://localhost:8080/finished")) //use connection configuration from existing 'my_http' connection definition
     ```
 
@@ -228,14 +269,14 @@ validations. This can be via:
 === "Java"
 
     ```java
-    var csvTxns = csv("transactions", "/tmp/csv", Map.of("header", "true"))
+    var csvTxns = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition().file("/tmp/json"));
     ```
 
 === "Scala"
 
     ```scala
-    val csvTxns = csv("transactions", "/tmp/csv", Map.of("header", "true"))
+    val csvTxns = csv("transactions", "/tmp/csv")
       .validationWait(waitCondition.file("/tmp/json"))
     ```
 

@@ -1411,6 +1411,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#pre-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-filter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#equal" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2583,6 +2594,9 @@
 <h1 id="basic-validations">Basic Validations</h1>
 <p>Run validations on a column to ensure the values adhere to your requirement. Can be set to complex validation logic
 via SQL expression as well if needed (see <a href="#expression"><strong>here</strong></a>).</p>
+<h2 id="pre-filter">Pre-filter</h2>
+<p>If you want to only run the validation on a specific subset of data, you can define pre-filter conditions. <a href="../#pre-filter-data">Find more 
+details here</a>.</p>
 <h2 id="equal">Equal</h2>
 <p>Ensure all data in column is equal to certain value. Value can be of any data type. Can use <code>isEqualCol</code> to define SQL
 expression that can reference other columns.</p>
@@ -2604,7 +2618,7 @@ expression that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;year</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">2021&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;year</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">2021&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2630,7 +2644,7 @@ define SQL expression that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;year</span><span class="nv"> </span><span class="s">!=</span><span class="nv"> </span><span class="s">2021&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;year</span><span class="nv"> </span><span class="s">!=</span><span class="nv"> </span><span class="s">2021&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2653,7 +2667,7 @@ define SQL expression that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ISNULL(year)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ISNULL(year)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2676,7 +2690,7 @@ define SQL expression that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ISNOTNULL(year)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ISNOTNULL(year)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2699,7 +2713,7 @@ define SQL expression that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;CONTAINS(name,</span><span class="nv"> </span><span class="s">&#39;peter&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;CONTAINS(name,</span><span class="nv"> </span><span class="s">&#39;peter&#39;)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2722,7 +2736,7 @@ define SQL expression that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!CONTAINS(name,</span><span class="nv"> </span><span class="s">&#39;peter&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!CONTAINS(name,</span><span class="nv"> </span><span class="s">&#39;peter&#39;)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2771,8 +2785,8 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">100&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">100&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">1&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2798,8 +2812,8 @@ that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;=</span><span class="nv"> </span><span class="s">100&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;=</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;=</span><span class="nv"> </span><span class="s">100&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;=</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">1&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2825,8 +2839,8 @@ that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">100&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">balance&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">100&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">balance&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2852,8 +2866,8 @@ expression that can reference other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">100&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">balance&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">100&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">balance&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2879,8 +2893,8 @@ columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">BETWEEN</span><span class="nv"> </span><span class="s">100</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">200&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">BETWEEN</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">0.9</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">1.1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">BETWEEN</span><span class="nv"> </span><span class="s">100</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">200&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">BETWEEN</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">0.9</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">1.1&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2906,8 +2920,8 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">BETWEEN</span><span class="nv"> </span><span class="s">100</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">200&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">BETWEEN</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">0.9</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">1.1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">BETWEEN</span><span class="nv"> </span><span class="s">100</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">200&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">BETWEEN</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">0.9</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">balance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">1.1&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2930,7 +2944,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;status</span><span class="nv"> </span><span class="s">IN</span><span class="nv"> </span><span class="s">(&#39;open&#39;,</span><span class="nv"> </span><span class="s">&#39;closed&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;status</span><span class="nv"> </span><span class="s">IN</span><span class="nv"> </span><span class="s">(&#39;open&#39;,</span><span class="nv"> </span><span class="s">&#39;closed&#39;)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2953,7 +2967,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;REGEXP(account_id,</span><span class="nv"> </span><span class="s">ACC[0-9]{8})&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;REGEXP(account_id,</span><span class="nv"> </span><span class="s">ACC[0-9]{8})&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2976,7 +2990,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!REGEXP(account_id,</span><span class="nv"> </span><span class="s">&#39;^acc.*&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!REGEXP(account_id,</span><span class="nv"> </span><span class="s">&#39;^acc.*&#39;)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2999,7 +3013,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;STARTSWITH(account_id,</span><span class="nv"> </span><span class="s">&#39;ACC&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;STARTSWITH(account_id,</span><span class="nv"> </span><span class="s">&#39;ACC&#39;)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3022,7 +3036,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!STARTSWITH(account_id,</span><span class="nv"> </span><span class="s">&#39;ACC&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!STARTSWITH(account_id,</span><span class="nv"> </span><span class="s">&#39;ACC&#39;)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3045,7 +3059,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENDWITH(account_id,</span><span class="nv"> </span><span class="s">&#39;ACC&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENDWITH(account_id,</span><span class="nv"> </span><span class="s">&#39;ACC&#39;)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3068,7 +3082,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!ENDWITH(account_id,</span><span class="nv"> </span><span class="s">&#39;ACC&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!ENDWITH(account_id,</span><span class="nv"> </span><span class="s">&#39;ACC&#39;)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3091,7 +3105,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions,</span><span class="nv"> </span><span class="s">5)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions,</span><span class="nv"> </span><span class="s">5)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3114,7 +3128,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">!=</span><span class="nv"> </span><span class="s">5&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">!=</span><span class="nv"> </span><span class="s">5&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3137,7 +3151,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">5&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">5&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3160,7 +3174,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">&lt;=</span><span class="nv"> </span><span class="s">5&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">&lt;=</span><span class="nv"> </span><span class="s">5&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3183,7 +3197,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">5&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">5&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3206,7 +3220,7 @@ other columns.</p>
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">5&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIZE(transactions)</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">5&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3230,7 +3244,7 @@ identification numbers (see <a href="https://en.wikipedia.org/wiki/Luhn_algorith
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LUHN_CHECK(credit_card)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LUHN_CHECK(credit_card)&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3253,7 +3267,7 @@ identification numbers (see <a href="https://en.wikipedia.org/wiki/Luhn_algorith
 <span class="nt">dataSources</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">validations</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;TYPEOF(id)</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&#39;string&#39;&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;TYPEOF(id)</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&#39;string&#39;&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -3295,10 +3309,10 @@ open to have <code>balance</code> greater than 0, otherwise, check the <code>bal
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/csv&quot;</span>
 <span class="w">    </span><span class="nt">validations</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">100&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;year</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">2021&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amount</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">100&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;year</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">2021&quot;</span>
 <span class="w">        </span><span class="nt">errorThreshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">   </span><span class="c1">#equivalent to if error percentage is &gt; 10%, then fail</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;REGEXP_LIKE(name,</span><span class="nv"> </span><span class="s">&#39;Peter</span><span class="nv"> </span><span class="s">.*&#39;)&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">whereExpr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;REGEXP_LIKE(name,</span><span class="nv"> </span><span class="s">&#39;Peter</span><span class="nv"> </span><span class="s">.*&#39;)&quot;</span>
 <span class="w">        </span><span class="nt">errorThreshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">   </span><span class="c1">#equivalent to if number of errors is &gt; 200, then fail</span>
 <span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">lots</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">Peters&quot;</span>
 

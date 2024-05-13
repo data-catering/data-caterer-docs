@@ -9,6 +9,11 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 Run validations on a column to ensure the values adhere to your requirement. Can be set to complex validation logic
 via SQL expression as well if needed (see [**here**](#expression)).
 
+## Pre-filter
+
+If you want to only run the validation on a specific subset of data, you can define pre-filter conditions. [Find more 
+details here](../validation.md#pre-filter-data).
+
 ## Equal
 
 Ensure all data in column is equal to certain value. Value can be of any data type. Can use `isEqualCol` to define SQL
@@ -36,7 +41,7 @@ expression that can reference other columns.
     dataSources:
       ...
         validations:
-          - expr: "year == 2021"
+          - whereExpr: "year == 2021"
     ```
 
 ## Not Equal
@@ -66,7 +71,7 @@ define SQL expression that can reference other columns.
     dataSources:
       ...
         validations:
-          - expr: "year != 2021"
+          - whereExpr: "year != 2021"
     ```
 
 ## Null
@@ -93,7 +98,7 @@ Ensure all data in column is null.
     dataSources:
       ...
         validations:
-          - expr: "ISNULL(year)"
+          - whereExpr: "ISNULL(year)"
     ```
 
 ## Not Null
@@ -120,7 +125,7 @@ Ensure all data in column is not null.
     dataSources:
       ...
         validations:
-          - expr: "ISNOTNULL(year)"
+          - whereExpr: "ISNOTNULL(year)"
     ```
 
 ## Contains
@@ -147,7 +152,7 @@ Ensure all data in column is contains certain string. Column has to have type st
     dataSources:
       ...
         validations:
-          - expr: "CONTAINS(name, 'peter')"
+          - whereExpr: "CONTAINS(name, 'peter')"
     ```
 
 ## Not Contains
@@ -174,7 +179,7 @@ Ensure all data in column does not contain certain string. Column has to have ty
     dataSources:
       ...
         validations:
-          - expr: "!CONTAINS(name, 'peter')"
+          - whereExpr: "!CONTAINS(name, 'peter')"
     ```
 
 ## Unique
@@ -232,8 +237,8 @@ other columns.
     dataSources:
       ...
         validations:
-          - expr: "amount < 100"
-          - expr: "amount < balance + 1"
+          - whereExpr: "amount < 100"
+          - whereExpr: "amount < balance + 1"
     ```
 
 ## Less Than Or Equal
@@ -263,8 +268,8 @@ that can reference other columns.
     dataSources:
       ...
         validations:
-          - expr: "amount <= 100"
-          - expr: "amount <= balance + 1"
+          - whereExpr: "amount <= 100"
+          - whereExpr: "amount <= balance + 1"
     ```
 
 ## Greater Than
@@ -294,8 +299,8 @@ that can reference other columns.
     dataSources:
       ...
         validations:
-          - expr: "amount > 100"
-          - expr: "amount > balance"
+          - whereExpr: "amount > 100"
+          - whereExpr: "amount > balance"
     ```
 
 ## Greater Than Or Equal
@@ -325,8 +330,8 @@ expression that can reference other columns.
     dataSources:
       ...
         validations:
-          - expr: "amount >= 100"
-          - expr: "amount >= balance"
+          - whereExpr: "amount >= 100"
+          - whereExpr: "amount >= balance"
     ```
 
 ## Between
@@ -356,8 +361,8 @@ columns.
     dataSources:
       ...
         validations:
-          - expr: "amount BETWEEN 100 AND 200"
-          - expr: "amount BETWEEN balance * 0.9 AND balance * 1.1"
+          - whereExpr: "amount BETWEEN 100 AND 200"
+          - whereExpr: "amount BETWEEN balance * 0.9 AND balance * 1.1"
     ```
 
 ## Not Between
@@ -387,8 +392,8 @@ other columns.
     dataSources:
       ...
         validations:
-          - expr: "amount NOT BETWEEN 100 AND 200"
-          - expr: "amount NOT BETWEEN balance * 0.9 AND balance * 1.1"
+          - whereExpr: "amount NOT BETWEEN 100 AND 200"
+          - whereExpr: "amount NOT BETWEEN balance * 0.9 AND balance * 1.1"
     ```
 
 ## In
@@ -415,7 +420,7 @@ Ensure all data in column is in set of defined values.
     dataSources:
       ...
         validations:
-          - expr: "status IN ('open', 'closed')"
+          - whereExpr: "status IN ('open', 'closed')"
     ```
 
 ## Matches
@@ -442,7 +447,7 @@ Ensure all data in column matches certain regex expression.
     dataSources:
       ...
         validations:
-          - expr: "REGEXP(account_id, ACC[0-9]{8})"
+          - whereExpr: "REGEXP(account_id, ACC[0-9]{8})"
     ```
 
 ## Not Matches
@@ -469,7 +474,7 @@ Ensure all data in column does not match certain regex expression.
     dataSources:
       ...
         validations:
-          - expr: "!REGEXP(account_id, '^acc.*')"
+          - whereExpr: "!REGEXP(account_id, '^acc.*')"
     ```
 
 ## Starts With
@@ -496,7 +501,7 @@ Ensure all data in column starts with certain string. Column has to have type st
     dataSources:
       ...
         validations:
-          - expr: "STARTSWITH(account_id, 'ACC')"
+          - whereExpr: "STARTSWITH(account_id, 'ACC')"
     ```
 
 ## Not Starts With
@@ -523,7 +528,7 @@ Ensure all data in column does not start with certain string. Column has to have
     dataSources:
       ...
         validations:
-          - expr: "!STARTSWITH(account_id, 'ACC')"
+          - whereExpr: "!STARTSWITH(account_id, 'ACC')"
     ```
 
 ## Ends With
@@ -550,7 +555,7 @@ Ensure all data in column ends with certain string. Column has to have type stri
     dataSources:
       ...
         validations:
-          - expr: "ENDWITH(account_id, 'ACC')"
+          - whereExpr: "ENDWITH(account_id, 'ACC')"
     ```
 
 ## Not Ends With
@@ -577,7 +582,7 @@ Ensure all data in column does not end with certain string. Column has to have t
     dataSources:
       ...
         validations:
-          - expr: "!ENDWITH(account_id, 'ACC')"
+          - whereExpr: "!ENDWITH(account_id, 'ACC')"
     ```
 
 ## Size
@@ -604,7 +609,7 @@ Ensure all data in column has certain size. Column has to have type array or map
     dataSources:
       ...
         validations:
-          - expr: "SIZE(transactions, 5)"
+          - whereExpr: "SIZE(transactions, 5)"
     ```
 
 ## Not Size
@@ -631,7 +636,7 @@ Ensure all data in column does not have certain size. Column has to have type ar
     dataSources:
       ...
         validations:
-          - expr: "SIZE(transactions) != 5"
+          - whereExpr: "SIZE(transactions) != 5"
     ```
 
 ## Less Than Size
@@ -658,7 +663,7 @@ Ensure all data in column has size less than certain value. Column has to have t
     dataSources:
       ...
         validations:
-          - expr: "SIZE(transactions) < 5"
+          - whereExpr: "SIZE(transactions) < 5"
     ```
 
 ## Less Than Or Equal Size
@@ -685,7 +690,7 @@ Ensure all data in column has size less than or equal to certain value. Column h
     dataSources:
       ...
         validations:
-          - expr: "SIZE(transactions) <= 5"
+          - whereExpr: "SIZE(transactions) <= 5"
     ```
 
 ## Greater Than Size
@@ -712,7 +717,7 @@ Ensure all data in column has size greater than certain value. Column has to hav
     dataSources:
       ...
         validations:
-          - expr: "SIZE(transactions) > 5"
+          - whereExpr: "SIZE(transactions) > 5"
     ```
 
 ## Greater Than Or Equal Size
@@ -739,7 +744,7 @@ Ensure all data in column has size greater than or equal to certain value. Colum
     dataSources:
       ...
         validations:
-          - expr: "SIZE(transactions) >= 5"
+          - whereExpr: "SIZE(transactions) >= 5"
     ```
 
 ## Luhn Check
@@ -767,7 +772,7 @@ identification numbers (see [here](https://en.wikipedia.org/wiki/Luhn_algorithm)
     dataSources:
       ...
         validations:
-          - expr: "LUHN_CHECK(credit_card)"
+          - whereExpr: "LUHN_CHECK(credit_card)"
     ```
 
 ## Has Type
@@ -794,7 +799,7 @@ Ensure all data in column has certain data type.
     dataSources:
       ...
         validations:
-          - expr: "TYPEOF(id) == 'string'"
+          - whereExpr: "TYPEOF(id) == 'string'"
     ```
 
 ## Expression
@@ -841,10 +846,10 @@ open to have `balance` greater than 0, otherwise, check the `balance` is 0.
         options:
           path: "/tmp/csv"
         validations:
-          - expr: "amount < 100"
-          - expr: "year == 2021"
+          - whereExpr: "amount < 100"
+          - whereExpr: "year == 2021"
             errorThreshold: 0.1   #equivalent to if error percentage is > 10%, then fail
-          - expr: "REGEXP_LIKE(name, 'Peter .*')"
+          - whereExpr: "REGEXP_LIKE(name, 'Peter .*')"
             errorThreshold: 200   #equivalent to if number of errors is > 200, then fail
             description: "Should be lots of Peters"
 

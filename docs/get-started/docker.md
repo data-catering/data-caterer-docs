@@ -34,7 +34,7 @@ cd data-caterer-example && ./run.sh
 
 Check the report generated under `docker/data/custom/report/index.html`.
 
-Sample report can also be seen [**here**](../sample/report/html/index.html)
+Sample report can also be seen [**here**](../sample/report/html/index.html).
 
 ## Guided tour
 
