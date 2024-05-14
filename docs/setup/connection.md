@@ -1,6 +1,6 @@
 ---
 title: "Data source connections"
-description: "Data Caterer can connect to databases, file and messaging systems, HTTP APIs and metadata services."
+description: "Data Caterer can connect to databases (Postgres, MySQL), file (Parquet, ORC) and messaging systems (Kafka, Solace), HTTP APIs and metadata services."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
@@ -12,13 +12,36 @@ These configurations can be done via API or from configuration. Examples of both
 
 ## Supported Data Connections
 
-| Data Source Type | Data Source                                                | Sponsor |
-|------------------|------------------------------------------------------------|---------|
-| Database         | Postgres, MySQL, Cassandra                                 | N       |
-| File             | CSV, JSON, ORC, Parquet                                    | N       |
-| Messaging        | Kafka, Solace                                              | Y       |
-| HTTP             | REST API                                                   | Y       |
-| Metadata         | Marquez, OpenMetadata, OpenAPI/Swagger, Great Expectations | Y       |
+| Data Source Type | Data Source         | Support                                   | Free                                      |
+|------------------|---------------------|-------------------------------------------|-------------------------------------------|
+| Cloud Storage    | AWS S3              | :white_check_mark:                        | :white_check_mark:                        |
+| Cloud Storage    | GCP Cloud Storage   | :white_check_mark:                        | :white_check_mark:                        |
+| Cloud Storage    | Azure Blob Storage  | :white_check_mark:                        | :white_check_mark:                        |
+| Database         | Postgres            | :white_check_mark:                        | :white_check_mark:                        |
+| Database         | MySQL               | :white_check_mark:                        | :white_check_mark:                        |
+| Database         | Cassandra           | :white_check_mark:                        | :white_check_mark:                        |
+| Database         | MongoDB             | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| Database         | Elasticsearch       | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| File             | CSV                 | :white_check_mark:                        | :white_check_mark:                        |
+| File             | JSON                | :white_check_mark:                        | :white_check_mark:                        |
+| File             | ORC                 | :white_check_mark:                        | :white_check_mark:                        |
+| File             | Parquet             | :white_check_mark:                        | :white_check_mark:                        |
+| File             | Hudi                | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| File             | Iceberg             | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| File             | Delta Lake          | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| HTTP             | REST API            | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
+| Messaging        | Kafka               | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
+| Messaging        | Solace              | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
+| Messaging        | Pulsar              | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
+| Messaging        | RabbitMQ            | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
+| Messaging        | ActiveMQ            | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
+| Metadata         | Marquez             | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
+| Metadata         | OpenMetadata        | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
+| Metadata         | OpenAPI/Swagger     | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
+| Metadata         | Great Expectations  | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
+| Metadata         | Amundsen            | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
+| Metadata         | Datahub             | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
+| Metadata         | Solace Event Portal | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
 
 ### API
 

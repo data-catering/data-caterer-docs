@@ -1,11 +1,12 @@
 ---
-title: "Automated data generation and validation tool"
-description: "A synthetic data generation and testing tool that can automatically discover, generate and validate for
-files, databases, HTTP APIs and messaging systems."
+title: "Automated test data management tool"
+description: "An open-source automated test data management tool that can automatically discover, generate and validate for
+files, databases, HTTP APIs and messaging systems. Synthetically generate production-like data, verify via data quality rules
+and delete data after finishing."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
-<h1 align="center" style="padding-top: 25px;"><b>Never manually generate or validate data again.</b></h1>
+<h1 align="center" style="padding-top: 25px;"><b>Automated test data management.</b></h1>
 <h3 align="center" style="padding-bottom: 25px">Create simple managed flows for data generation, validation and cleanup.</h3>
 
 <picture class="center-content">
@@ -29,7 +30,7 @@ alt="Data Caterer generate, validate and clean data flow">
 <hr>
 
 <div class="right-side-description-container">
-<img src="diagrams/index/data_relationship.gif" alt="Create relationships between any data sources." class="front-page-gif">
+<img src="diagrams/index/data_relationship.gif" alt="Create relationships between any data sources, batch or real-time." class="front-page-gif">
 <div class="description-text-container">
 <b class="description-header">Relationships</b><br><a href="https://data.catering/setup/foreign-key/">Generate data with relationships</a> between any data source.
 </div>
