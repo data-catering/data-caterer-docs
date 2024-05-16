@@ -110,12 +110,6 @@ data source validations." class="front-page-gif">
     like and how it behaves. But it does not encompass all the additional metadata that comes with a data contract such
     as SLAs, security, etc.
 
--   :material-cloud-download-outline: __Metrics from load testing__
-
-    ---
-
-    Although millions of records can be generated, there are limited capabilities in terms of metric capturing.
-
 </div>
 
 <span class="center-content">
