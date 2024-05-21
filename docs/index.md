@@ -16,7 +16,7 @@ alt="Data Caterer generate, validate and clean data flow">
 </picture>
 
 <span class="center-content">
-[Try now!](get-started/docker.md){ .md-button .md-button--primary .button-spaced }
+[Try now!](get-started/quick-start.md){ .md-button .md-button--primary .button-spaced }
 [Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>
 
@@ -56,7 +56,7 @@ data source validations." class="front-page-gif">
 </div>
 
 <span class="center-content">
-[Try now!](get-started/docker.md){ .md-button .md-button--primary .button-spaced }
+[Try now!](get-started/quick-start.md){ .md-button .md-button--primary .button-spaced }
 [Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>
 
@@ -113,6 +113,6 @@ data source validations." class="front-page-gif">
 </div>
 
 <span class="center-content">
-[Try now!](get-started/docker.md){ .md-button .md-button--primary .button-spaced }
+[Try now!](get-started/quick-start.md){ .md-button .md-button--primary .button-spaced }
 [Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>

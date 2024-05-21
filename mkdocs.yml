@@ -60,7 +60,7 @@ theme:
 
 nav:
   - Home: 'index.md'
-  - Get Started: 'get-started/docker.md'
+  - Get Started: 'get-started/quick-start.md'
   - Setup:
       - 'setup/index.md'
       - Design: 'setup/design.md'

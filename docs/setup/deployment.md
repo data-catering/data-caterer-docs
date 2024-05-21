@@ -14,7 +14,7 @@ Three main ways to deploy and run Data Caterer:
 
 ## Application
 
-Run the OS native application from [downloading the specific OS application here](../get-started/docker.md#quick-start).
+Run the OS native application from [downloading the specific OS application here](../get-started/quick-start.md#quick-start).
 
 ## Docker
 

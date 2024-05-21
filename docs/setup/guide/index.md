@@ -9,7 +9,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 Below are a list of guides you can follow to create your data generation for your use case.
 
 For any of the paid tier guides, you can use the trial version fo the app to try it out. Details on how to get
-the trial can be found [**here**](../../get-started/docker.md#paid-version-trial).
+the trial can be found [**here**](../../get-started/quick-start.md#paid-version-trial).
 
 ## Scenarios
 

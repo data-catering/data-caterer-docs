@@ -8,7 +8,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 !!! example "Info"
 
-    Generating event data is a paid feature. Try the free trial [here](../../../get-started/docker.md).
+    Generating event data is a paid feature. Try the free trial [here](../../../get-started/quick-start.md).
 
 Creating a data generator for Kafka topic with matching records in a CSV file.
 

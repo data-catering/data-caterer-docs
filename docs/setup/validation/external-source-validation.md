@@ -14,7 +14,7 @@ in production.
 
 !!! example "Info"
 
-    Retrieving data validations from an external source is a paid feature. Try the free trial [here](../../get-started/docker.md).
+    Retrieving data validations from an external source is a paid feature. Try the free trial [here](../../get-started/quick-start.md).
 
 ## Supported Sources
 

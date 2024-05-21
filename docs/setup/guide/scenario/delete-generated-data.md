@@ -8,7 +8,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 !!! example "Info"
 
-    Delete generated data is a paid feature. Try the free trial [here](../../../get-started/docker.md).
+    Delete generated data is a paid feature. Try the free trial [here](../../../get-started/quick-start.md).
 
 Creating a data generator for Postgres and delete the generated data after using it.
 

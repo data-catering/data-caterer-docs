@@ -9,7 +9,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 !!! example "Info"
 
-    Deleting generated data is a paid feature. Try the free trial [here](../get-started/docker.md).
+    Deleting generated data is a paid feature. Try the free trial [here](../get-started/quick-start.md).
 
 As you generate and validate data, you may want to clean up the data that has been generated. This helps you:
 

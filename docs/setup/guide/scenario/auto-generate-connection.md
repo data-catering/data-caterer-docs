@@ -8,7 +8,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 !!! example "Info"
 
-    Auto data generation from data connection is a paid feature. Try the free trial [here](../../../get-started/docker.md).
+    Auto data generation from data connection is a paid feature. Try the free trial [here](../../../get-started/quick-start.md).
 
 Creating a data generator based on only a data connection to Postgres.
 
