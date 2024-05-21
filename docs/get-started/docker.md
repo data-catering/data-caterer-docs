@@ -10,9 +10,10 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 1. [Mac download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-mac.zip)
     1. Extract zip file
-    2. Drag Data Caterer into 'Applications' folder
-    3. Go to 'Applications' folder, right click Data Caterer, click 'Open' and then 'Open Anyway'
-    4. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
+    2. Double-click 'DataCaterer-1.0.0.dmg'
+    3. Drag Data Caterer into 'Applications' folder
+    4. Go to 'Applications' folder, right click Data Caterer, click 'Open' and then 'Open Anyway'
+    5. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
 2. [Windows download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-windows.zip)
     1. After downloaded, go to 'Downloads' folder and 'Extract All' from data-caterer-windows
     2. Double-click 'DataCaterer-1.0.0' to install Data Caterer
