@@ -247,7 +247,7 @@ function listOption(text) {
     return option;
 }
 
-export const wait = function (ms = 1500) {
+const wait = function (ms = 1500) {
     return new Promise(resolve => {
         setTimeout(resolve, ms);
     });
