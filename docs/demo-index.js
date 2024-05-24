@@ -278,8 +278,8 @@ generateButton.addEventListener("click", async function () {
     isGenerateData = true;
     await createTransactionCards();
 });
-validateButton.addEventListener("click", await validateTransactions);
-cleanupButton.addEventListener("click", await cleanupTransactions);
+validateButton.addEventListener("click", await validateTransactions());
+cleanupButton.addEventListener("click", await cleanupTransactions());
 
 createValidationRules();
 await createTransactionCards();
