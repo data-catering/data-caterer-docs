@@ -13,7 +13,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 Creating a data generator for Solace. You will build a Docker image that will be able to populate data in Solace
 for the queues/topics you configure.
 
-![Generate Solace messages](../../../diagrams/solace_generation_run.gif)
+![Generate Solace messages](../../../diagrams/data-source/solace_generation_run.gif)
 
 ## Requirements
 
@@ -47,7 +47,7 @@ Open up [localhost:8080](http://localhost:8080) and login with `admin:admin` and
 below. Notice there is 2 queues/topics created. If you do not see 2 created, try to run the script found under
 `docker/data/solace/setup_solace.sh` and change the `host` to `localhost`.
 
-![Solace dashboard](../../../diagrams/solace_dashboard.png)
+![Solace dashboard](../../../diagrams/data-source/solace_dashboard.png)
 
 ### Plan Setup
 
@@ -343,7 +343,7 @@ class we just created.
 
 Your output should look like this.
 
-![Solace messages queued](../../../diagrams/solace_messages_queued.png)
+![Solace messages queued](../../../diagrams/data-source/solace_messages_queued.png)
 
 Unfortunately, there is no easy way to see the message content. You can check the message content from your application
 or service that consumes these messages.

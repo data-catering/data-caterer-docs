@@ -12,7 +12,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 Creating a data generator based on an [OpenAPI/Swagger](https://spec.openapis.org/oas/latest.html) document.
 
-![Generate HTTP requests](../../../diagrams/http_generation_run.gif)
+![Generate HTTP requests](../../../diagrams/data-source/http_generation_run.gif)
 
 ## Requirements
 

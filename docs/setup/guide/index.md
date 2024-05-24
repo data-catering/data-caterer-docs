@@ -56,8 +56,8 @@ the trial can be found [**here**](../../get-started/quick-start.md#paid-version-
   [Cassandra]: data-source/cassandra.md
   [Kafka]: data-source/kafka.md
   [Solace]: data-source/solace.md
-  [Marquez]: data-source/marquez-metadata-source.md
-  [OpenMetadata]: data-source/open-metadata-source.md
+  [Marquez]: data-source/metadata/marquez.md
+  [OpenMetadata]: data-source/metadata/open-metadata.md
   [HTTP]: data-source/http.md
   [MySql]: data-source/cassandra.md
 
@@ -83,16 +83,16 @@ more steps.
 
 ### Task
 
-| Data Source Type | Data Source | Sample Task                                                                                                                            | Notes                                                             |
-|------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| Data Source Type | Data Source | Sample Task                                                                                                                                  | Notes                                                             |
+|------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
 | Database         | Postgres    | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/jdbc/postgres/postgres-account-task.yaml)   |                                                                   |
 | Database         | MySQL       | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/jdbc/mysql/mysql-account-task.yaml)         |                                                                   |
 | Database         | Cassandra   | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/cassandra/cassandra-customer-task.yaml)     |                                                                   |
 | File             | CSV         | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/file/csv/csv-transaction-task.yaml)         |                                                                   |
 | File             | JSON        | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/file/json/json-account-task.yaml)           | Contains nested schemas and use of SQL for generated values       |
 | File             | Parquet     | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/file/parquet/parquet-transaction-task.yaml) | Partition by year column                                          |
-| Kafka            | Kafka       | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/kafka/kafka-account-task.yaml)              | Specific base schema to be used, define headers, key, value, etc. |
-| JMS              | Solace      | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/jms/solace/jms-account-task.yaml)           | JSON formatted message                                            |
+| Messaging System | Kafka       | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/kafka/kafka-account-task.yaml)              | Specific base schema to be used, define headers, key, value, etc. |
+| Messaging System | Solace      | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/jms/solace/jms-account-task.yaml)           | JSON formatted message                                            |
 | HTTP             | PUT         | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/http/http-account-task.yaml)                | JSON formatted PUT body                                           |
 
 ### Configuration

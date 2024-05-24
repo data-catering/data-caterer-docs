@@ -79,9 +79,11 @@ nav:
               - Cassandra: 'setup/guide/data-source/cassandra.md'
               - Kafka: 'setup/guide/data-source/kafka.md'
               - Solace: 'setup/guide/data-source/solace.md'
-              - Marquez Metadata Source: 'setup/guide/data-source/marquez-metadata-source.md'
-              - OpenMetadata Source: 'setup/guide/data-source/open-metadata-source.md'
               - HTTP: 'setup/guide/data-source/http.md'
+              - Metadata:
+                - Great Expectations: 'setup/guide/data-source/metadata/great-expectations.md'
+                - Marquez: 'setup/guide/data-source/metadata/marquez.md'
+                - OpenMetadata: 'setup/guide/data-source/metadata/open-metadata.md'
       - Configuration: 'setup/configuration.md'
       - Connection: 'setup/connection.md'
       - Generator:

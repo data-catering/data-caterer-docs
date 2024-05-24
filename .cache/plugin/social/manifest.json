@@ -43,5 +43,8 @@
   "assets/images/social/setup/delete-data.png": "67e872f623ef8eb185f3ba103b7d1d2ad4f810ff",
   "assets/images/social/demo.png": "49f1941baebaf5717b2a7a76a9472d0e9d89a7f8",
   "assets/images/social/sponsor-blah.png": "f369f1d660b471ef373daf40722a62d4b756f78f",
-  "assets/images/social/get-started/quick-start.png": "1e2aa0a66823889c65e7650e6d764f0f78923d3b"
+  "assets/images/social/get-started/quick-start.png": "1e2aa0a66823889c65e7650e6d764f0f78923d3b",
+  "assets/images/social/setup/guide/data-source/metadata/open-metadata.png": "ab31fcccb5b849e6c4afd7e769ea4ec802aa2b12",
+  "assets/images/social/setup/guide/data-source/metadata/marquez.png": "eec8e31b43468fb940312e29bc6dcc73563b128e",
+  "assets/images/social/setup/guide/data-source/metadata/great-expectations.png": "c11959ed596bcc3274c27e255a314ca0285b19e6"
 }

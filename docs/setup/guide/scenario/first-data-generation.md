@@ -8,7 +8,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 Creating a data generator for a CSV file.
 
-![Generate CSV files](../../../diagrams/csv_generation_run.gif)
+![Generate CSV files](../../../diagrams/data-source/csv_generation_run.gif)
 
 ## Requirements
 

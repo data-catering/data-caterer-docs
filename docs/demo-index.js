@@ -54,7 +54,7 @@ async function createTransactionCards() {
         } else if (randDescVal < 0.5) {
             rawDescription = `${(Math.random() + 1).toString(36).substring(6)} ${currTxn.description}`;
         }
-        let rawTxnText = `{"date": "${fullCurrDate}", "desc": "${rawDescription}", "amount": "${String(currAmount)}"}\n`;
+        let rawTxnText = `{"date":"${fullCurrDate}","desc":"${rawDescription}","amount":"${String(currAmount)}"}\n`;
 
         let date = document.createElement("p");
         date.classList.add("date-text", "card-text");
@@ -76,6 +76,7 @@ async function createTransactionCards() {
 
         txnContainer.append(date, description, category, amount);
         txnCard.append(txnContainer);
+        await wait(200);
         allTransactionCardContainer.append(txnCard);
         allTransactionCardContainer.scrollTop = allTransactionCardContainer.scrollHeight;
         startDate = currDate;
@@ -86,18 +87,19 @@ async function createTransactionCards() {
 async function validateTransactions() {
     // foreach record generated, go one by one through each and validate with transition
     isGenerateData = false;
-    await wait(1000);
-    if (validationContainer.style.visibility === "hidden") {
-        validationContainer.style.visibility = "visible";
+    if (validationContainer.style.display === "none") {
+        validationContainer.style.display = "block";
     }
-    let txnCards = Array.from(allTransactionCardContainer.children).reverse();
     let currentValidations = Array.from(validationContainer.children);
+    let txnCards = Array.from(allTransactionCardContainer.children).reverse();
     for (const txnCard of txnCards) {
         txnCard.style.backgroundColor = "";
         if (txnCard.childElementCount > 1) {
             txnCard.removeChild(txnCard.lastChild);
         }
     }
+    await wait(2000);
+    txnCards = Array.from(allTransactionCardContainer.children).reverse();
 
     for (const txnCard of txnCards) {
         await wait(1000);
@@ -107,10 +109,11 @@ async function validateTransactions() {
         let failedSummary = document.createElement("ol");
         failedSummary.style.display = "none";
         let failedSummaryText = document.createElement("a");
+        failedSummaryText.classList.add("fail-reason-button");
         failedSummaryText.innerText = "Reason >";
         failedSummaryText.addEventListener("click", function () {
             if (failedSummary.style.display === "none") {
-                failedSummary.style.display = "block";
+                failedSummary.style.display = "contents";
             } else {
                 failedSummary.style.display = "none";
             }
@@ -147,7 +150,7 @@ async function validateTransactions() {
                 if (!res) failedSummary.append(listOption(`${field} not less than ${validation.getElementsByTagName("input").item(0).value}`));
             }
         });
-        txnCard.style.backgroundColor = validationResult ? "#5cb85c" : "#d9534f";
+        txnCard.style.backgroundColor = validationResult ? "hsl(120, 40%, 45%)" : "hsl(2, 40%, 45%)";
         if (failedSummary.childElementCount > 0) {
             failedSummaryText.append(failedSummary);
             txnCard.append(failedSummaryText);
@@ -156,15 +159,14 @@ async function validateTransactions() {
 }
 
 function createValidationRules() {
-    validationContainer.style.visibility = "hidden";
+    validationContainer.style.display = "none";
     // have a list of 4 validations rules that users could alter
     let validationRules = [
-        {"field": "category", "validation": {"type": "select", "options": ["Not Null", "Null"]}},
+        {"field": "description", "validation": {"type": "text", "title": "Matches", "default": "^[A-Z][a-z]+$"}},
         {
             "field": "category",
             "validation": {"type": "text", "title": "In", "default": "Financial,Food,Travel,Transport,Technology"}
         },
-        {"field": "description", "validation": {"type": "text", "title": "Matches", "default": "^[A-Z][a-z]+$"}},
         {"field": "amount", "validation": {"type": "number", "title": "Less Than", "default": "175"}},
     ];
 
@@ -177,9 +179,9 @@ function createValidationRules() {
         validationRuleContainer.setAttribute("field", validationRule.field);
 
         if (validationRule.validation.type === "select") {
-            let validationSelect = document.createElement("md-outlined-select");
+            let validationSelect = document.createElement("select");
             validationRule.validation.options.forEach(opt => {
-                let option = document.createElement("md-select-option");
+                let option = document.createElement("option");
                 option.value = opt;
                 option.innerText = opt;
                 validationSelect.append(option);
@@ -209,7 +211,7 @@ function createValidationRules() {
 async function cleanupTransactions() {
     // go through each record and remove it
     isGenerateData = false;
-    await wait(1000);
+    await wait(2000);
     let txnCards = Array.from(allTransactionCardContainer.children).reverse();
 
     for (const txnCard of txnCards) {
@@ -281,4 +283,3 @@ cleanupButton.addEventListener("click", await cleanupTransactions);
 
 createValidationRules();
 await createTransactionCards();
-// await createFinancialAccountAndTransactions();

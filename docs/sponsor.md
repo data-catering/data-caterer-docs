@@ -4,16 +4,8 @@ To have access to all the features of Data Caterer, you can subscribe according 
 charged by usage. As you continue to subscribe, you will have access to the latest version of Data Caterer as new
 bug fixes and features get published. You will also get priority on any feature requests.
 
-This has been a passion project of mine where I have spent countless hours thinking of the idea, implementing, 
-maintaining, documenting and updating it. I hope that it will help with developers and companies with their testing 
-by saving time and effort, allowing you to focus on what is important. If you fall under this boat, please consider
-sponsorship to allow me to further maintain and upgrade the solution. Any contributions are much appreciated.
-
 Those who are wanting to use this project for open source applications, [please contact me](#contact) as I would be 
 happy to contribute.
-
-This is inspired by the [mkdocs-material project](https://github.com/squidfunk/mkdocs-material) that
-[follows the same model](https://squidfunk.github.io/mkdocs-material/insiders/).
 
 ## Features
 
@@ -21,7 +13,7 @@ This is inspired by the [mkdocs-material project](https://github.com/squidfunk/m
 - :material-file: Batch and :material-circle-multiple: Event generation
 - :material-auto-fix: [Auto generation from data connections or metadata sources](setup/guide/scenario/auto-generate-connection.md)
 - :material-test-tube: Suggest data validations
-- :material-delete-sweep: [Clean up generated data](setup/guide/scenario/delete-generated-data.md)
+- :material-delete-sweep: [Clean up generated and downstream data](setup/guide/scenario/delete-generated-data.md)
 - :material-animation-play-outline: Run as many times as you want, not charged by usage
 - :material-card-search: Metadata discovery
 - [Plus more to come](use-case/roadmap.md)
