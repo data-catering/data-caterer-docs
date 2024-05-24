@@ -5,6 +5,7 @@ files, databases, HTTP APIs and messaging systems. Synthetically generate produc
 and delete data after finishing."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
+<script src="demo-index.js"></script>
 
 <h1 align="center" style="padding-top: 25px;"><b>Automated test data management.</b></h1>
 <h3 align="center" style="padding-bottom: 25px">Create simple managed flows for data generation, validation and cleanup.</h3>
@@ -139,4 +140,3 @@ it up.
 [Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>
 
-<script type="module" src="demo-index.js"></script>
