@@ -20,7 +20,7 @@ Below are a list of guides you can follow to create your first Data Catering job
 
 </div>
   
-  [Cassamdra]: data-source/database/cassandra.md
+  [Cassandra]: data-source/database/cassandra.md
   [MySQL (Soon to document)]: data-source/database/cassandra.md
   [Postgres (Soon to document)]: data-source/database/cassandra.md
 
@@ -32,7 +32,7 @@ Below are a list of guides you can follow to create your first Data Catering job
 - __[Iceberg]__ - Generate/validate data for Iceberg tables
 - __[JSON]__ - Generate/validate data for JSON
 - __[ORC]__ - Generate/validate data for ORC
-- __[Parqet]__ - Generate/validate data for Parquet
+- __[Parquet]__ - Generate/validate data for Parquet
 
 </div>
 
