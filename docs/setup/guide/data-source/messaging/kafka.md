@@ -15,7 +15,7 @@ for the topics you configure.
 
 ## Requirements
 
-- 20 minutes
+- 10 minutes
 - Git
 - Gradle
 - Docker

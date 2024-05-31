@@ -6,7 +6,78 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Guides
 
-Below are a list of guides you can follow to create your data generation for your use case.
+Below are a list of guides you can follow to create your first Data Catering job for your use case.
+
+## Data Sources
+
+### Databases
+
+<div class="grid cards" markdown>
+
+- __[Cassandra]__ - Generate/validate data for Cassandra
+- __[MySQL (Soon to document)]__ - Generate/validate data for MySQL
+- __[Postgres (Soon to document)]__ - Generate/validate data for Postgres
+
+</div>
+  
+  [Cassamdra]: data-source/database/cassandra.md
+  [MySQL (Soon to document)]: data-source/database/cassandra.md
+  [Postgres (Soon to document)]: data-source/database/cassandra.md
+
+### Files
+
+<div class="grid cards" markdown>
+
+- __[CSV]__ - Generate/validate data for CSV
+- __[Iceberg]__ - Generate/validate data for Iceberg tables
+- __[JSON]__ - Generate/validate data for JSON
+- __[ORC]__ - Generate/validate data for ORC
+- __[Parqet]__ - Generate/validate data for Parquet
+
+</div>
+
+  [CSV]: data-source/file/csv.md
+  [Iceberg]: data-source/file/iceberg.md
+  [JSON]: data-source/file/json.md
+  [ORC]: data-source/file/orc.md
+  [Parquet]: data-source/file/parquet.md
+
+### HTTP
+
+<div class="grid cards" markdown>
+
+- __[REST API]__ - Generate data for REST APIs
+
+</div>
+
+  [REST API]: data-source/http/http.md
+
+### Messaging
+
+<div class="grid cards" markdown>
+
+- __[Kafka]__ - Generate data for Kafka topics
+- __[Solace]__ - Generate data for Solace messages
+
+</div>
+
+  [Kafka]: data-source/messaging/kafka.md
+  [Solace]: data-source/messaging/solace.md
+
+### Metadata
+
+<div class="grid cards" markdown>
+
+- __[Great Expectations]__ - Use validations from Great Expectations for testing
+- __[Marquez]__ - Generate data based on metadata in Marquez
+- __[OpenMetadata]__ - Generate data based on metadata in OpenMetadata
+
+</div>
+
+  [Great Expectations]: data-source/metadata/great-expectations.md
+  [Marquez]: data-source/metadata/marquez.md
+  [OpenMetadata]: data-source/metadata/open-metadata.md
+
 
 ## Scenarios
 
@@ -29,34 +100,6 @@ Below are a list of guides you can follow to create your data generation for you
   [Auto Generate From Data Connection]: scenario/auto-generate-connection.md
   [Delete Generated Data]: scenario/delete-generated-data.md
   [Generate Batch and Event Data]: scenario/batch-and-event.md
-
-## Data Sources
-
-<div class="grid cards" markdown>
-
-- __[Files (CSV, JSON, ORC, Parquet)]__ - Generate data for popular file formats
-- __[Postgres]__ - JDBC Postgres tables
-- __[Cassandra]__ - Cassandra tables
-- __[Kafka]__ - Kafka topics
-- __[Solace]__ - Solace messages
-- __[Marquez]__ - Generate data based on metadata in Marquez
-- __[OpenMetadata]__ - Generate data based on metadata in OpenMetadata
-- __[HTTP]__ - HTTP requests
-- __[Files (Fixed width)]__ - (Soon to document) A variant of CSV but with no separator
-- __[MySql]__ - (Soon to document) JDBC MySql tables
-
-</div>
-
-  [Files (CSV, JSON, ORC, Parquet)]: scenario/first-data-generation.md
-  [Files (Fixed width)]: scenario/first-data-generation.md
-  [Postgres]: scenario/first-data-generation.md
-  [Cassandra]: data-source/database/cassandra.md
-  [Kafka]: data-source/messaging/kafka.md
-  [Solace]: data-source/messaging/solace.md
-  [Marquez]: data-source/metadata/marquez.md
-  [OpenMetadata]: data-source/metadata/open-metadata.md
-  [HTTP]: data-source/http/http.md
-  [MySql]: data-source/database/cassandra.md
 
 ## YAML Files
 
