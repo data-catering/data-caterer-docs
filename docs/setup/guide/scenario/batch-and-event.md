@@ -75,7 +75,7 @@ Make sure your class extends `PlanRun`.
     ```
 
 We will borrow the Kafka task that is already defined under the class `AdvancedKafkaPlanRun`
-or `AdvancedKafkaJavaPlanRun`. You can go through the Kafka guide [**here**](../data-source/kafka.md) for more details.
+or `AdvancedKafkaJavaPlanRun`. You can go through the Kafka guide [**here**](../data-source/messaging/kafka.md) for more details.
 
 #### Schema
 

@@ -15,30 +15,30 @@ These configurations can be done via API or from configuration. Examples of both
 | Data Source Type | Data Source         | Support                                   | Free                                      |
 |------------------|---------------------|-------------------------------------------|-------------------------------------------|
 | Cloud Storage    | AWS S3              | :white_check_mark:                        | :white_check_mark:                        |
-| Cloud Storage    | GCP Cloud Storage   | :white_check_mark:                        | :white_check_mark:                        |
 | Cloud Storage    | Azure Blob Storage  | :white_check_mark:                        | :white_check_mark:                        |
-| Database         | Postgres            | :white_check_mark:                        | :white_check_mark:                        |
-| Database         | MySQL               | :white_check_mark:                        | :white_check_mark:                        |
+| Cloud Storage    | GCP Cloud Storage   | :white_check_mark:                        | :white_check_mark:                        |
 | Database         | Cassandra           | :white_check_mark:                        | :white_check_mark:                        |
-| Database         | MongoDB             | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| Database         | MySQL               | :white_check_mark:                        | :white_check_mark:                        |
+| Database         | Postgres            | :white_check_mark:                        | :white_check_mark:                        |
 | Database         | Elasticsearch       | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| Database         | MongoDB             | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
 | File             | CSV                 | :white_check_mark:                        | :white_check_mark:                        |
+| File             | Iceberg             | :white_check_mark:                        | :white_check_mark:                        |
 | File             | JSON                | :white_check_mark:                        | :white_check_mark:                        |
 | File             | ORC                 | :white_check_mark:                        | :white_check_mark:                        |
 | File             | Parquet             | :white_check_mark:                        | :white_check_mark:                        |
-| File             | Hudi                | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
-| File             | Iceberg             | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
 | File             | Delta Lake          | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| File             | Hudi                | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
 | HTTP             | REST API            | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
 | Messaging        | Kafka               | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
 | Messaging        | Solace              | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
+| Messaging        | ActiveMQ            | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
 | Messaging        | Pulsar              | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
 | Messaging        | RabbitMQ            | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
-| Messaging        | ActiveMQ            | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
+| Metadata         | Great Expectations  | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
 | Metadata         | Marquez             | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
 | Metadata         | OpenMetadata        | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
 | Metadata         | OpenAPI/Swagger     | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
-| Metadata         | Great Expectations  | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
 | Metadata         | Amundsen            | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
 | Metadata         | Datahub             | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |
 | Metadata         | Solace Event Portal | :octicons-x-circle-fill-12:{ .red-cross } | :octicons-x-circle-fill-12:{ .red-cross } |

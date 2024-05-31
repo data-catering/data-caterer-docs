@@ -8,9 +8,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 Below are a list of guides you can follow to create your data generation for your use case.
 
-For any of the paid tier guides, you can use the trial version fo the app to try it out. Details on how to get
-the trial can be found [**here**](../../get-started/quick-start.md#paid-version-trial).
-
 ## Scenarios
 
 <div class="grid cards" markdown>
@@ -53,13 +50,13 @@ the trial can be found [**here**](../../get-started/quick-start.md#paid-version-
   [Files (CSV, JSON, ORC, Parquet)]: scenario/first-data-generation.md
   [Files (Fixed width)]: scenario/first-data-generation.md
   [Postgres]: scenario/first-data-generation.md
-  [Cassandra]: data-source/cassandra.md
-  [Kafka]: data-source/kafka.md
-  [Solace]: data-source/solace.md
+  [Cassandra]: data-source/database/cassandra.md
+  [Kafka]: data-source/messaging/kafka.md
+  [Solace]: data-source/messaging/solace.md
   [Marquez]: data-source/metadata/marquez.md
   [OpenMetadata]: data-source/metadata/open-metadata.md
-  [HTTP]: data-source/http.md
-  [MySql]: data-source/cassandra.md
+  [HTTP]: data-source/http/http.md
+  [MySql]: data-source/database/cassandra.md
 
 ## YAML Files
 

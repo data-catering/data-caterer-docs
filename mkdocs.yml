@@ -76,10 +76,13 @@ nav:
               - Generate Batch and Event Data: 'setup/guide/scenario/batch-and-event.md'
           - Data Sources:
               - Files (CSV, JSON, ORC, Parquet): 'setup/guide/scenario/first-data-generation.md'
-              - Cassandra: 'setup/guide/data-source/cassandra.md'
-              - Kafka: 'setup/guide/data-source/kafka.md'
-              - Solace: 'setup/guide/data-source/solace.md'
-              - HTTP: 'setup/guide/data-source/http.md'
+              - Database:
+                - Cassandra: 'setup/guide/data-source/database/cassandra.md'
+              - Messaging:
+                - Kafka: 'setup/guide/data-source/messaging/kafka.md'
+                - Solace: 'setup/guide/data-source/messaging/solace.md'
+              - HTTP:
+                - REST API: 'setup/guide/data-source/http/http.md'
               - Metadata:
                 - Great Expectations: 'setup/guide/data-source/metadata/great-expectations.md'
                 - Marquez: 'setup/guide/data-source/metadata/marquez.md'
