@@ -1,6 +1,6 @@
 ---
-title: "Data generation and validation tool roadmap"
-description: "Data Catering roadmap of features. Most requested features for data generation and validation tools."
+title: "Data Caterer Roadmap"
+description: "Data Caterer roadmap of features. Most requested features for test data management tools."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
