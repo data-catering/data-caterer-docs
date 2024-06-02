@@ -19,7 +19,6 @@ theme:
   favicon: diagrams/logo/data_catering_transparent.svg
   features:
     - navigation.tabs
-    - navigation.sections
     - navigation.instant
     - navigation.instant.prefetch
     - navigation.tracking
@@ -94,11 +93,11 @@ nav:
                 - Great Expectations: 'setup/guide/data-source/metadata/great-expectations.md'
                 - Marquez: 'setup/guide/data-source/metadata/marquez.md'
                 - OpenMetadata: 'setup/guide/data-source/metadata/open-metadata.md'
-      - Configuration: 'setup/configuration.md'
-      - Connection: 'setup/connection.md'
+      - Connections: 'setup/connection.md'
       - Generator:
           - Data Generator: 'setup/generator/data-generator.md'
           - Record Count: 'setup/generator/count.md'
+          - Relationships: 'setup/generator/foreign-key.md'
       - Validation:
           - 'setup/validation.md'
           - Basic: 'setup/validation/basic-validation.md'
@@ -109,8 +108,8 @@ nav:
       - Report:
           - HTML Report: 'setup/report/html-report.md'
           - Alert: 'setup/report/alert.md'
-      - Foreign Keys: 'setup/foreign-key.md'
       - Delete Data: 'setup/delete-data.md'
+      - Configuration: 'setup/configuration.md'
       - Deployment: 'setup/deployment.md'
       - Advanced: 'setup/advanced.md'
   - Use Case:

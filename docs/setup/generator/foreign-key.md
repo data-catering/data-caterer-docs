@@ -1,12 +1,12 @@
 ---
-title: "Foreign Keys/Relationships"
-description: "Foreign keys/relationships can be defined within Data Caterer to help generate data that requires the same values to be used. Can be simple, compound or complex relationships that reference other fields with transformations."
+title: "Relationships/Foreign Keys"
+description: "Relationships/foreign keys can be defined within Data Caterer to help generate data that requires the same values to be used. Can be simple, compound or complex relationships that reference other fields with transformations."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
-# Foreign Keys/Relationships
+# Relationships/Foreign Keys
 
-![Multiple data source foreign key example](../diagrams/foreign_keys.drawio.png "Multiple data source foreign keys")
+![Multiple data source foreign key example](../../diagrams/foreign_keys.drawio.png "Multiple data source foreign keys")
 
 Foreign keys can be defined to represent the relationships between datasets where values are required to match for
 particular fields.

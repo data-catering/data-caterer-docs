@@ -13,7 +13,7 @@ There are many options available for you to use when you have a scenario when da
 
 ![Multiple data source foreign key example](../diagrams/foreign_keys.drawio.png "Multiple data source foreign keys")
 
-Details for how you can configure foreign keys can be found [**here**](foreign-key.md).
+Details for how you can configure foreign keys can be found [**here**](generator/foreign-key.md).
 
 ## Edge cases
 

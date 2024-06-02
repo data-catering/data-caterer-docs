@@ -32,7 +32,7 @@ If you want a guided tour of using the Java or Scala API, you can follow one of 
   [Connections]: connection.md
   [Generators]: generator/data-generator.md
   [Validations]: validation.md
-  [Foreign Keys]: foreign-key.md
+  [Foreign Keys]: generator/foreign-key.md
   [Deployment]: deployment.md
   [Advanced]: advanced.md
 

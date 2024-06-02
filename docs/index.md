@@ -116,4 +116,3 @@ data source validations." class="front-page-gif">
 [Try now!](get-started/quick-start.md){ .md-button .md-button--primary .button-spaced }
 [Demo](sample/ui/index.html){ .md-button .md-button--primary .button-spaced }
 </span>
-
