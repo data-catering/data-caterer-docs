@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: "datacatering/data-caterer"
+  repository: "datacatering/data-caterer-basic"
   pullPolicy: "IfNotPresent"
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.10.4"
+  tag: "0.10.7"
 
 imagePullSecrets: []
 nameOverride: ""
