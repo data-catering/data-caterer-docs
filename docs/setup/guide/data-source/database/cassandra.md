@@ -1,5 +1,5 @@
 ---
-title: "Cassandra data generation and validation tool"
+title: "Cassandra Test Data Management"
 description: "Example of Cassandra data generation and testing tool that can automatically discover, generate and validate."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

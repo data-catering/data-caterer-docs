@@ -1,5 +1,5 @@
 ---
-title: "JSON Test Data Management tool"
+title: "JSON Test Data Management"
 description: "Example of JSON test data management tool that can automatically discover, generate and validate."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
@@ -92,7 +92,7 @@ to the accounts generated.
     var accountTask = json("customer_accounts", "/opt/app/data/customer/account_json")
             .schema(
                 field().name("account_id"),
-                field().name("balance").type(DoubleType.instance()),
+                field().name("balance").type(new DecimalType(5, 2)),
                 field().name("created_by"),
                 field().name("open_time").type(TimestampType.instance()),
                 field().name("status"),

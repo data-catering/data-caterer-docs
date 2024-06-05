@@ -1,5 +1,5 @@
 ---
-title: "Solace data generation and validation tool"
+title: "Solace Test Data Management"
 description: "Example of Solace for data generation and validation tool for queue/topic."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

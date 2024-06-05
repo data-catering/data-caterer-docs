@@ -1,12 +1,12 @@
 ---
-title: "Iceberg Test Data Management tool"
+title: "Iceberg Test Data Management"
 description: "Example of Iceberg test data management tool that can automatically discover, generate and validate."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
 # Iceberg
 
-Creating a data generator for Iceberg. You will have the ability to generate and validate Iceberg tables via Docker.
+Creating a data generator for Iceberg. You will have the ability to generate and validate Iceberg tables.
 
 ## Requirements
 
@@ -19,9 +19,27 @@ Creating a data generator for Iceberg. You will have the ability to generate and
 
 First, we will clone the data-caterer-example repo which will already have the base project setup required.
 
-```shell
-git clone git@github.com:data-catering/data-caterer-example.git
-```
+=== "Java"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "Scala"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "YAML"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "UI"
+
+    [Run Data Caterer UI via the 'Quick Start' found here.](../../../../get-started/quick-start.md)
 
 ### Plan Setup
 
@@ -98,7 +116,7 @@ to the accounts generated.
     var accountTask = iceberg("customer_accounts", "/opt/app/data/customer/iceberg", "account.accounts")
             .schema(
                 field().name("account_id"),
-                field().name("balance").type(DoubleType.instance()),
+                field().name("balance").type(new DecimalType(5, 2)),
                 field().name("created_by"),
                 field().name("name"),
                 field().name("open_time").type(TimestampType.instance()),
