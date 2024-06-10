@@ -29,6 +29,7 @@ Below are a list of guides you can follow to create your first Data Catering job
 <div class="grid cards" markdown>
 
 - __[CSV]__ - Generate/validate data for CSV
+- __[Delta Lake]__ - Generate/validate data for Delta Lake
 - __[Iceberg]__ - Generate/validate data for Iceberg tables
 - __[JSON]__ - Generate/validate data for JSON
 - __[ORC]__ - Generate/validate data for ORC
@@ -37,6 +38,7 @@ Below are a list of guides you can follow to create your first Data Catering job
 </div>
 
   [CSV]: data-source/file/csv.md
+  [Delta Lake]: data-source/file/delta-lake.md
   [Iceberg]: data-source/file/iceberg.md
   [JSON]: data-source/file/json.md
   [ORC]: data-source/file/orc.md
