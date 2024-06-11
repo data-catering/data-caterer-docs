@@ -47,6 +47,7 @@ Create a new Java or Scala class.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyIcebergJavaPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyIcebergPlan.scala`
+- YAML: `docker/data/customer/plan/my-iceberg.yaml`
 
 Make sure your class extends `PlanRun`.
 
@@ -67,6 +68,22 @@ Make sure your class extends `PlanRun`.
     class MyIcebergPlan extends PlanRun {
     }
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-iceberg.yaml`:
+    ```yaml
+    name: "my_iceberg_plan"
+    description: "Create account data in Iceberg table"
+    tasks:
+      - name: "iceberg_account_table"
+        dataSourceName: "customer_accounts"
+        enabled: true
+    ```
+
+=== "UI"
+
+    Check next section.
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -105,6 +122,30 @@ Within our class, we can start by defining the connection properties to read/wri
     
     Additional options can be found [**here**](https://iceberg.apache.org/docs/1.5.0/spark-configuration/#catalog-configuration).
 
+=== "YAML"
+
+    In `application.conf`:
+    ```
+    iceberg {
+      customer_accounts {
+        path = "/opt/app/data/customer/iceberg"
+        path = ${?ICEBERG_WAREHOUSE_PATH}
+        catalogType = "hadoop"
+        catalogType = ${?ICEBERG_CATALOG_TYPE}
+        catalogUri = ""
+        catalogUri = ${?ICEBERG_CATALOG_URI}
+      }
+    }
+    ```
+
+=== "UI"
+
+    1. Go to `Connection` tab in the top bar
+    2. Select data source as `Iceberg`
+        1. Enter in data source name `customer_accounts`
+        2. Select catalog type `hadoop`
+        3. Enter warehouse path as `/opt/app/data/customer/iceberg`
+
 #### Schema
 
 Depending on how you want to define the schema, follow the below:
@@ -139,15 +180,50 @@ have unique values generated.
     execute(myPlan, config, accountTask, transactionTask)
     ```
 
+=== "YAML"
+
+    In `application.conf`:
+    ```
+    flags {
+      enableUniqueCheck = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    2. Click on `Flag` and click on `Unique Check`
+    3. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
+
 ### Run
 
 Now we can run via the script `./run.sh` that is in the top level directory of the `data-caterer-example` to run the class we just
 created.
 
-```shell
-./run.sh
-#input class MyIcebergJavaPlan or MyIcebergPlan
-```
+=== "Java"
+
+    ```shell
+    ./run.sh MyIcebergJavaPlan
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MyIcebergPlan
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-iceberg.yaml
+    ```
+
+=== "UI"
+
+    1. Click on `Execute` at the top
 
 Congratulations! You have now made a data generator that has simulated a real world data scenario. You can check the
 `IcebergJavaPlan.java` or `IcebergPlan.scala` files as well to check that your plan is the same.

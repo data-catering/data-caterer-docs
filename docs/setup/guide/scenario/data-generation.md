@@ -45,10 +45,11 @@ First, we will clone the data-caterer-example repo which will already have the b
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a new Java or Scala class or plan YAML.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyCsvPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyCsvPlan.scala`
+- YAML: `docker/data/customer/plan/my-csv.yaml`
 
 Make sure your class extends `PlanRun`.
 
@@ -69,6 +70,22 @@ Make sure your class extends `PlanRun`.
     class MyCsvPlan extends PlanRun {
     }
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-csv.yaml`:
+    ```yaml
+    name: "my_csv_plan"
+    description: "Create account data in CSV file"
+    tasks:
+      - name: "csv_account_file"
+        dataSourceName: "customer_accounts"
+        enabled: true
+    ```
+
+=== "UI"
+
+    Go to next section.
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -101,6 +118,26 @@ high level configurations.
     ```
 
     [Other additional options for CSV can be found here](https://spark.apache.org/docs/latest/sql-data-sources-csv.html#data-source-option)
+
+=== "YAML"
+
+    In `application.conf`:
+    ```
+    csv {
+      customer_accounts {
+        path = "/opt/app/data/customer/account"
+        path = ${?CSV_PATH}
+        header = "true"
+      }
+    }
+    ```
+
+=== "UI"
+
+    1. Go to `Connection` tab in the top bar
+    2. Select data source as `CSV`
+        1. Enter in data source name `customer_accounts`
+        3. Enter path as `/tmp/data-caterer/customer/account`
 
 #### Schema
 
@@ -137,6 +174,43 @@ data type defined. This is because the default data type is `StringType`.
       )
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/task/file/csv/csv-account-task.yaml`:
+    ```yaml
+    name: "csv_account_file"
+    steps:
+      - name: "accounts"
+        type: "csv"
+        options:
+          path: "/opt/app/custom/csv/transactions"
+        schema:
+          fields:
+            - name: "account_id"
+            - name: "balance"
+              type: "double"
+            - name: "created_by"
+            - name: "name"
+            - name: "open_time"
+              type: "timestamp"
+            - name: "status"
+    ```
+
+=== "UI"
+
+    1. Go to `Home` tab in the top bar
+    2. Enter `my-csv` as the `Plan name`
+    3. Under `Tasks`, enter `csv-account-task` as `Task name` and select data source as `customer_accounts`
+    4. Click on `Generation` and tick the `Manual` checkbox
+    5. Click on `+ Field`
+        1. Add field `account_id` with type `string`
+        1. Add field `balance` with type `double`
+        1. Add field `created_by` with type `string`
+        1. Add field `name` with type `string`
+        1. Add field `open_time` with type `timestamp`
+        1. Add field `status` with type `string`
+
+
 #### Field Metadata
 
 We could stop here and generate random data for the accounts table. But wouldn't it be more useful if we produced data
@@ -161,6 +235,23 @@ attributes that add guidelines that the data generator will understand when gene
     field.name("account_id").regex("ACC[0-9]{8}").unique(true),
     ```
 
+=== "YAML"
+
+    ```yaml
+    fields:
+      - name: "account_id"
+        options:
+          regex: "ACC[0-9]{8}"
+          unique: true
+    ```
+
+=== "UI"
+
+    1. Go to `account_id` field
+    2. Click on `+` dropdown next to `string` data type
+    3. Click `Regex` and enter `ACC[0-9]{8}`
+    4. Click `Unique` and select `true`
+
 ##### balance
 
 - `balance` let's make the numbers not too large, so we can define a min and max for the generated numbers to be between
@@ -177,6 +268,24 @@ attributes that add guidelines that the data generator will understand when gene
     ```scala
     field.name("balance").`type`(DoubleType).min(1).max(1000),
     ```
+
+=== "YAML"
+
+    ```yaml
+    fields:
+      - name: "balance"
+        type: "double"
+        options:
+          min: 1
+          max: 1000
+    ```
+
+=== "UI"
+
+    1. Go to `balance` field
+    2. Click on `+` dropdown next to `double` data type
+    3. Click `Min` and enter `1`
+    4. Click `Max` and enter `1000`
 
 ##### name
 
@@ -197,6 +306,21 @@ attributes that add guidelines that the data generator will understand when gene
     field.name("name").expression("#{Name.name}"),
     ```
 
+=== "YAML"
+
+    ```yaml
+    fields:
+      - name: "name"
+        options:
+          expression: "#{Name.name}"
+    ```
+
+=== "UI"
+
+    1. Go to `name` field
+    2. Click on `+` dropdown next to `string` data type
+    3. Click `Faker Expression` and enter `#{Name.name}`
+
 ##### open_time
 
 - `open_time` is a timestamp that we want to have a value greater than a specific date. We can define a min date by
@@ -215,6 +339,22 @@ attributes that add guidelines that the data generator will understand when gene
     field.name("open_time").`type`(TimestampType).min(java.sql.Date.valueOf("2022-01-01")),
     ```
 
+=== "YAML"
+
+    ```yaml
+    fields:
+      - name: "open_time"
+        type: "timestamp"
+        options:
+          min: "2022-01-01"
+    ```
+
+=== "UI"
+
+    1. Go to `open_time` field
+    2. Click on `+` dropdown next to `timestamp` data type
+    3. Click `Min` and enter `2022-01-01`
+
 ##### status
 
 - `status` is a field that can only obtain one of four values, `open, closed, suspended or pending`.
@@ -230,6 +370,25 @@ attributes that add guidelines that the data generator will understand when gene
     ```scala
     field.name("status").oneOf("open", "closed", "suspended", "pending")
     ```
+
+=== "YAML"
+
+    ```yaml
+    fields:
+      - name: "status"
+        options:
+          oneOf:
+            - "open"
+            - "closed"
+            - "suspended"
+            - "pending"
+    ```
+
+=== "UI"
+
+    1. Go to `status` field
+    2. Click on `+` dropdown next to `string` data type
+    3. Click `One Of` and enter `open,closed,suspended,pending`
 
 ##### created_by
 
@@ -249,7 +408,22 @@ attributes that add guidelines that the data generator will understand when gene
     field.name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
     ```
 
-Putting it all the fields together, our class should now look like this.
+=== "YAML"
+
+    ```yaml
+    fields:
+      - name: "created_by"
+        options:
+          sql: "CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"
+    ```
+
+=== "UI"
+
+    1. Go to `created_by` field
+    2. Click on `+` dropdown next to `string` data type
+    3. Click `SQL` and enter `CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END`
+
+Putting it all the fields together, our structure should now look like this.
 
 === "Java"
 
@@ -279,6 +453,54 @@ Putting it all the fields together, our class should now look like this.
       )
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/task/file/csv/csv-account-task.yaml`:
+    ```yaml
+    name: "csv_account_file"
+    steps:
+      - name: "accounts"
+        type: "csv"
+        options:
+          path: "/opt/app/custom/csv/account"
+        count:
+          records: 100
+        schema:
+          fields:
+            - name: "account_id"
+              generator:
+                type: "regex"
+                options:
+                  regex: "ACC1[0-9]{9}"
+                  unique: true
+            - name: "balance"
+              type: "double"
+              options:
+                min: 1
+                max: 1000
+            - name: "created_by"
+              options:
+                sql: "CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"
+            - name: "name"
+              options:
+                expression: "#{Name.name}"
+            - name: "open_time"
+              type: "timestamp"
+              options:
+                min: "2022-01-01"
+            - name: "status"
+              options:
+                oneOf:
+                  - "open"
+                  - "closed"
+                  - "suspended"
+                  - "pending"
+    ```
+
+=== "UI"
+
+    Open `Task` and `Generation` to see all the fields.
+
 #### Record Count
 
 We only want to generate 100 records, so that we can see what the output looks like. This is controlled at the
@@ -304,6 +526,28 @@ We only want to generate 100 records, so that we can see what the output looks l
       .count(count.records(100))
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/task/file/csv/csv-account-task.yaml`:
+    ```yaml
+    name: "csv_account_file"
+    steps:
+      - name: "accounts"
+        type: "csv"
+        options:
+          path: "/opt/app/custom/csv/transactions"
+        count:
+          records: 100
+        schema:
+          fields:
+            ...
+    ```
+
+=== "UI"
+
+    1. Under task `customer_accounts`, click on `Generation`
+    2. Under title `Record Count`, set `Records` to `100`
+
 #### Additional Configurations
 
 At the end of data generation, a report gets generated that summarises the actions it performed. We can control the
@@ -325,6 +569,24 @@ have unique values generated.
       .generatedReportsFolderPath("/opt/app/data/report")
       .enableUniqueCheck(true)
     ```
+
+=== "YAML"
+
+    In `application.conf`:
+    ```
+    flags {
+      enableUniqueCheck = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    2. Click on `Flag` and click on `Unique Check`
+    3. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
 
 #### Execute
 
@@ -377,18 +639,46 @@ To tell Data Caterer that we want to run with the configurations along with the 
     }
     ```
 
+=== "YAML"
+  
+    Plan and task file should be ready.
+
+=== "UI"
+
+    1. Click `Save` at the top
+
 ### Run
 
 Now we can run via the script `./run.sh` that is in the top level directory of the `data-caterer-example` to run the
-class we just
-created.
+class we just created.
 
-```shell
-./run.sh
-#input class MyCsvJavaPlan or MyCsvPlan
-#after completing
-head docker/sample/customer/account/part-00000*
-```
+=== "Java"
+
+    ```shell
+    ./run.sh MyCsvJavaPlan
+    head docker/sample/customer/account/part-00000*
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MyCsvPlan
+    head docker/sample/customer/account/part-00000*
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-csv.yaml
+    head docker/sample/customer/account/part-00000*
+    ```
+
+=== "UI"
+
+    1. Click on `Execute` at the top
+    ```shell
+    head /tmp/data-caterer/customer/account/part-00000*
+    ```
 
 Your output should look like this.
 
@@ -443,6 +733,56 @@ We can define our schema the same way along with any additional metadata.
       )
     ```
 
+
+=== "YAML"
+
+    In `docker/data/custom/task/file/csv/csv-account-task.yaml`:
+    ```yaml
+    name: "csv_account_file"
+    steps:
+      - name: "accounts"
+        type: "csv"
+        options:
+          path: "/opt/app/custom/csv/account"
+        ...
+      - name: "transactions"
+        type: "csv"
+        options:
+          path: "/opt/app/custom/csv/transactions"
+        schema:
+          fields:
+            - name: "account_id"
+            - name: "full_name"
+            - name: "amount"
+              type: "double"
+              options:
+                min: 1
+                max: 100
+            - name: "time"
+              type: "timestamp"
+              options:
+                min: "2022-01-01"
+            - name: "date"
+              type: "date"
+              options:
+                sql: "DATE(time)"
+    ```
+
+=== "UI"
+
+    1. Go to `Connection` tab and add new `CSV` data source with path `/tmp/data-caterer/customer/transactions`
+    2. Go to `Plan` tab and click on `Edit` for `my-csv`
+    3. Click on `+ Task` towards the top
+    4. Under the new task, enter `csv-transaction-task` as `Task name` and select data source as `customer_accounts`
+    5. Click on `Generation` and tick the `Manual` checkbox
+    6. Click on `+ Field`
+        1. Add field `account_id` with type `string`
+        1. Add field `balance` with type `double`
+        1. Add field `created_by` with type `string`
+        1. Add field `name` with type `string`
+        1. Add field `open_time` with type `timestamp`
+        1. Add field `status` with type `string`
+
 #### Records Per Column
 
 Usually, for a given `account_id, full_name`, there should be multiple records for it as we want to simulate a customer
@@ -453,9 +793,7 @@ function.
 
     ```java
     var transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map.of("header", "true"))
-            .schema(
-                    ...
-            )
+            .schema(...)
             .count(count().recordsPerColumn(5, "account_id", "full_name"));
     ```
 
@@ -463,11 +801,37 @@ function.
 
     ```scala
     val transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map("header" -> "true"))
-      .schema(
-        ...
-      )
+      .schema(...)
       .count(count.recordsPerColumn(5, "account_id", "full_name"))
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/file/csv/csv-account-task.yaml`:
+    ```
+    name: "csv_account_file"
+    steps:
+      - name: "accounts"
+        ...
+      - name: "transactions"
+        type: "csv"
+        options:
+          path: "/opt/app/custom/csv/transactions"
+        count:
+          records: 100
+          perColumn:
+            columnNames:
+              - "account_id"
+              - "name"
+            count: 5
+    ```
+
+=== "UI"
+
+    1. Under title `Record count`, click on `Advanced`
+    2. Enter `account_id,name` in `Column(s)`
+    3. Click on `Per unique set of values` checkbox
+    4. Set `Records` to `5`
 
 ##### Random Records Per Column
 
@@ -495,6 +859,38 @@ can accommodate for this via defining a random number of records per column.
       .count(count.recordsPerColumnGenerator(generator.min(0).max(5), "account_id", "full_name"))
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/task/file/csv/csv-account-task.yaml`:
+    ```
+    name: "csv_account_file"
+    steps:
+      - name: "accounts"
+        ...
+      - name: "transactions"
+        type: "csv"
+        options:
+          path: "/opt/app/custom/csv/transactions"
+        count:
+          records: 100
+          perColumn:
+            columnNames:
+              - "account_id"
+              - "name"
+            generator:
+              type: "random"
+              options:
+                min: 0
+                max: 5
+    ```
+
+=== "UI"
+
+    1. Under title `Record count`, click on `Advanced`
+    2. Enter `account_id,name` in `Column(s)`
+    3. Click on `Per unique set of values between` checkbox
+    4. Set `Min` to `0` and `Max to `5`
+
 Here we set the minimum number of records per column to be 0 and the maximum to 5.
 
 #### Foreign Key
@@ -520,6 +916,31 @@ below.
       List(transactionTask -> List("account_id", "full_name"))  //list of other tasks and their respective column names we want matched
     )
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-csv.yaml`:
+    ```yaml
+    name: "my_csv_plan"
+    description: "Create account data in CSV file"
+    tasks:
+      - name: "csv_account_file"
+        dataSourceName: "customer_accounts"
+        enabled: true
+
+    sinkOptions:
+      foreignKeys:
+        - - "customer_accounts.accounts.account_id,name"
+          - - "customer_accounts.transactions.account_id,full_name"
+        - []
+      ```
+
+=== "UI"
+
+    1. Click `Relationships` and then click `+ Relationship`
+    2. Select `csv-account-task` and enter `account_id,name` in `Column(s)`
+    3. Open `Generation` and click `+ Link`
+    4. Select `csv-transaction-task` and enter `account_id,full_name` in `Column(s)`
 
 Now, stitching it all together for the `execute` function, our final plan should look like this.
 
@@ -602,18 +1023,56 @@ Now, stitching it all together for the `execute` function, our final plan should
     }
     ```
 
-Let's try run again.
+=== "YAML"
+
+    Check content of `docker/data/custom/plan/my-csv.yaml` and `docker/data/custom/task/file/csv/csv-account-task.yaml`.
+
+=== "UI"
+
+    Open UI dropdowns to see all details.
+
+Let's clean up the old data and try run again.
 
 ```shell
 #clean up old data
 rm -rf docker/sample/customer/account
-./run.sh
-#input class MyCsvJavaPlan or MyCsvPlan
-#after completing, let's pick an account and check the transactions for that account
-account=$(tail -1 docker/sample/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
-echo $account
-cat docker/sample/customer/transaction/part-00000* | grep $account
 ```
+
+=== "Java"
+
+    ```shell
+    ./run.sh MyCsvJavaPlan
+    account=$(tail -1 docker/sample/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
+    echo $account
+    cat docker/sample/customer/transaction/part-00000* | grep $account
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MyCsvPlan
+    account=$(tail -1 docker/sample/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
+    echo $account
+    cat docker/sample/customer/transaction/part-00000* | grep $account
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-csv.yaml
+    account=$(tail -1 docker/sample/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
+    echo $account
+    cat docker/sample/customer/transaction/part-00000* | grep $account
+    ```
+
+=== "UI"
+
+    1. Click on `Execute` at the top
+    ```shell
+    account=$(tail -1 /tmp/data-caterer/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
+    echo $account
+    cat /tmp/data-caterer/customer/transaction/part-00000* | grep $account
+    ```
 
 It should look something like this.
 
