@@ -66,20 +66,22 @@ nav:
       - Guide:
           - 'setup/guide/index.md'
           - Scenario:
-              - First Data Generation: 'setup/guide/scenario/first-data-generation.md'
-              - Multiple Records Per Column Value: 'setup/guide/scenario/records-per-column.md'
-              - Foreign Keys Across Data Sources: 'setup/guide/scenario/batch-and-event.md'
-              - Data Validations: 'setup/guide/scenario/data-validation.md'
-              - Auto Generate From Data Connection: 'setup/guide/scenario/auto-generate-connection.md'
+              - Auto Generate: 'setup/guide/scenario/auto-generate-connection.md'
+              - Data Generation: 'setup/guide/scenario/data-generation.md'
+              - Data Validation: 'setup/guide/scenario/data-validation.md'
               - Delete Generated Data: 'setup/guide/scenario/delete-generated-data.md'
+              - First Data Generation: 'setup/guide/scenario/first-data-generation.md'
+              - Foreign Keys Across Data Sources: 'setup/guide/scenario/batch-and-event.md'
               - Generate Batch and Event Data: 'setup/guide/scenario/batch-and-event.md'
+              - Multiple Records Per Column Value: 'setup/guide/scenario/records-per-column.md'
           - Data Sources:
               - Database:
                 - Cassandra: 'setup/guide/data-source/database/cassandra.md'
-                - MySQL: 'setup/guide/data-source/database/cassandra.md'
-                - Postgres: 'setup/guide/data-source/database/cassandra.md'
+                - MySQL: 'setup/guide/data-source/database/mysql.md'
+                - Postgres: 'setup/guide/data-source/database/postgres.md'
               - Files:
                 - CSV: 'setup/guide/data-source/file/csv.md'
+                - Delta Lake: 'setup/guide/data-source/file/delta-lake.md'
                 - Iceberg: 'setup/guide/data-source/file/iceberg.md'
                 - JSON: 'setup/guide/data-source/file/json.md'
                 - ORC: 'setup/guide/data-source/file/orc.md'
@@ -93,6 +95,7 @@ nav:
                 - Great Expectations: 'setup/guide/data-source/metadata/great-expectations.md'
                 - Marquez: 'setup/guide/data-source/metadata/marquez.md'
                 - OpenMetadata: 'setup/guide/data-source/metadata/open-metadata.md'
+                - Open Data Contract Standard (ODCS): 'setup/guide/data-source/metadata/open-data-contract-standard.md'
       - Connections: 'setup/connection.md'
       - Generator:
           - Data Generator: 'setup/generator/data-generator.md'

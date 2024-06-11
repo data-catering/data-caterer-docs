@@ -22,12 +22,13 @@ These configurations can be done via API or from configuration. Examples of both
 | Database         | Postgres            | :white_check_mark:                        | :white_check_mark:                        |
 | Database         | Elasticsearch       | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
 | Database         | MongoDB             | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
+| Database         | Opensearch          | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
 | File             | CSV                 | :white_check_mark:                        | :white_check_mark:                        |
+| File             | Delta Lake          | :white_check_mark:                        | :white_check_mark:                        |
 | File             | Iceberg             | :white_check_mark:                        | :white_check_mark:                        |
 | File             | JSON                | :white_check_mark:                        | :white_check_mark:                        |
 | File             | ORC                 | :white_check_mark:                        | :white_check_mark:                        |
 | File             | Parquet             | :white_check_mark:                        | :white_check_mark:                        |
-| File             | Delta Lake          | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
 | File             | Hudi                | :octicons-x-circle-fill-12:{ .red-cross } | :white_check_mark:                        |
 | HTTP             | REST API            | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
 | Messaging        | Kafka               | :white_check_mark:                        | :octicons-x-circle-fill-12:{ .red-cross } |
@@ -97,8 +98,9 @@ configurations can be found below.
     csv("customer_transactions", "/data/customer/transaction")
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     csv {
       customer_transactions {
@@ -124,8 +126,9 @@ configurations can be found below.
     json("customer_transactions", "/data/customer/transaction")
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     json {
       customer_transactions {
@@ -151,8 +154,9 @@ configurations can be found below.
     orc("customer_transactions", "/data/customer/transaction")
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     orc {
       customer_transactions {
@@ -178,8 +182,9 @@ configurations can be found below.
     parquet("customer_transactions", "/data/customer/transaction")
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     parquet {
       customer_transactions {
@@ -191,7 +196,7 @@ configurations can be found below.
 
 [Other available configuration for Parquet can be found here](https://spark.apache.org/docs/latest/sql-data-sources-parquet.html#data-source-option)
 
-#### Delta (not supported yet)
+#### Delta
 
 === "Java"
 
@@ -205,13 +210,58 @@ configurations can be found below.
     delta("customer_transactions", "/data/customer/transaction")
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     delta {
       customer_transactions {
         path = "/data/customer/transaction"
         path = ${?DELTA_PATH}
+      }
+    }
+    ```
+
+#### Iceberg
+
+=== "Java"
+
+    ```java
+    iceberg(
+      "customer_accounts",              //name
+      "account.accounts",               //table name
+      "/opt/app/data/customer/iceberg", //warehouse path
+      "hadoop",                         //catalog type
+      "",                               //catalogUri
+      Map.of()                          //additional options
+    );
+    ```
+
+=== "Scala"
+
+    ```scala
+    iceberg(
+      "customer_accounts",              //name
+      "account.accounts",               //table name
+      "/opt/app/data/customer/iceberg", //warehouse path
+      "hadoop",                         //catalog type
+      "",                               //catalogUri
+      Map()                             //additional options
+    )
+    ```
+
+=== "YAML"
+
+    In `application.conf`:
+    ```
+    iceberg {
+      customer_transactions {
+        path = "/opt/app/data/customer/iceberg"
+        path = ${?ICEBERG_WAREHOUSE_PATH}
+        catalogType = "hadoop"
+        catalogType = ${?ICEBERG_CATALOG_TYPE}
+        catalogUri = ""
+        catalogUri = ${?ICEBERG_CATALOG_URI}
       }
     }
     ```
@@ -244,8 +294,9 @@ Sample can be found below
     )
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     jdbc {
         customer_postgres {
@@ -310,8 +361,9 @@ Following permissions are required when generating plan and tasks:
     )
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     jdbc {
         customer_mysql {
@@ -364,8 +416,9 @@ found [**here**](https://github.com/datastax/spark-cassandra-connector/blob/mast
     )
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     org.apache.spark.sql.cassandra {
         customer_cassandra {
@@ -426,8 +479,9 @@ found [**here**](https://spark.apache.org/docs/latest/structured-streaming-kafka
     )
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     kafka {
         customer_kafka {
@@ -476,8 +530,9 @@ via JNDI otherwise a connection cannot be created.
     )
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     jms {
         customer_solace {
@@ -520,8 +575,9 @@ The url is defined in the tasks to allow for generated data to be populated in t
     )
     ```
 
-=== "application.conf"
+=== "YAML"
 
+    In `application.conf`:
     ```
     http {
         customer_api {

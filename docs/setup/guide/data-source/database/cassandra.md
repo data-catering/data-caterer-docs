@@ -21,9 +21,27 @@ for the tables you configure.
 
 First, we will clone the data-caterer-example repo which will already have the base project setup required.
 
-```shell
-git clone git@github.com:data-catering/data-caterer-example.git
-```
+=== "Java"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "Scala"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "YAML"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "UI"
+
+    [Run Data Caterer UI via the 'Quick Start' found here.](../../../../get-started/quick-start.md)
 
 If you already have a Cassandra instance running, you can skip to [this step](#plan-setup).
 
@@ -123,7 +141,7 @@ Within our class, we can start by defining the connection properties to connect 
 
 Let's create a task for inserting data into the `account.accounts` and `account.account_status_history` tables as
 defined under`docker/data/cql/customer.cql`. This table should already be setup for you if you followed this
-[step](#cassandra-setup). We can check if the table is setup already via the following command:
+[step](#cassandra-setup). We can check if the table is set up already via the following command:
 
 ```shell
 docker exec docker-cassandraserver-1 cqlsh -e 'describe account.accounts; describe account.account_status_history;'
@@ -190,146 +208,11 @@ corresponds to `text` in Cassandra.
       )
     ```
 
-#### Field Metadata
+Depending on how you want to define the schema, follow the below:
 
-We could stop here and generate random data for the accounts table. But wouldn't it be more useful if we produced data
-that is closer to the structure of the data that would come in production? We can do this by defining various metadata
-that add guidelines that the data generator will understand when generating data.
-
-##### account_id
-
-`account_id` follows a particular pattern that where it starts with `ACC` and has 8 digits after it.
-This can be defined via a regex like below. Alongside, we also mention that it is the primary key to prompt ensure that
-unique values are generated.
-
-=== "Java"
-
-    ```java
-    field().name("account_id").regex("ACC[0-9]{8}").primaryKey(true),
-    ```
-
-=== "Scala"
-
-    ```scala
-    field.name("account_id").regex("ACC[0-9]{8}").primaryKey(true),
-    ```
-
-##### amount
-
-`amount` the numbers shouldn't be too large, so we can define a min and max for the generated numbers to be between
-`1` and `1000`.
-
-=== "Java"
-
-    ```java
-    field().name("amount").type(DoubleType.instance()).min(1).max(1000),
-    ```
-
-=== "Scala"
-
-    ```scala
-    field.name("amount").`type`(DoubleType).min(1).max(1000),
-    ```
-
-##### name
-
-`name` is a string that also follows a certain pattern, so we could also define a regex but here we will choose to
-leverage the DataFaker library and create an `expression` to generate real looking name. All possible faker expressions
-can be found [**here**](../../../../sample/datafaker/expressions.txt)
-
-=== "Java"
-
-    ```java
-    field().name("name").expression("#{Name.name}"),
-    ```
-
-=== "Scala"
-
-    ```scala
-    field.name("name").expression("#{Name.name}"),
-    ```
-
-##### open_time
-
-`open_time` is a timestamp that we want to have a value greater than a specific date. We can define a min date by using
-`java.sql.Date` like below.
-
-=== "Java"
-
-    ```java
-    field().name("open_time").type(TimestampType.instance()).min(java.sql.Date.valueOf("2022-01-01")),
-    ```
-
-=== "Scala"
-
-    ```scala
-    field.name("open_time").`type`(TimestampType).min(java.sql.Date.valueOf("2022-01-01")),
-    ```
-
-##### status
-
-`status` is a field that can only obtain one of four values, `open, closed, suspended or pending`.
-
-=== "Java"
-
-    ```java
-    field().name("status").oneOf("open", "closed", "suspended", "pending")
-    ```
-
-=== "Scala"
-
-    ```scala
-    field.name("status").oneOf("open", "closed", "suspended", "pending")
-    ```
-
-##### created_by
-
-`created_by` is a field that is based on the `status` field where it follows the logic: `if status is open or closed, then
-it is created_by eod else created_by event`. This can be achieved by defining a SQL expression like below.
-
-=== "Java"
-
-    ```java
-    field().name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
-    ```
-
-=== "Scala"
-
-    ```scala
-    field.name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
-    ```
-
-Putting it all the fields together, our class should now look like this.
-
-=== "Java"
-
-    ```java
-    var accountTask = cassandra("customer_cassandra", "host.docker.internal:9042")
-            .table("account", "accounts")
-            .schema(
-                    field().name("account_id").regex("ACC[0-9]{8}").primaryKey(true),
-                    field().name("amount").type(DoubleType.instance()).min(1).max(1000),
-                    field().name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
-                    field().name("name").expression("#{Name.name}"),
-                    field().name("open_time").type(TimestampType.instance()).min(java.sql.Date.valueOf("2022-01-01")),
-                    field().name("status").oneOf("open", "closed", "suspended", "pending")
-            );
-    ```
-
-=== "Scala"
-
-    ```scala
-    val accountTask = cassandra("customer_cassandra", "host.docker.internal:9042")
-      .table("account", "accounts")
-      .schema(
-        field.name("account_id").primaryKey(true),
-        field.name("amount").`type`(DoubleType).min(1).max(1000),
-        field.name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
-        field.name("name").expression("#{Name.name}"),
-        field.name("open_time").`type`(TimestampType).min(java.sql.Date.valueOf("2022-01-01")),
-        field.name("status").oneOf("open", "closed", "suspended", "pending")
-      )
-    ```
+- [Manual schema guide](../../scenario/data-generation.md)
+- Automatically detect schema from the data source, you can simply enable `configuration.enableGeneratePlanAndTasks(true)`
+- [Automatically detect schema from a metadata source](../../index.md#metadata)
 
 #### Additional Configurations
 

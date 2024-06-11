@@ -1,17 +1,17 @@
 ---
-title: "Using OpenMetadata for Test Data Management"
-description: "Example of using OpenMetadata for data generation and testing tool."
+title: "Using Open Data Contract Standard (ODCS) for Test Data Management"
+description: "Example of using Open Data Contract Standard (ODCS) for data generation and testing tool."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
-# OpenMetadata Source
+# Open Data Contract Standard (ODCS) Source
 
 !!! example "Info"
 
     Generating data based on an external metadata source is a paid feature.
 
 Creating a data generator for a JSON file based on metadata stored
-in [OpenMetadata](https://github.com/open-metadata/OpenMetadata).
+in [Open Data Contract Standard (ODCS)](https://github.com/bitol-io/open-data-contract-standard).
 
 ## Requirements
 
@@ -46,31 +46,19 @@ First, we will clone the data-caterer-example repo which will already have the b
 
     [Run Data Caterer UI via the 'Quick Start' found here.](../../../../get-started/quick-start.md)
 
-### OpenMetadata Setup
+### Open Data Contract Standard (ODCS) Setup
 
 You can follow the local docker setup found
 [**here**](https://docs.open-metadata.org/v1.2.x/quick-start/local-docker-deployment) to help with setting up
-OpenMetadata in your local environment.
+Open Data Contract Standard (ODCS) in your local environment.
 
-If that page becomes outdated or the link doesn't work, below are the commands I used to run it:
-
-```shell
-mkdir openmetadata-docker && cd openmetadata-docker
-curl -sL https://github.com/open-metadata/OpenMetadata/releases/download/1.2.0-release/docker-compose.yml > docker-compose.yml
-docker compose -f docker-compose.yml up --detach
-```
-
-Check that the following [url](http://localhost:8585) works and login with `admin:admin`. Then you should see some data 
-like below:
-
-![OpenMetadata dashboard](../../../../diagrams/data-source/openmetadata_dashboard.png)
 
 ### Plan Setup
 
 Create a new Java or Scala class.
 
-- Java: `src/main/java/io/github/datacatering/plan/MyAdvancedOpenMetadataSourceJavaPlanRun.java`
-- Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedOpenMetadataSourcePlanRun.scala`
+- Java: `src/main/java/io/github/datacatering/plan/MyAdvancedODCSJavaPlanRun.java`
+- Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedODCSPlanRun.scala`
 
 Make sure your class extends `PlanRun`.
 
@@ -80,7 +68,7 @@ Make sure your class extends `PlanRun`.
     import io.github.datacatering.datacaterer.java.api.PlanRun;
     ...
     
-    public class MyAdvancedOpenMetadataSourceJavaPlanRun extends PlanRun {
+    public class MyAdvancedODCSJavaPlanRun extends PlanRun {
         {
             var conf = configuration().enableGeneratePlanAndTasks(true)
                 .generatedReportsFolderPath("/opt/app/data/report");
@@ -94,7 +82,7 @@ Make sure your class extends `PlanRun`.
     import io.github.datacatering.datacaterer.api.PlanRun
     ...
     
-    class MyAdvancedOpenMetadataSourcePlanRun extends PlanRun {
+    class MyAdvancedODCSPlanRun extends PlanRun {
       val conf = configuration.enableGeneratePlanAndTasks(true)
         .generatedReportsFolderPath("/opt/app/data/report")
     }
@@ -105,7 +93,7 @@ under a folder we can easily access.
 
 #### Schema
 
-We can point the schema of a data source to our OpenMetadata instance. We will use a JSON data source so that we can
+We can point the schema of a data source to our Open Data Contract Standard (ODCS) instance. We will use a JSON data source so that we can
 show how nested data types are handled and how we could customise it.
 
 ##### Single Schema
@@ -146,7 +134,7 @@ show how nested data types are handled and how we could customise it.
       .count(count.records(10))
     ```
 
-The above defines that the schema will come from OpenMetadata, which is a type of metadata source that contains
+The above defines that the schema will come from Open Data Contract Standard (ODCS), which is a type of metadata source that contains
 information about schemas. Specifically, it points to the `sample_data.ecommerce_db.shopify.raw_customer` table. You
 can check out the schema [here](http://localhost:8585/table/sample_data.ecommerce_db.shopify.raw_customer/schema) to
 see what it looks like.
@@ -158,7 +146,7 @@ Let's try run and see what happens.
 ```shell
 cd ..
 ./run.sh
-#input class MyAdvancedOpenMetadataSourceJavaPlanRun or MyAdvancedOpenMetadataSourcePlanRun
+#input class MyAdvancedODCSJavaPlanRun or MyAdvancedODCSPlanRun
 #after completing
 cat docker/sample/json/part-00000-*
 ```
@@ -339,7 +327,7 @@ data.
 
 ### Data validation
 
-Another aspect of OpenMetadata that can be leveraged is the definition of data quality rules. These rules can be 
+Another aspect of Open Data Contract Standard (ODCS) that can be leveraged is the definition of data quality rules. These rules can be 
 incorporated into your Data Caterer job as well by enabling data validations via `enableGenerateValidations` in 
 `configuration`.
 
@@ -363,4 +351,4 @@ incorporated into your Data Caterer job as well by enabling data validations via
     execute(conf, jsonTask)
     ```
 
-Check out the full example under `AdvancedOpenMetadataSourcePlanRun` in the example repo.
+Check out the full example under `AdvancedODCSSourcePlanRun` in the example repo.

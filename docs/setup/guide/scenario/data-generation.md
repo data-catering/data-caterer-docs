@@ -1,6 +1,6 @@
 ---
-title: "First Data Generation Example"
-description: "Introduction example for generating data with Data Caterer. Generate linked data between two CSV files. Then validating data saved in Postgres."
+title: "Data Generation Example"
+description: "Introduction example for generating data with Data Caterer. Generate linked data between two CSV files."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
@@ -12,7 +12,7 @@ Creating a data generator for a CSV file.
 
 ## Requirements
 
-- 20 minutes
+- 5 minutes
 - Git
 - Gradle
 - Docker
@@ -625,109 +625,3 @@ ACC29117767,Willodean Sauer,58.89345733567232,2022-11-22T07:38:20.143Z,2022-11-2
 
 Congratulations! You have now made a data generator that has simulated a real world data scenario. You can check the
 `DocumentationJavaPlanRun.java` or `DocumentationPlanRun.scala` files as well to check that your plan is the same.
-
-We can now look to consume this CSV data from a job or service. Usually, once we have consumed the data, we would also
-want to check and validate that our consumer has correctly ingested the data.
-
-### Validate
-
-In this scenario, our consumer will read in the CSV file, do some transformations, and then save the data to Postgres.
-Let's try to configure data validations for the data that gets pushed into Postgres.
-
-#### Postgres setup
-
-First, we define our connection properties for Postgres. You can check out the full options available
-[**here**](../../connection.md).
-
-=== "Java"
-
-    ```java
-    var postgresValidateTask = postgres(
-        "my_postgres",                                          //connection name
-        "jdbc:postgresql://host.docker.internal:5432/customer", //url
-        "postgres",                                             //username
-        "password"                                              //password
-    ).table("account", "transactions");
-    ```
-
-=== "Scala"
-
-    ```scala
-    val postgresValidateTask = postgres(
-      "my_postgres",                                          //connection name
-      "jdbc:postgresql://host.docker.internal:5432/customer", //url
-      "postgres",                                             //username
-      "password"                                              //password
-    ).table("account", "transactions")
-    ```
-
-We can connect and access the data inside the table `account.transactions`. Now to define our data validations.
-
-#### Validations
-
-For full information about validation options and configurations, check [**here**](../../validation.md).
-Below, we have an example that should give you a good understanding of what validations are possible.
-
-=== "Java"
-
-    ```java
-    var postgresValidateTask = postgres(...)
-            .table("account", "transactions")
-            .validations(
-                    validation().col("account_id").isNotNull(),
-                    validation().col("name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.2).description("Some names have different formats"),
-                    validation().col("balance").greaterThanOrEqual(0).errorThreshold(10).description("Account can have negative balance if overdraft"),
-                    validation().expr("CASE WHEN status == 'closed' THEN isNotNull(close_date) ELSE isNull(close_date) END"),
-                    validation().unique("account_id", "name"),
-                    validation().groupBy("account_id", "name").max("login_retry").lessThan(10)
-            );
-    ```
-
-=== "Scala"
-
-    ```scala
-    val postgresValidateTask = postgres(...)
-      .table("account", "transactions")
-      .validations(
-        validation.col("account_id").isNotNull,
-        validation.col("name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.2).description("Some names have different formats"),
-        validation.col("balance").greaterThanOrEqual(0).errorThreshold(10).description("Account can have negative balance if overdraft"),
-        validation.expr("CASE WHEN status == 'closed' THEN isNotNull(close_date) ELSE isNull(close_date) END"),
-        validation.unique("account_id", "name"),
-        validation.groupBy("account_id", "name").max("login_retry").lessThan(10)
-      )
-    ```
-
-##### name
-
-For all values in the `name` column, we check if they match the regex `[A-Z][a-z]+ [A-Z][a-z]+`. As we know in the real
-world, names do not always follow the same pattern, so we allow for an `errorThreshold` before marking the validation
-as failed. Here, we define the `errorThreshold` to be `0.2`, which means, if the error percentage is greater than 20%,
-then fail the validation. We also append on a helpful description so other developers/users can understand the context
-of the validation.
-
-##### balance
-
-We check that all `balance` values are greater than or equal to 0. This time, we have a slightly different
-`errorThreshold` as it is set to `10`, which means, if the number of errors is greater than 10, then fail the
-validation.
-
-##### expr
-
-Sometimes, we may need to include the values of multiple columns to validate a certain condition. This is where we can
-use `expr` to define a SQL expression that returns a boolean. In this scenario, we are checking if the `status` column
-has value `closed`, then the `close_date` should be not null, otherwise, `close_date` is null.
-
-##### unique
-
-We check whether the combination of `account_id` and `name` are unique within the dataset. You can define one or more
-columns for `unique` validations.
-
-##### groupBy
-
-There may be some business rule that states the number of `login_retry` should be less than 10 for each account. We can
-check this via a group by validation where we group by the `account_id, name`, take the maximum value
-for `login_retry` per `account_id,name` combination, then check if it is less than 10.
-
-You can now look to play around with other configurations or data sources to meet your needs. Also, make sure to explore
-the docs further as it can guide you on what can be configured.

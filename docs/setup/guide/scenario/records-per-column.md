@@ -19,9 +19,27 @@ Creating a data generator for a CSV file where there are multiple records per co
 
 First, we will clone the data-caterer-example repo which will already have the base project setup required.
 
-```shell
-git clone git@github.com:data-catering/data-caterer-example.git
-```
+=== "Java"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "Scala"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "YAML"
+
+    ```shell
+    git clone git@github.com:data-catering/data-caterer-example.git
+    ```
+
+=== "UI"
+
+    [Run Data Caterer UI via the 'Quick Start' found here.](../../../get-started/quick-start.md)
 
 ### Plan Setup
 

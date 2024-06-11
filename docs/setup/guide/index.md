@@ -14,26 +14,26 @@ Below are a list of guides you can follow to create your first Data Catering job
 
 <div class="grid cards" markdown>
 
-- __[Cassandra]__ - Generate/validate data for Cassandra
-- __[MySQL (Soon to document)]__ - Generate/validate data for MySQL
-- __[Postgres (Soon to document)]__ - Generate/validate data for Postgres
+- __:material-database: [Cassandra]__ - Generate/validate data for Cassandra
+- __:material-database: [MySQL]__ - Generate/validate data for MySQL
+- __:material-database: [Postgres]__ - Generate/validate data for Postgres
 
 </div>
   
   [Cassandra]: data-source/database/cassandra.md
-  [MySQL (Soon to document)]: data-source/database/cassandra.md
-  [Postgres (Soon to document)]: data-source/database/cassandra.md
+  [MySQL]: data-source/database/mysql.md
+  [Postgres]: data-source/database/postgres.md
 
 ### Files
 
 <div class="grid cards" markdown>
 
-- __[CSV]__ - Generate/validate data for CSV
-- __[Delta Lake]__ - Generate/validate data for Delta Lake
-- __[Iceberg]__ - Generate/validate data for Iceberg tables
-- __[JSON]__ - Generate/validate data for JSON
-- __[ORC]__ - Generate/validate data for ORC
-- __[Parquet]__ - Generate/validate data for Parquet
+- __:material-file: [CSV]__ - Generate/validate data for CSV
+- __:material-file: [Delta Lake]__ - Generate/validate data for Delta Lake
+- __:material-file: [Iceberg]__ - Generate/validate data for Iceberg tables
+- __:material-file: [JSON]__ - Generate/validate data for JSON
+- __:material-file: [ORC]__ - Generate/validate data for ORC
+- __:material-file: [Parquet]__ - Generate/validate data for Parquet
 
 </div>
 
@@ -48,7 +48,7 @@ Below are a list of guides you can follow to create your first Data Catering job
 
 <div class="grid cards" markdown>
 
-- __[REST API]__ - Generate data for REST APIs
+- __:material-api: [REST API]__ - Generate data for REST APIs
 
 </div>
 
@@ -58,8 +58,8 @@ Below are a list of guides you can follow to create your first Data Catering job
 
 <div class="grid cards" markdown>
 
-- __[Kafka]__ - Generate data for Kafka topics
-- __[Solace]__ - Generate data for Solace messages
+- __:material-message: [Kafka]__ - Generate data for Kafka topics
+- __:material-message: [Solace]__ - Generate data for Solace messages
 
 </div>
 
@@ -70,9 +70,9 @@ Below are a list of guides you can follow to create your first Data Catering job
 
 <div class="grid cards" markdown>
 
-- __[Great Expectations]__ - Use validations from Great Expectations for testing
-- __[Marquez]__ - Generate data based on metadata in Marquez
-- __[OpenMetadata]__ - Generate data based on metadata in OpenMetadata
+- __:material-check-all: [Great Expectations]__ - Use validations from Great Expectations for testing
+- __:material-database-plus: [Marquez]__ - Generate data based on metadata in Marquez
+- __:material-database-plus: [OpenMetadata]__ - Generate data based on metadata in OpenMetadata
 
 </div>
 
@@ -85,23 +85,25 @@ Below are a list of guides you can follow to create your first Data Catering job
 
 <div class="grid cards" markdown>
 
-- __[First Data Generation]__ - If you are new, this is the place to start
-- __[Multiple Records Per Column Value]__ - How you can generate multiple records per set of columns
-- __[Foreign Keys Across Data Sources]__ - Generate matching values across generated data sets
-- __[Data Validations]__ - Run data validations after generating data
 - __[Auto Generate From Data Connection]__ - Automatically generating data from just defining data sources
+- __[Data Generation]__ - Generate production-like data
+- __[Data Validations]__ - Run data validations after generating data
 - __[Delete Generated Data]__ - Delete the generated data whilst leaving other data
+- __[First Data Generation]__ - If you are new, this is the place to start
+- __[Foreign Keys Across Data Sources]__ - Generate matching values across generated data sets
 - __[Generate Batch and Event Data]__ - Generate matching batch and event data
+- __[Multiple Records Per Column Value]__ - How you can generate multiple records per set of columns
 
 </div>
 
-  [First Data Generation]: scenario/first-data-generation.md
-  [Multiple Records Per Column Value]: scenario/records-per-column.md
-  [Foreign Keys Across Data Sources]: scenario/batch-and-event.md
-  [Data Validations]: scenario/data-validation.md
   [Auto Generate From Data Connection]: scenario/auto-generate-connection.md
+  [Data Generation]: scenario/data-generation.md
+  [Data Validations]: scenario/data-validation.md
   [Delete Generated Data]: scenario/delete-generated-data.md
+  [First Data Generation]: scenario/first-data-generation.md
+  [Foreign Keys Across Data Sources]: scenario/batch-and-event.md
   [Generate Batch and Event Data]: scenario/batch-and-event.md
+  [Multiple Records Per Column Value]: scenario/records-per-column.md
 
 ## YAML Files
 
