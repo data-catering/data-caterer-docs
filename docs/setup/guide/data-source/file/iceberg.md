@@ -6,11 +6,11 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Iceberg
 
-Creating a data generator for Iceberg. You will have the ability to generate and validate Iceberg tables.
+Data testing for Iceberg. You will have the ability to generate and validate Iceberg tables.
 
 ## Requirements
 
-- 10 minutes
+- 5 minutes
 - Git
 - Gradle
 - Docker
@@ -100,7 +100,7 @@ Within our class, we can start by defining the connection properties to read/wri
             "account.accounts",               //table name
             "/opt/app/data/customer/iceberg", //warehouse path
             "hadoop",                         //catalog type
-            "",                               //catalogUri
+            "",                               //catalog uri
             Map.of()                          //additional options
     );
     ```
@@ -115,7 +115,7 @@ Within our class, we can start by defining the connection properties to read/wri
       "account.accounts",               //table name
       "/opt/app/data/customer/iceberg", //warehouse path
       "hadoop",                         //catalog type
-      "",                               //catalogUri
+      "",                               //catalog uri
       Map()                             //additional options
     )
     ```
