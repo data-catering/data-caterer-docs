@@ -4,9 +4,9 @@ description: "Introduction example for generating data with Data Caterer. Genera
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
-# First Data Generation
+# Data Generation
 
-Creating a data generator for a CSV file.
+Go through the available options for data generation. Creating a data generator for a CSV file.
 
 ![Generate CSV files](../../../diagrams/data-source/csv_generation_run.gif)
 

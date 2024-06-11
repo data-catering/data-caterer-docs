@@ -196,7 +196,7 @@ corresponds to `text` in Postgres.
 
 Depending on how you want to define the schema, follow the below:
 
-- [Manual schema guide](../../scenario/data-generation.md)
+- [Manual schema guide](../../scenario/data-generation.md#schema)
 - Automatically detect schema from the data source, you can simply
   enable `configuration.enableGeneratePlanAndTasks(true)`
 - [Automatically detect schema from a metadata source](../../index.md#metadata)

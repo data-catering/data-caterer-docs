@@ -83,7 +83,7 @@ Make sure your class extends `PlanRun`.
 
 === "UI"
 
-    Check next section.
+    [Go here.](#connection-configuration)
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -150,7 +150,7 @@ Within our class, we can start by defining the connection properties to read/wri
 
 Depending on how you want to define the schema, follow the below:
 
-- [Manual schema guide](../../scenario/data-generation.md)
+- [Manual schema guide](../../scenario/data-generation.md#schema)
 - Automatically detect schema from the data source, you can simply enable `configuration.enableGeneratePlanAndTasks(true)`
 - [Automatically detect schema from a metadata source](../../index.md#metadata)
 
