@@ -9,7 +9,7 @@ happy to contribute.
 
 ## Features
 
-- :material-connection: Connect to all data sources (see [here for all data sources](setup/connection.md))
+- :material-connection: [Connect to all data sources](setup/connection.md))
 - :material-file: Batch and :material-circle-multiple: Event generation
 - :material-auto-fix: [Auto generation from data connections or metadata sources](setup/guide/scenario/auto-generate-connection.md)
 - :material-test-tube: Suggest data validations
