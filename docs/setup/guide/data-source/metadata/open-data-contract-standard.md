@@ -1,5 +1,5 @@
 ---
-title: "Using Open Data Contract Standard (ODCS) for Test Data Management"
+title: "Using Open Data Contract Standard (ODCS) with Data Caterer"
 description: "Example of using Open Data Contract Standard (ODCS) for data generation and testing."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
@@ -50,9 +50,9 @@ First, we will clone the data-caterer-example repo which will already have the b
 
 ### Open Data Contract Standard (ODCS) Setup
 
-You can follow the local docker setup found
-[**here**](https://docs.open-metadata.org/v1.2.x/quick-start/local-docker-deployment) to help with setting up
-Open Data Contract Standard (ODCS) in your local environment.
+We will be using
+[the following ODCS file](https://github.com/data-catering/data-caterer-example/blob/main/docker/mount/odcs/full-example.yaml)
+for this example.
 
 ### Plan Setup
 
@@ -352,5 +352,19 @@ via `enableGenerateValidations` in `configuration`.
     
     execute(conf, accountTask)
     ```
+
+=== "YAML"
+
+    In `application.conf`:
+    ```
+    flags {
+      enableGenerateValidations = true
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    2. Click on `Flag` and click on `Generate Validations`
 
 Check out the full example under `AdvancedODCSSourcePlanRun` in the example repo.

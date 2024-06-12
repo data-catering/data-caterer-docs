@@ -1,5 +1,5 @@
 ---
-title: "Using Marquez for Test Data Management"
+title: "Using Marquez with Data Caterer"
 description: "Example of using Marquez for data generation and testing tool."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---

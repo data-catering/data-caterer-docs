@@ -1,5 +1,5 @@
 ---
-title: "Using Great Expectations for Test Data Management"
+title: "Using Great Expectations with Data Caterer"
 description: "Example of using Great Expectations for data generation and testing in Data Caterer."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
