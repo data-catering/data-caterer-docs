@@ -10,6 +10,8 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
     Generating data based on an external metadata source is a paid feature.
 
+![Data Caterer reading from ODCS file for schema metadata and data quality](../../../../diagrams/data-source/high_level_flow-run-config-basic-flow-odcs-support.svg)
+
 Creating a data generator for a CSV file based on metadata stored
 in [Open Data Contract Standard (ODCS)](https://github.com/bitol-io/open-data-contract-standard).
 
