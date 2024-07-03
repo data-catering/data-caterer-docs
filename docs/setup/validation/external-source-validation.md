@@ -14,7 +14,7 @@ in production.
 
 !!! example "Info"
 
-    Retrieving data validations from an external source is a paid feature. Try the free trial [here](../../get-started/quick-start.md).
+    Retrieving data validations from an external source is a paid feature.
 
 ## Supported Sources
 
@@ -64,7 +64,16 @@ Use data quality rules defined from OpenMetadata to execute over dataset.
 
 === "YAML"
 
-
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      my_json:
+        - options:
+            metadataSourceType: "open_metadata"
+            authType: "openMetadataJwtToken"
+            openMetadataJwtToken: "abc123"
+            tableFqn: "sample_data.ecommerce_db.shopify.raw_customer"
+    ```
 
 ## Great Expectations
 
@@ -86,4 +95,15 @@ Use data quality rules defined from OpenMetadata to execute over dataset.
       .validations(metadataSource.greatExpectations("great-expectations/taxi-expectations.json")
 
     val conf = configuration.enableGenerateValidations(true)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      my_json:
+        - options:
+            metadataSourceType: "great_expectations"
+            expectationsFile: "great-expectations/taxi-expectations.json"
     ```
