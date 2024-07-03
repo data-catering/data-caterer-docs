@@ -31,6 +31,17 @@ Check the number of records across the whole dataset.
     validation.groupBy().count().lessThan(1000)
     ```
 
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      ...
+        validations:
+          - aggType: "count"
+            aggExpr: "count < 1000"
+    ```
+
 ## Record count per group
 
 Check the number of records for each group.
@@ -45,6 +56,18 @@ Check the number of records for each group.
 
     ```scala
     validation.groupBy("account_id", "year").count().lessThan(10)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      ...
+        validations:
+          - groupByCols: ["account_id", "year"]
+            aggType: "count"
+            aggExpr: "count < 10"
     ```
 
 ## Sum
@@ -63,6 +86,17 @@ Check the sum of a columns values for each group adheres to validation.
     validation.groupBy("account_id", "year").sum("amount").lessThan(1000)
     ```
 
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      ...
+        validations:
+          - groupByCols: ["account_id", "year"]
+            aggExpr: "sum(amount) < 1000"
+    ```
+
 ## Count
 
 Check the count for each group adheres to validation.
@@ -77,6 +111,18 @@ Check the count for each group adheres to validation.
 
     ```scala
     validation.groupBy("account_id", "year").count("amount").lessThan(10)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      ...
+        validations:
+          - groupByCols: ["account_id", "year"]
+            aggType: "count"
+            aggExpr: "count(amount) < 10"
     ```
 
 ## Min
@@ -95,6 +141,17 @@ Check the min for each group adheres to validation.
     validation.groupBy("account_id", "year").min("amount").greaterThan(0)
     ```
 
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      ...
+        validations:
+          - groupByCols: ["account_id", "year"]
+            aggExpr: "min(amount) > 0"
+    ```
+
 ## Max
 
 Check the max for each group adheres to validation.
@@ -109,6 +166,17 @@ Check the max for each group adheres to validation.
 
     ```scala
     validation.groupBy("account_id", "year").max("amount").lessThanOrEqual(100)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      ...
+        validations:
+          - groupByCols: ["account_id", "year"]
+            aggExpr: "max(amount) < 100"
     ```
 
 ## Average
@@ -127,6 +195,17 @@ Check the average for each group adheres to validation.
     validation.groupBy("account_id", "year").avg("amount").between(40, 60)
     ```
 
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      ...
+        validations:
+          - groupByCols: ["account_id", "year"]
+            aggExpr: "avg(amount) BETWEEN 40 && 60"
+    ```
+
 ## Standard deviation
 
 Check the standard deviation for each group adheres to validation.
@@ -141,4 +220,15 @@ Check the standard deviation for each group adheres to validation.
 
     ```scala
     validation.groupBy("account_id", "year").stddev("amount").between(0.5, 0.6)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "account_checks"
+    dataSources:
+      ...
+        validations:
+          - groupByCols: ["account_id", "year"]
+            aggExpr: "stddev(amount) BETWEEN 0.5 && 0.6"
     ```

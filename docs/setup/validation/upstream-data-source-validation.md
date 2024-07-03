@@ -76,6 +76,22 @@ dataset should equal to the `name` column in the `my_second_json`.
       )
     ```
 
+=== "YAML"
+
+    ```yaml
+    ---
+    name: "account_checks"
+    dataSources:
+      json:
+        - options:
+            path: "/tmp/data/second_json"
+          validations:
+            - upstreamDataSource: "my_first_json"
+              joinColumns: ["account_id"]
+              validation:
+                expr: "my_first_json_customer_details.name == name"
+    ```
+
 ## Join expression
 
 Define join expression to link two datasets together. This can be any SQL expression that returns a boolean value.
@@ -128,6 +144,22 @@ In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` an
               .isEqualCol("name")
           )
       )
+    ```
+
+=== "YAML"
+
+    ```yaml
+    ---
+    name: "account_checks"
+    dataSources:
+      json:
+        - options:
+            path: "/tmp/data/second_json"
+          validations:
+            - upstreamDataSource: "my_first_json"
+              joinColumns: ["expr:my_first_json_account_id == CONCAT('ACC', account_number)"]
+              validation:
+                expr: "my_first_json_customer_details.name == name"
     ```
 
 ## Different join type
@@ -197,6 +229,29 @@ similar but does an `outer` join (by default) and checks that the joined dataset
       )
     ```
 
+=== "YAML"
+
+    ```yaml
+    ---
+    name: "account_checks"
+    dataSources:
+      json:
+        - options:
+            path: "/tmp/data/second_json"
+          validations:
+            - upstreamDataSource: "my_first_json"
+              joinColumns: ["account_id"]
+              joinType: "anti"
+              validation:
+                aggType: "count"
+                aggExpr: "count == 0"
+            - upstreamDataSource: "my_first_json"
+              joinColumns: ["account_id"]
+              validation:
+                aggType: "count"
+                aggExpr: "count == 30"
+    ```
+
 ## Join then group by validation
 
 We can apply aggregate or group by validations to the resulting joined dataset as the `withValidation` method accepts
@@ -251,6 +306,23 @@ between 0.8 and 1.2 times the balance.
               .betweenCol("my_first_json_balance * 0.8", "my_first_json_balance * 1.2")
           )
       )
+    ```
+
+=== "YAML"
+
+    ```yaml
+    ---
+    name: "account_checks"
+    dataSources:
+      json:
+        - options:
+            path: "/tmp/data/second_json"
+          validations:
+            - upstreamDataSource: "my_first_json"
+              joinColumns: ["account_id"]
+              validation:
+                groupByCols: ["account_id", "my_first_json_balance"]
+                aggExpr: "sum(amount) BETWEEN my_first_json_balance * 0.8 AND my_first_json_balance * 1.2"
     ```
 
 ## Chained validations
@@ -324,6 +396,26 @@ together by `account_id`.
               .betweenCol("my_first_json_balance * 0.8", "my_first_json_balance * 1.2")
           ),
       )
+    ```
+
+=== "YAML"
+
+    ```yaml
+    ---
+    name: "account_checks"
+    dataSources:
+      json:
+        - options:
+            path: "/tmp/data/second_json"
+          validations:
+            - upstreamDataSource: "my_first_json"
+              joinColumns: ["account_id"]
+              validation:
+                upstreamDataSource: "my_third_json"
+                joinColumns: ["account_id"]
+                validation:
+                  aggType: "count"
+                  aggExpr: "count == 30"
     ```
 
 [Can check out a full example here for more details.](https://github.com/data-catering/data-caterer-example/blob/main/src/main/scala/io/github/datacatering/plan/ValidationPlanRun.scala)

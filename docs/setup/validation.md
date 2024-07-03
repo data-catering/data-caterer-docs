@@ -68,15 +68,15 @@ Full example validations can be found below. For more details, check out each of
         options:
           path: "/tmp/csv"
         validations:
-          - whereExpr: "amount < 100"
-          - whereExpr: "year == 2021"
+          - expr: "amount < 100"
+          - expr: "year == 2021"
             errorThreshold: 0.1   #equivalent to if error percentage is > 10%, then fail
-          - whereExpr: "REGEXP_LIKE(name, 'Peter .*')"
+          - expr: "REGEXP_LIKE(name, 'Peter .*')"
             errorThreshold: 200   #equivalent to if number of errors is > 200, then fail
             description: "Should be lots of Peters"
-          - whereExpr: "amount > 100"
+          - expr: "amount > 100"
             preFilterExpr: "STARTSWITH(account_id, 'ACC')"
-          - whereExpr: "ISNOTNULL(name)"
+          - expr: "ISNOTNULL(name)"
             preFilterExpr: "STARTSWITH(account_id, 'ACC') AND ISNOTNULL(merchant)"
         waitCondition:
           pauseInSeconds: 1
@@ -115,7 +115,7 @@ when you want to check that for all records with `status=closed`, that `balance=
         options:
           path: "/tmp/csv"
         validations:
-          - whereExpr: "balance == 0"
+          - expr: "balance == 0"
             preFilterExpr: "status == 'closed'"
     ```
 

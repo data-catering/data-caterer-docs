@@ -7,7 +7,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 # External Source Validations
 
 Use validations that are defined in external sources such as Great Expectations or OpenMetadata. This allows you to
-generate data for your upstream data sources and validate your pipelines based on the same rules that would be applied 
+generate data for your upstream data sources and validate your pipelines based on the same rules that would be applied
 in production.
 
 ![Example flow with validations from external source](../../diagrams/high_level_flow-external-source-validation.svg)
@@ -61,6 +61,10 @@ Use data quality rules defined from OpenMetadata to execute over dataset.
 
     val conf = configuration.enableGenerateValidations(true)
     ```
+
+=== "YAML"
+
+
 
 ## Great Expectations
 
