@@ -24,6 +24,13 @@ Ensure column name count is equal to certain number.
     validation.columnNames.countEqual(3)
     ```
 
+=== "YAML"
+
+    ```yaml
+    - columnNameType: "columnCountEqual"
+      count: "3"
+    ```
+
 ## Not Equal
 
 Ensure column name count is between two numbers.
@@ -38,6 +45,14 @@ Ensure column name count is between two numbers.
 
     ```scala
     validation.columnNames.countBetween(10, 12)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    - columnNameType: "columnCountBetween"
+      minCount: "10"
+      maxCount: "12"
     ```
 
 ## Match Order
@@ -56,6 +71,13 @@ Ensure all column names match particular ordering and is complete.
     validation.columnNames.matchOrder("account_id", "amount", "name")
     ```
 
+=== "YAML"
+
+    ```yaml
+    - columnNameType: "columnNameMatchOrder"
+      names: ["account_id", "amount", "name"]
+    ```
+
 ## Match Set
 
 Ensure column names contains set of expected names. Order is not checked.
@@ -70,4 +92,11 @@ Ensure column names contains set of expected names. Order is not checked.
 
     ```scala
     validation.columnNames.matchSet("account_id", "first_name")
+    ```
+
+=== "YAML"
+
+    ```yaml
+    - columnNameType: "columnNameMatchSet"
+      names: ["account_id", "first_name"]
     ```

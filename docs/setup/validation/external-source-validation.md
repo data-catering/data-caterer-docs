@@ -69,7 +69,7 @@ Use data quality rules defined from OpenMetadata to execute over dataset.
     dataSources:
       my_json:
         - options:
-            metadataSourceType: "open_metadata"
+            metadataSourceType: "openMetadata"
             authType: "openMetadataJwtToken"
             openMetadataJwtToken: "abc123"
             tableFqn: "sample_data.ecommerce_db.shopify.raw_customer"
@@ -104,6 +104,6 @@ Use data quality rules defined from OpenMetadata to execute over dataset.
     dataSources:
       my_json:
         - options:
-            metadataSourceType: "great_expectations"
+            metadataSourceType: "greatExpectations"
             expectationsFile: "great-expectations/taxi-expectations.json"
     ```
