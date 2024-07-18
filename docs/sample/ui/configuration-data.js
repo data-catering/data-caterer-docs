@@ -1208,7 +1208,7 @@ dataSourcePropertiesMap.set("marquez", {
         }
     }
 });
-dataSourcePropertiesMap.set("open_api", {
+dataSourcePropertiesMap.set("openApi", {
     optGroupLabel: "Metadata Source",
     Name: "OpenAPI/Swagger",
     properties: {
@@ -1221,7 +1221,7 @@ dataSourcePropertiesMap.set("open_api", {
         }
     }
 });
-dataSourcePropertiesMap.set("open_data_contract_standard", {
+dataSourcePropertiesMap.set("openDataContractStandard", {
     optGroupLabel: "Metadata Source",
     Name: "ODCS",
     properties: {
@@ -1234,7 +1234,7 @@ dataSourcePropertiesMap.set("open_data_contract_standard", {
         }
     }
 });
-dataSourcePropertiesMap.set("open_metadata", {
+dataSourcePropertiesMap.set("openMetadata", {
     optGroupLabel: "Metadata Source",
     Name: "Open Metadata",
     properties: {

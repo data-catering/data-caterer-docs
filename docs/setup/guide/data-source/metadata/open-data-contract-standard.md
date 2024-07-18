@@ -151,7 +151,7 @@ We can point the schema of a data source to our Open Data Contract Standard (ODC
         type: "csv"
         options:
           path: "/opt/app/data/csv/account-odcs"
-          metadataSourceType: "open_data_contract_standard"
+          metadataSourceType: "openDataContractStandard"
           dataContractFile: "/opt/app/mount/odcs/full-example.yaml"
         count:
           records: 100
@@ -256,7 +256,7 @@ either `AU, US or TW`. For the full guide on data generation options,
         type: "csv"
         options:
           path: "/opt/app/data/csv/account-odcs"
-          metadataSourceType: "open_data_contract_standard"
+          metadataSourceType: "openDataContractStandard"
           dataContractFile: "/opt/app/mount/odcs/full-example.yaml"
         count:
           records: 100
