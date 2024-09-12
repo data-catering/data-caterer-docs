@@ -186,3 +186,77 @@ In the example below, it will generate between `(count.records * count.perColumn
                 min: 1
                 max: 2
     ```
+
+## All Combinations
+
+If you want to generate records for all combinations of values that your fields can obtain, you can set `allCombinations`
+to `true`.
+
+For example, if your dataset has fields:
+- `account_id`: Some string
+- `debit_credit`: Either `D` or `C`
+- `status`: Either `open`, `closed` or `suspended`
+
+It can generate a dataset like below where all combinations of `debit_credit` and `status` are covered:
+
+| account_id | debit_credit | status    |
+|------------|--------------|-----------|
+| ACC123     | D            | open      |
+| ACC124     | D            | closed    |
+| ACC125     | D            | suspended |
+| ACC126     | C            | open      |
+| ACC127     | C            | closed    |
+| ACC128     | C            | suspended |
+
+
+=== "Java"
+
+    ```java
+    csv("transactions", "app/src/test/resources/sample/csv/transactions")
+      .schema(
+        field().name("account_id"),
+        field().name("debit_creidt").oneOf("D", "C"),
+        field().name("status").oneOf("open", "closed", "suspended")
+      )
+      .allCombinations(true);
+    ```
+
+=== "Scala"
+
+    ```scala
+    csv("transactions", "app/src/test/resources/sample/csv/transactions")
+      schema(
+        field.name("account_id"),
+        field.name("debit_creidt").oneOf("D", "C"),
+        field.name("status").oneOf("open", "closed", "suspended")
+      )
+      .allCombinations(true)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "csv_file"
+    steps:
+      - name: "transactions"
+        type: "csv"
+        options:
+          path: "app/src/test/resources/sample/csv/transactions"
+          allCombinations: "true"
+        schema:
+          fields:
+            - name: "account_id"
+            - name: "debit_credit"
+              generator:
+                options:
+                  oneOf:
+                    - "D"
+                    - "C"
+            - name: "status"
+              generator:
+                options:
+                  oneOf:
+                    - "open"
+                    - "closed"
+                    - "suspended"
+    ```
