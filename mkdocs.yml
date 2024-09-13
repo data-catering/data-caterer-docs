@@ -9,7 +9,6 @@ extra_css:
 plugins:
   - open-in-new-tab
   - search
-  - optimize
   - social
   - privacy
 
