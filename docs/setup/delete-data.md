@@ -7,10 +7,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Delete Generated Data
 
-!!! example "Info"
-
-    Deleting generated data is a paid feature.
-
 As you generate and validate data, you may want to clean up the data that has been generated. This helps you:
 
 1. Keep your test environments clean

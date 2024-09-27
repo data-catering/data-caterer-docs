@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Metadata Source
 
-!!! example "Info"
-
-    Generating data based on an external metadata source is a paid feature.
-
 Creating a data generator for Postgres tables and CSV file based on metadata stored in Marquez (
 follows [OpenLineage API](https://openlineage.io/)).
 

@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Generate Batch and Event Data
 
-!!! example "Info"
-
-    Generating event data is a paid feature.
-
 Creating a data generator for Kafka topic with matching records in a CSV file.
 
 ## Requirements

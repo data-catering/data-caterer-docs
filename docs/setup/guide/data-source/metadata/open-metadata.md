@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # OpenMetadata Source
 
-!!! example "Info"
-
-    Generating data based on an external metadata source is a paid feature.
-
 Creating a data generator for a JSON file based on metadata stored
 in [OpenMetadata](https://github.com/open-metadata/OpenMetadata).
 

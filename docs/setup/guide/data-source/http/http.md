@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # HTTP Source
 
-!!! example "Info"
-
-    Generating data based on OpenAPI/Swagger document and pushing to HTTP endpoint is a paid feature.
-
 Creating a data generator based on an [OpenAPI/Swagger](https://spec.openapis.org/oas/latest.html) document.
 
 ![Generate HTTP requests](../../../../diagrams/data-source/http_generation_run.gif)

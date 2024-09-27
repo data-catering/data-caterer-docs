@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Delete Generated Data
 
-!!! example "Info"
-
-    Delete generated data is a paid feature.
-
 Creating a data generator for Postgres and delete the generated data after using it.
 
 ## Requirements

@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Kafka
 
-!!! example "Info"
-
-    Writing data to Kafka is a paid feature.
-
 Creating a data generator for Kafka. You will build a Docker image that will be able to populate data in kafka
 for the topics you configure.
 

@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Great Expectations Source
 
-!!! example "Info"
-
-    Generating data based on an external metadata source is a paid feature.
-
 Creating a data generator for a JSON file and validating the data based on expectations 
 in [Great Expectations](https://github.com/great-expectations/great_expectations).
 

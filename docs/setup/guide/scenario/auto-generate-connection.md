@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Auto Generate From Data Connection
 
-!!! example "Info"
-
-    Auto data generation from data connection is a paid feature.
-
 Creating a data generator based on only a data connection to Postgres.
 
 ## Requirements

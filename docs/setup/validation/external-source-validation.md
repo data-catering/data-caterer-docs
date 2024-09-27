@@ -12,10 +12,6 @@ in production.
 
 ![Example flow with validations from external source](../../diagrams/high_level_flow-external-source-validation.svg)
 
-!!! example "Info"
-
-    Retrieving data validations from an external source is a paid feature.
-
 ## Supported Sources
 
 | Source                                                                                            | Support                                   |

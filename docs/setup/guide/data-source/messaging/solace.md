@@ -6,10 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Solace
 
-!!! example "Info"
-
-    Writing data to Solace is a paid feature.
-
 Creating a data generator for Solace. You will build a Docker image that will be able to populate data in Solace
 for the queues/topics you configure.
 
