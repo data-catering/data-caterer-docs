@@ -10,17 +10,23 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 <div class="grid cards" markdown>
 
--   :material-apple: __[Mac]__
+-   :material-apple: __[UI App - Mac]__
 
     ---
 
     Instructions for Mac download
 
--   :material-microsoft-windows: __[Windows]__
+-   :material-microsoft-windows: __[UI App - Windows]__
 
     ---
 
     Instructions for Windows download
+
+-   :material-linux: __[UI App - Linux]__
+
+    ---
+
+    Instructions for Linux download
 
 -   :material-docker: __[Docker]__
 
@@ -28,25 +34,26 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
     Instructions for Docker download
 
--   :material-linux: __[Linux]__
-
-    ---
-
-    Instructions for Linux download
-
 -   :material-language-java: :simple-scala: __[Java/Scala]__
 
     ---
 
     Instructions for using Java/Scala API via Docker
 
+-   :simple-yaml: __[YAML]__
+
+    ---
+
+    Instructions for using YAML via Docker
+
 </div>
 
-  [Mac]: #mac
-  [Windows]: #windows
+  [UI App - Mac]: #mac
+  [UI App - Windows]: #windows
+  [UI App - Linux]: #linux
   [Docker]: #docker
-  [Linux]: #linux
   [Java/Scala]: #javascala-api
+  [YAML]: #yaml
 
 ### Mac
 
@@ -80,6 +87,14 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 2. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
 
 ### Java/Scala API
+
+```shell
+git clone git@github.com:data-catering/data-caterer-example.git
+cd data-caterer-example && ./run.sh
+#check results under docker/sample/report/index.html folder
+```
+
+### YAML
 
 ```shell
 git clone git@github.com:data-catering/data-caterer-example.git
