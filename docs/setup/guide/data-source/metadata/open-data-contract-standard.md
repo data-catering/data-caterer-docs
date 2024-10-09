@@ -47,12 +47,12 @@ First, we will clone the data-caterer-example repo which will already have the b
 ### Open Data Contract Standard (ODCS) Setup
 
 We will be using
-[the following ODCS file](https://github.com/data-catering/data-caterer-example/blob/main/docker/mount/odcs/full-example.yaml)
+[the following ODCS file](https://github.com/data-catering/data-caterer-example/blob/main/docker/mount/odcs/full-example.odcs.yaml)
 for this example.
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a new Java/Scala class or YAML file.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyAdvancedODCSJavaPlanRun.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedODCSPlanRun.scala`
@@ -173,21 +173,21 @@ Let's try run and see what happens.
 
     ```shell
     ./run.sh MyAdvancedODCSJavaPlanRun
-    head docker/sample/account-odcs/part-00000-*
+    head docker/sample/customer/account-odcs/part-00000-*
     ```
 
 === "Scala"
 
     ```shell
     ./run.sh MyAdvancedODCSPlanRun
-    head docker/sample/account-odcs/part-00000-*
+    head docker/sample/customer/account-odcs/part-00000-*
     ```
 
 === "YAML"
 
     ```shell
     ./run.sh my-odcs.yaml
-    head docker/sample/account-odcs/part-00000-*
+    head docker/sample/customer/account-odcs/part-00000-*
     ```
 
 === "UI"
@@ -287,21 +287,21 @@ Let's test it out by running it again
 
     ```shell
     ./run.sh MyAdvancedODCSJavaPlanRun
-    head docker/sample/account-odcs/part-00000-*
+    head docker/sample/customer/account-odcs/part-00000-*
     ```
 
 === "Scala"
 
     ```shell
     ./run.sh MyAdvancedODCSPlanRun
-    head docker/sample/account-odcs/part-00000-*
+    head docker/sample/customer/account-odcs/part-00000-*
     ```
 
 === "YAML"
 
     ```shell
     ./run.sh my-odcs.yaml
-    head docker/sample/account-odcs/part-00000-*
+    head docker/sample/customer/account-odcs/part-00000-*
     ```
 
 === "UI"

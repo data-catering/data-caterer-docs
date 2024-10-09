@@ -70,15 +70,19 @@ Below are a list of guides you can follow to create your first Data Catering job
 
 <div class="grid cards" markdown>
 
+- __:material-file: [Data Contract CLI]__ - Generate data based on metadata in data contract files in Data Contract CLI format
 - __:material-check-all: [Great Expectations]__ - Use validations from Great Expectations for testing
 - __:material-database-plus: [Marquez]__ - Generate data based on metadata in Marquez
 - __:material-database-plus: [OpenMetadata]__ - Generate data based on metadata in OpenMetadata
+- __:material-file: [Open Data Contract Standard (ODCS)]__ - Generate data based on metadata in data contract files in ODCS format
 
 </div>
 
+  [Data Contract CLI]: data-source/metadata/data-contract-cli.md
   [Great Expectations]: data-source/metadata/great-expectations.md
   [Marquez]: data-source/metadata/marquez.md
   [OpenMetadata]: data-source/metadata/open-metadata.md
+  [Open Data Contract Standard (ODCS)]: data-source/metadata/open-data-contract-standard.md
 
 
 ## Scenarios
