@@ -134,13 +134,13 @@ extra:
     - icon: fontawesome/brands/slack
       link: https://join.slack.com/t/data-catering/shared_invite/zt-2664ylbpi-w3n7lWAO~PHeOG9Ujpm~~w
     - icon: fontawesome/brands/github
-      link: https://github.com/data-catering/data-caterer-example
+      link: https://github.com/data-catering/data-caterer
     - icon: fontawesome/brands/medium
       link: https://medium.com/@pflooky
     - icon: fontawesome/brands/linkedin
-      link: https://www.linkedin.com/in/peter-flook/
+      link: https://www.linkedin.com/company/data-catering
     - icon: fontawesome/solid/paper-plane
-      link: mailto:peter.flook@data.catering
+      link: mailto:hello@data.catering
     - icon: fontawesome/brands/youtube
       link: https://www.youtube.com/channel/UCNJACecY00X3JuV99UOySqQ
     - icon: fontawesome/brands/x-twitter
