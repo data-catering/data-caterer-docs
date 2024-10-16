@@ -51,6 +51,8 @@ Cons
 - Long time for model learning
 - Black box of logic
 - Maintain, store and update of ML models
+- Required connection to production data
+- Potential to leak PII data from production
 - Restriction on input data lengths
 - May not maintain referential integrity
 - Require deeper understanding of ML models for fine-tuning
