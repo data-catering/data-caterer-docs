@@ -166,7 +166,7 @@ information and our privacy policies and procedures.
 
 ## How to contact us
 
-- by email at `peter.flook@data.catering`
+- by email at `hello@data.catering`
 
 Our business changes constantly, and this privacy notice will change also. We may e-mail periodic reminders of our
 notices and conditions, unless you have instructed us not to, but you should check our website frequently to see

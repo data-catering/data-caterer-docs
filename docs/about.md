@@ -9,10 +9,11 @@ repeatable. Through the use of metadata, Data Caterer can help simplify your dat
 environment data, aid in data debugging, or whatever your data use case may be.
 
 Given that it is going to save you and your team time and money, please help in considering financial support. This will
-help the product grow into a sustainable and feature-full service.
+help the product grow into a sustainable and feature-full service. Check the [sponsor section](sponsor.md) to see how 
+you can help.
 
 ## Contact
 
-Please contact Peter Flook
+Please contact us
 via [Slack](https://join.slack.com/t/data-catering/shared_invite/zt-2664ylbpi-w3n7lWAO~PHeOG9Ujpm~~w)
-or via email `peter.flook@data.catering` if you have any questions or queries.
+or via email `hello@data.catering` if you have any questions or queries.

@@ -165,4 +165,4 @@ terms. If You do not agree to the new terms, in whole or in part, please stop us
 
 If you have any questions about these Terms and Conditions, You can contact us:
 
-- By email: peter.flook@data.catering
+- By email: hello@data.catering
