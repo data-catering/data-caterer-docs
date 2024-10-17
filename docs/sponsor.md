@@ -5,11 +5,12 @@ as an enterprise, you are required to be a sponsor for the project.
 
 ## Tiers
 
-| Company Size | Employees | Sponsorship (AUD per month) |
-|--------------|-----------|-----------------------------|
-| Small        | 1-100     | $99                         |
-| Medium       | 100-1000  | $499                        |
-| Large        | 1000+     | $999                        |
+| Type           | Employees | Sponsorship (AUD) |
+|----------------|-----------|-------------------|
+| Individual     | 1         | $99/year          |
+| Small Company  | 1-100     | $99/month         |
+| Medium Company | 100-1000  | $499/month        |
+| Large Company  | 1000+     | $999/month        |
 
 ## Contact
 
