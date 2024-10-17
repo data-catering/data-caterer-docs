@@ -159,9 +159,10 @@ To define the generated data that should be deleted, follow the below configurat
           - []
     ```
 
-##### UI
+=== "UI"
 
-![Generate relationship in UI](../diagrams/ui/data-caterer-ui-generate-relationship.png)
+    ![Generate relationship in UI](../diagrams/ui/data-caterer-ui-generate-relationship.png)
+
 
 ### Delete
 
@@ -293,7 +294,3 @@ follow the below example:
 === "UI"
 
     ![Delete relationship in UI](../diagrams/ui/data-caterer-ui-delete-relationship.png)
-
-##### UI
-
-![Delete relationship in UI](../diagrams/ui/data-caterer-ui-delete-relationship.png)
