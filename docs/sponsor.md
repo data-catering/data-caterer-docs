@@ -5,12 +5,14 @@ as an enterprise, you are required to be a sponsor for the project.
 
 ## Tiers
 
-| Type           | Employees | Sponsorship (AUD) |
-|----------------|-----------|-------------------|
-| Individual     | 1         | $99/year          |
-| Small Company  | 1-100     | $99/month         |
-| Medium Company | 100-1000  | $499/month        |
-| Large Company  | 1000+     | $999/month        |
+<script src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1OH0g0JLcXz3QuJfOLZEAh1j"
+publishable-key="pk_live_51Nt1GMJLcXz3QuJfivqD6tl8fF3VZdzHgSOl9AGTWn3qD0neSI2UTHoD3iVwi6As2lVMhGeZEieFW6Jdeoan4Rqb00WigQVrLa">
+</stripe-pricing-table>
+
+## Manage Subscription
+
+[Manage via this link](https://billing.stripe.com/p/login/28oaIGdfreH7eXufYY)
 
 ## Contact
 
