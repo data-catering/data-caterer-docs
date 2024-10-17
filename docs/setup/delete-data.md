@@ -290,6 +290,10 @@ follow the below example:
           - - "postgres.balances.account_id"
     ```
 
+=== "UI"
+
+    ![Delete relationship in UI](../diagrams/ui/data-caterer-ui-delete-relationship.png)
+
 ##### UI
 
 ![Delete relationship in UI](../diagrams/ui/data-caterer-ui-delete-relationship.png)
