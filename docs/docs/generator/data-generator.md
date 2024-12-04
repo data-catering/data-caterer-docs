@@ -16,8 +16,8 @@ Below is a list of all supported data types for generating data:
 | long                      | LongType                      | `min, max, stddev, mean`                 |                                                           |
 | short                     | ShortType                     | `min, max, stddev, mean`                 |                                                           |
 | decimal(precision, scale) | DecimalType(precision, scale) | `min, max, stddev, mean`                 |                                                           |
-| double                    | DoubleType                    | `min, max, stddev, mean`                 |                                                           |
-| float                     | FloatType                     | `min, max, stddev, mean`                 |                                                           |
+| double                    | DoubleType                    | `min, max, round, stddev, mean`          |                                                           |
+| float                     | FloatType                     | `min, max, round, stddev, mean`          |                                                           |
 | date                      | DateType                      | `min, max, enableNull`                   |                                                           |
 | timestamp                 | TimestampType                 | `min, max, enableNull`                   |                                                           |
 | boolean                   | BooleanType                   |                                          |                                                           |
@@ -38,6 +38,7 @@ descriptions:
 | `enableEdgeCase`      | false   | `enableEdgeCase: "true"`                                | Enable/disable generated data to contain edge cases based on the data type. For example, integer data type has edge cases of (Int.MaxValue, Int.MinValue and 0)                                                                                                                                    |
 | `edgeCaseProbability` | 0.0     | `edgeCaseProb: "0.1"`                                   | Probability of generating a random edge case value if `enableEdgeCase` is true                                                                                                                                                                                                                     |
 | `isUnique`            | false   | `isUnique: "true"`                                      | Enable/disable generated data to be unique for that column. Errors will be thrown when it is unable to generate unique data                                                                                                                                                                        |
+| `regex`               | <empty> | `regex: "ACC[0-9]{10}"`                                 | Regular expression to define pattern generated data should follow                                                                                                                                                                                                                                  |
 | `seed`                | <empty> | `seed: "1"`                                             | Defines the random seed for generating data for that particular column. It will override any seed defined at a global level                                                                                                                                                                        |
 | `sql`                 | <empty> | `sql: "CASE WHEN amount < 10 THEN true ELSE false END"` | Define any SQL statement for generating that columns value. Computation occurs after all non-SQL fields are generated. This means any columns used in the SQL cannot be based on other SQL generated columns. Data type of generated value from SQL needs to match data type defined for the field |
 
@@ -233,6 +234,7 @@ as defined by the data source (i.e. max value as per database type).
 |----------|-------------|-----------------|----------------------------------------------------------------------|
 | `min`    | 0.0         | `min: "2.1"`    | Ensures that all generated values are greater than or equal to `min` |
 | `max`    | 1000.0      | `max: "25.9"`   | Ensures that all generated values are less than or equal to `max`    |
+| `round`  | N/A         | `round: "2"`    | Round to particular number of decimal places                         |
 | `stddev` | 1.0         | `stddev: "2.0"` | Standard deviation for normal distributed data                       |
 | `mean`   | `max - min` | `mean: "5.0"`   | Mean for normal distributed data                                     |
 
