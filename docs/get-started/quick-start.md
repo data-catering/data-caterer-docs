@@ -59,7 +59,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 1. Docker
    ```shell
-   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.12.3
+   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.12.4
    ```
 2. [Open localhost:9898](http://localhost:9898)
 

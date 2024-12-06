@@ -80,7 +80,6 @@ Make sure your class extends `PlanRun`.
     tasks:
       - name: "csv_account_file"
         dataSourceName: "customer_accounts"
-        enabled: true
     ```
 
 === "UI"
@@ -926,7 +925,6 @@ below.
     tasks:
       - name: "csv_account_file"
         dataSourceName: "customer_accounts"
-        enabled: true
 
     sinkOptions:
       foreignKeys:

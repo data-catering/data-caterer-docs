@@ -335,3 +335,8 @@ Also check the HTML report, found at `docker/sample/report/index.html`, that get
 was executed.
 
 ![Sample report](../../../../sample/report/report_screenshot.png)
+
+### Validation
+
+If you want to validate data from Cassandra,
+[follow the validation documentation found here to help guide you](../../../validation.md).

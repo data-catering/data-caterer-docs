@@ -90,6 +90,32 @@ Make sure your class extends `PlanRun`.
     }
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/plan/my-http.yaml`:
+    ```yaml
+    name: "my_http_plan"
+    description: "Create account data via HTTP from OpenAPI metadata"
+    tasks:
+      - name: "http_task"
+        dataSourceName: "my_http"
+    ```
+
+    In `application.conf`:
+    ```
+    flags {
+      enableGeneratePlanAndTasks = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    3. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
+
 We will enable generate plan and tasks so that we can read from external sources for metadata and save the reports
 under a folder we can easily access.
 
@@ -121,6 +147,30 @@ We have kept the following endpoints to test out:
       .schema(metadataSource.openApi("/opt/app/mount/http/petstore.json"))
       .count(count.records(2))
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/http/openapi-task.yaml`:
+    ```
+    name: "http_task"
+    steps:
+      - name: "my_petstore"
+        options:
+          metadataSourceType: "openapi"
+          schemaLocation: "/opt/app/mount/http/petstore.json"
+        count:
+          records: 2
+    ```
+
+=== "UI"
+
+    1. Click on `Connection` tab at the top
+        1. Click on `Select data source type` and select `OpenAPI/Swagger`
+        1. Provide a `Name` and `Schema Location` pointing to where you have stored your OpenAPI specification file
+        1. Click `Create`
+    1. Click on `Home` tab at the top
+    1. Click on `Generation` and tick the `Auto from metadata source` checkbox
+        1. Click on `Select metadata source` and select the OpenAPI metadata source you just created
 
 The above defines that the schema will come from an OpenAPI document found on the pathway defined. It will then generate
 2 requests per request method and endpoint combination.
@@ -197,6 +247,28 @@ knowledge to link all the `id` values together.
     execute(myPlan, conf, httpTask)
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/plan/my-http.yaml`:
+    ```yaml
+    name: "my_http_plan"
+    description: "Create account data via HTTP from OpenAPI metadata"
+    tasks:
+      - name: "http_task"
+        dataSourceName: "my_http"
+
+    sinkOptions:
+      foreignKeys:
+        - - "my_http.POST/pets.bodyContent.id"
+          - - "my_http.DELETE/pets/{id}.pathParamid"
+          - - "my_http.GET/pets/{id}.pathParamid"
+          - []
+    ```
+
+=== "UI"
+
+    ![Generate relationship in UI](../diagrams/ui/data-caterer-ui-generate-relationship.png)
+
 Let's test it out by running it again
 
 ```shell
@@ -242,6 +314,38 @@ Given the `id` column is a nested column as noted in the foreign key, we can alt
       .schema(field.name("bodyContent").schema(field.name("id").regex("ID[0-9]{8}")))
       .count(count.records(2))
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/http/openapi-task.yaml`:
+    ```
+    name: "http_task"
+    steps:
+      - name: "my_petstore"
+        options:
+          metadataSourceType: "openapi"
+          schemaLocation: "/opt/app/mount/http/petstore.json"
+        count:
+          records: 2
+        schema:
+          fields:
+            - name: "bodyContent"
+              fields:
+                - name: "id"
+                  options:
+                    regex: "ID[0-9]{8}"
+    ```
+
+=== "UI"
+
+    1. Click on `Generation` and tick the `Manual` checkbox
+    1. Click on `+ Field`
+        1. Add name as `bodyContent`
+        1. Click on `Select data type` and select `struct`
+        1. Click on `+ Field`
+        1. Add name as `id`
+        1. Click on `Select data type` and select `string`
+        1. Click `Regex` and enter `ID[0-9]{8}`
 
 We first get the column `bodyContent`, then get the nested schema and get the column `id` and add metadata stating that
 `id` should follow the patter `ID[0-9]{8}`.
@@ -297,5 +401,43 @@ want to alter this value, you can do so via the below configuration. The lowest 
     val httpTask = http("my_http", options = Map(ROWS_PER_SECOND -> "1"))
       ...
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/http/openapi-task.yaml`:
+    ```
+    name: "http_task"
+    steps:
+      - name: "my_petstore"
+        options:
+          metadataSourceType: "openapi"
+          schemaLocation: "/opt/app/mount/http/petstore.json"
+          rowsPerSecond: "1"
+        ...
+    ```
+
+### Validation
+
+Once you have generated HTTP requests, you may also want to validate the responses to ensure your service is responding
+as expected.
+
+The following fields are made available to you to validate against:
+
+| Field    | Inner Field | Data Type           | Example                       |
+|----------|-------------|---------------------|-------------------------------|
+| request  | method      | String              | GET                           |
+| request  | url         | String              | http://localhost:8080/my/path |
+| request  | headers     | Map[String, String] | Content-Length -> 200         |
+| request  | body        | String              | my-body                       |
+| request  | startTime   | Long                | 1733408207499                 |
+| response | contentType | String              | application/json              |
+| response | headers     | Map[String, String] | Content-Length -> 200         |
+| response | body        | String              | my-body                       |
+| response | statusCode  | Int                 | 200                           |
+| response | statusText  | String              | OK                            |
+| response | timeTakenMs | Long                | 120                           |
+
+If you want to validate data from an HTTP source,
+[follow the validation documentation found here to help guide you](../../../validation.md).
 
 Check out the full example under `AdvancedHttpPlanRun` in the example repo.

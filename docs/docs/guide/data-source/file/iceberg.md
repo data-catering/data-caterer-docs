@@ -78,7 +78,6 @@ Make sure your class extends `PlanRun`.
     tasks:
       - name: "iceberg_account_table"
         dataSourceName: "customer_accounts"
-        enabled: true
     ```
 
 === "UI"
