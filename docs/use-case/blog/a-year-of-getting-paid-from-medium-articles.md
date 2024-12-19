@@ -225,7 +225,9 @@ created called [insta-infra](https://github.com/data-catering/insta-infra). All 
 
 ```shell
 git clone git@github.com:data-catering/insta-infra.git
-cd insta-infra && ./run.sh duckdb && docker cp <directory path to stats_export> duckdb:/tmp && ./run.sh -c duckdb
+cd insta-infra && ./run.sh duckdb
+docker cp <directory path to stats_export> duckdb:/tmp
+./run.sh -c duckdb
 ```
 
 You can use the above queries to now check your stats. You can also find
