@@ -75,8 +75,8 @@ website but could only find you can export out your [audience statistics](#audie
 something more comprehensive in [this GitHub repo called medium_stats](https://github.com/otosky/medium_stats). Great!
 
 When I ran it after installing it via pip, it ran into a JSON decoding error. Most likely Medium has changed its API
-and the project needs to be updated. Using my internet skills, I opened up "Inspect" in my browsers, went to the "
-Network" tab and tried to find out which API call contains all the juicy information. After a few clicks, I found this
+and the project needs to be updated. Using my internet skills, I opened up "Inspect" in my browsers, went to the 
+"Network" tab and tried to find out which API call contains all the juicy information. After a few clicks, I found this
 GraphQL response.
 
 ![GraphQL query to get all story stats](../../diagrams/blog/paid-medium-articles/inspect_graphql_query.png)
