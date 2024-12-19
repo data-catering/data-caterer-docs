@@ -267,7 +267,7 @@ knowledge to link all the `id` values together.
 
 === "UI"
 
-    ![Generate relationship in UI](../../../diagrams/ui/data-caterer-ui-generate-relationship.png)
+    ![Generate relationship in UI](../../../../diagrams/ui/data-caterer-ui-generate-relationship.png)
 
 Let's test it out by running it again
 
