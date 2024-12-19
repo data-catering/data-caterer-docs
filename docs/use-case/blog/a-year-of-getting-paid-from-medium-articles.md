@@ -4,7 +4,9 @@ description: "Analysing my Medium article data to see how my trial of one year o
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
-# Creating Articles
+# A year of getting paid from Medium articles
+
+## Creating Articles
 
 At the end of last year, I decided to put more effort into creating articles both to help boost awareness of my
 new business Data Catering and consolidate my knowledge and exploration of technology topics. I had been using
@@ -184,7 +186,7 @@ WHERE earnings.periodStartedAt = stats.dayStartsAt;
 
 So I wasn't really expecting much out of it but was at least hoping to break even with my initial $50 USD investment.
 
-#### Total earnings across all articles
+### Total earnings across all articles
 
 ```sql
 SELECT SUM(CAST(CONCAT(node.earnings.total.units, '.',
@@ -196,3 +198,4 @@ FROM
 ![DuckDB query results for total earnings](../../diagrams/blog/paid-medium-articles/duckdb_total_earnings.png)
 
 Nope!
+But surely, the knowledge gained, priceless.
