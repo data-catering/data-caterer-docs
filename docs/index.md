@@ -26,11 +26,11 @@ alt="Data Caterer generate, validate and clean data testing flow">
 
 ## Main features
 
-- :material-connection: [Connect to any data source](setup/connection.md)
-- :material-auto-fix: [Auto generate production-like data from data connections or metadata sources](setup/guide/scenario/auto-generate-connection.md)
-- :material-relation-many-to-one: [Relationships across data sources](setup/generator/foreign-key.md)
-- :material-test-tube: [Validate based on data generated](setup/validation.md)
-- :material-delete-sweep: [Clean up generated and downstream data](setup/delete-data.md)
+- :material-connection: [Connect to any data source](docs/connection.md)
+- :material-auto-fix: [Auto generate production-like data from data connections or metadata sources](docs/guide/scenario/auto-generate-connection.md)
+- :material-relation-many-to-one: [Relationships across data sources](docs/generator/foreign-key.md)
+- :material-test-tube: [Validate based on data generated](docs/validation.md)
+- :material-delete-sweep: [Clean up generated and downstream data](docs/delete-data.md)
 
 <span class="center-content">
 [Try now](get-started/quick-start.md){ .md-button .md-button--primary .button-spaced }
@@ -88,6 +88,14 @@ alt="Data Caterer generate, validate and clean data testing flow">
     as SLAs, security, etc.
 
 </div>
+
+## Who can use it
+
+| Type      | Interface                                              | User                                 |
+|-----------|--------------------------------------------------------|--------------------------------------|
+| No Code   | [UI](get-started/quick-start.md#windows)               | QA, Testers, Data Scientist, Analyst |
+| Low Code  | [YAML](get-started/quick-start.md#yaml)                | DevOps, Kubernetes Fans              |
+| High Code | [Java/Scala](get-started/quick-start.md#javascala-api) | Software Developers, Data Engineers  |
 
 <span class="center-content">
 [Try now](get-started/quick-start.md){ .md-button .md-button--primary .button-spaced }

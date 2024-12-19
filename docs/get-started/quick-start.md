@@ -112,6 +112,6 @@ Check the report generated under `docker/data/custom/report/index.html`.
 
 ### Guided tour
 
-[**Check out the starter guide here**](../setup/guide/scenario/first-data-generation.md) that will take your through
-step by step. You can also check the other guides [**here**](../setup/guide/index.md) to see the other possibilities of
+[**Check out the starter guide here**](../docs/guide/scenario/first-data-generation.md) that will take your through
+step by step. You can also check the other guides [**here**](../docs/guide/index.md) to see the other possibilities of
 what Data Caterer can achieve for you.

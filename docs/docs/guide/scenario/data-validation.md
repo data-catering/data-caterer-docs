@@ -146,7 +146,7 @@ validation considers an acceptable error threshold before marking it as failed.
 - Customisation
     - Adjust the regex pattern and error threshold based on your specific data schema and validation requirements.
     - For the full list of types of basic validations that can be
-      used, [check this page](../../../setup/validation/basic-validation.md).
+      used, [check this page](../../../docs/validation/basic-validation.md).
 - Understanding Tolerance
     - Be mindful of the error threshold, as it directly influences what percentage of deviations from the pattern is
       acceptable.
@@ -220,7 +220,7 @@ Line 2: `validation.groupBy("account_id").max("balance").lessThan(900)`
 - Adjust the `errorThreshold` or validation to your specification scenario. The full list
   of [types of validations can be found here](../../validation.md).
 - For the full list of types of group by validations that can be
-  used, [check this page](../../../setup/validation/group-by-validation.md).
+  used, [check this page](../../../docs/validation/group-by-validation.md).
 
 === "Java"
 
