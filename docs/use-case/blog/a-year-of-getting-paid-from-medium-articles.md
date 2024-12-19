@@ -34,37 +34,37 @@ Shows you a summary of the current month earnings and gives you an overview on a
 note is that you now only get paid once you have reached $10 USD. Previously, you would get paid per month no matter
 the amount.
 
-![Medium Partner Program dashboard](../../../docs/diagrams/blog/paid-medium-articles/partner_program_dashboard.png)
+![Medium Partner Program dashboard](../../diagrams/blog/paid-medium-articles/partner_program_dashboard.png)
 
 ### Audience Dashboard
 
 An overview of subscribers to your articles. You can see a jump in October because I wrote an article that month.
 
-![Medium audience dashboard](../../../docs/diagrams/blog/paid-medium-articles/audience_stats_dashboard.png)
+![Medium audience dashboard](../../diagrams/blog/paid-medium-articles/audience_stats_dashboard.png)
 
 ### Story Dashboard
 
 Details on how many people have viewed and read your articles.
 
-![Story statistics dashboard](../../../docs/diagrams/blog/paid-medium-articles/story_stats_dashboard.png)
+![Story statistics dashboard](../../diagrams/blog/paid-medium-articles/story_stats_dashboard.png)
 
 Basic sorting options for story statistics.
 
-![Story statistics sorting options](../../../docs/diagrams/blog/paid-medium-articles/story_stats_sorting.png)
+![Story statistics sorting options](../../diagrams/blog/paid-medium-articles/story_stats_sorting.png)
 
 ### Per Story Dashboard
 
 You can drill down into more details at the article level.
 
-![Per story overview with earnings](../../../docs/diagrams/blog/paid-medium-articles/per_story_stats_top.png)
+![Per story overview with earnings](../../diagrams/blog/paid-medium-articles/per_story_stats_top.png)
 
 The breakdown of member/non-member reads and views per day.
 
-![Per story member/non-member reads and views per day](../../../docs/diagrams/blog/paid-medium-articles/per_story_stats_middle.png)
+![Per story member/non-member reads and views per day](../../diagrams/blog/paid-medium-articles/per_story_stats_middle.png)
 
 The sources of traffic to your article and the interests of your readers.
 
-![Per story traffic sources and reader interests](../../../docs/diagrams/blog/paid-medium-articles/per_story_stats_bottom.png)
+![Per story traffic sources and reader interests](../../diagrams/blog/paid-medium-articles/per_story_stats_bottom.png)
 
 ## I Want More Insights
 
@@ -77,7 +77,7 @@ and the project needs to be updated. Using my internet skills, I opened up "Insp
 Network" tab and tried to find out which API call contains all the juicy information. After a few clicks, I found this 
 GraphQL response.
 
-![GraphQL query to get all story stats](../../../docs/diagrams/blog/paid-medium-articles/inspect_graphql_query.png)
+![GraphQL query to get all story stats](../../diagrams/blog/paid-medium-articles/inspect_graphql_query.png)
 
 I could see the
 [medium_stats project was already making some GraphQL calls](https://github.com/otosky/medium_stats/blob/master/medium_stats/scraper.py#L15).
@@ -103,7 +103,7 @@ FROM
 ORDER BY earnings DESC;
 ```
 
-![DuckDB query results for earnings per story](../../../docs/diagrams/blog/paid-medium-articles/duckdb_earnings_per_story.png)
+![DuckDB query results for earnings per story](../../diagrams/blog/paid-medium-articles/duckdb_earnings_per_story.png)
 
 #### Earnings per day per story
 
@@ -123,7 +123,7 @@ FROM (SELECT d.id                                          AS id,
 ORDER BY earn DESC;
 ```
 
-![DuckDB query results for earnings per day per story](../../../docs/diagrams/blog/paid-medium-articles/duckdb_earnings_per_day_per_story.png)
+![DuckDB query results for earnings per day per story](../../diagrams/blog/paid-medium-articles/duckdb_earnings_per_day_per_story.png)
 
 #### Earnings per member interaction per story
 
@@ -151,7 +151,7 @@ WHERE earnings.periodStartedAt = stats.dayStartsAt
 ORDER BY amount DESC;
 ```
 
-![DuckDB query results for earnings with interactions from members](../../../docs/diagrams/blog/paid-medium-articles/duckdb_earnings_per_interaction.png)
+![DuckDB query results for earnings with interactions from members](../../diagrams/blog/paid-medium-articles/duckdb_earnings_per_interaction.png)
 
 #### Linear regression of member interactions with earnings
 
@@ -178,7 +178,7 @@ FROM (SELECT d.id               AS id,
 WHERE earnings.periodStartedAt = stats.dayStartsAt;
 ```
 
-![DuckDB query results for linear regression between member interactions and earnings](../../../docs/diagrams/blog/paid-medium-articles/duckdb_linear_regression_interactions.png)
+![DuckDB query results for linear regression between member interactions and earnings](../../diagrams/blog/paid-medium-articles/duckdb_linear_regression_interactions.png)
 
 ## Did I Reach Break Even?
 
@@ -193,6 +193,6 @@ FROM
     read_json('/tmp/stats_exports/*/agg_stats/*.json');
 ```
 
-![DuckDB query results for total earnings](../../../docs/diagrams/blog/paid-medium-articles/duckdb_total_earnings.png)
+![DuckDB query results for total earnings](../../diagrams/blog/paid-medium-articles/duckdb_total_earnings.png)
 
 Nope!

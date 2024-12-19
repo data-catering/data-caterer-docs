@@ -93,7 +93,7 @@ alt="Data Caterer generate, validate and clean data testing flow">
 
 | Type      | Interface                                              | User                                 |
 |-----------|--------------------------------------------------------|--------------------------------------|
-| No Code   | [UI](get-started/quick-start.md#windows)               | QA, Testers, Data Scientist, Analyst |
+| No Code   | [UI](get-started/quick-start.md#mac)                   | QA, Testers, Data Scientist, Analyst |
 | Low Code  | [YAML](get-started/quick-start.md#yaml)                | DevOps, Kubernetes Fans              |
 | High Code | [Java/Scala](get-started/quick-start.md#javascala-api) | Software Developers, Data Engineers  |
 

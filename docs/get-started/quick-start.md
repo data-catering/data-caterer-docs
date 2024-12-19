@@ -77,6 +77,10 @@ cd data-caterer-example && ./run.sh
 git clone git@github.com:data-catering/data-caterer-example.git
 cd data-caterer-example && ./run.sh
 #check results under docker/sample/report/index.html folder
+#check example YAML files under:
+# - docker/data/custom/plan
+# - docker/data/custom/task
+# - docker/data/custom/validation
 ```
 
 ### Mac

@@ -91,6 +91,7 @@ nav:
                 - Kafka: 'docs/guide/data-source/messaging/kafka.md'
                 - Solace: 'docs/guide/data-source/messaging/solace.md'
               - Metadata:
+                - Data Contract CLI: 'docs/guide/data-source/metadata/data-contract-cli.md'
                 - Great Expectations: 'docs/guide/data-source/metadata/great-expectations.md'
                 - Marquez: 'docs/guide/data-source/metadata/marquez.md'
                 - OpenMetadata: 'docs/guide/data-source/metadata/open-metadata.md'
@@ -120,6 +121,7 @@ nav:
       - Comparison: 'use-case/comparison.md'
       - Roadmap: 'use-case/roadmap.md'
       - Blog:
+          - A year of getting paid from Medium articles: 'use-case/blog/a-year-of-getting-paid-from-medium-articles.md'
           - Shift Left Data Quality: 'use-case/blog/shift-left-data-quality.md'
   - About:
       - 'about.md'
@@ -145,13 +147,6 @@ extra:
       link: https://twitter.com/datacatering
     - icon: fontawesome/brands/docker
       link: https://hub.docker.com/u/datacatering
-  consent:
-    title: Cookie consent
-    description: >-
-      We use cookies to recognize your repeated visits and preferences, as well
-      as to measure the effectiveness of our documentation and whether users
-      find what they're searching for. With your consent, you're helping us to
-      make our documentation better.
   analytics:
     provider: google
     property: G-4098CTH5TX
