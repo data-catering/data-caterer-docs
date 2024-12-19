@@ -23,7 +23,7 @@ To earn money from an article, you have to restrict access to the article to onl
 Program. You have the option as a writer of the article to also share a friend's link which allows others to bypass this
 restriction, but you don't earn anything based on the interactions from the friend's link.
 
-So your only chances of earning from an article are essentially based on people outside your network, who are members, 
+So your only chances of earning from an article are essentially based on people outside your network, who are members,
 interacting with your article.
 
 ## Medium Dashboards
@@ -76,7 +76,7 @@ something more comprehensive in [this GitHub repo called medium_stats](https://g
 
 When I ran it after installing it via pip, it ran into a JSON decoding error. Most likely Medium has changed its API
 and the project needs to be updated. Using my internet skills, I opened up "Inspect" in my browsers, went to the "
-Network" tab and tried to find out which API call contains all the juicy information. After a few clicks, I found this 
+Network" tab and tried to find out which API call contains all the juicy information. After a few clicks, I found this
 GraphQL response.
 
 ![GraphQL query to get all story stats](../../diagrams/blog/paid-medium-articles/inspect_graphql_query.png)
@@ -199,3 +199,35 @@ FROM
 
 Nope!
 But surely, the knowledge gained, priceless.
+
+## Check Your Stats
+
+I've created a PR to the [main repo here](https://github.com/otosky/medium_stats/pull/20) but if you can't wait, try
+to run the following:
+
+```shell
+git clone git@github.com:pflooky/medium_stats.git
+cd medium_stats
+git checkout update-graphql
+#check README for details on how to use your Medium credentials
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install pyproject.toml
+PYTHONPATH=. python -m medium_stats scrape_user -u <username> --all
+```
+
+Now all your stats should be available in the `stats_export` directory.
+
+### Using DuckDB
+
+To query the data, you can use DuckDB. If you have it installed already, use that, else, you can use it via a tool I
+created called [insta-infra](https://github.com/data-catering/insta-infra). All you need is Docker.
+
+```shell
+git clone git@github.com:data-catering/insta-infra.git
+cd insta-infra && ./run.sh duckdb && docker cp <directory path to stats_export> duckdb:/tmp && ./run.sh -c duckdb
+```
+
+You can use the above queries to now check your stats. You can also find
+all [the queries here](https://github.com/pflooky/medium_stats/blob/update-graphql/sql/sample_queries.sql).
+
