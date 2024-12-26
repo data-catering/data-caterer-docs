@@ -25,7 +25,7 @@ define SQL expression that can reference other fields.
     validation().field("year").isEqual(2021),
     validation().field("year").isEqualField("YEAR(date)"),
 
-    validation().field("year").isEqual(2021, true), #check not equal to
+    validation().field("year").isEqual(2021, true), //check not equal to
     validation().field("year").isEqualField("YEAR(date)", true),
     ```
 
@@ -35,7 +35,7 @@ define SQL expression that can reference other fields.
     validation.field("year").isEqual(2021),
     validation.field("year").isEqualField("YEAR(date)"),
 
-    validation.field("year").isEqual(2021, true),  #check not equal to
+    validation.field("year").isEqual(2021, true),  //check not equal to
     validation.field("year").isEqualField("YEAR(date)", true),
     ```
 
@@ -65,7 +65,7 @@ Ensure all data in field is null or not null.
     ```java
     validation().field("year").isNull()
 
-    validation().field("year").isNull(true) #check not null
+    validation().field("year").isNull(true) //check not null
     ```
 
 === "Scala"
@@ -73,7 +73,7 @@ Ensure all data in field is null or not null.
     ```scala
     validation.field("year").isNull()
 
-    validation().field("year").isNull(true) #check not null
+    validation().field("year").isNull(true) //check not null
     ```
 
 === "YAML"
@@ -100,7 +100,7 @@ Ensure all data in field is contains/not contains a certain string. Field has to
     ```java
     validation().field("name").contains("peter")
 
-    validation().field("name").contains("peter", true)  #check not contains
+    validation().field("name").contains("peter", true)  //check not contains
     ```
 
 === "Scala"
@@ -108,7 +108,7 @@ Ensure all data in field is contains/not contains a certain string. Field has to
     ```scala
     validation.field("name").contains("peter")
 
-    validation.field("name").contains("peter", true)  #check not contains
+    validation.field("name").contains("peter", true)  //check not contains
     ```
 
 === "YAML"
@@ -167,7 +167,7 @@ other fields.
     validation().field("amount").lessThan(100),
     validation().field("amount").lessThanField("balance + 1"),
 
-    validation().field("amount").lessThan(100, false), #check less than or equal to
+    validation().field("amount").lessThan(100, false), //check less than or equal to
     validation().field("amount").lessThanField("balance + 1", false),
     ```
 
@@ -177,7 +177,7 @@ other fields.
     validation.field("amount").lessThan(100),
     validation.field("amount").lessThanField("balance + 1"),
 
-    validation.field("amount").lessThan(100, false), #check less than or equal to
+    validation.field("amount").lessThan(100, false), //check less than or equal to
     validation.field("amount").lessThanField("balance + 1", false),
     ```
 
@@ -211,7 +211,7 @@ that can reference other fields.
     validation().field("amount").greaterThan(100),
     validation().field("amount").greaterThanField("balance"),
 
-    validation().field("amount").greaterThan(100, false), #check greater than or equal to
+    validation().field("amount").greaterThan(100, false), //check greater than or equal to
     validation().field("amount").greaterThanField("balance", false),
     ```
 
@@ -221,7 +221,7 @@ that can reference other fields.
     validation.field("amount").greaterThan(100),
     validation.field("amount").greaterThanField("balance"),
 
-    validation.field("amount").greaterThan(100), #check greater than or equal to
+    validation.field("amount").greaterThan(100), //check greater than or equal to
     validation.field("amount").greaterThanField("balance"),
     ```
 
@@ -255,7 +255,7 @@ fields.
     validation().field("amount").between(100, 200),
     validation().field("amount").betweenFields("balance * 0.9", "balance * 1.1"),
 
-    validation().field("amount").between(100, 200, true), #check not between
+    validation().field("amount").between(100, 200, true), //check not between
     validation().field("amount").betweenFields("balance * 0.9", "balance * 1.1", true),
     ```
 
@@ -265,7 +265,7 @@ fields.
     validation.field("amount").between(100, 200),
     validation.field("amount").betweenFields("balance * 0.9", "balance * 1.1"),
 
-    validation.field("amount").between(100, 200, true), #check not between
+    validation.field("amount").between(100, 200, true), //check not between
     validation.field("amount").betweenFields("balance * 0.9", "balance * 1.1", true),
     ```
 
@@ -299,7 +299,7 @@ Ensure all data in field is in set of defined values.
     ```java
     validation().field("status").in("open", "closed")
 
-    validation().field("status").in(List.of("open", "closed"), true)  #check not in
+    validation().field("status").in(List.of("open", "closed"), true)  //check not in
     ```
 
 === "Scala"
@@ -307,7 +307,7 @@ Ensure all data in field is in set of defined values.
     ```scala
     validation.field("status").in("open", "closed")
 
-    validation.field("status").in(List("open", "closed"), true) #check not in
+    validation.field("status").in(List("open", "closed"), true) //check not in
     ```
 
 === "YAML"
@@ -336,28 +336,28 @@ Ensure all data in field matches certain regex expression(s).
 
     ```java
     validation().field("account_id").matches("ACC[0-9]{8}")
-    validation().field("account_id").matchesList(List.of("ACC[0-9]{8}", "ACC[0-9]{10}"))  #check matches all regexes
+    validation().field("account_id").matchesList(List.of("ACC[0-9]{8}", "ACC[0-9]{10}"))  //check matches all regexes
 
-    validation().field("account_id").matches("ACC[0-9]{8}", true) #check not matches
-    validation().field("account_id").matchesList(List.of("ACC[0-9]{8}", "ACC[0-9]{10}"), true, false) #check does not match all regexes
+    validation().field("account_id").matches("ACC[0-9]{8}", true) //check not matches
+    validation().field("account_id").matchesList(List.of("ACC[0-9]{8}", "ACC[0-9]{10}"), true, false) //check does not match all regexes
 
-    validation().field("account_id").matchesList(List.of("ACC[0-9]{8}", "ACC[0-9]{10}"), false, true)  #check matches at least one regex
+    validation().field("account_id").matchesList(List.of("ACC[0-9]{8}", "ACC[0-9]{10}"), false, true)  //check matches at least one regex
 
-    validation().field("account_id").matchesList(List.of("ACC[0-9]{8}", "ACC[0-9]{10}"), false, false)  #check does not match at least one regex
+    validation().field("account_id").matchesList(List.of("ACC[0-9]{8}", "ACC[0-9]{10}"), false, false)  //check does not match at least one regex
     ```
 
 === "Scala"
 
     ```scala
     validation.field("account_id").matches("ACC[0-9]{8}")
-    validation.field("account_id").matchesList(List("ACC[0-9]{8}", "ACC[0-9]{10}"))  #check matches all regexes
+    validation.field("account_id").matchesList(List("ACC[0-9]{8}", "ACC[0-9]{10}"))  //check matches all regexes
 
-    validation.field("account_id").matches("ACC[0-9]{8}", true) #check not matches
-    validation.field("account_id").matchesList(List("ACC[0-9]{8}", "ACC[0-9]{10}"), true, false)  #check does not match all regexes
+    validation.field("account_id").matches("ACC[0-9]{8}", true) //check not matches
+    validation.field("account_id").matchesList(List("ACC[0-9]{8}", "ACC[0-9]{10}"), true, false)  //check does not match all regexes
 
-    validation.field("account_id").matchesList(List("ACC[0-9]{8}", "ACC[0-9]{10}"), false, true)  #check matches at least one regex
+    validation.field("account_id").matchesList(List("ACC[0-9]{8}", "ACC[0-9]{10}"), false, true)  //check matches at least one regex
 
-    validation.field("account_id").matchesList(List("ACC[0-9]{8}", "ACC[0-9]{10}"), false, false)  #check does not match at least one regex
+    validation.field("account_id").matchesList(List("ACC[0-9]{8}", "ACC[0-9]{10}"), false, false)  //check does not match at least one regex
     ```
 
 === "YAML"
@@ -391,7 +391,7 @@ Ensure all data in field starts with certain string. Field has to have type stri
     ```java
     validation().field("account_id").startsWith("ACC")
 
-    validation().field("account_id").startsWith("ACC", true)  #check does not start with
+    validation().field("account_id").startsWith("ACC", true)  //check does not start with
     ```
 
 === "Scala"
@@ -399,7 +399,7 @@ Ensure all data in field starts with certain string. Field has to have type stri
     ```scala
     validation.field("account_id").startsWith("ACC")
 
-    validation.field("account_id").startsWith("ACC", true)  #check does not start with
+    validation.field("account_id").startsWith("ACC", true)  //check does not start with
     ```
 
 === "YAML"
@@ -429,7 +429,7 @@ Ensure all data in field ends with certain string. Field has to have type string
     ```java
     validation().field("account_id").endsWith("ACC")
 
-    validation().field("account_id").endsWith("ACC", true)  #check does not end with
+    validation().field("account_id").endsWith("ACC", true)  //check does not end with
     ```
 
 === "Scala"
@@ -437,7 +437,7 @@ Ensure all data in field ends with certain string. Field has to have type string
     ```scala
     validation.field("account_id").endsWith("ACC")
 
-    validation.field("account_id").endsWith("ACC", true)  #check does not end with
+    validation.field("account_id").endsWith("ACC", true)  //check does not end with
     ```
 
 === "YAML"
@@ -467,7 +467,7 @@ Ensure all data in field has certain size. Field has to have type array or map.
     ```java
     validation().field("transactions").size(5)
 
-    validation().field("transactions").size(5, true)  #check does not have size
+    validation().field("transactions").size(5, true)  //check does not have size
     ```
 
 === "Scala"
@@ -475,7 +475,7 @@ Ensure all data in field has certain size. Field has to have type array or map.
     ```scala
     validation.field("transactions").size(5)
 
-    validation.field("transactions").size(5, true)  #check does not have size
+    validation.field("transactions").size(5, true)  //check does not have size
     ```
 
 === "YAML"
@@ -505,7 +505,7 @@ Ensure all data in field has size less than certain value. Field has to have typ
     ```java
     validation().field("transactions").lessThanSize(5)
 
-    validation().field("transactions").lessThanSize(5, false) #check for less than or equal to size
+    validation().field("transactions").lessThanSize(5, false) //check for less than or equal to size
     ```
 
 === "Scala"
@@ -513,7 +513,7 @@ Ensure all data in field has size less than certain value. Field has to have typ
     ```scala
     validation.field("transactions").lessThanSize(5)
 
-    validation.field("transactions").lessThanSize(5, false) #check for less than or equal to size
+    validation.field("transactions").lessThanSize(5, false) //check for less than or equal to size
     ```
 
 === "YAML"
@@ -543,7 +543,7 @@ Ensure all data in field has size greater than certain value. Field has to have 
     ```java
     validation().field("transactions").greaterThanSize(5)
 
-    validation().field("transactions").greaterThanSize(5, false)  #check for less than or equal to size
+    validation().field("transactions").greaterThanSize(5, false)  //check for less than or equal to size
     ```
 
 === "Scala"
@@ -551,7 +551,7 @@ Ensure all data in field has size greater than certain value. Field has to have 
     ```scala
     validation.field("transactions").greaterThanSize(5)
 
-    validation.field("transactions").greaterThanSize(5, false)  #check for less than or equal to size
+    validation.field("transactions").greaterThanSize(5, false)  //check for less than or equal to size
     ```
 
 === "YAML"
@@ -582,7 +582,7 @@ identification numbers (see [here](https://en.wikipedia.org/wiki/Luhn_algorithm)
     ```java
     validation().field("credit_card").luhnCheck()
 
-    validation().field("credit_card").luhnCheck(true) #check does not pass Luhn check
+    validation().field("credit_card").luhnCheck(true) //check does not pass Luhn check
     ```
 
 === "Scala"
@@ -590,7 +590,7 @@ identification numbers (see [here](https://en.wikipedia.org/wiki/Luhn_algorithm)
     ```scala
     validation.field("credit_card").luhnCheck()
 
-    validation.field("credit_card").luhnCheck(true) #check does not pass Luhn check
+    validation.field("credit_card").luhnCheck(true) //check does not pass Luhn check
     ```
 
 === "YAML"
@@ -619,7 +619,7 @@ Ensure all data in field has certain data type.
     validation().field("id").hasType("string")
     validation().field("id").hasTypes(List.of("string", "double"))
 
-    validation().field("id").hasType("string", true)  #check does not have type
+    validation().field("id").hasType("string", true)  //check does not have type
     validation().field("id").hasTypes(List("string", "double"), true)
     ```
 
@@ -629,7 +629,7 @@ Ensure all data in field has certain data type.
     validation.field("id").hasType("string")
     validation.field("id").hasTypes(List.of("string", "double"))
 
-    validation.field("id").hasType("string", true)  #check does not have type
+    validation.field("id").hasType("string", true)  //check does not have type
     validation.field("id").hasTypes(List("string", "double"), true)
     ```
 
@@ -665,7 +665,7 @@ Check if distinct values of field exist in set.
     ```java
     validation().field("name").distinctInSet("peter", "john")
 
-    validation().field("name").distinctInSet(List.of("peter", "john"), false) #check for distinct values not in set
+    validation().field("name").distinctInSet(List.of("peter", "john"), false) //check for distinct values not in set
     ```
 
 === "Scala"
@@ -673,7 +673,7 @@ Check if distinct values of field exist in set.
     ```scala
     validation.field("name").distinctInSet("peter", "john")
 
-    validation.field("name").distinctInSet(List("peter", "john"), true) #check for distinct values not in set
+    validation.field("name").distinctInSet(List("peter", "john"), true) //check for distinct values not in set
     ```
 
 === "YAML"
@@ -702,7 +702,7 @@ Check if distinct values of field contains set of values.
     ```java
     validation().field("name").distinctContainsSet("peter", "john")
 
-    validation().field("name").distinctContainsSet(List.of("peter", "john"), false) #check for distinct values not contains set
+    validation().field("name").distinctContainsSet(List.of("peter", "john"), false) //check for distinct values not contains set
     ```
 
 === "Scala"
@@ -710,7 +710,7 @@ Check if distinct values of field contains set of values.
     ```scala
     validation.field("name").distinctContainsSet("peter", "john")
 
-    validation.field("name").distinctContainsSet(List("peter", "john"), true) #check for distinct values not contains set
+    validation.field("name").distinctContainsSet(List("peter", "john"), true) //check for distinct values not contains set
     ```
 
 === "YAML"
@@ -739,7 +739,7 @@ Check if distinct values of field equals set of values.
     ```java
     validation().field("name").distinctEqual("peter", "john")
 
-    validation().field("name").distinctEqual(List.of("peter", "john"), false) #check for distinct values not equals set
+    validation().field("name").distinctEqual(List.of("peter", "john"), false) //check for distinct values not equals set
     ```
 
 === "Scala"
@@ -747,7 +747,7 @@ Check if distinct values of field equals set of values.
     ```scala
     validation.field("name").distinctEqual("peter", "john")
 
-    validation.field("name").distinctEqual(List("peter", "john"), true) #check for distinct values not equals set
+    validation.field("name").distinctEqual(List("peter", "john"), true) //check for distinct values not equals set
     ```
 
 === "YAML"
@@ -781,7 +781,7 @@ Check if aggregation of values for field is between set of values.
     validation().field("amount").stdDevBetween(1, 100)
     validation().field("amount").sumBetween(1, 100)
 
-    validation().field("amount").maxBetween(1, 100, true) #check max amount is not between 1 and 100
+    validation().field("amount").maxBetween(1, 100, true) //check max amount is not between 1 and 100
     validation().field("amount").meanBetween(1, 100, true)
     validation().field("amount").medianBetween(1, 100, true)
     validation().field("amount").minBetween(1, 100, true)
@@ -799,7 +799,7 @@ Check if aggregation of values for field is between set of values.
     validation.field("amount").stdDevBetween(1, 100)
     validation.field("amount").sumBetween(1, 100)
 
-    validation.field("amount").maxBetween(1, 100, true) #check max amount is not between 1 and 100
+    validation.field("amount").maxBetween(1, 100, true) //check max amount is not between 1 and 100
     validation.field("amount").meanBetween(1, 100, true)
     validation.field("amount").medianBetween(1, 100, true)
     validation.field("amount").minBetween(1, 100, true)
@@ -848,7 +848,7 @@ Check if length of field values is between or equal to value(s).
     validation().field("name").lengthBetween(1, 10)
     validation().field("name").lengthEqual(5)
 
-    validation().field("name").lengthBetween(1, 10, false) #check for length not between 1 and 10
+    validation().field("name").lengthBetween(1, 10, false) //check for length not between 1 and 10
     validation().field("name").lengthEqual(5, false)
     ```
 
@@ -858,7 +858,7 @@ Check if length of field values is between or equal to value(s).
     validation.field("name").lengthBetween(1, 10)
     validation.field("name").lengthEqual(5)
 
-    validation.field("name").lengthBetween(1, 10, false) #check for length not between 1 and 10
+    validation.field("name").lengthBetween(1, 10, false) //check for length not between 1 and 10
     validation.field("name").lengthEqual(5, false)
     ```
 
@@ -896,7 +896,7 @@ Check if values of a field are increasing or decreasing.
     validation().field("amount").isDecreasing()
     validation().field("amount").isIncreasing()
 
-    validation().field("amount").isDecreasing(false) #check it is not strictly decreasing
+    validation().field("amount").isDecreasing(false) //check it is not strictly decreasing
     validation().field("amount").isIncreasing(false)
     ```
 
@@ -906,7 +906,7 @@ Check if values of a field are increasing or decreasing.
     validation.field("amount").isDecreasing()
     validation.field("amount").isIncreasing()
 
-    validation.field("amount").isDecreasing(false) #check it is not strictly decreasing
+    validation.field("amount").isDecreasing(false) //check it is not strictly decreasing
     validation.field("amount").isIncreasing(false)
     ```
 
@@ -937,7 +937,7 @@ Check if values of a field are JSON parsable.
     ```java
     validation().field("details").isJsonParsable()
 
-    validation().field("details").isJsonParsable(true) #check it is not JSON parsable
+    validation().field("details").isJsonParsable(true) //check it is not JSON parsable
     ```
 
 === "Scala"
@@ -945,7 +945,7 @@ Check if values of a field are JSON parsable.
     ```scala
     validation.field("details").isJsonParsable()
 
-    validation.field("details").isJsonParsable(true) #check it is not JSON parsable
+    validation.field("details").isJsonParsable(true) //check it is not JSON parsable
     ```
 
 === "YAML"
@@ -972,7 +972,7 @@ Check if values of a field match JSON schema.
     ```java
     validation().field("details").matchJsonSchema("id STRING, amount DOUBLE")
 
-    validation().field("details").matchJsonSchema("id STRING, amount DOUBLE", true) #check values do not match JSON schema
+    validation().field("details").matchJsonSchema("id STRING, amount DOUBLE", true) //check values do not match JSON schema
     ```
 
 === "Scala"
@@ -980,7 +980,7 @@ Check if values of a field match JSON schema.
     ```scala
     validation.field("details").matchJsonSchema("id STRING, amount DOUBLE")
 
-    validation.field("details").matchJsonSchema("id STRING, amount DOUBLE", true) #check values do not match JSON schema
+    validation.field("details").matchJsonSchema("id STRING, amount DOUBLE", true) //check values do not match JSON schema
     ```
 
 === "YAML"
@@ -1009,7 +1009,7 @@ Check if values of a field match date time format ([defined formats](https://spa
     ```java
     validation().field("date").matchDateTimeFormat("yyyy-MM-dd")
 
-    validation().field("date").matchDateTimeFormat("yyyy-MM-dd", true) #check values do not match date time format
+    validation().field("date").matchDateTimeFormat("yyyy-MM-dd", true) //check values do not match date time format
     ```
 
 === "Scala"
@@ -1017,7 +1017,7 @@ Check if values of a field match date time format ([defined formats](https://spa
     ```scala
     validation.field("date").matchDateTimeFormat("yyyy-MM-dd")
 
-    validation.field("date").matchDateTimeFormat("yyyy-MM-dd", true) #check values do not match date time format
+    validation.field("date").matchDateTimeFormat("yyyy-MM-dd", true) //check values do not match date time format
     ```
 
 === "YAML"
@@ -1046,7 +1046,7 @@ Check if the most common field value exists in set of values.
     ```java
     validation().field("name").mostCommonValueInSet("peter", "john")
 
-    validation().field("name").mostCommonValueInSet(List.of("peter", "john"), true) #check is most common value does not exist in set
+    validation().field("name").mostCommonValueInSet(List.of("peter", "john"), true) //check is most common value does not exist in set
     ```
 
 === "Scala"
@@ -1054,7 +1054,7 @@ Check if the most common field value exists in set of values.
     ```scala
     validation.field("name").mostCommonValueInSet("peter", "john")
 
-    validation.field("name").mostCommonValueInSet(List("peter", "john"), true) #check is most common value does not exist in set
+    validation.field("name").mostCommonValueInSet(List("peter", "john"), true) //check is most common value does not exist in set
     ```
 
 === "YAML"
@@ -1083,7 +1083,7 @@ Check if the fields proportion of unique values is between two values.
     ```java
     validation().field("name").uniqueValuesProportionBetween(0.1, 0.3)
 
-    validation().field("name").uniqueValuesProportionBetween(0.1, 0.3, true) #check if proportion of unique values is not between two values
+    validation().field("name").uniqueValuesProportionBetween(0.1, 0.3, true) //check if proportion of unique values is not between two values
     ```
 
 === "Scala"
@@ -1091,7 +1091,7 @@ Check if the fields proportion of unique values is between two values.
     ```scala
     validation.field("name").uniqueValuesProportionBetween(0.1, 0.3)
 
-    validation.field("name").uniqueValuesProportionBetween(0.1, 0.3, true) #check if proportion of unique values is not between two values
+    validation.field("name").uniqueValuesProportionBetween(0.1, 0.3, true) //check if proportion of unique values is not between two values
     ```
 
 === "YAML"
@@ -1122,7 +1122,7 @@ Check if quantiles of field values is within range.
     ```java
     validation().field("amount").quantileValuesBetween(Map.of(0.1, new Tuple2(1.0, 2.0)))
 
-    validation().field("amount").quantileValuesBetween(Map.of(0.1, new Tuple2(1.0, 2.0)), true) #check if quantile value is not between two values
+    validation().field("amount").quantileValuesBetween(Map.of(0.1, new Tuple2(1.0, 2.0)), true) //check if quantile value is not between two values
     ```
 
 === "Scala"
@@ -1130,7 +1130,7 @@ Check if quantiles of field values is within range.
     ```scala
     validation.field("amount").quantileValuesBetween(Map(0.1 -> (1.0, 2.0)))
 
-    validation.field("amount").quantileValuesBetween(Map(0.1 -> (1.0, 2.0)), true) #check if quantile value is not between two values
+    validation.field("amount").quantileValuesBetween(Map(0.1 -> (1.0, 2.0)), true) //check if quantile value is not between two values
     ```
 
 === "YAML"
