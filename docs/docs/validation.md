@@ -1,6 +1,6 @@
 ---
 title: "Data Validations"
-description: "Data Caterer can execute complex validations including column level, aggregate/group by, upstream data source and column name validations. It can also retrieve existing data quality/validation rules from sources such as Great Expectations or OpenMetadata."
+description: "Data Caterer can execute complex validations including field level, aggregate/group by, upstream data source and field name validations. It can also retrieve existing data quality/validation rules from sources such as Great Expectations or OpenMetadata."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
@@ -11,10 +11,10 @@ summarising the success or failure of the validations is produced and can be exa
 
 <div class="grid cards" markdown>
 
-- __[Basic]__ - Basic column level validations
+- __[Basic]__ - Basic field level validations
 - __[Group by/Aggregate]__ - Run aggregates over grouped data, then validate
 - __[Upstream data source]__ - Ensure record values exist in datasets based on other data sources or data generated
-- __[Column names]__ - Validate column names and ordering
+- __[Field names]__ - Validate field names and ordering
 - __[External validation source]__ - Use pre-existing validation rules from sources such as Great Expectations or OpenMetadata
 - __Data Profile (Coming soon)__ - Score how close the data profile of generated data is against the target data profile
 
@@ -23,7 +23,7 @@ summarising the success or failure of the validations is produced and can be exa
   [Basic]: validation/basic-validation.md
   [Group by/Aggregate]: validation/group-by-validation.md
   [Upstream data source]: validation/upstream-data-source-validation.md
-  [Column names]: validation/column-name-validation.md
+  [Field names]: validation/field-name-validation.md
   [External validation source]: validation/external-source-validation.md
 
 ## Define Validations
@@ -35,9 +35,9 @@ Full example validations can be found below. For more details, check out each of
     ```java
     var csvTxns = csv("transactions", "/tmp/csv")
       .validations(
-        validation().col("amount").lessThan(100),
-        validation().col("year").isEqual(2021).errorThreshold(0.1),       //equivalent to if error percentage is > 10%, then fail
-        validation().col("name").matches("Peter .*").errorThreshold(200)  //equivalent to if number of errors is > 200, then fail
+        validation().field("amount").lessThan(100),
+        validation().field("year").isEqual(2021).errorThreshold(0.1),       //equivalent to if error percentage is > 10%, then fail
+        validation().field("name").matches("Peter .*").errorThreshold(200)  //equivalent to if number of errors is > 200, then fail
       )
       .validationWait(waitCondition().pause(1));
 
@@ -49,9 +49,9 @@ Full example validations can be found below. For more details, check out each of
     ```scala
     val csvTxns = csv("transactions", "/tmp/csv")
       .validations(
-        validation.col("amount").lessThan(100),
-        validation.col("year").isEqual(2021).errorThreshold(0.1),       //equivalent to if error percentage is > 10%, then fail
-        validation.col("name").matches("Peter .*").errorThreshold(200)  //equivalent to if number of errors is > 200, then fail
+        validation.field("amount").lessThan(100),
+        validation.field("year").isEqual(2021).errorThreshold(0.1),       //equivalent to if error percentage is > 10%, then fail
+        validation.field("name").matches("Peter .*").errorThreshold(200)  //equivalent to if number of errors is > 200, then fail
       )  
       .validationWait(waitCondition.pause(1))
 
@@ -69,6 +69,10 @@ Full example validations can be found below. For more details, check out each of
             path: "/tmp/csv"
           validations:
             - expr: "amount < 100"
+            - field: "amount" #or
+              validation:
+                - type: "lessThan"
+                  value: 100
             - expr: "year == 2021"
               errorThreshold: 0.1   #equivalent to if error percentage is > 10%, then fail
             - expr: "REGEXP_LIKE(name, 'Peter .*')"
@@ -92,7 +96,7 @@ when you want to check that for all records with `status=closed`, that `balance=
     ```java
     var csvTxns = csv("transactions", "/tmp/csv")
       .validations(
-        validation().preFilter(columnPreFilter("status").isEqual("closed")).col("balance").isEqual(0)
+        validation().preFilter(fieldPreFilter("status").isEqual("closed")).field("balance").isEqual(0)
       );
     ```
 
@@ -101,7 +105,7 @@ when you want to check that for all records with `status=closed`, that `balance=
     ```scala
     val csvTxns = csv("transactions", "/tmp/csv")
       .validations(
-        validation.preFilter(columnPreFilter("status").isEqual("closed")).col("balance").isEqual(0)
+        validation.preFilter(fieldPreFilter("status").isEqual("closed")).field("balance").isEqual(0)
       )  
     ```
 

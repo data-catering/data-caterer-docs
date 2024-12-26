@@ -114,7 +114,7 @@ At the end, we point to our expectations metadata source to use those validation
 
     ```java
     var jsonTask = json("my_json", "/opt/app/data/json", Map.of("saveMode", "overwrite"))
-            .schema(
+            .fields(
                     field().name("vendor_id"),
                     field().name("pickup_datetime").type(TimestampType.instance()),
                     field().name("dropoff_datetime").type(TimestampType.instance()),
@@ -141,7 +141,7 @@ At the end, we point to our expectations metadata source to use those validation
 
     ```scala
     val jsonTask = json("my_json", "/opt/app/data/taxi_json", Map("saveMode" -> "overwrite"))
-      .schema(
+      .fields(
         field.name("vendor_id"),
         field.name("pickup_datetime").`type`(TimestampType),
         field.name("dropoff_datetime").`type`(TimestampType),
@@ -195,22 +195,22 @@ Expectations. No worries, we can simply add it in here alongside the existing ex
 
     ```java
     var jsonTask = json("my_json", "/opt/app/data/json", Map.of("saveMode", "overwrite"))
-            .schema(
+            .fields(
                 ...
             ))
             .validations(greatExpectations)
-            .validations(validation().col("trip_distance").lessThan(500));
+            .validations(validation().field("trip_distance").lessThan(500));
     ```
 
 === "Scala"
 
     ```scala
     val jsonTask = json("my_json", "/opt/app/data/json", Map("saveMode" -> "overwrite"))
-      .schema(
+      .fields(
         ...
       ))
       .validations(greatExpectationsSource)
-      .validations(validation.col("trip_distance").lessThan(500))
+      .validations(validation.field("trip_distance").lessThan(500))
     ```
 
 Let's test it out by running it again

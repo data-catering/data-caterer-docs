@@ -136,7 +136,7 @@ We have kept the following endpoints to test out:
 
     ```java
     var httpTask = http("my_http")
-            .schema(metadataSource().openApi("/opt/app/mount/http/petstore.json"))
+            .fields(metadataSource().openApi("/opt/app/mount/http/petstore.json"))
             .count(count().records(2));
     ```
 
@@ -144,7 +144,7 @@ We have kept the following endpoints to test out:
 
     ```scala
     val httpTask = http("my_http")
-      .schema(metadataSource.openApi("/opt/app/mount/http/petstore.json"))
+      .fields(metadataSource.openApi("/opt/app/mount/http/petstore.json"))
       .count(count.records(2))
     ```
 
@@ -210,9 +210,9 @@ particular `id` value. We note that the `id` value is first used when a pet is c
 Then it gets used as a path parameter in the DELETE and GET requests.
 
 To link them all together, we must follow a particular pattern when referring to request body, query parameter or path
-parameter columns.
+parameter fields.
 
-| HTTP Type       | Column Prefix | Example              |
+| HTTP Type       | Field Prefix  | Example              |
 |-----------------|---------------|----------------------|
 | Request Body    | `bodyContent` | `bodyContent.id`     |
 | Path Parameter  | `pathParam`   | `pathParamid`        |
@@ -259,10 +259,17 @@ knowledge to link all the `id` values together.
 
     sinkOptions:
       foreignKeys:
-        - - "my_http.POST/pets.bodyContent.id"
-          - - "my_http.DELETE/pets/{id}.pathParamid"
-          - - "my_http.GET/pets/{id}.pathParamid"
-          - []
+        - source:
+            dataSource: "my_http"
+            step: "POST/pets"
+            fields: ["bodyContent.id"]
+          generate:
+            - dataSource: "my_http"
+              step: "DELETE/pets/{id}"
+              fields: ["pathParamid"]
+            - dataSource: "my_http"
+              step: "GET/pets/{id}"
+              fields: ["pathParamid"]
     ```
 
 === "UI"
@@ -294,15 +301,15 @@ values should follow a particular pattern?
 ### Custom metadata
 
 So given that we have defined a foreign key where the root of the foreign key values is from the POST request, we can
-update the metadata of the `id` column for the POST request and it will proliferate to the other endpoints as well.
-Given the `id` column is a nested column as noted in the foreign key, we can alter its metadata via the following:
+update the metadata of the `id` field for the POST request and it will proliferate to the other endpoints as well.
+Given the `id` field is a nested field as noted in the foreign key, we can alter its metadata via the following:
 
 === "Java"
 
     ```java
     var httpTask = http("my_http")
-            .schema(metadataSource().openApi("/opt/app/mount/http/petstore.json"))
-            .schema(field().name("bodyContent").schema(field().name("id").regex("ID[0-9]{8}")))
+            .fields(metadataSource().openApi("/opt/app/mount/http/petstore.json"))
+            .fields(field().name("bodyContent").fields(field().name("id").regex("ID[0-9]{8}")))
             .count(count().records(2));
     ```
 
@@ -310,8 +317,8 @@ Given the `id` column is a nested column as noted in the foreign key, we can alt
 
     ```scala
     val httpTask = http("my_http")
-      .schema(metadataSource.openApi("/opt/app/mount/http/petstore.json"))
-      .schema(field.name("bodyContent").schema(field.name("id").regex("ID[0-9]{8}")))
+      .fields(metadataSource.openApi("/opt/app/mount/http/petstore.json"))
+      .fields(field.name("bodyContent").fields(field.name("id").regex("ID[0-9]{8}")))
       .count(count.records(2))
     ```
 
@@ -327,13 +334,12 @@ Given the `id` column is a nested column as noted in the foreign key, we can alt
           schemaLocation: "/opt/app/mount/http/petstore.json"
         count:
           records: 2
-        schema:
-          fields:
-            - name: "bodyContent"
-              fields:
-                - name: "id"
-                  options:
-                    regex: "ID[0-9]{8}"
+        fields:
+          - name: "bodyContent"
+            fields:
+              - name: "id"
+                options:
+                  regex: "ID[0-9]{8}"
     ```
 
 === "UI"
@@ -347,7 +353,7 @@ Given the `id` column is a nested column as noted in the foreign key, we can alt
         1. Click on `Select data type` and select `string`
         1. Click `Regex` and enter `ID[0-9]{8}`
 
-We first get the column `bodyContent`, then get the nested schema and get the column `id` and add metadata stating that
+We first get the field `bodyContent`, then get the nested schema and get the field `id` and add metadata stating that
 `id` should follow the patter `ID[0-9]{8}`.
 
 Let's try run again, and hopefully we should see some proper ID values.

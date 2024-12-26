@@ -6,7 +6,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Group By Validation
 
-If you want to run aggregations based on a particular set of columns or just the whole dataset, you can do so via group
+If you want to run aggregations based on a particular set of fields or just the whole dataset, you can do so via group
 by validations. An example would be checking that the sum of `amount` is less than 1000 per `account_id, year`. The
 validations applied can be one of the validations from the [basic validation set found here](basic-validation.md).
 
@@ -72,7 +72,7 @@ Check the number of records for each group.
 
 ## Sum
 
-Check the sum of a columns values for each group adheres to validation.
+Check the sum of a fields values for each group adheres to validation.
 
 === "Java"
 

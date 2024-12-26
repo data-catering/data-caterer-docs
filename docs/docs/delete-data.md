@@ -66,14 +66,14 @@ To define the generated data that should be deleted, follow the below configurat
     ```java
     var postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("name"),
         ...
       );
     var postgresTxn = postgres(postgresAcc)
       .table("public.transactions")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("full_name"),
         ...
@@ -97,14 +97,14 @@ To define the generated data that should be deleted, follow the below configurat
     ```scala
     val postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("name"),
         ...
       )
     val postgresTxn = postgres(postgresAcc)
       .table("public.transactions")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("full_name"),
         ...
@@ -133,18 +133,16 @@ To define the generated data that should be deleted, follow the below configurat
         type: "postgres"
         options:
           dbtable: "account.accounts"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "name"
+        fields:
+          - name: "account_id"
+          - name: "name"
       - name: "transactions"
         type: "postgres"
         options:
           dbtable: "account.transactions"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "full_name"
+        fields:
+          - name: "account_id"
+          - name: "full_name"
     ---
     name: "customer_create_plan"
     description: "Create customers in JDBC"
@@ -154,9 +152,14 @@ To define the generated data that should be deleted, follow the below configurat
 
     sinkOptions:
       foreignKeys:
-        - - "postgres.accounts.account_id"
-          - - "postgres.transactions.account_id"
-          - []
+        - source:
+            dataSource: "postgres"
+            step: "accounts"
+            fields: ["account_id"]
+          generate:
+            - dataSource: "postgres"
+              step: "transactions"
+              fields: ["account_id"]
     ```
 
 === "UI"
@@ -210,7 +213,7 @@ follow the below example:
     ```java
     var postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("name"),
         ...
@@ -237,7 +240,7 @@ follow the below example:
     ```scala
     val postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("name"),
         ...
@@ -269,10 +272,9 @@ follow the below example:
         type: "postgres"
         options:
           dbtable: "account.accounts"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "name"
+        fields:
+          - name: "account_id"
+          - name: "name"
       - name: "balances"
         type: "postgres"
         options:
@@ -286,9 +288,14 @@ follow the below example:
 
     sinkOptions:
       foreignKeys:
-        - - "postgres.accounts.account_id"
-          - []
-          - - "postgres.balances.account_id"
+        - source:
+            dataSource: "postgres"
+            step: "accounts"
+            fields: ["account_id"]
+          delete:
+            - dataSource: "postgres"
+              step: "balances"
+              fields: ["account_id"]
     ```
 
 === "UI"

@@ -37,10 +37,10 @@ descriptions:
 |-----------------------|---------|---------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `enableEdgeCase`      | false   | `enableEdgeCase: "true"`                                | Enable/disable generated data to contain edge cases based on the data type. For example, integer data type has edge cases of (Int.MaxValue, Int.MinValue and 0)                                                                                                                                    |
 | `edgeCaseProbability` | 0.0     | `edgeCaseProb: "0.1"`                                   | Probability of generating a random edge case value if `enableEdgeCase` is true                                                                                                                                                                                                                     |
-| `isUnique`            | false   | `isUnique: "true"`                                      | Enable/disable generated data to be unique for that column. Errors will be thrown when it is unable to generate unique data                                                                                                                                                                        |
+| `isUnique`            | false   | `isUnique: "true"`                                      | Enable/disable generated data to be unique for that field. Errors will be thrown when it is unable to generate unique data                                                                                                                                                                        |
 | `regex`               | <empty> | `regex: "ACC[0-9]{10}"`                                 | Regular expression to define pattern generated data should follow                                                                                                                                                                                                                                  |
-| `seed`                | <empty> | `seed: "1"`                                             | Defines the random seed for generating data for that particular column. It will override any seed defined at a global level                                                                                                                                                                        |
-| `sql`                 | <empty> | `sql: "CASE WHEN amount < 10 THEN true ELSE false END"` | Define any SQL statement for generating that columns value. Computation occurs after all non-SQL fields are generated. This means any columns used in the SQL cannot be based on other SQL generated columns. Data type of generated value from SQL needs to match data type defined for the field |
+| `seed`                | <empty> | `seed: "1"`                                             | Defines the random seed for generating data for that particular field. It will override any seed defined at a global level                                                                                                                                                                        |
+| `sql`                 | <empty> | `sql: "CASE WHEN amount < 10 THEN true ELSE false END"` | Define any SQL statement for generating that fields value. Computation occurs after all non-SQL fields are generated. This means any fields used in the SQL cannot be based on other SQL generated fields. Data type of generated value from SQL needs to match data type defined for the field |
 
 ### String
 
@@ -61,7 +61,7 @@ Förlåt", "你好吗", "Nhà vệ sinh ở đâu", "こんにちは", "नम�
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field()
           .name("name")
           .type(StringType.instance())
@@ -77,7 +77,7 @@ Förlåt", "你好吗", "Nhà vệ sinh ở đâu", "こんにちは", "नम�
 
     ```scala
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field
           .name("name")
           .`type`(StringType)
@@ -98,17 +98,15 @@ Förlåt", "你好吗", "Nhà vệ sinh ở đâu", "こんにちは", "नम�
         type: "csv"
         options:
           path: "app/src/test/resources/sample/csv/transactions"
-        schema:
-          fields:
-            - name: "name"
-              type: "string"
-              generator:
-                options:
-                  expression: "#{Name.name}"
-                  enableNull: true
-                  nullProb: 0.1
-                  minLength: 4
-                  maxLength: 20
+        fields:
+          - name: "name"
+            type: "string"
+            options:
+              expression: "#{Name.name}"
+              enableNull: true
+              nullProb: 0.1
+              minLength: 4
+              maxLength: 20
     ```
 
 ### Numeric
@@ -138,7 +136,7 @@ as defined by the data source (i.e. max value as per database type).
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field().name("year").type(IntegerType.instance()).min(2020).max(2023),
         field().name("customer_id").type(LongType.instance()),
         field().name("customer_group").type(ShortType.instance())
@@ -149,7 +147,7 @@ as defined by the data source (i.e. max value as per database type).
 
     ```scala
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field.name("year").`type`(IntegerType).min(2020).max(2023),
         field.name("customer_id").`type`(LongType),
         field.name("customer_group").`type`(ShortType)
@@ -163,18 +161,16 @@ as defined by the data source (i.e. max value as per database type).
     steps:
       - name: "transactions"
         ...
-        schema:
-          fields:
-            - name: "year"
-              type: "integer"
-              generator:
-                options:
-                  min: 2020
-                  max: 2023
-            - name: "customer_id"
-              type: "long"
-            - name: "customer_group"
-              type: "short"
+        fields:
+          - name: "year"
+            type: "integer"
+            options:
+              min: 2020
+              max: 2023
+          - name: "customer_id"
+            type: "long"
+          - name: "customer_group"
+            type: "short"
     ```
 
 #### Decimal
@@ -197,7 +193,7 @@ as defined by the data source (i.e. max value as per database type).
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field().name("balance").type(DecimalType.instance()).numericPrecision(10).numericScale(5)
       );
     ```
@@ -206,7 +202,7 @@ as defined by the data source (i.e. max value as per database type).
 
     ```scala
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field.name("balance").`type`(DecimalType).numericPrecision(10).numericScale(5)
       )
     ```
@@ -218,14 +214,13 @@ as defined by the data source (i.e. max value as per database type).
     steps:
       - name: "transactions"
         ...
-        schema:
-          fields:
-            - name: "balance"
-              type: "decimal"
-                generator:
-                  options:
-                    precision: 10
-                    scale: 5
+        fields:
+          - name: "balance"
+            type: "decimal"
+              generator:
+                options:
+                  precision: 10
+                  scale: 5
     ```
 
 #### Double/Float
@@ -248,7 +243,7 @@ NaN)
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field().name("amount").type(DoubleType.instance())
       );
     ```
@@ -257,7 +252,7 @@ NaN)
 
     ```scala
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field.name("amount").`type`(DoubleType)
       )
     ```
@@ -269,10 +264,9 @@ NaN)
     steps:
       - name: "transactions"
         ...
-        schema:
-          fields:
-            - name: "amount"
-              type: "double"
+        fields:
+          - name: "amount"
+            type: "double"
     ```
 
 ### Date
@@ -293,7 +287,7 @@ NaN)
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field().name("created_date").type(DateType.instance()).min(java.sql.Date.valueOf("2020-01-01"))
       );
     ```
@@ -302,7 +296,7 @@ NaN)
 
     ```scala
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field.name("created_date").`type`(DateType).min(java.sql.Date.valueOf("2020-01-01"))
       )
     ```
@@ -314,13 +308,12 @@ NaN)
     steps:
       - name: "transactions"
         ...
-        schema:
-          fields:
-            - name: "created_date"
-              type: "date"
-                generator:
-                  options:
-                    min: "2020-01-01"
+        fields:
+          - name: "created_date"
+            type: "date"
+              generator:
+                options:
+                  min: "2020-01-01"
     ```
 
 ### Timestamp
@@ -340,7 +333,7 @@ NaN)
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field().name("created_time").type(TimestampType.instance()).min(java.sql.Timestamp.valueOf("2020-01-01 00:00:00"))
       );
     ```
@@ -349,7 +342,7 @@ NaN)
 
     ```scala
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field.name("created_time").`type`(TimestampType).min(java.sql.Timestamp.valueOf("2020-01-01 00:00:00"))
       )
     ```
@@ -361,13 +354,12 @@ NaN)
     steps:
       - name: "transactions"
         ...
-        schema:
-          fields:
-            - name: "created_time"
-              type: "timestamp"
-                generator:
-                  options:
-                    min: "2020-01-01 00:00:00"
+        fields:
+          - name: "created_time"
+            type: "timestamp"
+              generator:
+                options:
+                  min: "2020-01-01 00:00:00"
     ```
 
 ### Binary
@@ -387,7 +379,7 @@ NaN)
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field().name("payload").type(BinaryType.instance())
       );
     ```
@@ -396,7 +388,7 @@ NaN)
 
     ```scala
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field.name("payload").`type`(BinaryType)
       )
     ```
@@ -408,10 +400,9 @@ NaN)
     steps:
       - name: "transactions"
         ...
-        schema:
-          fields:
-            - name: "payload"
-              type: "binary"
+        fields:
+          - name: "payload"
+            type: "binary"
     ```
 
 ### Array
@@ -430,7 +421,7 @@ NaN)
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field().name("last_5_amounts").type(ArrayType.instance()).arrayType("double")
       );
     ```
@@ -439,7 +430,7 @@ NaN)
 
     ```scala
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field.name("last_5_amounts").`type`(ArrayType).arrayType("double")
       )
     ```
@@ -451,8 +442,7 @@ NaN)
     steps:
       - name: "transactions"
         ...
-        schema:
-          fields:
-            - name: "last_5_amounts"
-              type: "array<double>"
+        fields:
+          - name: "last_5_amounts"
+            type: "array<double>"
     ```

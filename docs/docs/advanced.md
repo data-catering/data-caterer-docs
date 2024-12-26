@@ -18,7 +18,7 @@ Details for how you can configure foreign keys can be found [**here**](generator
 ## Edge cases
 
 For each given data type, there are edge cases which can cause issues when your application processes the data.
-This can be controlled at a column level by including the following flag in the generator options:
+This can be controlled at a field level by including the following flag in the generator options:
 
 === "Java"
 
@@ -61,7 +61,7 @@ type, [can check the documentation here](generator/data-generator.md).
 You can create specific scenarios by adjusting the metadata found in the plan and tasks to your liking.  
 For example, if you had two data sources, a Postgres database and a parquet file, and you wanted to save account data
 into Postgres and transactions related to those accounts into a parquet file.
-You can alter the `status` column in the account data to only generate `open` accounts
+You can alter the `status` field in the account data to only generate `open` accounts
 and define a foreign key between Postgres and parquet to ensure the same `account_id` is being used.  
 Then in the parquet task, define 1 to 10 transactions per `account_id` to be generated.
 
@@ -81,7 +81,7 @@ configurations. Below is an example for S3.
 
     ```java
     var csvTask = csv("my_csv", "s3a://my-bucket/csv/accounts")
-      .schema(
+      .fields(
         field().name("account_id"),
         ...
       );
@@ -105,7 +105,7 @@ configurations. Below is an example for S3.
 
     ```scala
     val csvTask = csv("my_csv", "s3a://my-bucket/csv/accounts")
-      .schema(
+      .fields(
         field.name("account_id"),
         ...
       )

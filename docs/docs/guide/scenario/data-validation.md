@@ -1,6 +1,6 @@
 ---
 title: "Example Validation"
-description: "Example of validating data via basic column checks, group by aggregates, across columns, whole dataset or cross dataset."
+description: "Example of validating data via basic field checks, group by aggregates, across fields, whole dataset or cross dataset."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
@@ -108,19 +108,19 @@ only want to validate data.
 For reference, the schema in which we will be validating against looks like the below.
 
 ```shell
-.schema(
+.fields(
   field.name("account_id"),
   field.name("year").`type`(IntegerType),
   field.name("balance").`type`(DoubleType),
   field.name("date").`type`(DateType),
   field.name("status"),
   field.name("update_history").`type`(ArrayType)
-    .schema(
+    .fields(
       field.name("updated_time").`type`(TimestampType),
       field.name("status").oneOf("open", "closed", "pending", "suspended"),
     ),
   field.name("customer_details")
-    .schema(
+    .fields(
       field.name("name").expression("#{Name.name}"),
       field.name("age").`type`(IntegerType),
       field.name("city").expression("#{Address.city}")
@@ -154,7 +154,7 @@ validation considers an acceptable error threshold before marking it as failed.
 === "Java"
 
     ```java
-    validation().col("customer_details.name")
+    validation().field("customer_details.name")
         .matches("[A-Z][a-z]+ [A-Z][a-z]+")
         .errorThreshold(0.1)                                      //<=10% failure rate is acceptable
         .description("Names generally follow the same pattern"),  //description to add context in report or other developers
@@ -163,7 +163,7 @@ validation considers an acceptable error threshold before marking it as failed.
 === "Scala"
 
     ```scala
-    validation.col("customer_details.name")
+    validation.field("customer_details.name")
       .matches("[A-Z][a-z]+ [A-Z][a-z]+")
       .errorThreshold(0.1)                                      //<=10% failure rate is acceptable
       .description("Names generally follow the same pattern"),  //description to add context in report or other developers
@@ -245,14 +245,14 @@ To try cover the majority of validation cases, the below has been created.
     ```java
     var jsonTask = json("my_json", "/opt/app/data/json")
             .validations(
-                    validation().col("customer_details.name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.1).description("Names generally follow the same pattern"),
-                    validation().col("date").isNotNull().errorThreshold(10),
-                    validation().col("balance").greaterThan(500),
+                    validation().field("customer_details.name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.1).description("Names generally follow the same pattern"),
+                    validation().field("date").isNull(true).errorThreshold(10),
+                    validation().field("balance").greaterThan(500),
                     validation().expr("YEAR(date) == year"),
-                    validation().col("status").in("open", "closed", "pending").errorThreshold(0.2).description("Could be new status introduced"),
-                    validation().col("customer_details.age").greaterThan(18),
+                    validation().field("status").in("open", "closed", "pending").errorThreshold(0.2).description("Could be new status introduced"),
+                    validation().field("customer_details.age").greaterThan(18),
                     validation().expr("FORALL(update_history, x -> x.updated_time > TIMESTAMP('2022-01-01 00:00:00'))"),
-                    validation().col("update_history").greaterThanSize(2),
+                    validation().field("update_history").greaterThanSize(2),
                     validation().unique("account_id"),
                     validation().groupBy().count().isEqual(1000),
                     validation().groupBy("account_id").max("balance").lessThan(900)
@@ -271,14 +271,14 @@ To try cover the majority of validation cases, the below has been created.
     ```scala
     val jsonTask = json("my_json", "/opt/app/data/json")
       .validations(
-        validation.col("customer_details.name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.1).description("Names generally follow the same pattern"),
-        validation.col("date").isNotNull.errorThreshold(10),
-        validation.col("balance").greaterThan(500),
+        validation.field("customer_details.name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.1).description("Names generally follow the same pattern"),
+        validation.field("date").isNull(true).errorThreshold(10),
+        validation.field("balance").greaterThan(500),
         validation.expr("YEAR(date) == year"),
-        validation.col("status").in("open", "closed", "pending").errorThreshold(0.2).description("Could be new status introduced"),
-        validation.col("customer_details.age").greaterThan(18),
+        validation.field("status").in("open", "closed", "pending").errorThreshold(0.2).description("Could be new status introduced"),
+        validation.field("customer_details.age").greaterThan(18),
         validation.expr("FORALL(update_history, x -> x.updated_time > TIMESTAMP('2022-01-01 00:00:00'))"),
-        validation.col("update_history").greaterThanSize(2),
+        validation.field("update_history").greaterThanSize(2),
         validation.unique("account_id"),
         validation.groupBy().count().isEqual(1000),
         validation.groupBy("account_id").max("balance").lessThan(900)

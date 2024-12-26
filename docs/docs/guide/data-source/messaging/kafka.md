@@ -133,7 +133,7 @@ the `text` fields do not have a data type defined. This is because the default d
     {
         var kafkaTask = kafka("my_kafka", "kafkaserver:29092")
                 .topic("account-topic")
-                .schema(
+                .fields(
                         field().name("key").sql("content.account_id"),
                         field().name("value").sql("TO_JSON(content)"),
                         //field().name("partition").type(IntegerType.instance()),  can define partition here
@@ -146,22 +146,22 @@ the `text` fields do not have a data type defined. This is because the default d
                                                 ")"
                                 ),
                         field().name("content")
-                                .schema(
+                                .fields(
                                         field().name("account_id").regex("ACC[0-9]{8}"),
                                         field().name("year").type(IntegerType.instance()),
                                         field().name("amount").type(DoubleType.instance()),
                                         field().name("details")
-                                                .schema(
+                                                .fields(
                                                         field().name("name").expression("#{Name.name}"),
                                                         field().name("first_txn_date").type(DateType.instance()).sql("ELEMENT_AT(SORT_ARRAY(content.transactions.txn_date), 1)"),
                                                         field().name("updated_by")
-                                                                .schema(
+                                                                .fields(
                                                                         field().name("user"),
                                                                         field().name("time").type(TimestampType.instance())
                                                                 )
                                                 ),
                                         field().name("transactions").type(ArrayType.instance())
-                                                .schema(
+                                                .fields(
                                                         field().name("txn_date").type(DateType.instance()).min(Date.valueOf("2021-01-01")).max("2021-12-31"),
                                                         field().name("amount").type(DoubleType.instance())
                                                 )
@@ -177,7 +177,7 @@ the `text` fields do not have a data type defined. This is because the default d
     ```scala
     val kafkaTask = kafka("my_kafka", "kafkaserver:29092")
       .topic("account-topic")
-      .schema(
+      .fields(
         field.name("key").sql("content.account_id"),
         field.name("value").sql("TO_JSON(content)"),
         //field.name("partition").type(IntegerType),  can define partition here
@@ -190,22 +190,22 @@ the `text` fields do not have a data type defined. This is because the default d
               |)""".stripMargin
           ),
         field.name("content")
-          .schema(
+          .fields(
             field.name("account_id").regex("ACC[0-9]{8}"),
             field.name("year").`type`(IntegerType).min(2021).max(2023),
             field.name("amount").`type`(DoubleType),
             field.name("details")
-              .schema(
+              .fields(
                 field.name("name").expression("#{Name.name}"),
                 field.name("first_txn_date").`type`(DateType).sql("ELEMENT_AT(SORT_ARRAY(content.transactions.txn_date), 1)"),
                 field.name("updated_by")
-                  .schema(
+                  .fields(
                     field.name("user"),
                     field.name("time").`type`(TimestampType),
                   ),
               ),
             field.name("transactions").`type`(ArrayType)
-              .schema(
+              .fields(
                 field.name("txn_date").`type`(DateType).min(Date.valueOf("2021-01-01")).max("2021-12-31"),
                 field.name("amount").`type`(DoubleType),
               )
@@ -268,7 +268,7 @@ can be controlled via `arrayMinLength` and `arrayMaxLength`.
 
     ```java
     field().name("transactions").type(ArrayType.instance())
-            .schema(
+            .fields(
                     field().name("txn_date").type(DateType.instance()).min(Date.valueOf("2021-01-01")).max("2021-12-31"),
                     field().name("amount").type(DoubleType.instance())
             )
@@ -278,7 +278,7 @@ can be controlled via `arrayMinLength` and `arrayMaxLength`.
 
     ```scala
     field.name("transactions").`type`(ArrayType)
-      .schema(
+      .fields(
         field.name("txn_date").`type`(DateType).min(Date.valueOf("2021-01-01")).max("2021-12-31"),
         field.name("amount").`type`(DoubleType),
       )
@@ -294,11 +294,11 @@ sort the array by `txn_date` and get the first element.
 
     ```java
     field().name("details")
-            .schema(
+            .fields(
                     field().name("name").expression("#{Name.name}"),
                     field().name("first_txn_date").type(DateType.instance()).sql("ELEMENT_AT(SORT_ARRAY(content.transactions.txn_date), 1)"),
                     field().name("updated_by")
-                            .schema(
+                            .fields(
                                     field().name("user"),
                                     field().name("time").type(TimestampType.instance())
                             )
@@ -309,11 +309,11 @@ sort the array by `txn_date` and get the first element.
 
     ```scala
     field.name("details")
-      .schema(
+      .fields(
         field.name("name").expression("#{Name.name}"),
         field.name("first_txn_date").`type`(DateType).sql("ELEMENT_AT(SORT_ARRAY(content.transactions.txn_date), 1)"),
         field.name("updated_by")
-          .schema(
+          .fields(
             field.name("user"),
             field.name("time").`type`(TimestampType),
           ),

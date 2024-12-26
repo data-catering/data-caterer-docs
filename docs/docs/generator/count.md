@@ -76,22 +76,23 @@ For example, if I wanted to generate between 1000 and 2000 records, I could defi
               max: 2000
     ```
 
-## Per Column Count
+## Per Field Count
 
-When defining a per column count, this allows you to generate records "per set of columns".
-This means that for a given set of columns, it will generate a particular amount of records per combination of values for those columns.  
+When defining a per field count, this allows you to generate records "per set of fields".
+This means that for a given set of fields, it will generate a particular amount of records per combination of values 
+for those fields.  
 
-One example of this would be when generating transactions relating to a customer, a customer may be defined by columns `account_id, name`.
+One example of this would be when generating transactions relating to a customer, a customer may be defined by fields `account_id, name`.
 A number of transactions would be generated per `account_id, name`.  
 
-You can also use a combination of the above two methods to generate the number of records per column.
+You can also use a combination of the above two methods to generate the number of records per field.
 
 ### Records
 
-When defining a base number of records within the `perColumn` configuration, it translates to creating `(count.records * count.recordsPerColumn)` records.  
+When defining a base number of records within the `perField` configuration, it translates to creating `(count.records * count.recordsPerField)` records.  
 This is a fixed number of records that will be generated each time, with no variation between runs.
 
-In the example below, we have `count.records = 1000` and `count.recordsPerColumn = 2`. Which means that `1000 * 2 = 2000` records will be generated
+In the example below, we have `count.records = 1000` and `count.recordsPerField = 2`. Which means that `1000 * 2 = 2000` records will be generated
 in total.
 
 === "Java"
@@ -101,7 +102,7 @@ in total.
       .count(
         count()
           .records(1000)
-          .recordsPerColumn(2, "account_id", "name")
+          .recordsPerField(2, "account_id", "name")
       );
     ```
 
@@ -112,7 +113,7 @@ in total.
       .count(
         count
           .records(1000)
-          .recordsPerColumn(2, "account_id", "name")
+          .recordsPerField(2, "account_id", "name")
       )
     ```
 
@@ -127,20 +128,20 @@ in total.
           path: "app/src/test/resources/sample/csv/transactions"
         count:
           records: 1000
-          perColumn:
+          perField:
             records: 2
-            columnNames:
+            fieldNames:
               - "account_id"
               - "name"
     ```
 
 ### Generated
 
-You can also define a generator for the count per column. This can be used in scenarios where you want a variable number of records
-per set of columns.
+You can also define a generator for the count per field. This can be used in scenarios where you want a variable number of records
+per set of fields.
 
-In the example below, it will generate between `(count.records * count.perColumnGenerator.generator.min) = (1000 * 1) = 1000` and
-`(count.records * count.perColumnGenerator.generator.max) = (1000 * 2) = 2000` records.
+In the example below, it will generate between `(count.records * count.perFieldGenerator.generator.min) = (1000 * 1) = 1000` and
+`(count.records * count.perFieldGenerator.generator.max) = (1000 * 2) = 2000` records.
 
 
 === "Java"
@@ -150,7 +151,7 @@ In the example below, it will generate between `(count.records * count.perColumn
       .count(
         count()
           .records(1000)
-          .recordsPerColumnGenerator(generator().min(1).max(2), "account_id", "name")
+          .recordsPerFieldGenerator(generator().min(1).max(2), "account_id", "name")
       );
     ```
 
@@ -161,7 +162,7 @@ In the example below, it will generate between `(count.records * count.perColumn
       .count(
         count
           .records(1000)
-          .recordsPerColumnGenerator(generator.min(1).max(2), "account_id", "name")
+          .recordsPerFieldGenerator(generator.min(1).max(2), "account_id", "name")
       )
     ```
 
@@ -176,8 +177,8 @@ In the example below, it will generate between `(count.records * count.perColumn
           path: "app/src/test/resources/sample/csv/transactions"
         count:
           records: 1000
-          perColumn:
-            columnNames:
+          perField:
+            fieldNames:
               - "account_id"
               - "name"
             generator:
@@ -213,7 +214,7 @@ It can generate a dataset like below where all combinations of `debit_credit` an
 
     ```java
     csv("transactions", "app/src/test/resources/sample/csv/transactions")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("debit_creidt").oneOf("D", "C"),
         field().name("status").oneOf("open", "closed", "suspended")
@@ -243,20 +244,17 @@ It can generate a dataset like below where all combinations of `debit_credit` an
         options:
           path: "app/src/test/resources/sample/csv/transactions"
           allCombinations: "true"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "debit_credit"
-              generator:
-                options:
-                  oneOf:
-                    - "D"
-                    - "C"
-            - name: "status"
-              generator:
-                options:
-                  oneOf:
-                    - "open"
-                    - "closed"
-                    - "suspended"
+        fields:
+          - name: "account_id"
+          - name: "debit_credit"
+            options:
+              oneOf:
+                - "D"
+                - "C"
+          - name: "status"
+            options:
+              oneOf:
+                - "open"
+                - "closed"
+                - "suspended"
     ```

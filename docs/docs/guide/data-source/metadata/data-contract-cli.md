@@ -124,7 +124,7 @@ We can point the schema of a data source to our Data Contract CLI file.
 
     ```java
     var accountTask = csv("my_csv", "/opt/app/data/account-datacontract-cli", Map.of("header", "true"))
-            .schema(metadataSource().dataContractCli("/opt/app/mount/datacontract-cli/datacontract.yaml"))
+            .fields(metadataSource().dataContractCli("/opt/app/mount/datacontract-cli/datacontract.yaml"))
             .count(count().records(100));
     ```
 
@@ -132,7 +132,7 @@ We can point the schema of a data source to our Data Contract CLI file.
 
     ```scala
     val accountTask = csv("customer_accounts", "/opt/app/data/customer/account-datacontract-cli", Map("header" -> "true"))
-      .schema(metadataSource.dataContractCli("/opt/app/mount/datacontract-cli/datacontract.yaml"))
+      .fields(metadataSource.dataContractCli("/opt/app/mount/datacontract-cli/datacontract.yaml"))
       .count(count.records(100))
     ```
 
@@ -223,8 +223,8 @@ For the full guide on data generation options,
 
     ```java
     var accountTask = csv("my_csv", "/opt/app/data/account-datacontract-cli", Map.of("header", "true"))
-                .schema(metadata...)
-                .schema(
+                .fields(metadata...)
+                .fields(
                     field().name("latitude").min(-90).max(90),
                     field().name("longitude").min(-180).max(180),
                     field().name("country_region").expression("#{Address.state}")
@@ -236,8 +236,8 @@ For the full guide on data generation options,
 
     ```scala
     val accountTask = csv("customer_accounts", "/opt/app/data/customer/account-datacontract-cli", Map("header" -> "true"))
-      .schema(metadata...)
-      .schema(
+      .fields(metadata...)
+      .fields(
         field.name("latitude").min(-90).max(90),
         field.name("longitude").min(-180).max(180),
         field.name("country_region").expression("#{Address.state}")
@@ -259,19 +259,18 @@ For the full guide on data generation options,
           dataContractFile: "/opt/app/mount/datacontract-cli/datacontract.yaml"
         count:
           records: 100
-        schema:
-          fields:
-            - name: "latitude"
-              options:
-                min: -90
-                max: 90
-            - name: "longitude"
-              options:
-                min: -180
-                max: 180
-            - name: "country_region"
-              options:
-                expression: "#{Address.state}"
+        fields:
+          - name: "latitude"
+            options:
+              min: -90
+              max: 90
+          - name: "longitude"
+            options:
+              min: -180
+              max: 180
+          - name: "country_region"
+            options:
+              expression: "#{Address.state}"
     ```
 
 === "UI"

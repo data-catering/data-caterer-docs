@@ -114,7 +114,7 @@ a specific `namespace` and `dataset`.
 
     ```java
     var csvTask = csv("my_csv", "/tmp/data/csv", Map.of("saveMode", "overwrite", "header", "true"))
-            .schema(metadataSource().marquez("http://localhost:5001", "food_delivery", "public.delivery_7_days"))
+            .fields(metadataSource().marquez("http://localhost:5001", "food_delivery", "public.delivery_7_days"))
             .count(count().records(10));
     ```
 
@@ -122,7 +122,7 @@ a specific `namespace` and `dataset`.
 
     ```scala
     val csvTask = csv("my_csv", "/tmp/data/csv", Map("saveMode" -> "overwrite", "header" -> "true"))
-      .schema(metadataSource.marquez("http://localhost:5001", "food_delivery", "public.delivery_7_days"))
+      .fields(metadataSource.marquez("http://localhost:5001", "food_delivery", "public.delivery_7_days"))
       .count(count.records(10))
     ```
 
@@ -136,7 +136,7 @@ schema information from.
 
     ```java
     var postgresTask = postgres("my_postgres", "jdbc:postgresql://host.docker.internal:5432/food_delivery", "postgres", "password", Map.of())
-        .schema(metadataSource().marquez("http://host.docker.internal:5001", "food_delivery"))
+        .fields(metadataSource().marquez("http://host.docker.internal:5001", "food_delivery"))
         .count(count().records(10));
     ```
 
@@ -144,7 +144,7 @@ schema information from.
 
     ```scala
     val postgresTask = postgres("my_postgres", "jdbc:postgresql://host.docker.internal:5432/food_delivery", "postgres", "password")
-      .schema(metadataSource.marquez("http://host.docker.internal:5001", "food_delivery"))
+      .fields(metadataSource.marquez("http://host.docker.internal:5001", "food_delivery"))
       .count(count.records(10))
     ```
 
@@ -202,7 +202,7 @@ can use a foreign key definition.
 We can take a look at the report (under `docker/sample/report/index.html`) to see what we need to do to create the 
 foreign key. From the overview, you should see under `Tasks` there is a `my_postgres` task which has 
 `food_delivery_public.delivery_7_days` as a step. Click on the link for `food_delivery_public.delivery_7_days` and it 
-will take us to a page where we can find out about the columns used in this table. Click on the `Fields` button on the 
+will take us to a page where we can find out about the fields used in this table. Click on the `Fields` button on the 
 far right to see.
   
 We can copy all of a subset of fields that we want matched across the CSV file and Postgres. For this example, we will 

@@ -124,7 +124,7 @@ We can point the schema of a data source to our Open Data Contract Standard (ODC
 
     ```java
     var accountTask = csv("my_csv", "/opt/app/data/account-odcs", Map.of("header", "true"))
-            .schema(metadataSource().openDataContractStandard("/opt/app/mount/odcs/full-example.yaml"))
+            .fields(metadataSource().openDataContractStandard("/opt/app/mount/odcs/full-example.yaml"))
             .count(count().records(100));
     ```
 
@@ -132,7 +132,7 @@ We can point the schema of a data source to our Open Data Contract Standard (ODC
 
     ```scala
     val accountTask = csv("customer_accounts", "/opt/app/data/customer/account-odcs", Map("header" -> "true"))
-      .schema(metadataSource.openDataContractStandard("/opt/app/mount/odcs/full-example.yaml"))
+      .fields(metadataSource.openDataContractStandard("/opt/app/mount/odcs/full-example.yaml"))
       .count(count.records(100))
     ```
 
@@ -221,8 +221,8 @@ either `AU, US or TW`. For the full guide on data generation options,
 
     ```java
     var accountTask = csv("my_csv", "/opt/app/data/account-odcs", Map.of("header", "true"))
-                .schema(metadata...)
-                .schema(
+                .fields(metadata...)
+                .fields(
                     field().name("rcvr_id").regex("RC[0-9]{8}"),
                     field().name("rcvr_cntry_code").oneOf("AU", "US", "TW")
                 )
@@ -233,8 +233,8 @@ either `AU, US or TW`. For the full guide on data generation options,
 
     ```scala
     val accountTask = csv("customer_accounts", "/opt/app/data/customer/account-odcs", Map("header" -> "true"))
-      .schema(metadata...)
-      .schema(
+      .fields(metadata...)
+      .fields(
         field.name("rcvr_id").regex("RC[0-9]{8}"),
         field.name("rcvr_cntry_code").oneOf("AU", "US", "TW")
       )
@@ -255,17 +255,16 @@ either `AU, US or TW`. For the full guide on data generation options,
           dataContractFile: "/opt/app/mount/odcs/full-example.yaml"
         count:
           records: 100
-        schema:
-          fields:
-            - name: "rcvr_id"
-              options:
-                regex: "RC[0-9]{8}"
-            - name: "rcvr_cntry_code"
-              options:
-                oneOf:
-                  - "AU"
-                  - "US"
-                  - "TW"
+        fields:
+          - name: "rcvr_id"
+            options:
+              regex: "RC[0-9]{8}"
+          - name: "rcvr_cntry_code"
+            options:
+              oneOf:
+                - "AU"
+                - "US"
+                - "TW"
     ```
 
 === "UI"

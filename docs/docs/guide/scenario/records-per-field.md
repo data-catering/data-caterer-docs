@@ -1,12 +1,12 @@
 ---
-title: "Generate Multiple Records Per Column Example"
-description: "Example for generating multiple records per column for data with Data Caterer."
+title: "Generate Multiple Records Per Field Example"
+description: "Example for generating multiple records per field for data with Data Caterer."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
-# Multiple Records Per Column
+# Multiple Records Per Field
 
-Creating a data generator for a CSV file where there are multiple records per column values.
+Creating a data generator for a CSV file where there are multiple records per field values.
 
 ## Requirements
 
@@ -59,7 +59,7 @@ Make sure your class extends `PlanRun`.
     public class MyMultipleRecordsPerColJavaPlan extends PlanRun {
         {
             var transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map.of("header", "true"))
-                    .schema(
+                    .fields(
                             field().name("account_id"),
                             field().name("full_name"),
                             field().name("amount").type(DoubleType.instance()).min(1).max(100),
@@ -85,7 +85,7 @@ Make sure your class extends `PlanRun`.
     class MyMultipleRecordsPerColPlan extends PlanRun {
 
       val transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map("header" -> "true"))
-        .schema(
+        .fields(
           field.name("account_id").regex("ACC[0-9]{8}"), 
           field.name("full_name").expression("#{Name.name}"), 
           field.name("amount").`type`(DoubleType.instance).min(1).max(100),
@@ -105,7 +105,7 @@ Make sure your class extends `PlanRun`.
 By default, tasks will generate 1000 records. You can alter this value via the `count` configuration which can be
 applied to individual tasks. For example, in Scala, `csv(...).count(count.records(100))` to generate only 100 records.
 
-#### Records Per Column
+#### Records Per Field
 
 In this scenario, for a given `account_id, full_name`, there should be multiple records for it as we want to simulate a
 customer having multiple transactions. We can achieve this through defining the number of records to generate in
@@ -115,55 +115,55 @@ the `count` function.
 
     ```java
     var transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map.of("header", "true"))
-            .schema(
+            .fields(
                     ...
             )
-            .count(count().recordsPerColumn(5, "account_id", "full_name"));
+            .count(count().recordsPerField(5, "account_id", "full_name"));
     ```
 
 === "Scala"
 
     ```scala
     val transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map("header" -> "true"))
-      .schema(
+      .fields(
         ...
       )
-      .count(count.recordsPerColumn(5, "account_id", "full_name"))
+      .count(count.recordsPerField(5, "account_id", "full_name"))
     ```
 
 This will generate `1000 * 5 = 5000` records as the default number of records is set (1000) and
 per `account_id, full_name` from the initial 1000 records, 5 records will be generated.
 
-#### Random Records Per Column
+#### Random Records Per Field
 
-Generating 5 records per column is okay but still not quite reflective of the real world. Sometimes, people have
+Generating 5 records per field is okay but still not quite reflective of the real world. Sometimes, people have
 accounts with no transactions in them, or they could have many. We can accommodate for this via defining a random number
-of records per column.
+of records per field.
 
 === "Java"
 
     ```java
     var transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map.of("header", "true"))
-            .schema(
+            .fields(
                     ...
             )
-            .count(count().recordsPerColumnGenerator(generator().min(0).max(5), "account_id", "full_name"));
+            .count(count().recordsPerFieldGenerator(generator().min(0).max(5), "account_id", "full_name"));
     ```
 
 === "Scala"
 
     ```scala
     val transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map("header" -> "true"))
-      .schema(
+      .fields(
         ...
       )
-      .count(count.recordsPerColumnGenerator(generator.min(0).max(5), "account_id", "full_name"))
+      .count(count.recordsPerFieldGenerator(generator.min(0).max(5), "account_id", "full_name"))
     ```
 
-Here we set the minimum number of records per column to be 0 and the maximum to 5. This will follow a uniform
+Here we set the minimum number of records per field to be 0 and the maximum to 5. This will follow a uniform
 distribution so the average number of records per account is 2.5. We could also define other metadata,
 just like we did with fields, when defining the generator. For example, we could set `standardDeviation` and `mean` for
-the number of records generated per column to follow a normal distribution.
+the number of records generated per field to follow a normal distribution.
 
 ### Run
 

@@ -22,14 +22,14 @@ for `account_id`.
     ```java
     var postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("name"),
         ...
       );
     var postgresTxn = postgres(postgresAcc)
       .table("public.transactions")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("full_name"),
         ...
@@ -46,14 +46,14 @@ for `account_id`.
     ```scala
     val postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("name"),
         ...
       )
     val postgresTxn = postgres(postgresAcc)
       .table("public.transactions")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("full_name"),
         ...
@@ -75,18 +75,16 @@ for `account_id`.
         type: "postgres"
         options:
           dbtable: "account.accounts"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "name"
+        fields:
+          - name: "account_id"
+          - name: "name"
       - name: "transactions"
         type: "postgres"
         options:
           dbtable: "account.transactions"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "full_name"
+        fields:
+          - name: "account_id"
+          - name: "full_name"
     ---
     name: "customer_create_plan"
     description: "Create customers in JDBC"
@@ -96,9 +94,14 @@ for `account_id`.
 
     sinkOptions:
       foreignKeys:
-        - - "postgres.accounts.account_id"
-          - - "postgres.transactions.account_id"
-          - []
+        - source:
+            dataSource: "postgres"
+            step: "accounts"
+            fields: ["account_id"]
+          generate:
+            - dataSource: "postgres"
+              step: "transactions"
+              fields: ["account_id"]
     ```
 
 ## Multiple fields
@@ -111,14 +114,14 @@ and `name` from `accounts` to match with `account_id` and `full_name` to match i
     ```java
     var postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("name"),
         ...
       );
     var postgresTxn = postgres(postgresAcc)
       .table("public.transactions")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("full_name"),
         ...
@@ -135,14 +138,14 @@ and `name` from `accounts` to match with `account_id` and `full_name` to match i
     ```scala
     val postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("name"),
         ...
       )
     val postgresTxn = postgres(postgresAcc)
       .table("public.transactions")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("full_name"),
         ...
@@ -164,18 +167,16 @@ and `name` from `accounts` to match with `account_id` and `full_name` to match i
         type: "postgres"
         options:
           dbtable: "account.accounts"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "name"
+        fields:
+          - name: "account_id"
+          - name: "name"
       - name: "transactions"
         type: "postgres"
         options:
           dbtable: "account.transactions"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "full_name"
+        fields:
+          - name: "account_id"
+          - name: "full_name"
     ---
     name: "customer_create_plan"
     description: "Create customers in JDBC"
@@ -185,9 +186,14 @@ and `name` from `accounts` to match with `account_id` and `full_name` to match i
 
     sinkOptions:
       foreignKeys:
-        - - "my_postgres.accounts.account_id,name"
-          - - "my_postgres.transactions.account_id,full_name"
-          - []
+        - source:
+            dataSource: "postgres"
+            step: "accounts"
+            fields: ["account_id", "name"]
+          generate:
+            - dataSource: "postgres"
+              step: "transactions"
+              fields: ["account_id", "full_name"]
     ```
 
 ## Transformed field
@@ -202,13 +208,13 @@ data source contains `account_id` which is a concatenation of `ACC` with `accoun
     ```java
     var postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field().name("account_number"),
         field().name("name"),
         ...
       );
     var jsonTask = json("my_json", "/tmp/json")
-      .schema(
+      .fields(
         field().name("account_id").sql("CONCAT('ACC', account_number)"),
         field().name("account_number").omit(true),  #using this field for intermediate calculation, not included in final result with omit=true
         ...
@@ -225,13 +231,13 @@ data source contains `account_id` which is a concatenation of `ACC` with `accoun
     ```scala
     val postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field.name("account_number"),
         field.name("name"),
         ...
       )
     var jsonTask = json("my_json", "/tmp/json")
-      .schema(
+      .fields(
         field.name("account_id").sql("CONCAT('ACC', account_number)"),
         field.name("account_number").omit(true),  #using this field for intermediate calculation, not included in final result with omit=true
         ...
@@ -254,10 +260,9 @@ data source contains `account_id` which is a concatenation of `ACC` with `accoun
         type: "postgres"
         options:
           dbtable: "account.accounts"
-        schema:
-          fields:
-            - name: "account_number"
-            - name: "name"
+        fields:
+          - name: "account_number"
+          - name: "name"
     ---
     #json task yaml
     name: "json_data"
@@ -266,16 +271,13 @@ data source contains `account_id` which is a concatenation of `ACC` with `accoun
         type: "json"
         options:
           dbtable: "account.transactions"
-        schema:
-          fields:
-            - name: "account_id"
-              generator:
-                options:
-                  sql: "CONCAT('ACC', account_number)"
-            - name: "account_number"
-              generator:
-                options:
-                  omit: true
+        fields:
+          - name: "account_id"
+            options:
+              sql: "CONCAT('ACC', account_number)"
+          - name: "account_number"
+            options:
+              omit: true
 
     ---
     #plan yaml
@@ -289,9 +291,14 @@ data source contains `account_id` which is a concatenation of `ACC` with `accoun
 
     sinkOptions:
       foreignKeys:
-        - - "my_postgres.accounts.account_number"
-          - - "my_json.transactions.account_number"
-          - []
+        - source:
+            dataSource: "my_postgres"
+            step: "accounts"
+            fields: ["account_number"]
+          generate:
+            - dataSource: "my_json"
+              step: "transactions"
+              fields: ["account_number"]
     ```
 
 ## Nested field
@@ -308,16 +315,16 @@ key definition.
     ```java
     var postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("name"),
         ...
       );
     var jsonTask = json("my_json", "/tmp/json")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("customer_details")
-          .schema(
+          .fields(
             field().name("name").sql("_txn_name"), #nested field will get value from '_txn_name'
             ...
           ),
@@ -335,16 +342,16 @@ key definition.
     ```scala
     val postgresAcc = postgres("my_postgres", "jdbc:...")
       .table("public.accounts")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("name"),
         ...
       )
     var jsonTask = json("my_json", "/tmp/json")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("customer_details")
-          .schema(
+          .fields(
             field.name("name").sql("_txn_name"), #nested field will get value from '_txn_name'
             ...
           ), 
@@ -368,10 +375,9 @@ key definition.
         type: "postgres"
         options:
           dbtable: "account.accounts"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "name"
+        fields:
+          - name: "account_id"
+          - name: "name"
     ---
     #json task yaml
     name: "json_data"
@@ -380,21 +386,16 @@ key definition.
         type: "json"
         options:
           dbtable: "account.transactions"
-        schema:
-          fields:
-            - name: "account_id"
-            - name: "_txn_name"
-              generator:
-                options:
-                  omit: true
-            - name: "cusotmer_details"
-              schema:
-                fields:
-                  name: "name"
-                  generator:
-                    type: "sql"
-                    options:
-                      sql: "_txn_name"
+        fields:
+          - name: "account_id"
+          - name: "_txn_name"
+            options:
+              omit: true
+          - name: "cusotmer_details"
+            fields:
+              name: "name"
+              options:
+                sql: "_txn_name"
 
     ---
     #plan yaml
@@ -408,7 +409,12 @@ key definition.
 
     sinkOptions:
       foreignKeys:
-        - - "my_postgres.accounts.account_id,name"
-          - - "my_json.transactions.account_id,_txn_name"
-          - []
+        - source:
+            dataSource: "my_postgres"
+            step: "accounts"
+            fields: ["account_id", "name"]
+          generate:
+            - dataSource: "my_json"
+              step: "transactions"
+              fields: ["account_id", "_txn_name"]
     ```

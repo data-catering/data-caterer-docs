@@ -447,7 +447,7 @@ Ensure that the user has write permission, so it is able to save the table to th
     ```
 
 Following permissions are required when enabling `configuration.enableGeneratePlanAndTasks(true)` as it will gather
-metadata information about tables and columns from the below tables.
+metadata information about tables and fields from the below tables.
 
 ??? tip "CQL Permission Statements"
 

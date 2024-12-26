@@ -113,7 +113,7 @@ show how nested data types are handled and how we could customise it.
     ...
     
     var jsonTask = json("my_json", "/opt/app/data/json", Map.of("saveMode", "overwrite"))
-            .schema(metadataSource().openMetadataJava(
+            .fields(metadataSource().openMetadataJava(
                 "http://localhost:8585/api",                                                              //url
                 Constants.OPEN_METADATA_AUTH_TYPE_OPEN_METADATA(),                                        //auth type
                 Map.of(                                                                                   //additional options (including auth options)
@@ -131,7 +131,7 @@ show how nested data types are handled and how we could customise it.
     ...
     
     val jsonTask = json("my_json", "/opt/app/data/json", Map("saveMode" -> "overwrite"))
-      .schema(metadataSource.openMetadata(
+      .fields(metadataSource.openMetadata(
         "http://localhost:8585/api",                                                  //url
         OPEN_METADATA_AUTH_TYPE_OPEN_METADATA,                                        //auth type
         Map(                                                                          //additional options (including auth options)
@@ -244,12 +244,12 @@ field `customer.sex` is also from a predefined set of values.
 
     ```java
     var jsonTask = json("my_json", "/opt/app/data/json", Map.of("saveMode", "overwrite"))
-                .schema(
+                .fields(
                     metadata...
                 ))
-                .schema(
+                .fields(
                     field().name("platform").oneOf("website", "mobile"),
-                    field().name("customer").schema(field().name("sex").oneOf("M", "F", "O"))
+                    field().name("customer").fields(field().name("sex").oneOf("M", "F", "O"))
                 )
                 .count(count().records(10));
     ```
@@ -258,12 +258,12 @@ field `customer.sex` is also from a predefined set of values.
 
     ```scala
     val jsonTask = json("my_json", "/opt/app/data/json", Map("saveMode" -> "overwrite"))
-      .schema(
+      .fields(
         metadata...
       ))
-      .schema(
+      .fields(
         field.name("platform").oneOf("website", "mobile"),
-        field.name("customer").schema(field.name("sex").oneOf("M", "F", "O"))
+        field.name("customer").fields(field.name("sex").oneOf("M", "F", "O"))
       )
       .count(count.records(10))
     ```

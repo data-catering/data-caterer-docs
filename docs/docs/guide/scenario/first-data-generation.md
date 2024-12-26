@@ -113,7 +113,7 @@ data type defined. This is because the default data type is `StringType`.
 
     ```java
     var accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map.of("header", "true"))
-            .schema(
+            .fields(
                     field().name("account_id"),
                     field().name("balance").type(DoubleType.instance()),
                     field().name("created_by"),
@@ -127,7 +127,7 @@ data type defined. This is because the default data type is `StringType`.
 
     ```scala
     val accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map("header" -> "true"))
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("balance").`type`(DoubleType),
         field.name("created_by"),
@@ -255,7 +255,7 @@ Putting it all the fields together, our class should now look like this.
 
     ```java
     var accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map.of("header", "true"))
-            .schema(
+            .fields(
                     field().name("account_id").regex("ACC[0-9]{8}").unique(true),
                     field().name("balance").type(DoubleType.instance()).min(1).max(1000),
                     field().name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
@@ -269,7 +269,7 @@ Putting it all the fields together, our class should now look like this.
 
     ```scala
     val accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map("header" -> "true"))
-      .schema(
+      .fields(
         field.name("account_id").regex("ACC[0-9]{8}").unique(true),
         field.name("balance").`type`(DoubleType).min(1).max(1000),
         field.name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
@@ -288,7 +288,7 @@ We only want to generate 100 records, so that we can see what the output looks l
 
     ```java
     var accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map.of("header", "true"))
-            .schema(
+            .fields(
                     ...
             )
             .count(count().records(100));
@@ -298,7 +298,7 @@ We only want to generate 100 records, so that we can see what the output looks l
 
     ```scala
     val accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map("header" -> "true"))
-      .schema(
+      .fields(
         ...
       )
       .count(count.records(100))
@@ -337,7 +337,7 @@ To tell Data Caterer that we want to run with the configurations along with the 
     public class MyCsvJavaPlan extends PlanRun {
         {
             var accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map.of("header", "true"))
-                    .schema(
+                    .fields(
                             field().name("account_id").regex("ACC[0-9]{8}").unique(true),
                             field().name("balance").type(DoubleType.instance()).min(1).max(1000),
                             field().name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
@@ -361,7 +361,7 @@ To tell Data Caterer that we want to run with the configurations along with the 
     class MyCsvPlan extends PlanRun {
 
       val accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map("header" -> "true"))
-        .schema(
+        .fields(
           field.name("account_id").regex("ACC[0-9]{8}").unique(true),
           field.name("balance").`type`(DoubleType).min(1).max(1000),
           field.name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
@@ -421,7 +421,7 @@ We can define our schema the same way along with any additional metadata.
 
     ```java
     var transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map.of("header", "true"))
-            .schema(
+            .fields(
                     field().name("account_id"),
                     field().name("name"),
                     field().name("amount").type(DoubleType.instance()).min(1).max(100),
@@ -434,7 +434,7 @@ We can define our schema the same way along with any additional metadata.
 
     ```scala
     val transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map("header" -> "true"))
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("full_name"),
         field.name("amount").`type`(DoubleType).min(1).max(100),
@@ -443,7 +443,7 @@ We can define our schema the same way along with any additional metadata.
       )
     ```
 
-#### Records Per Column
+#### Records Per Field
 
 Usually, for a given `account_id, full_name`, there should be multiple records for it as we want to simulate a customer
 having multiple transactions. We can achieve this through defining the number of records to generate in the `count`
@@ -453,53 +453,53 @@ function.
 
     ```java
     var transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map.of("header", "true"))
-            .schema(
+            .fields(
                     ...
             )
-            .count(count().recordsPerColumn(5, "account_id", "full_name"));
+            .count(count().recordsPerField(5, "account_id", "full_name"));
     ```
 
 === "Scala"
 
     ```scala
     val transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map("header" -> "true"))
-      .schema(
+      .fields(
         ...
       )
-      .count(count.recordsPerColumn(5, "account_id", "full_name"))
+      .count(count.recordsPerField(5, "account_id", "full_name"))
     ```
 
-##### Random Records Per Column
+##### Random Records Per Field
 
 Above, you will notice that we are generating 5 records per `account_id, full_name`. This is okay but still not quite
 reflective of the real world. Sometimes, people have accounts with no transactions in them, or they could have many. We
-can accommodate for this via defining a random number of records per column.
+can accommodate for this via defining a random number of records per field.
 
 === "Java"
 
     ```java
     var transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map.of("header", "true"))
-            .schema(
+            .fields(
                     ...
             )
-            .count(count().recordsPerColumnGenerator(generator().min(0).max(5), "account_id", "full_name"));
+            .count(count().recordsPerFieldGenerator(generator().min(0).max(5), "account_id", "full_name"));
     ```
 
 === "Scala"
 
     ```scala
     val transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map("header" -> "true"))
-      .schema(
+      .fields(
         ...
       )
-      .count(count.recordsPerColumnGenerator(generator.min(0).max(5), "account_id", "full_name"))
+      .count(count.recordsPerFieldGenerator(generator.min(0).max(5), "account_id", "full_name"))
     ```
 
-Here we set the minimum number of records per column to be 0 and the maximum to 5.
+Here we set the minimum number of records per field to be 0 and the maximum to 5.
 
 #### Foreign Key
 
-In this scenario, we want to match the `account_id` in `account` to match the same column values in `transaction`. We
+In this scenario, we want to match the `account_id` in `account` to match the same field values in `transaction`. We
 also want to match `name` in `account` to `full_name` in `transaction`. This can be done via plan configuration like
 below.
 
@@ -507,8 +507,8 @@ below.
 
     ```java
     var myPlan = plan().addForeignKeyRelationship(
-            accountTask, List.of("account_id", "name"), //the task and columns we want linked
-            List.of(Map.entry(transactionTask, List.of("account_id", "full_name"))) //list of other tasks and their respective column names we want matched
+            accountTask, List.of("account_id", "name"), //the task and fields we want linked
+            List.of(Map.entry(transactionTask, List.of("account_id", "full_name"))) //list of other tasks and their respective field names we want matched
     );
     ```
 
@@ -516,8 +516,8 @@ below.
 
     ```scala
     val myPlan = plan.addForeignKeyRelationship(
-      accountTask, List("account_id", "name"),  //the task and columns we want linked
-      List(transactionTask -> List("account_id", "full_name"))  //list of other tasks and their respective column names we want matched
+      accountTask, List("account_id", "name"),  //the task and fields we want linked
+      List(transactionTask -> List("account_id", "full_name"))  //list of other tasks and their respective field names we want matched
     )
     ```
 
@@ -529,7 +529,7 @@ Now, stitching it all together for the `execute` function, our final plan should
     public class MyCsvJavaPlan extends PlanRun {
         {
             var accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map.of("header", "true"))
-                    .schema(
+                    .fields(
                             field().name("account_id").regex("ACC[0-9]{8}").unique(true),
                             field().name("balance").type(DoubleType.instance()).min(1).max(1000),
                             field().name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
@@ -540,14 +540,14 @@ Now, stitching it all together for the `execute` function, our final plan should
                     .count(count().records(100));
     
             var transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map.of("header", "true"))
-                    .schema(
+                    .fields(
                             field().name("account_id"),
                             field().name("name"),
                             field().name("amount").type(DoubleType.instance()).min(1).max(100),
                             field().name("time").type(TimestampType.instance()).min(java.sql.Date.valueOf("2022-01-01")),
                             field().name("date").type(DateType.instance()).sql("DATE(time)")
                     )
-                    .count(count().recordsPerColumnGenerator(generator().min(0).max(5), "account_id", "full_name"));
+                    .count(count().recordsPerFieldGenerator(generator().min(0).max(5), "account_id", "full_name"));
     
             var config = configuration()
                     .generatedReportsFolderPath("/opt/app/data/report")
@@ -569,7 +569,7 @@ Now, stitching it all together for the `execute` function, our final plan should
     class MyCsvPlan extends PlanRun {
     
       val accountTask = csv("customer_accounts", "/opt/app/data/customer/account", Map("header" -> "true"))
-        .schema(
+        .fields(
           field.name("account_id").regex("ACC[0-9]{8}").unique(true),
           field.name("balance").`type`(DoubleType).min(1).max(1000),
           field.name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
@@ -580,14 +580,14 @@ Now, stitching it all together for the `execute` function, our final plan should
         .count(count.records(100))
     
       val transactionTask = csv("customer_transactions", "/opt/app/data/customer/transaction", Map("header" -> "true"))
-        .schema(
+        .fields(
           field.name("account_id"),
           field.name("name"),
           field.name("amount").`type`(DoubleType).min(1).max(100),
           field.name("time").`type`(TimestampType).min(java.sql.Date.valueOf("2022-01-01")),
           field.name("date").`type`(DateType).sql("DATE(time)")
         )
-        .count(count.recordsPerColumnGenerator(generator.min(0).max(5), "account_id", "full_name"))
+        .count(count.recordsPerFieldGenerator(generator.min(0).max(5), "account_id", "full_name"))
     
       val config = configuration
         .generatedReportsFolderPath("/opt/app/data/report")
@@ -674,9 +674,9 @@ Below, we have an example that should give you a good understanding of what vali
     var postgresValidateTask = postgres(...)
             .table("account", "transactions")
             .validations(
-                    validation().col("account_id").isNotNull(),
-                    validation().col("name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.2).description("Some names have different formats"),
-                    validation().col("balance").greaterThanOrEqual(0).errorThreshold(10).description("Account can have negative balance if overdraft"),
+                    validation().field("account_id").isNull(true),
+                    validation().field("name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.2).description("Some names have different formats"),
+                    validation().field("balance").greaterThanOrEqual(0).errorThreshold(10).description("Account can have negative balance if overdraft"),
                     validation().expr("CASE WHEN status == 'closed' THEN isNotNull(close_date) ELSE isNull(close_date) END"),
                     validation().unique("account_id", "name"),
                     validation().groupBy("account_id", "name").max("login_retry").lessThan(10)
@@ -689,9 +689,9 @@ Below, we have an example that should give you a good understanding of what vali
     val postgresValidateTask = postgres(...)
       .table("account", "transactions")
       .validations(
-        validation.col("account_id").isNotNull,
-        validation.col("name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.2).description("Some names have different formats"),
-        validation.col("balance").greaterThanOrEqual(0).errorThreshold(10).description("Account can have negative balance if overdraft"),
+        validation.field("account_id").isNull(true),
+        validation.field("name").matches("[A-Z][a-z]+ [A-Z][a-z]+").errorThreshold(0.2).description("Some names have different formats"),
+        validation.field("balance").greaterThanOrEqual(0).errorThreshold(10).description("Account can have negative balance if overdraft"),
         validation.expr("CASE WHEN status == 'closed' THEN isNotNull(close_date) ELSE isNull(close_date) END"),
         validation.unique("account_id", "name"),
         validation.groupBy("account_id", "name").max("login_retry").lessThan(10)
@@ -700,7 +700,7 @@ Below, we have an example that should give you a good understanding of what vali
 
 ##### name
 
-For all values in the `name` column, we check if they match the regex `[A-Z][a-z]+ [A-Z][a-z]+`. As we know in the real
+For all values in the `name` field, we check if they match the regex `[A-Z][a-z]+ [A-Z][a-z]+`. As we know in the real
 world, names do not always follow the same pattern, so we allow for an `errorThreshold` before marking the validation
 as failed. Here, we define the `errorThreshold` to be `0.2`, which means, if the error percentage is greater than 20%,
 then fail the validation. We also append on a helpful description so other developers/users can understand the context
@@ -714,14 +714,14 @@ validation.
 
 ##### expr
 
-Sometimes, we may need to include the values of multiple columns to validate a certain condition. This is where we can
-use `expr` to define a SQL expression that returns a boolean. In this scenario, we are checking if the `status` column
+Sometimes, we may need to include the values of multiple fields to validate a certain condition. This is where we can
+use `expr` to define a SQL expression that returns a boolean. In this scenario, we are checking if the `status` field
 has value `closed`, then the `close_date` should be not null, otherwise, `close_date` is null.
 
 ##### unique
 
 We check whether the combination of `account_id` and `name` are unique within the dataset. You can define one or more
-columns for `unique` validations.
+fields for `unique` validations.
 
 ##### groupBy
 

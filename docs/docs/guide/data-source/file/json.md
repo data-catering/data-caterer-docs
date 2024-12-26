@@ -114,14 +114,14 @@ to the accounts generated.
 
     ```java
     var accountTask = json("customer_accounts", "/opt/app/data/customer/account_json")
-            .schema(
+            .fields(
                 field().name("account_id"),
                 field().name("balance").type(new DecimalType(5, 2)),
                 field().name("created_by"),
                 field().name("open_time").type(TimestampType.instance()),
                 field().name("status"),
                 field().name("customer_details")
-                    .schema(
+                    .fields(
                         field().name("name"),
                         field().name("age").type(IntegerType.instance()),
                         field().name("city")
@@ -133,14 +133,14 @@ to the accounts generated.
 
     ```scala
     val accountTask = json("customer_accounts", "/opt/app/data/customer/account_json")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("balance").`type`(new DecimalType(5, 2)),
         field.name("created_by"),
         field.name("open_time").`type`(TimestampType),
         field.name("status"),
         field.name("customer_details")
-          .schema(
+          .fields(
             field.name("name"),
             field.name("age").`type`(IntegerType),
             field.name("city")

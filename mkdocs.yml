@@ -72,7 +72,7 @@ nav:
               - First Data Generation: 'docs/guide/scenario/first-data-generation.md'
               - Foreign Keys Across Data Sources: 'docs/guide/scenario/batch-and-event.md'
               - Generate Batch and Event Data: 'docs/guide/scenario/batch-and-event.md'
-              - Multiple Records Per Column Value: 'docs/guide/scenario/records-per-column.md'
+              - Multiple Records Per Field Value: 'docs/guide/scenario/records-per-field.md'
           - Data Sources:
               - Database:
                 - Cassandra: 'docs/guide/data-source/database/cassandra.md'
@@ -106,7 +106,7 @@ nav:
           - Basic: 'docs/validation/basic-validation.md'
           - Group by/Aggregate: 'docs/validation/group-by-validation.md'
           - Upstream: 'docs/validation/upstream-data-source-validation.md'
-          - Column Names: 'docs/validation/column-name-validation.md'
+          - Field Names: 'docs/validation/field-name-validation.md'
           - External Source: 'docs/validation/external-source-validation.md'
       - Report:
           - HTML Report: 'docs/report/html-report.md'

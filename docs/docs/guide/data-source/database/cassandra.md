@@ -66,7 +66,7 @@ Let's make a new user that has the required permissions needed to push data into
     ```
 
 Following permissions are required when enabling `configuration.enableGeneratePlanAndTasks(true)` as it will gather
-metadata information about tables and columns from the below tables.
+metadata information about tables and fields from the below tables.
 
 ???+ tip "CQL Permission Statements"
 
@@ -182,7 +182,7 @@ corresponds to `text` in Cassandra.
     {
         var accountTask = cassandra("customer_cassandra", "host.docker.internal:9042")
                 .table("account", "accounts")
-                .schema(
+                .fields(
                         field().name("account_id"),
                         field().name("amount").type(DoubleType.instance()),
                         field().name("created_by"),
@@ -198,7 +198,7 @@ corresponds to `text` in Cassandra.
     ```scala
     val accountTask = cassandra("customer_cassandra", "host.docker.internal:9042")
       .table("account", "accounts")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("amount").`type`(DoubleType),
         field.name("created_by"),
@@ -249,7 +249,7 @@ To tell Data Caterer that we want to run with the configurations along with the 
         {
             var accountTask = cassandra("customer_cassandra", "host.docker.internal:9042")
                     .table("account", "accounts")
-                    .schema(
+                    .fields(
                             field().name("account_id").regex("ACC[0-9]{8}").primaryKey(true),
                             field().name("amount").type(DoubleType.instance()).min(1).max(1000),
                             field().name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),
@@ -273,7 +273,7 @@ To tell Data Caterer that we want to run with the configurations along with the 
     class MyAdvancedCassandraPlan extends PlanRun {
       val accountTask = cassandra("customer_cassandra", "host.docker.internal:9042")
         .table("account", "accounts")
-        .schema(
+        .fields(
           field.name("account_id").primaryKey(true),
           field.name("amount").`type`(DoubleType).min(1).max(1000),
           field.name("created_by").sql("CASE WHEN status IN ('open', 'closed') THEN 'eod' ELSE 'event' END"),

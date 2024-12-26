@@ -9,7 +9,7 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 If you want to run data validations based on data generated or data from another data source, you can use the upstream
 data source validations. An example would be generating a Parquet file that gets ingested by a job and inserted into
 Postgres. The validations can then check for each `account_id` generated in the Parquet, it exists in `account_number`
-column in Postgres. The validations can be chained with basic and group by validations or even other upstream data
+field in Postgres. The validations can be chained with basic and group by validations or even other upstream data
 sources, to cover any complex validations.
 
 ![Generate and validate flow with upstream validations](../../diagrams/validation_generation_run.gif)
@@ -23,21 +23,21 @@ details here](../validation.md#pre-filter-data).
 
 ## Basic join
 
-Join across datasets by particular columns. Then run validations on the joined dataset. You will notice that the data
-source name is appended onto the column names when joined (i.e. `my_first_json_customer_details`), to ensure column
-names do not clash and make it obvious which columns are being validated.
+Join across datasets by particular fields. Then run validations on the joined dataset. You will notice that the data
+source name is appended onto the field names when joined (i.e. `my_first_json_customer_details`), to ensure field
+names do not clash and make it obvious which fields are being validated.
 
 In the below example, we check that the for the same `account_id`, then `customer_details.name` in the `my_first_json`
-dataset should equal to the `name` column in the `my_second_json`.
+dataset should equal to the `name` field in the `my_second_json`.
 
 === "Java"
 
     ```java
     var firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field().name("account_id").regex("ACC[0-9]{8}"),
         field().name("customer_details")
-          .schema(
+          .fields(
             field().name("name").expression("#{Name.name}")
           )
       );
@@ -45,10 +45,10 @@ dataset should equal to the `name` column in the `my_second_json`.
     var secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
         validation().upstreamData(firstJsonTask)                   //upstream data generation task is `firstJsonTask`
-          .joinColumns("account_id")                               //use `account_id` column in both datasets to join corresponding records (outer join by default)
+          .joinFields("account_id")                               //use `account_id` field in both datasets to join corresponding records (outer join by default)
           .withValidation(
-            validation().col("my_first_json_customer_details.name")
-              .isEqualCol("name")                                  //validate the name in `my_second_json` is equal to `customer_details.name` in `my_first_json` when the `account_id` matches
+            validation().field("my_first_json_customer_details.name")
+              .isEqualField("name")                                  //validate the name in `my_second_json` is equal to `customer_details.name` in `my_first_json` when the `account_id` matches
           )
       );
     ```
@@ -57,10 +57,10 @@ dataset should equal to the `name` column in the `my_second_json`.
 
     ```scala
     val firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field.name("account_id").regex("ACC[0-9]{8}"),
         field.name("customer_details")
-          .schema(
+          .fields(
             field.name("name").expression("#{Name.name}")
           )
       )
@@ -68,10 +68,10 @@ dataset should equal to the `name` column in the `my_second_json`.
     val secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
         validation.upstreamData(firstJsonTask)                   //upstream data generation task is `firstJsonTask`
-          .joinColumns("account_id")                             //use `account_id` column in both datasets to join corresponding records (outer join by default)
+          .joinFields("account_id")                             //use `account_id` field in both datasets to join corresponding records (outer join by default)
           .withValidation(
-            validation.col("my_first_json_customer_details.name")
-              .isEqualCol("name")                                //validate the name in `my_second_json` is equal to `customer_details.name` in `my_first_json` when the `account_id` matches
+            validation.field("my_first_json_customer_details.name")
+              .isEqualField("name")                                //validate the name in `my_second_json` is equal to `customer_details.name` in `my_first_json` when the `account_id` matches
           )
       )
     ```
@@ -87,7 +87,7 @@ dataset should equal to the `name` column in the `my_second_json`.
             path: "/tmp/data/second_json"
           validations:
             - upstreamDataSource: "my_first_json"
-              joinColumns: ["account_id"]
+              joinFields: ["account_id"]
               validation:
                 expr: "my_first_json_customer_details.name == name"
     ```
@@ -98,16 +98,16 @@ Define join expression to link two datasets together. This can be any SQL expres
 Useful in situations where join is based on transformations or complex logic.
 
 In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` and `account_number` to join with
-`account_id` column in `my_first_json` dataset.
+`account_id` field in `my_first_json` dataset.
 
 === "Java"
 
     ```java
     var firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field().name("account_id").regex("ACC[0-9]{8}"),
         field().name("customer_details")
-          .schema(
+          .fields(
             field().name("name").expression("#{Name.name}")
           )
       );
@@ -117,8 +117,8 @@ In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` an
         validation().upstreamData(firstJsonTask)
           .joinExpr("my_first_json_account_id == CONCAT('ACC', account_number)")  //generic SQL expression that returns a boolean
           .withValidation(
-            validation().col("my_first_json_customer_details.name")
-              .isEqualCol("name")
+            validation().field("my_first_json_customer_details.name")
+              .isEqualField("name")
           )
       );
     ```
@@ -127,10 +127,10 @@ In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` an
 
     ```scala
     val firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field.name("account_id").regex("ACC[0-9]{8}"),
         field.name("customer_details")
-          .schema(
+          .fields(
             field.name("name").expression("#{Name.name}")
           )
       )
@@ -140,8 +140,8 @@ In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` an
         validation.upstreamData(firstJsonTask)
           .joinExpr("my_first_json_account_id == CONCAT('ACC', account_number)")  //generic SQL expression that returns a boolean
           .withValidation(
-            validation.col("my_first_json_customer_details.name")
-              .isEqualCol("name")
+            validation.field("my_first_json_customer_details.name")
+              .isEqualField("name")
           )
       )
     ```
@@ -157,14 +157,14 @@ In the below example, we have to use `CONCAT` SQL function to combine `'ACC'` an
             path: "/tmp/data/second_json"
           validations:
             - upstreamDataSource: "my_first_json"
-              joinColumns: ["expr:my_first_json_account_id == CONCAT('ACC', account_number)"]
+              joinFields: ["expr:my_first_json_account_id == CONCAT('ACC', account_number)"]
               validation:
                 expr: "my_first_json_customer_details.name == name"
     ```
 
 ## Different join type
 
-By default, an outer join is used to gather columns from both datasets together for validation. But there may be
+By default, an outer join is used to gather fields from both datasets together for validation. But there may be
 scenarios where you want to control the join type.
 
 Possible join types include:
@@ -177,7 +177,7 @@ Possible join types include:
 - leftanti, left_anti, anti
 - cross
 
-In the example below, we do an `anti` join by column `account_id` and check if there are no records. This essentially
+In the example below, we do an `anti` join by field `account_id` and check if there are no records. This essentially
 checks that all `account_id`'s from `my_second_json` exist in `my_first_json`. The second validation also does something
 similar but does an `outer` join (by default) and checks that the joined dataset has 30 records.
 
@@ -185,10 +185,10 @@ similar but does an `outer` join (by default) and checks that the joined dataset
 
     ```java
     var firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field().name("account_id").regex("ACC[0-9]{8}"),
         field().name("customer_details")
-          .schema(
+          .fields(
             field().name("name").expression("#{Name.name}")
           )
       );
@@ -196,11 +196,11 @@ similar but does an `outer` join (by default) and checks that the joined dataset
     var secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
         validation().upstreamData(firstJsonTask)
-          .joinColumns("account_id")
+          .joinFields("account_id")
           .joinType("anti")
           .withValidation(validation().count().isEqual(0)),
         validation().upstreamData(firstJsonTask)
-          .joinColumns("account_id")
+          .joinFields("account_id")
           .withValidation(validation().count().isEqual(30))
       );
     ```
@@ -209,10 +209,10 @@ similar but does an `outer` join (by default) and checks that the joined dataset
 
     ```scala
     val firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field.name("account_id").regex("ACC[0-9]{8}"),
         field.name("customer_details")
-          .schema(
+          .fields(
             field.name("name").expression("#{Name.name}")
           )
       )
@@ -220,11 +220,11 @@ similar but does an `outer` join (by default) and checks that the joined dataset
     val secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
         validation.upstreamData(firstJsonTask)
-          .joinColumns("account_id")
+          .joinFields("account_id")
           .joinType("anti")
           .withValidation(validation.count().isEqual(0)),
         validation.upstreamData(firstJsonTask)
-          .joinColumns("account_id")
+          .joinFields("account_id")
           .withValidation(validation.count().isEqual(30))
       )
     ```
@@ -240,13 +240,13 @@ similar but does an `outer` join (by default) and checks that the joined dataset
             path: "/tmp/data/second_json"
           validations:
             - upstreamDataSource: "my_first_json"
-              joinColumns: ["account_id"]
+              joinFields: ["account_id"]
               joinType: "anti"
               validation:
                 aggType: "count"
                 aggExpr: "count == 0"
             - upstreamDataSource: "my_first_json"
-              joinColumns: ["account_id"]
+              joinFields: ["account_id"]
               validation:
                 aggType: "count"
                 aggExpr: "count == 30"
@@ -264,22 +264,22 @@ between 0.8 and 1.2 times the balance.
 
     ```java
     var firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field().name("account_id").regex("ACC[0-9]{8}"),
         field().name("balance").type(DoubleType.instance()).min(10).max(1000),
         field().name("customer_details")
-          .schema(
+          .fields(
             field().name("name").expression("#{Name.name}")
           )
       );
 
     var secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
-        validation().upstreamData(firstJsonTask).joinColumns("account_id")
+        validation().upstreamData(firstJsonTask).joinFields("account_id")
           .withValidation(
             validation().groupBy("account_id", "my_first_json_balance")
               .sum("amount")
-              .betweenCol("my_first_json_balance * 0.8", "my_first_json_balance * 1.2")
+              .betweenFields("my_first_json_balance * 0.8", "my_first_json_balance * 1.2")
           )
       );
     ```
@@ -288,22 +288,22 @@ between 0.8 and 1.2 times the balance.
 
     ```scala
     val firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field.name("account_id").regex("ACC[0-9]{8}"),
         field.name("balance").`type`(DoubleType).min(10).max(1000),
         field.name("customer_details")
-          .schema(
+          .fields(
             field.name("name").expression("#{Name.name}")
           )
       )
 
     val secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
-        validation.upstreamData(firstJsonTask).joinColumns("account_id")
+        validation.upstreamData(firstJsonTask).joinFields("account_id")
           .withValidation(
             validation.groupBy("account_id", "my_first_json_balance")
               .sum("amount")
-              .betweenCol("my_first_json_balance * 0.8", "my_first_json_balance * 1.2")
+              .betweenFields("my_first_json_balance * 0.8", "my_first_json_balance * 1.2")
           )
       )
     ```
@@ -319,7 +319,7 @@ between 0.8 and 1.2 times the balance.
             path: "/tmp/data/second_json"
           validations:
             - upstreamDataSource: "my_first_json"
-              joinColumns: ["account_id"]
+              joinFields: ["account_id"]
               validation:
                 groupByCols: ["account_id", "my_first_json_balance"]
                 aggExpr: "sum(amount) BETWEEN my_first_json_balance * 0.8 AND my_first_json_balance * 1.2"
@@ -335,18 +335,18 @@ together by `account_id`.
 
     ```java
     var firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field().name("account_id").regex("ACC[0-9]{8}"),
         field().name("balance").type(DoubleType.instance()).min(10).max(1000),
         field().name("customer_details")
-          .schema(
+          .fields(
             field().name("name").expression("#{Name.name}")
           )
       )
       .count(count().records(10));
 
     var thirdJsonTask = json("my_third_json", "/tmp/data/third_json")
-      .schema(
+      .fields(
         field().name("account_id"),
         field().name("amount").type(IntegerType.instance()).min(1).max(100),
         field().name("name").expression("#{Name.name}")
@@ -356,10 +356,10 @@ together by `account_id`.
     var secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
         validation().upstreamData(firstJsonTask)
-          .joinColumns("account_id")
+          .joinFields("account_id")
           .withValidation(
             validation().upstreamData(thirdJsonTask)
-              .joinColumns("account_id")
+              .joinFields("account_id")
               .withValidation(validation().count().isEqual(30))
           )
       );
@@ -369,18 +369,18 @@ together by `account_id`.
 
     ```scala
     val firstJsonTask = json("my_first_json", "/tmp/data/first_json")
-      .schema(
+      .fields(
         field.name("account_id").regex("ACC[0-9]{8}"),
         field.name("balance").`type`(DoubleType).min(10).max(1000),
         field.name("customer_details")
-          .schema(
+          .fields(
             field.name("name").expression("#{Name.name}")
           )
       )
       .count(count.records(10))
       
     val thirdJsonTask = json("my_third_json", "/tmp/data/third_json")
-      .schema(
+      .fields(
         field.name("account_id"),
         field.name("amount").`type`(IntegerType).min(1).max(100),
         field.name("name").expression("#{Name.name}"),
@@ -389,11 +389,11 @@ together by `account_id`.
 
     val secondJsonTask = json("my_second_json", "/tmp/data/second_json")
       .validations(
-        validation.upstreamData(firstJsonTask).joinColumns("account_id")
+        validation.upstreamData(firstJsonTask).joinFields("account_id")
           .withValidation(
             validation.groupBy("account_id", "my_first_json_balance")
               .sum("amount")
-              .betweenCol("my_first_json_balance * 0.8", "my_first_json_balance * 1.2")
+              .betweenFields("my_first_json_balance * 0.8", "my_first_json_balance * 1.2")
           ),
       )
     ```
@@ -409,10 +409,10 @@ together by `account_id`.
             path: "/tmp/data/second_json"
           validations:
             - upstreamDataSource: "my_first_json"
-              joinColumns: ["account_id"]
+              joinFields: ["account_id"]
               validation:
                 upstreamDataSource: "my_third_json"
-                joinColumns: ["account_id"]
+                joinFields: ["account_id"]
                 validation:
                   aggType: "count"
                   aggExpr: "count == 30"

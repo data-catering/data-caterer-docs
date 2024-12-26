@@ -102,7 +102,7 @@ Kafka messages.
     var kafkaTask = new AdvancedKafkaJavaPlanRun().getKafkaTask();
     
     var csvTask = csv("my_csv", "/opt/app/data/csv/account")
-            .schema(
+            .fields(
                     field().name("account_number"),
                     field().name("year"),
                     field().name("name"),
@@ -116,7 +116,7 @@ Kafka messages.
     val kafkaTask = new AdvancedKafkaPlanRun().kafkaTask
 
     val csvTask = csv("my_csv", "/opt/app/data/csv/account")
-      .schema(
+      .fields(
         field.name("account_number"),
         field.name("year"),
         field.name("name"),
@@ -133,18 +133,18 @@ when we define our foreign key relationships.
 From the above CSV schema, we see note the following against the Kafka schema:
 
 - `account_number` in CSV needs to match with the `account_id` in Kafka
-    - We see that `account_id` is referred to in the `key` column as `field.name("key").sql("content.account_id")`
+    - We see that `account_id` is referred to in the `key` field as `field.name("key").sql("content.account_id")`
 - `year` needs to match with `content.year` in Kafka, which is a nested field
-    - We can only do foreign key relationships with top level fields, not nested fields. So we define a new column
+    - We can only do foreign key relationships with top level fields, not nested fields. So we define a new field
       called `tmp_year` which will not appear in the final output for the Kafka messages but is used as an intermediate
       step `field.name("tmp_year").sql("content.year").omit(true)`
 - `name` needs to match with `content.details.name` in Kafka, also a nested field
-    - Using the same logic as above, we define a temporary column called `tmp_name` which will take the value of the
+    - Using the same logic as above, we define a temporary field called `tmp_name` which will take the value of the
       nested field but will be omitted `field.name("tmp_name").sql("content.details.name").omit(true)`
-- `payload` represents the whole JSON message sent to Kafka, which matches to `value` column
+- `payload` represents the whole JSON message sent to Kafka, which matches to `value` field
 
-Our foreign keys are therefore defined like below. Order is important when defining the list of columns. The index needs
-to match with the corresponding column in the other data source.
+Our foreign keys are therefore defined like below. Order is important when defining the list of fields. The index needs
+to match with the corresponding field in the other data source.
 
 === "Java"
 

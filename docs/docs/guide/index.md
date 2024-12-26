@@ -96,7 +96,7 @@ Below are a list of guides you can follow to create your first Data Catering job
 - __[First Data Generation]__ - If you are new, this is the place to start
 - __[Foreign Keys Across Data Sources]__ - Generate matching values across generated data sets
 - __[Generate Batch and Event Data]__ - Generate matching batch and event data
-- __[Multiple Records Per Column Value]__ - How you can generate multiple records per set of columns
+- __[Multiple Records Per Field Value]__ - How you can generate multiple records per set of fields
 
 </div>
 
@@ -107,7 +107,7 @@ Below are a list of guides you can follow to create your first Data Catering job
   [First Data Generation]: scenario/first-data-generation.md
   [Foreign Keys Across Data Sources]: scenario/batch-and-event.md
   [Generate Batch and Event Data]: scenario/batch-and-event.md
-  [Multiple Records Per Column Value]: scenario/records-per-column.md
+  [Multiple Records Per Field Value]: scenario/records-per-field.md
 
 ## YAML Files
 
@@ -138,7 +138,7 @@ more steps.
 | Database         | Cassandra   | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/cassandra/cassandra-customer-task.yaml)     |                                                                   |
 | File             | CSV         | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/file/csv/csv-transaction-task.yaml)         |                                                                   |
 | File             | JSON        | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/file/json/json-account-task.yaml)           | Contains nested schemas and use of SQL for generated values       |
-| File             | Parquet     | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/file/parquet/parquet-transaction-task.yaml) | Partition by year column                                          |
+| File             | Parquet     | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/file/parquet/parquet-transaction-task.yaml) | Partition by year field                                          |
 | Messaging System | Kafka       | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/kafka/kafka-account-task.yaml)              | Specific base schema to be used, define headers, key, value, etc. |
 | Messaging System | Solace      | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/jms/solace/jms-account-task.yaml)           | JSON formatted message                                            |
 | HTTP             | PUT         | [Sample](https://github.com/data-catering/data-caterer-example/blob/main/docker/data/custom/task/http/http-account-task.yaml)                | JSON formatted PUT body                                           |
