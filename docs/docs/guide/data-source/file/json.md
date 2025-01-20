@@ -43,12 +43,11 @@ First, we will clone the data-caterer-example repo which will already have the b
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyJSONJavaPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyJSONPlan.scala`
-
-Make sure your class extends `PlanRun`.
+- YAML: `docker/data/custom/plan/my-json.yaml`
 
 === "Java"
 
@@ -67,6 +66,31 @@ Make sure your class extends `PlanRun`.
     class MyJSONPlan extends PlanRun {
     }
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-json.yaml`:
+    ```yaml
+    name: "my_json_plan"
+    description: "Create account data in JSON"
+    tasks:
+      - name: "json_task"
+        dataSourceName: "my_json"
+    ```
+
+=== "UI"
+
+    1. Click on `Connection` towards the top of the screen
+    1. For connection name, set to `my_json`
+    1. Click on `Select data source type..` and select `JSON`
+    1. Set `Path` as `/tmp/custom/json/accounts`
+        1. Optionally, we could set the number of partitions and columns to partition by
+    1. Click on `Create`
+    1. You should see your connection `my_json` show under `Existing connections`
+    1. Click on `Home` towards the top of the screen
+    1. Set plan name to `my_json_plan`
+    1. Set task name to `json_task`
+    1. Click on `Select data source..` and select `my_json`
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -98,6 +122,21 @@ Within our class, we can start by defining the connection properties to read/wri
     ```
     
     Additional options can be found [**here**](https://spark.apache.org/docs/latest/sql-data-sources-json.html#data-source-option).
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    json {
+        my_json {
+            "dateFormat": "dd-MM-yyyy"
+        }
+    }
+    ```
+
+=== "UI"
+
+    1. We have already created the connection details in [this step](#plan-setup)
 
 #### Schema
 
@@ -148,6 +187,50 @@ to the accounts generated.
       )
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/task/json/json-task.yaml`:
+    ```yaml
+    name: "json_task"
+    steps:
+      - name: "accounts"
+        type: "json"
+        fields:
+          - name: "account_id"
+          - name: "balance"
+            type: "double"
+          - name: "created_by"
+          - name: "open_time"
+            type: "timestamp"
+          - name: "status"
+          - name: "customer_details"
+            fields:
+              - name: "name"
+              - name: "age"
+                type: "integer"
+              - name: "city"
+    ```
+
+=== "UI"
+
+    1. Click on `Generation` and tick the `Manual` checkbox
+    1. Click on `+ Field`
+    1. Add name as `account_id`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `balance`
+    1. Click on `Select data type` and select `double`
+    1. Click on `+ Field` and add name as `created_by`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `open_time`
+    1. Click on `Select data type` and select `timestamp`
+    1. Click on `+ Field` and add name as `status`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `customer_details`
+    1. Click on `Select data type` and select `struct`
+        1. Under `customer_details`, click on `+ Field` and add name `name`
+        1. Under `customer_details`, click on `+ Field` and add name `age`, set data type as `integer`
+        1. Under `customer_details`, click on `+ Field` and add name `city`
+
 #### Additional Configurations
 
 At the end of data generation, a report gets generated that summarises the actions it performed. We can control the
@@ -174,22 +257,73 @@ have unique values generated.
     execute(myPlan, config, accountTask, transactionTask)
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    flags {
+      enableUniqueCheck = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    1. Click on `Flag` and click on `Unique Check`
+    1. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
+
 ### Run
 
 Now we can run via the script `./run.sh` that is in the top level directory of the `data-caterer-example` to run the class we just
 created.
 
-```shell
-./run.sh
-#input class MyJSONJavaPlan or MyJSONPlan
-#after completing, let's pick an account and check the transactions for that account
-account=$(head -1 docker/sample/customer/account_json/part-00000-* | sed -nr 's/.*account_id":"(.+)","balance.*/\1/p')
-echo "Head account record:"
-head -1 docker/sample/customer/account_json/part-00000-*
-echo $account
-echo "Transaction records:"
-cat docker/sample/customer/transaction_json/part-0000* | grep $account
-```
+=== "Java"
+
+    ```shell
+    ./run.sh MyJSONJavaPlan
+    account=$(head -1 docker/sample/customer/account_json/part-00000-* | sed -nr 's/.*account_id":"(.+)","balance.*/\1/p')
+    echo "Head account record:"
+    head -1 docker/sample/customer/account_json/part-00000-*
+    echo $account
+    echo "Transaction records:"
+    cat docker/sample/customer/transaction_json/part-0000* | grep $account
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MyJSONPlan
+    account=$(head -1 docker/sample/customer/account_json/part-00000-* | sed -nr 's/.*account_id":"(.+)","balance.*/\1/p')
+    echo "Head account record:"
+    head -1 docker/sample/customer/account_json/part-00000-*
+    echo $account
+    echo "Transaction records:"
+    cat docker/sample/customer/transaction_json/part-0000* | grep $account
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-json.yaml
+    account=$(head -1 docker/sample/customer/account_json/part-00000-* | sed -nr 's/.*account_id":"(.+)","balance.*/\1/p')
+    echo "Head account record:"
+    head -1 docker/sample/customer/account_json/part-00000-*
+    echo $account
+    echo "Transaction records:"
+    cat docker/sample/customer/transaction_json/part-0000* | grep $account
+    ```
+
+=== "UI"
+
+    1. Click the button `Execute` at the top
+    1. Progress updates will show in the bottom right corner
+    1. Click on `History` at the top
+    1. Check for your plan name and see the result summary
+    1. Click on `Report` on the right side to see more details of what was executed
+
 
 It should look something like this.
 

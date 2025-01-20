@@ -359,4 +359,4 @@ incorporated into your Data Caterer job as well by enabling data validations via
     execute(conf, jsonTask)
     ```
 
-Check out the full example under `AdvancedOpenMetadataSourcePlanRun` in the example repo.
+Check out the full example under `OpenMetadataSourcePlanRun` in the example repo.

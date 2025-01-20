@@ -52,13 +52,11 @@ for this example.
 
 ### Plan Setup
 
-Create a new Java/Scala class or YAML file.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyAdvancedDataContractCliJavaPlanRun.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedDataContractCliPlanRun.scala`
 - YAML: `docker/data/customer/plan/my-datacontract-cli.yaml`
-
-Make sure your class extends `PlanRun`.
 
 === "Java"
 
@@ -97,7 +95,7 @@ Make sure your class extends `PlanRun`.
         dataSourceName: "customer_accounts"
     ```
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     flags {
       enableUniqueCheck = true
@@ -139,7 +137,7 @@ We can point the schema of a data source to our Data Contract CLI file.
 === "YAML"
 
     In `docker/data/custom/task/file/csv/csv-datacontract-cli-account-task.yaml`:
-    ```
+    ```yaml
     name: "csv_account_file"
     steps:
       - name: "accounts"
@@ -248,7 +246,7 @@ For the full guide on data generation options,
 === "YAML"
 
     In `docker/data/custom/task/file/csv/csv-odcs-account-task.yaml`:
-    ```
+    ```yaml
     name: "csv_account_file"
     steps:
       - name: "accounts"
@@ -365,7 +363,7 @@ Once available, it will be as easy as enabling data validations via `enableGener
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     flags {
       enableGenerateValidations = true
@@ -377,4 +375,4 @@ Once available, it will be as easy as enabling data validations via `enableGener
     1. Click on `Advanced Configuration` towards the bottom of the screen
     2. Click on `Flag` and click on `Generate Validations`
 
-Check out the full example under `AdvancedDataContractCliSourcePlanRun` in the example repo.
+Check out the full example under `DataContractCliSourcePlanRun` in the example repo.

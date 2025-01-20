@@ -77,12 +77,11 @@ metadata information about tables and fields from the below tables.
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MySQLJavaPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MySQLPlan.scala`
-
-Make sure your class extends `PlanRun`.
+- YAML: `docker/data/custom/plan/my-mysql.yaml`
 
 === "Java"
 
@@ -101,6 +100,33 @@ Make sure your class extends `PlanRun`.
     class MySQLPlan extends PlanRun {
     }
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-mysql.yaml`:
+    ```yaml
+    name: "my_mysql_plan"
+    description: "Create account data via MySQL"
+    tasks:
+      - name: "mysql_task"
+        dataSourceName: "my_mysql"
+    ```
+
+=== "UI"
+
+    1. Click on `Connection` towards the top of the screen
+    1. For connection name, set to `my_mysql`
+    1. Click on `Select data source type..` and select `MySQL`
+    1. Set URL as `jdbc:mysql://localhost:3306/customer`
+    1. Set username as `root`
+    1. Set password as `root`
+        1. Optionally, we could set a schema and table name but if you have more than schema or table, you would have to create new connection for each
+    1. Click on `Create`
+    1. You should see your connection `my_mysql` show under `Existing connections`
+    1. Click on `Home` towards the top of the screen
+    1. Set plan name to `my_mysql_plan`
+    1. Set task name to `mysql_task`
+    1. Click on `Select data source..` and select `my_mysql`
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -139,7 +165,7 @@ Within our class, we can start by defining the connection properties to connect 
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     jdbc {
         customer_mysql {
@@ -150,6 +176,10 @@ Within our class, we can start by defining the connection properties to connect 
         }
     }
     ```
+
+=== "UI"
+
+    1. We have already created the connection details in [this step](#plan-setup)
 
 #### Schema
 
@@ -194,6 +224,44 @@ corresponds to `text` in MySQL.
       )
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/task/mysql/mysql-task.yaml`:
+    ```yaml
+    name: "mysql_task"
+    steps:
+      - name: "accounts"
+        type: "mysql"
+        options:
+          dbtable: "customer.accounts"
+        fields:
+        - name: "account_number"
+        - name: "amount"
+          type: "double"
+        - name: "created_by"
+        - name: "created_by_fixed_length"
+        - name: "open_timestamp"
+          type: "timestamp"
+        - name: "account_status"
+    ```
+
+=== "UI"
+
+    1. Click on `Generation` and tick the `Manual` checkbox
+    1. Click on `+ Field`
+    1. Add name as `account_number`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `amount`
+    1. Click on `Select data type` and select `double`
+    1. Click on `+ Field` and add name as `created_by`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `created_by_fixed_length`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `open_timestamp`
+    1. Click on `Select data type` and select `timestamp`
+    1. Click on `+ Field` and add name as `account_status`
+    1. Click on `Select data type` and select `string`
+
 Depending on how you want to define the schema, follow the below:
 
 - [Manual schema guide](../../scenario/data-generation.md#schema)
@@ -222,6 +290,24 @@ have unique values generated.
       .generatedReportsFolderPath("/opt/app/data/report")
       .enableUniqueCheck(true)
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    flags {
+      enableUniqueCheck = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    1. Click on `Flag` and click on `Unique Check`
+    1. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
 
 #### Execute
 
@@ -276,18 +362,48 @@ To tell Data Caterer that we want to run with the configurations along with the 
     }
     ```
 
+=== "YAML"
+
+    No additional steps for YAML.
+
+=== "UI"
+
+    You can save your plan via the `Save` button at the top.
+
 ### Run
 
 Now we can run via the script `./run.sh` that is in the top level directory of the `data-caterer-example` to run the
 class we just
 created.
 
-```shell
-./run.sh
-#input class MySQLJavaPlan or MySQLPlan
-#after completing
-docker exec docker-mysql-1  mysql -u root "-proot" "customer" -e "SELECT COUNT(1) FROM customer.accounts; SELECT * FROM customer.accounts LIMIT 10;"
-```
+=== "Java"
+
+    ```shell
+    ./run.sh MySQLJavaPlan
+    docker exec docker-mysql-1  mysql -u root "-proot" "customer" -e "SELECT COUNT(1) FROM customer.accounts; SELECT * FROM customer.accounts LIMIT 10;"
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MySQLPlan
+    docker exec docker-mysql-1  mysql -u root "-proot" "customer" -e "SELECT COUNT(1) FROM customer.accounts; SELECT * FROM customer.accounts LIMIT 10;"
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-mysql.yaml
+    docker exec docker-mysql-1  mysql -u root "-proot" "customer" -e "SELECT COUNT(1) FROM customer.accounts; SELECT * FROM customer.accounts LIMIT 10;"
+    ```
+
+=== "UI"
+
+    1. Click the button `Execute` at the top
+    1. Progress updates will show in the bottom right corner
+    1. Click on `History` at the top
+    1. Check for your plan name and see the result summary
+    1. Click on `Report` on the right side to see more details of what was executed
 
 Your output should look like this.
 

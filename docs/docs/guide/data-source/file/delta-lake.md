@@ -43,12 +43,11 @@ First, we will clone the data-caterer-example repo which will already have the b
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyDeltaLakeJavaPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyDeltaLakePlan.scala`
-
-Make sure your class extends `PlanRun`.
+- YAML: `docker/data/custom/plan/my-delta-lake.yaml`
 
 === "Java"
 
@@ -67,6 +66,31 @@ Make sure your class extends `PlanRun`.
     class MyDeltaLakePlan extends PlanRun {
     }
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-delta-lake.yaml`:
+    ```yaml
+    name: "my_delta_lake_plan"
+    description: "Create account data in Delta Lake"
+    tasks:
+      - name: "delta_lake_task"
+        dataSourceName: "my_delta_lake"
+    ```
+
+=== "UI"
+
+    1. Click on `Connection` towards the top of the screen
+    1. For connection name, set to `my_delta_lake`
+    1. Click on `Select data source type..` and select `Delta Lake`
+    1. Set `Path` as `/tmp/custom/delta_lake/accounts`
+        1. Optionally, we could set the number of partitions and columns to partition by
+    1. Click on `Create`
+    1. You should see your connection `my_delta_lake` show under `Existing connections`
+    1. Click on `Home` towards the top of the screen
+    1. Set plan name to `my_delta_lake_plan`
+    1. Set task name to `delta_lake_task`
+    1. Click on `Select data source..` and select `my_delta_lake`
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -98,6 +122,21 @@ Within our class, we can start by defining the connection properties to read/wri
     ```
     
     Additional options can be found [**here**](https://docs.delta.io/latest/delta-batch.html#).
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    delta_lake {
+        my_delta_lake {
+            "spark.databricks.delta.properties.defaults.appendOnly" = "true"
+        }
+    }
+    ```
+
+=== "UI"
+
+    1. We have already created the connection details in [this step](#plan-setup)
 
 #### Schema
 
@@ -133,20 +172,59 @@ have unique values generated.
     execute(myPlan, config, accountTask, transactionTask)
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    flags {
+      enableUniqueCheck = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    1. Click on `Flag` and click on `Unique Check`
+    1. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
+
 ### Run
 
 Now we can run via the script `./run.sh` that is in the top level directory of the `data-caterer-example` to run the class we just
 created.
 
-```shell
-./run.sh
-#input class MyDeltaLakeJavaPlan or MyDeltaLakePlan
-```
+=== "Java"
+
+    ```shell
+    ./run.sh MyDeltaLakeJavaPlan
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MyDeltaLakePlan
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-delta-lake.yaml
+    ```
+
+=== "UI"
+
+    1. Click the button `Execute` at the top
+    1. Progress updates will show in the bottom right corner
+    1. Click on `History` at the top
+    1. Check for your plan name and see the result summary
+    1. Click on `Report` on the right side to see more details of what was executed
 
 Congratulations! You have now made a data generator that has simulated a real world data scenario. You can check the
 `DeltaLakeJavaPlan.java` or `DeltaLakePlan.scala` files as well to check that your plan is the same.
 
 ### Validation
 
-If you want to validate data from an Delta Lake source, 
+If you want to validate data from a Delta Lake source, 
 [follow the validation documentation found here to help guide you](../../../validation.md).

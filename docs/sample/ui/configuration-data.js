@@ -870,6 +870,33 @@ dataSourcePropertiesMap.set("csv", {
         }
     }
 });
+dataSourcePropertiesMap.set("delta", {
+    optGroupLabel: "Data Source",
+    Name: "Delta Lake",
+    properties: {
+        path: {
+            displayName: "Path",
+            default: "/tmp/generated-data/delta",
+            type: "text",
+            help: "File pathway to save Delta Lake.",
+            required: ""
+        },
+        partitions: {
+            displayName: "Num Partitions",
+            default: "1",
+            type: "number",
+            help: "Number of file partitions.",
+            override: "true"
+        },
+        partitionBy: {
+            displayName: "Partition By",
+            default: "",
+            type: "text",
+            help: "Field name(s) to partition by (comma separated).",
+            override: "true"
+        }
+    }
+});
 dataSourcePropertiesMap.set("http", {
     optGroupLabel: "Data Source",
     Name: "HTTP",
@@ -1151,6 +1178,19 @@ dataSourcePropertiesMap.set("amundsen", {
             default: "",
             type: "text",
             help: "URL to connect to Amundsen API.",
+            required: ""
+        }
+    }
+});
+dataSourcePropertiesMap.set("dataContractCli", {
+    optGroupLabel: "Metadata Source",
+    Name: "Data Contract CLI",
+    properties: {
+        path: {
+            displayName: "Contract File",
+            default: "",
+            type: "text",
+            help: "File path to data contract file.",
             required: ""
         }
     }

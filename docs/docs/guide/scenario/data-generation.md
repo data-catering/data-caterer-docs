@@ -120,7 +120,7 @@ high level configurations.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     csv {
       customer_accounts {
@@ -566,7 +566,7 @@ have unique values generated.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     flags {
       enableUniqueCheck = true
@@ -801,7 +801,7 @@ function.
 === "YAML"
 
     In `docker/data/custom/task/file/csv/csv-account-task.yaml`:
-    ```
+    ```yaml
     name: "csv_account_file"
     steps:
       - name: "accounts"
@@ -855,7 +855,7 @@ can accommodate for this via defining a random number of records per field.
 === "YAML"
 
     In `docker/data/custom/task/file/csv/csv-account-task.yaml`:
-    ```
+    ```yaml
     name: "csv_account_file"
     steps:
       - name: "accounts"

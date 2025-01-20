@@ -97,7 +97,7 @@ Make sure your class extends `PlanRun`.
         dataSourceName: "customer_accounts"
     ```
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     flags {
       enableUniqueCheck = true
@@ -139,7 +139,7 @@ We can point the schema of a data source to our Open Data Contract Standard (ODC
 === "YAML"
 
     In `docker/data/custom/task/file/csv/csv-odcs-account-task.yaml`:
-    ```
+    ```yaml
     name: "csv_account_file"
     steps:
       - name: "accounts"
@@ -244,7 +244,7 @@ either `AU, US or TW`. For the full guide on data generation options,
 === "YAML"
 
     In `docker/data/custom/task/file/csv/csv-odcs-account-task.yaml`:
-    ```
+    ```yaml
     name: "csv_account_file"
     steps:
       - name: "accounts"
@@ -351,7 +351,7 @@ via `enableGenerateValidations` in `configuration`.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     flags {
       enableGenerateValidations = true
@@ -363,4 +363,4 @@ via `enableGenerateValidations` in `configuration`.
     1. Click on `Advanced Configuration` towards the bottom of the screen
     2. Click on `Flag` and click on `Generate Validations`
 
-Check out the full example under `AdvancedODCSSourcePlanRun` in the example repo.
+Check out the full example under `ODCSSourcePlanRun` in the example repo.

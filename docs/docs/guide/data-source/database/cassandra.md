@@ -102,6 +102,33 @@ Make sure your class extends `PlanRun`.
     }
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/plan/my-cassandra.yaml`:
+    ```yaml
+    name: "my_cassandra_plan"
+    description: "Create account data via Cassandra"
+    tasks:
+      - name: "cassandra_task"
+        dataSourceName: "my_cassandra"
+    ```
+
+=== "UI"
+
+    1. Click on `Connection` towards the top of the screen
+    1. For connection name, set to `my_cassandra`
+    1. Click on `Select data source type..` and select `Cassandra`
+    1. Set URL as `localhost:9042`
+    1. Set username as `cassandra`
+    1. Set password as `cassandra`
+        1. Optionally, we could set a keyspace and table name but if you have more than keyspace or table, you would have to create new connection for each
+    1. Click on `Create`
+    1. You should see your connection `my_cassandra` show under `Existing connections`
+    1. Click on `Home` towards the top of the screen
+    1. Set plan name to `my_cassandra_plan`
+    1. Set task name to `cassandra_task`
+    1. Click on `Select data source..` and select `my_cassandra`
+
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
 
@@ -136,6 +163,28 @@ Within our class, we can start by defining the connection properties to connect 
     ```
     
     Additional options such as SSL configuration, etc can be found [**here**](https://github.com/datastax/spark-cassandra-connector/blob/master/doc/reference.md).
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    org.apache.spark.sql.cassandra {
+        cassandra {
+            spark.cassandra.connection.host = "localhost"
+            spark.cassandra.connection.host = ${?CASSANDRA_HOST}
+            spark.cassandra.connection.port = "9042"
+            spark.cassandra.connection.port = ${?CASSANDRA_PORT}
+            spark.cassandra.auth.username = "cassandra"
+            spark.cassandra.auth.username = ${?CASSANDRA_USERNAME}
+            spark.cassandra.auth.password = "cassandra"
+            spark.cassandra.auth.password = ${?CASSANDRA_PASSWORD}
+        }
+    }
+    ```
+
+=== "UI"
+
+    1. We have already created the connection details in [this step](#plan-setup)
 
 #### Schema
 
@@ -208,6 +257,42 @@ corresponds to `text` in Cassandra.
       )
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/task/cassandra/cassandra-task.yaml`:
+    ```yaml
+    name: "cassandra_task"
+    steps:
+      - name: "accounts"
+        type: "cassandra"
+        options:
+          keyspace: "account"
+          table: "accounts"
+        fields:
+        - name: "account_number"
+        - name: "amount"
+          type: "double"
+        - name: "created_by"
+        - name: "open_time"
+          type: "timestamp"
+        - name: "status"
+    ```
+
+=== "UI"
+
+    1. Click on `Generation` and tick the `Manual` checkbox
+    1. Click on `+ Field`
+    1. Add name as `account_number`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `amount`
+    1. Click on `Select data type` and select `double`
+    1. Click on `+ Field` and add name as `created_by`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `open_time`
+    1. Click on `Select data type` and select `timestamp`
+    1. Click on `+ Field` and add name as `status`
+    1. Click on `Select data type` and select `string`
+
 Depending on how you want to define the schema, follow the below:
 
 - [Manual schema guide](../../scenario/data-generation.md#schema)
@@ -235,6 +320,24 @@ have unique values generated.
       .generatedReportsFolderPath("/opt/app/data/report")
       .enableUniqueCheck(true)
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    flags {
+      enableUniqueCheck = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    1. Click on `Flag` and click on `Unique Check`
+    1. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
 
 #### Execute
 
@@ -290,17 +393,48 @@ To tell Data Caterer that we want to run with the configurations along with the 
     }
     ```
 
+=== "YAML"
+
+    No additional steps for YAML.
+
+=== "UI"
+
+    You can save your plan via the `Save` button at the top.
+
 ### Run
 
 Now we can run via the script `./run.sh` that is in the top level directory of the `data-caterer-example` to run the class we just
 created.
 
-```shell
-./run.sh
-#input class MyAdvancedCassandraJavaPlan or MyAdvancedCassandraPlan
-#after completing
-docker exec docker-cassandraserver-1 cqlsh -e 'select count(1) from account.accounts;select * from account.accounts limit 10;'
-```
+=== "Java"
+
+    ```shell
+    ./run.sh MyAdvancedCassandraJavaPlan
+    docker exec docker-cassandraserver-1 cqlsh -e 'select count(1) from account.accounts;select * from account.accounts limit 10;'
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MyAdvancedCassandraPlan
+    docker exec docker-cassandraserver-1 cqlsh -e 'select count(1) from account.accounts;select * from account.accounts limit 10;'
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-cassandra.yaml
+    docker exec docker-cassandraserver-1 cqlsh -e 'select count(1) from account.accounts;select * from account.accounts limit 10;'
+    ```
+
+=== "UI"
+
+    1. Click the button `Execute` at the top
+    1. Progress updates will show in the bottom right corner
+    1. Click on `History` at the top
+    1. Check for your plan name and see the result summary
+    1. Click on `Report` on the right side to see more details of what was executed
+
 
 Your output should look like this.
 

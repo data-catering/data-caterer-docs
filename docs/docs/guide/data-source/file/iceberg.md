@@ -43,13 +43,11 @@ First, we will clone the data-caterer-example repo which will already have the b
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyIcebergJavaPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyIcebergPlan.scala`
 - YAML: `docker/data/customer/plan/my-iceberg.yaml`
-
-Make sure your class extends `PlanRun`.
 
 === "Java"
 
@@ -76,13 +74,17 @@ Make sure your class extends `PlanRun`.
     name: "my_iceberg_plan"
     description: "Create account data in Iceberg table"
     tasks:
-      - name: "iceberg_account_table"
-        dataSourceName: "customer_accounts"
+      - name: "iceberg_task"
+        dataSourceName: "my_iceberg"
     ```
 
 === "UI"
 
-    [Go here.](#connection-configuration)
+    1. Go to `Connection` tab in the top bar
+    2. Select data source as `Iceberg`
+        1. Enter in data source name `my_iceberg`
+        2. Select catalog type `hadoop`
+        3. Enter warehouse path as `/opt/app/data/customer/iceberg`
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -123,10 +125,10 @@ Within our class, we can start by defining the connection properties to read/wri
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     iceberg {
-      customer_accounts {
+      my_iceberg {
         path = "/opt/app/data/customer/iceberg"
         path = ${?ICEBERG_WAREHOUSE_PATH}
         catalogType = "hadoop"
@@ -139,11 +141,7 @@ Within our class, we can start by defining the connection properties to read/wri
 
 === "UI"
 
-    1. Go to `Connection` tab in the top bar
-    2. Select data source as `Iceberg`
-        1. Enter in data source name `customer_accounts`
-        2. Select catalog type `hadoop`
-        3. Enter warehouse path as `/opt/app/data/customer/iceberg`
+    1. We have already created the connection details in [this step](#plan-setup)
 
 #### Schema
 
@@ -181,7 +179,7 @@ have unique values generated.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     flags {
       enableUniqueCheck = true
@@ -222,7 +220,11 @@ created.
 
 === "UI"
 
-    1. Click on `Execute` at the top
+    1. Click the button `Execute` at the top
+    1. Progress updates will show in the bottom right corner
+    1. Click on `History` at the top
+    1. Check for your plan name and see the result summary
+    1. Click on `Report` on the right side to see more details of what was executed
 
 Congratulations! You have now made a data generator that has simulated a real world data scenario. You can check the
 `IcebergJavaPlan.java` or `IcebergPlan.scala` files as well to check that your plan is the same.

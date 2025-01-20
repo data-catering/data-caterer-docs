@@ -25,7 +25,7 @@ function getExistingPlans() {
                 let deleteButton = createButton(`plan-delete-${numPlans}`, "Plan delete", "btn btn-danger", "Delete");
 
                 editButton.addEventListener("click", function() {
-                    location.href = `https://data.catering/sample/ui/index.html?plan-name=${plan.name}`;
+                    location.href = `https://data.catering/latest/sample/ui/index.html?plan-name=${plan.name}`;
                 });
                 executeButton.addEventListener("click", function () {
                     let runId = crypto.randomUUID();

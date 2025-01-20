@@ -57,12 +57,11 @@ docker ps
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyAdvancedHttpJavaPlanRun.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedHttpPlanRun.scala`
-
-Make sure your class extends `PlanRun`.
+- YAML: `docker/data/custom/plan/my-http.yaml`
 
 === "Java"
 
@@ -101,7 +100,7 @@ Make sure your class extends `PlanRun`.
         dataSourceName: "my_http"
     ```
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     flags {
       enableGeneratePlanAndTasks = true
@@ -114,7 +113,7 @@ Make sure your class extends `PlanRun`.
 === "UI"
 
     1. Click on `Advanced Configuration` towards the bottom of the screen
-    3. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
+    1. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
 
 We will enable generate plan and tasks so that we can read from external sources for metadata and save the reports
 under a folder we can easily access.
@@ -151,7 +150,7 @@ We have kept the following endpoints to test out:
 === "YAML"
 
     In `docker/data/custom/task/http/openapi-task.yaml`:
-    ```
+    ```yaml
     name: "http_task"
     steps:
       - name: "my_petstore"
@@ -212,12 +211,12 @@ Then it gets used as a path parameter in the DELETE and GET requests.
 To link them all together, we must follow a particular pattern when referring to request body, query parameter or path
 parameter fields.
 
-| HTTP Type       | Field Prefix  | Example              |
-|-----------------|---------------|----------------------|
-| Request Body    | `bodyContent` | `bodyContent.id`     |
-| Path Parameter  | `pathParam`   | `pathParamid`        |
-| Query Parameter | `queryParam`  | `queryParamid`       |
-| Header          | `header`      | `headerContent_Type` |
+| HTTP Type       | Field Prefix | Example              |
+|-----------------|--------------|----------------------|
+| Request Body    | `body`       | `body.id`            |
+| Path Parameter  | `pathParam`  | `pathParamid`        |
+| Query Parameter | `queryParam` | `queryParamid`       |
+| Header          | `header`     | `headerContent_Type` |
 
 Also note, that when creating a foreign field definition for a HTTP data source, to refer to a specific endpoint and
 method, we have to follow the pattern of `{http method}{http path}`. For example, `POST/pets`. Let's apply this
@@ -227,7 +226,7 @@ knowledge to link all the `id` values together.
 
     ```java
     var myPlan = plan().addForeignKeyRelationship(
-            foreignField("my_http", "POST/pets", "bodyContent.id"),     //source of foreign key value
+            foreignField("my_http", "POST/pets", "body.id"),     //source of foreign key value
             foreignField("my_http", "DELETE/pets/{id}", "pathParamid"),
             foreignField("my_http", "GET/pets/{id}", "pathParamid")
     );
@@ -239,7 +238,7 @@ knowledge to link all the `id` values together.
 
     ```scala
     val myPlan = plan.addForeignKeyRelationship(
-      foreignField("my_http", "POST/pets", "bodyContent.id"),     //source of foreign key value
+      foreignField("my_http", "POST/pets", "body.id"),     //source of foreign key value
       foreignField("my_http", "DELETE/pets/{id}", "pathParamid"),
       foreignField("my_http", "GET/pets/{id}", "pathParamid")
     )
@@ -262,7 +261,7 @@ knowledge to link all the `id` values together.
         - source:
             dataSource: "my_http"
             step: "POST/pets"
-            fields: ["bodyContent.id"]
+            fields: ["body.id"]
           generate:
             - dataSource: "my_http"
               step: "DELETE/pets/{id}"
@@ -309,7 +308,7 @@ Given the `id` field is a nested field as noted in the foreign key, we can alter
     ```java
     var httpTask = http("my_http")
             .fields(metadataSource().openApi("/opt/app/mount/http/petstore.json"))
-            .fields(field().name("bodyContent").fields(field().name("id").regex("ID[0-9]{8}")))
+            .fields(field().name("body").fields(field().name("id").regex("ID[0-9]{8}")))
             .count(count().records(2));
     ```
 
@@ -318,14 +317,14 @@ Given the `id` field is a nested field as noted in the foreign key, we can alter
     ```scala
     val httpTask = http("my_http")
       .fields(metadataSource.openApi("/opt/app/mount/http/petstore.json"))
-      .fields(field.name("bodyContent").fields(field.name("id").regex("ID[0-9]{8}")))
+      .fields(field.name("body").fields(field.name("id").regex("ID[0-9]{8}")))
       .count(count.records(2))
     ```
 
 === "YAML"
 
     In `docker/data/custom/task/http/openapi-task.yaml`:
-    ```
+    ```yaml
     name: "http_task"
     steps:
       - name: "my_petstore"
@@ -335,7 +334,7 @@ Given the `id` field is a nested field as noted in the foreign key, we can alter
         count:
           records: 2
         fields:
-          - name: "bodyContent"
+          - name: "body"
             fields:
               - name: "id"
                 options:
@@ -346,14 +345,14 @@ Given the `id` field is a nested field as noted in the foreign key, we can alter
 
     1. Click on `Generation` and tick the `Manual` checkbox
     1. Click on `+ Field`
-        1. Add name as `bodyContent`
+        1. Add name as `body`
         1. Click on `Select data type` and select `struct`
         1. Click on `+ Field`
         1. Add name as `id`
         1. Click on `Select data type` and select `string`
-        1. Click `Regex` and enter `ID[0-9]{8}`
+        1. Click `+` next to data type and select `Regex`. Then enter `ID[0-9]{8}`
 
-We first get the field `bodyContent`, then get the nested schema and get the field `id` and add metadata stating that
+We first get the field `body`, then get the nested schema and get the field `id` and add metadata stating that
 `id` should follow the patter `ID[0-9]{8}`.
 
 Let's try run again, and hopefully we should see some proper ID values.
@@ -376,6 +375,243 @@ docker logs -f docker-http-1
 ```
 
 Great! Now we have replicated a production-like flow of HTTP requests.
+
+### No OpenAPI/Swagger
+
+You may want to create your own HTTP requests that are hand-crafted with your requirements. Below is how we can achieve
+this with some helper methods.
+
+#### HTTP URL
+
+There are 4 different parts of creating an HTTP URL. At minimum, you need a base URL and HTTP method.
+- Base URL
+- HTTP method (i.e. GET, POST, etc.)
+- Path parameters
+- Query parameters
+
+=== "Java"
+
+    ```java
+    var httpTask = http("my_http")
+            .fields(
+                    field().httpUrl(
+                            "http://host.docker.internal:80/anything/pets/{id}",    //url
+                            HttpMethodEnum.GET(),                                       //method
+                            List.of(field().name("id")),                                //path parameter
+                            List.of(field().name("limit").type(IntegerType.instance()).min(1).max(10))  //query parameter
+                    )
+            )
+            .count(count().records(2));
+    ```
+
+=== "Scala"
+
+    ```scala
+    val httpTask = http("my_http")
+      .fields(
+        field.httpUrl(
+          "http://host.docker.internal:80/anything/pets/{id}",  //url
+          HttpMethodEnum.GET,                                   //method
+          List(field.name("id")),                               //path parameter
+          List(field.name("limit").`type`(IntegerType).min(1).max(10))  //query parameter
+        ): _*
+      )
+      .count(count.records(2))
+    ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/http/http-task.yaml`:
+    ```yaml
+    name: "http_task"
+    steps:
+      - name: "my_petstore"
+        count:
+          records: 2
+        fields:
+          - name: "httpUrl"
+            fields:
+              - name: "url"
+                static: "http://localhost:80/anything/{id}"
+              - name: "method"
+                static: "GET"
+              - name: "pathParam"
+                fields:
+                  - name: "id"
+              - name: "queryParam"
+                fields:
+                  - name: "limit"
+                    type: "integer"
+                    options:
+                      min: 1
+                      max: 10
+    ```
+
+=== "UI"
+
+    1. Click on `Generation` and tick the `Manual` checkbox
+    1. Click on `+ Field`
+        1. Add name as `httpUrl`
+        1. Click on `Select data type` and select `struct`
+        1. Click on `+ Field` under `httpUrl`
+        1. Add name as `url`
+        1. Click on `Select data type` and select `string`
+        1. Click `Static` and enter `http://localhost:80/anything/{id}`
+        1. Click on `+ Field` and add name as `method`
+        1. Click on `Select data type` and select `string`
+        1. Click `+` next to data type and select `Static`. Then enter `GET`
+        1. Click on `+ Field` and add name as `pathParam`
+        1. Click on `Select data type` and select `struct`
+        1. Click on `+ Field` under `pathParam` and add name as `id`
+        1. Click on `+ Field` and add name as `queryParam`
+        1. Click on `Select data type` and select `struct`
+        1. Click on `+ Field` under `queryParam` and add name as `limit`
+        1. Click `+` next to data type and select `Min` and enter `1`. Similarly, select `Max` and enter `10`
+
+#### HTTP Headers
+
+HTTP headers can also be generated and have values that are based on the request payload.
+
+=== "Java"
+
+    ```java
+    var httpTask = http("my_http")
+            .fields(
+                    field().httpHeader("Content-Type").staticValue("application/json"),
+                    field().httpHeader("Content-Length"), //automatically calculated for you
+                    field().httpHeader("X-Account-Id").sql("body.account_id")
+            )
+            ...
+    ```
+
+=== "Scala"
+
+    ```scala
+    val httpTask = http("my_http")
+      .fields(
+        field.httpHeader("Content-Type").static("application/json"),
+        field.httpHeader("Content-Length"), //automatically calculated for you
+        field.httpHeader("X-Account-Id").sql("body.account_id")
+      )
+      ...
+    ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/http/http-task.yaml`:
+    ```yaml
+    name: "http_task"
+    steps:
+      - name: "my_petstore"
+        count:
+          records: 2
+        fields:
+          - name: "httpHeaders"
+            fields:
+              - name: "Content-Type"
+                static: "application/json"
+              - name: "Content-Length"
+              - name: "X-Account-Id"
+                options:
+                  sql: "body.account_id"
+    ```
+
+=== "UI"
+
+    1. Click on `+ Field`
+    1. Add name as `httpHeader`
+    1. Click on `Select data type` and select `struct`
+    1. Click on `+ Field` under `httpHeader`
+    1. Add name as `Content-Type`
+    1. Click on `Select data type` and select `string`
+    1. Click `Static` and enter `application/json`
+    1. Click on `+ Field` and add name as `Content-Length`
+    1. Click on `Select data type` and select `string`
+    1. Click on `+ Field` and add name as `X-Account-Id`
+    1. Click on `Select data type` and select `string`
+    1. Click `+` next to data type and select `Sql` and enter `body.account_id`
+
+#### HTTP Body
+
+HTTP body can be currently formed as a JSON structure that is generated from the metadata you define.
+
+=== "Java"
+
+    ```java
+    var httpTask = http("my_http")
+            .fields(
+                    field().httpBody(
+                            field().name("account_id").regex("ACC[0-9]{8}"),
+                            field().name("details").fields(
+                                    field().name("name").expression("#{Name.name}"),
+                                    field().name("age").type(IntegerType.instance()).max(100)
+                            )
+                    )
+            )
+            ...
+    ```
+
+=== "Scala"
+
+    ```scala
+    val httpTask = http("my_http")
+      .fields(
+        field.httpBody(
+          field.name("account_id").regex("ACC[0-9]{8}"),
+          field.name("details").fields(
+            field.name("name").expression("#{Name.name}"),
+            field.name("age").`type`(IntegerType).max(100)
+          )
+        )
+      )
+      ...
+    ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/http/http-task.yaml`:
+    ```yaml
+    name: "http_task"
+    steps:
+      - name: "my_petstore"
+        count:
+          records: 2
+        fields:
+          - name: "httpBody"
+            fields:
+              - name: "account_id"
+                options:
+                  regex: "ACC[0-9]{8}"
+              - name: "details"
+                fields:
+                  - name: "name"
+                    options:
+                      expression: "#{Name.name}"
+                  - name: "age"
+                    type: Integer
+                    options:
+                      max: 100
+    ```
+
+=== "UI"
+
+    1. Click on `+ Field`
+    1. Add name as `httpBody`
+    1. Click on `Select data type` and select `struct`
+    1. Click on `+ Field` under `httpBody`
+    1. Add name as `account_id`
+    1. Click on `Select data type` and select `string`
+    1. Click `+` next to data type and select `Regex` and enter `ACC[0-9]{8}`
+    1. Click on `+ Field` and add name as `details`
+    1. Click on `Select data type` and select `struct`
+    1. Click on `+ Field` under `details`
+    1. Add name as `name`
+    1. Click on `Select data type` and select `string`
+    1. Click `+` next to data type and select `Faker expression` and enter `#{Name.name}`
+    1. Click on `+ Field` under `details`
+    1. Add name as `age`
+    1. Click on `Select data type` and select `integer`
+    1. Click `+` next to data type and select `Max` and enter `100`
 
 ### Ordering
 
@@ -411,7 +647,7 @@ want to alter this value, you can do so via the below configuration. The lowest 
 === "YAML"
 
     In `docker/data/custom/task/http/openapi-task.yaml`:
-    ```
+    ```yaml
     name: "http_task"
     steps:
       - name: "my_petstore"
@@ -446,4 +682,4 @@ The following fields are made available to you to validate against:
 If you want to validate data from an HTTP source,
 [follow the validation documentation found here to help guide you](../../../validation.md).
 
-Check out the full example under `AdvancedHttpPlanRun` in the example repo.
+Check out the full example under `HttpPlanRun` in the example repo.

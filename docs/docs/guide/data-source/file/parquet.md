@@ -43,12 +43,11 @@ First, we will clone the data-caterer-example repo which will already have the b
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyParquetJavaPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyParquetPlan.scala`
-
-Make sure your class extends `PlanRun`.
+- YAML: `docker/data/custom/plan/my-parquet.yaml`
 
 === "Java"
 
@@ -67,6 +66,31 @@ Make sure your class extends `PlanRun`.
     class MyParquetPlan extends PlanRun {
     }
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-parquet.yaml`:
+    ```yaml
+    name: "my_parquet_plan"
+    description: "Create account data in Parquet format"
+    tasks:
+      - name: "parquet_task"
+        dataSourceName: "my_parquet"
+    ```
+
+=== "UI"
+
+    1. Click on `Connection` towards the top of the screen
+    1. For connection name, set to `my_parquet`
+    1. Click on `Select data source type..` and select `Parquet`
+    1. Set `Path` as `/tmp/custom/parquet/accounts`
+        1. Optionally, we could set the number of partitions and columns to partition by
+    1. Click on `Create`
+    1. You should see your connection `my_parquet` show under `Existing connections`
+    1. Click on `Home` towards the top of the screen
+    1. Set plan name to `my_parquet_plan`
+    1. Set task name to `parquet_task`
+    1. Click on `Select data source..` and select `my_parquet`
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -98,6 +122,23 @@ Within our class, we can start by defining the connection properties to read/wri
     ```
     
     Additional options can be found [**here**](https://spark.apache.org/docs/latest/sql-data-sources-parquet.html#data-source-option).
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    parquet {
+        my_parquet {
+            "spark.sql.parquet.mergeSchema": "true"
+        }
+    }
+    ```
+
+    Additional options can be found [**here**](https://spark.apache.org/docs/latest/sql-data-sources-parquet.html#data-source-option).
+
+=== "UI"
+
+    1. We have already created the connection details in [this step](#plan-setup)
 
 #### Schema
 
@@ -133,15 +174,54 @@ have unique values generated.
     execute(myPlan, config, accountTask, transactionTask)
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    flags {
+      enableUniqueCheck = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    1. Click on `Flag` and click on `Unique Check`
+    1. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
+
 ### Run
 
 Now we can run via the script `./run.sh` that is in the top level directory of the `data-caterer-example` to run the class we just
 created.
 
-```shell
-./run.sh
-#input class MyParquetJavaPlan or MyParquetPlan
-```
+=== "Java"
+
+    ```shell
+    ./run.sh MyParquetJavaPlan
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MyParquetPlan
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-parquet.yaml
+    ```
+
+=== "UI"
+
+    1. Click the button `Execute` at the top
+    1. Progress updates will show in the bottom right corner
+    1. Click on `History` at the top
+    1. Check for your plan name and see the result summary
+    1. Click on `Report` on the right side to see more details of what was executed
 
 Congratulations! You have now made a data generator that has simulated a real world data scenario. You can check the
 `ParquetJavaPlan.java` or `ParquetPlan.scala` files as well to check that your plan is the same.

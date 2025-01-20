@@ -274,4 +274,4 @@ $ cat docker/sample/csv/part-0000* | grep normand.aufderhar
 Great! Now we have the ability to get schema information from an external source, add our own foreign keys and generate 
 data.
   
-Check out the full example under `AdvancedMetadataSourcePlanRun` in the example repo.
+Check out the full example under `MetadataSourcePlanRun` in the example repo.

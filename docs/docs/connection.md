@@ -102,7 +102,7 @@ configurations can be found below.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     csv {
       customer_transactions {
@@ -130,7 +130,7 @@ configurations can be found below.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     json {
       customer_transactions {
@@ -158,7 +158,7 @@ configurations can be found below.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     orc {
       customer_transactions {
@@ -186,7 +186,7 @@ configurations can be found below.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     parquet {
       customer_transactions {
@@ -214,7 +214,7 @@ configurations can be found below.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     delta {
       customer_transactions {
@@ -254,7 +254,7 @@ configurations can be found below.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     iceberg {
       customer_transactions {
@@ -298,7 +298,7 @@ Sample can be found below
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     jdbc {
         customer_postgres {
@@ -365,7 +365,7 @@ Following permissions are required when generating plan and tasks:
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     jdbc {
         customer_mysql {
@@ -420,7 +420,7 @@ found [**here**](https://github.com/datastax/spark-cassandra-connector/blob/mast
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     org.apache.spark.sql.cassandra {
         customer_cassandra {
@@ -483,7 +483,7 @@ found [**here**](https://spark.apache.org/docs/latest/structured-streaming-kafka
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     kafka {
         customer_kafka {
@@ -534,7 +534,7 @@ via JNDI otherwise a connection cannot be created.
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     jms {
         customer_solace {
@@ -579,7 +579,7 @@ The url is defined in the tasks to allow for generated data to be populated in t
 
 === "YAML"
 
-    In `application.conf`:
+    In `docker/data/custom/application.conf`:
     ```
     http {
         customer_api {

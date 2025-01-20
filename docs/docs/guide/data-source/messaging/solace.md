@@ -65,12 +65,11 @@ below. Notice there is 2 queues/topics created. If you do not see 2 created, try
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyAdvancedSolaceJavaPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedSolacePlan.scala`
-
-Make sure your class extends `PlanRun`.
+- YAML: `docker/data/custom/plan/my-solace.yaml`
 
 === "Java"
 
@@ -89,6 +88,31 @@ Make sure your class extends `PlanRun`.
     class MyAdvancedSolacePlan extends PlanRun {
     }
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-solace.yaml`:
+    ```yaml
+    name: "my_solace_plan"
+    description: "Create account data in Solace"
+    tasks:
+      - name: "solace_task"
+        dataSourceName: "my_solace"
+    ```
+
+=== "UI"
+
+    1. Click on `Connection` towards the top of the screen
+    1. For connection name, set to `my_solace`
+    1. Click on `Select data source type..` and select `Solace`
+    1. Set `URL` as `smf://host.docker.internal:55554`
+        1. Optionally, we could set the JNDI destination (queue or topic) but we would have to create a new connection for each queue or topic
+    1. Click on `Create`
+    1. You should see your connection `my_solace` show under `Existing connections`
+    1. Click on `Home` towards the top of the screen
+    1. Set plan name to `my_solace_plan`
+    1. Set task name to `solace_task`
+    1. Click on `Select data source..` and select `my_solace`
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -121,6 +145,32 @@ Within our class, we can start by defining the connection properties to connect 
     
     Additional connection options can be found [**here**](../../../connection.md#jms).
 
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    jms {
+        solace {
+            initialContextFactory = "com.solacesystems.jndi.SolJNDIInitialContextFactory"
+            initialContextFactory = ${?SOLACE_INITIAL_CONTEXT_FACTORY}
+            connectionFactory = "/jms/cf/default"
+            connectionFactory = ${?SOLACE_CONNECTION_FACTORY}
+            url = "smf://solaceserver:55555"
+            url = ${?SOLACE_URL}
+            user = "admin"
+            user = ${?SOLACE_USER}
+            password = "admin"
+            password = ${?SOLACE_PASSWORD}
+            vpnName = "default"
+            vpnName = ${?SOLACE_VPN}
+        }
+    }
+    ```
+
+=== "UI"
+
+    1. We have already created the connection details in [this step](#plan-setup)
+
 #### Schema
 
 Let's create a task for inserting data into the `rest_test_queue` or `rest_test_topic` that is already created for us
@@ -138,37 +188,32 @@ that the `text` fields do not have a data type defined. This is because the defa
         var solaceTask = solace("my_solace", "smf://host.docker.internal:55554")
                 .destination("/JNDI/Q/rest_test_queue")
                 .fields(
-                        field().name("value").sql("TO_JSON(content)"),
-                        //field().name("partition").type(IntegerType.instance()),   //can define message JMS priority here
-                        field().name("headers")                                     //set message properties via headers field
-                                .type(HeaderType.getType())
-                                .sql(
-                                        "ARRAY(" +
-                                                "NAMED_STRUCT('key', 'account-id', 'value', TO_BINARY(content.account_id, 'utf-8'))," +
-                                                "NAMED_STRUCT('key', 'updated', 'value', TO_BINARY(content.details.updated_by.time, 'utf-8'))" +
-                                                ")"
-                                ),
-                        field().name("content")
-                                .fields(
-                                        field().name("account_id").regex("ACC[0-9]{8}"),
-                                        field().name("year").type(IntegerType.instance()).min(2021).max(2023),
-                                        field().name("amount").type(DoubleType.instance()),
-                                        field().name("details")
-                                                .fields(
-                                                        field().name("name").expression("#{Name.name}"),
-                                                        field().name("first_txn_date").type(DateType.instance()).sql("ELEMENT_AT(SORT_ARRAY(content.transactions.txn_date), 1)"),
-                                                        field().name("updated_by")
-                                                                .fields(
-                                                                        field().name("user"),
-                                                                        field().name("time").type(TimestampType.instance())
-                                                                )
-                                                ),
-                                        field().name("transactions").type(ArrayType.instance())
-                                                .fields(
-                                                        field().name("txn_date").type(DateType.instance()).min(Date.valueOf("2021-01-01")).max("2021-12-31"),
-                                                        field().name("amount").type(DoubleType.instance())
-                                                )
-                                )
+                        //field().name("partition").type(IntegerType.instance()),   can define JMS priority here
+                        field().messageHeaders(   //set message properties via headers field
+                                field().messageHeader("account-id", "body.account_id"),
+                                field().messageHeader("updated", "body.details.updated_by-time")
+                        )
+                ).fields(
+                        field().messageBody(
+                                field().name("account_id").regex("ACC[0-9]{8}"),
+                                field().name("year").type(IntegerType.instance()).min(2021).max(2023),
+                                field().name("amount").type(DoubleType.instance()),
+                                field().name("details")
+                                        .fields(
+                                                field().name("name").expression("#{Name.name}"),
+                                                field().name("first_txn_date").type(DateType.instance()).sql("ELEMENT_AT(SORT_ARRAY(body.transactions.txn_date), 1)"),
+                                                field().name("updated_by")
+                                                        .fields(
+                                                                field().name("user"),
+                                                                field().name("time").type(TimestampType.instance())
+                                                        )
+                                        ),
+                                field().name("transactions").type(ArrayType.instance())
+                                        .fields(
+                                                field().name("txn_date").type(DateType.instance()).min(Date.valueOf("2021-01-01")).max("2021-12-31"),
+                                                field().name("amount").type(DoubleType.instance())
+                                        )
+                        )
                 )
                 .count(count().records(10));
     }
@@ -180,85 +225,168 @@ that the `text` fields do not have a data type defined. This is because the defa
     val solaceTask = solace("my_solace", "smf://host.docker.internal:55554")
       .destination("/JNDI/Q/rest_test_queue")
       .fields(
-        field.name("value").sql("TO_JSON(content)"),
-        //field.name("partition").`type`(IntegerType),  //can define message JMS priority here
-        field.name("headers")                           //set message properties via headers field
-          .`type`(HeaderType.getType)
-          .sql(
-            """ARRAY(
-              |  NAMED_STRUCT('key', 'account-id', 'value', TO_BINARY(content.account_id, 'utf-8')),
-              |  NAMED_STRUCT('key', 'updated', 'value', TO_BINARY(content.details.updated_by.time, 'utf-8'))
-              |)""".stripMargin
-          ),
-        field.name("content")
-          .fields(
-            field.name("account_id").regex("ACC[0-9]{8}"),
-            field.name("year").`type`(IntegerType).min(2021).max(2023),
-            field.name("amount").`type`(DoubleType),
-            field.name("details")
-              .fields(
-                field.name("name").expression("#{Name.name}"),
-                field.name("first_txn_date").`type`(DateType).sql("ELEMENT_AT(SORT_ARRAY(content.transactions.txn_date), 1)"),
-                field.name("updated_by")
-                  .fields(
-                    field.name("user"),
-                    field.name("time").`type`(TimestampType),
-                  ),
-              ),
-            field.name("transactions").`type`(ArrayType)
-              .fields(
-                field.name("txn_date").`type`(DateType).min(Date.valueOf("2021-01-01")).max("2021-12-31"),
-                field.name("amount").`type`(DoubleType),
-              )
-          ),
-      ).count(count.records(10))
+        //field.name("partition").type(IntegerType),  can define JMS priority here
+        field.messageHeaders(                         //set message properties via headers field
+          field.messageHeader("account-id", "body.account_id"),
+          field.messageHeader("updated", "body.details.updated_by.time"),
+        )
+      )
+      .fields(
+        field.messageBody(
+          field.name("account_id").regex("ACC[0-9]{8}"),
+          field.name("year").`type`(IntegerType).min(2021).max(2023),
+          field.name("account_status").oneOf("open", "closed", "suspended", "pending"),
+          field.name("amount").`type`(DoubleType),
+          field.name("details").`type`(StructType)
+            .fields(
+              field.name("name").expression("#{Name.name}"),
+              field.name("first_txn_date").`type`(DateType).sql("ELEMENT_AT(SORT_ARRAY(body.transactions.txn_date), 1)"),
+              field.name("updated_by").`type`(StructType)
+                .fields(
+                  field.name("user"),
+                  field.name("time").`type`(TimestampType),
+                ),
+            ),
+          field.name("transactions").`type`(ArrayType)
+            .fields(
+              field.name("txn_date").`type`(DateType).min(Date.valueOf("2021-01-01")).max("2021-12-31"),
+              field.name("amount").`type`(DoubleType),
+            )
+        )
+      )
+      .count(count.records(10))
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/solace/solace-task.yaml`:
+    ```yaml
+    name: "solace_task"
+    steps:
+      - name: "solace_account"
+        options:
+          destinationName: "/JNDI/Q/rest_test_queue"
+        fields:
+          - name: "messageBody"
+            fields:
+              - name: "account_id"
+              - name: "year"
+                type: "int"
+                options:
+                  min: "2021"
+                  max: "2022"
+              - name: "amount"
+                type: "double"
+                options:
+                  min: "10.0"
+                  max: "100.0"
+              - name: "details"
+                fields:
+                  - name: "name"
+                  - name: "first_txn_date"
+                    type: "date"
+                    options:
+                      sql: "ELEMENT_AT(SORT_ARRAY(body.transactions.txn_date), 1)"
+                  - name: "updated_by"
+                    fields:
+                      - name: "user"
+                      - name: "time"
+                        type: "timestamp"
+              - name: "transactions"
+                type: "array"
+                fields:
+                  - name: "txn_date"
+                    type: "date"
+                  - name: "amount"
+                    type: "double"
+          - name: "messageHeaders"
+            fields:
+              - name: "account-id"
+                options:
+                  sql: "body.account_id"
+              - name: "updated"
+                options:
+                  sql: "body.details.update_by.time"
+    ```
+
+=== "UI"
+
+    1. Click on `Generation` and tick the `Manual` checkbox
+    1. Click on `+ Field`
+        1. Add name as `key`
+        1. Click on `Select data type` and select `string`
+        1. Click `+` next to data type and select `Sql`. Then enter `body.account_id`
+        1. Click on `+ Field` and add name as `messageBody`
+        1. Click on `Select data type` and select `struct`
+        1. Click on `+ Field` under `messageBody` and add name as `account_id`
+        1. Add additional fields under `messageBody` with your own metadata
+        1. Click on `+ Field` and add name as `messageHeaders`
+        1. Click on `Select data type` and select `struct`
+        1. Click on `+ Field` under `messageHeaders` and add name as `account_id`
+        1. Add additional fields under `messageHeaders` with your own metadata
 
 #### Fields
 
 The schema defined for Solace has a format that needs to be followed as noted above. Specifically, the required fields
 are:
-
-- value
+- `messageBody`
 
 Whilst, the other fields are optional:
 
-- partition - refers to JMS priority of the message
-- headers - refers to JMS message properties
+- `partition` - refers to JMS priority of the message
+- `messageHeaders` - refers to JMS message properties
 
-##### headers
+##### Message Headers
 
-`headers` follows a particular pattern that where it is of type `HeaderType.getType` which behind the scenes, translates
-to`array<struct<key: string,value: binary>>`. To be able to generate data for this data type, we need to use an SQL
-expression like the one below. You will notice that in the`value` part, it refers to `content.account_id` where 
-`content` is another field defined at the top level of the schema. This allows you to reference other values that have 
-already been generated.
+If your messages contain headers, you can follow the details below on generating header values. These can be based off
+values contained within you message body or could be static values, just like any other generated field. The main
+restriction imposed here is that the `key` of the message header is static and the `value` has to be a valid SQL 
+expression.
 
 === "Java"
 
     ```java
-    field().name("headers")
-            .type(HeaderType.getType())
-            .sql(
-                    "ARRAY(" +
-                            "NAMED_STRUCT('key', 'account-id', 'value', TO_BINARY(content.account_id, 'utf-8'))," +
-                            "NAMED_STRUCT('key', 'updated', 'value', TO_BINARY(content.details.updated_by.time, 'utf-8'))" +
-                            ")"
-            )
+    field().messageHeaders(
+            field().messageHeader("account-id", "body.account_id"),
+            field().messageHeader("updated", "body.details.updated_by-time")
+    )
     ```
 
 === "Scala"
 
     ```scala
-    field.name("headers")
-      .`type`(HeaderType.getType)
-      .sql(
-        """ARRAY(
-          |  NAMED_STRUCT('key', 'account-id', 'value', TO_BINARY(content.account_id, 'utf-8')),
-          |  NAMED_STRUCT('key', 'updated', 'value', TO_BINARY(content.details.updated_by.time, 'utf-8'))
-          |)""".stripMargin
-      )
+    field.messageHeaders(
+      field.messageHeader("account-id", "body.account_id"),
+      field.messageHeader("updated", "body.details.updated_by.time"),
+    )
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/solace/solace-task.yaml`:
+    ```yaml
+    name: "solace_task"
+    steps:
+      - name: "solace_account"
+        options:
+          destinationName: "/JNDI/Q/rest_test_queue"
+        fields:
+          - name: "messageHeaders"
+            fields:
+              - name: "account-id"
+                options:
+                  sql: "body.account_id"
+              - name: "updated"
+                options:
+                  sql: "body.details.update_by.time"
+    ```
+
+=== "UI"
+
+    1. Click on `+ Field` and add name as `messageHeaders`
+    1. Click on `Select data type` and select `struct`
+    1. Click on `+ Field` under `messageHeaders` and add name as `account_id`
+    1. Add additional fields under `messageHeaders` with your own metadata
 
 ##### transactions
 
@@ -284,6 +412,32 @@ can be controlled via `arrayMinLength` and `arrayMaxLength`.
         field.name("amount").`type`(DoubleType),
       )
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/solace/solace-task.yaml`:
+    ```yaml
+    name: "solace_task"
+    steps:
+      - name: "solace_account"
+        options:
+          destinationName: "/JNDI/Q/rest_test_queue"
+        fields:
+          - name: "messageBody"
+            fields:
+              - name: "transactions"
+                type: "array"
+                fields:
+                  - name: "txn_date"
+                    type: "date"
+                  - name: "amount"
+                    type: "double"
+    ```
+
+=== "UI"
+
+    !!! warning "Warning"
+        Inner field definition for array type is currently not supported from the UI. Will be added in the near future!
 
 ##### details
 
@@ -321,6 +475,39 @@ sort the array by `txn_date` and get the first element.
       )
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/task/solace/solace-task.yaml`:
+    ```yaml
+    name: "solace_task"
+    steps:
+      - name: "solace_account"
+        options:
+          destinationName: "/JNDI/Q/rest_test_queue"
+        fields:
+          - name: "messageBody"
+            fields:
+              - name: "details"
+                fields:
+                  - name: "name"
+                  - name: "first_txn_date"
+                    type: "date"
+                    options:
+                      sql: "ELEMENT_AT(SORT_ARRAY(body.transactions.txn_date), 1)"
+                  - name: "updated_by"
+                    fields:
+                      - name: "user"
+                      - name: "time"
+                        type: "timestamp"
+    ```
+
+=== "UI"
+
+    1. Click on `+ Field` and add name as `messageBody`
+    1. Click on `Select data type` and select `struct`
+    1. Click on `+ Field` under `messageBody` and add name as `details`
+    1. Add additional fields under `details` with your own metadata
+
 #### Additional Configurations
 
 At the end of data generation, a report gets generated that summarises the actions it performed. We can control the
@@ -340,6 +527,20 @@ output folder of that report via configurations.
       .generatedReportsFolderPath("/opt/app/data/report")
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    1. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
+
 #### Execute
 
 To tell Data Caterer that we want to run with the configurations along with the `kafkaTask`, we have to call `execute`.
@@ -354,6 +555,36 @@ class we just created.
 #input class AdvancedSolaceJavaPlanRun or AdvancedSolacePlanRun
 #after completing, check http://localhost:8080 from browser
 ```
+
+
+=== "Java"
+
+    ```shell
+    ./run.sh AdvancedSolaceJavaPlanRun
+    #after completing, check http://localhost:8080 from browser
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh AdvancedSolacePlanRun
+    #after completing, check http://localhost:8080 from browser
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-solace.yaml
+    #after completing, check http://localhost:8080 from browser
+    ```
+
+=== "UI"
+
+    1. Click the button `Execute` at the top
+    1. Progress updates will show in the bottom right corner
+    1. Click on `History` at the top
+    1. Check for your plan name and see the result summary
+    1. Click on `Report` on the right side to see more details of what was executed
 
 Your output should look like this.
 

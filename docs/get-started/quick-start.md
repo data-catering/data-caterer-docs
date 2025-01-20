@@ -6,15 +6,17 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Run Data Caterer
 
+## Get Token
+
+To run a trial of Data Caterer, you will need a username and token. Get one by following the below instructions.
+
+1. Join the Data Catering [Slack](https://join.slack.com/t/data-catering/shared_invite/zt-2664ylbpi-w3n7lWAO~PHeOG9Ujpm~~w)
+2. In any channel, type `/token` (the message will only be seen by you)
+3. Take note of your given `user-id` and `token` values (your token value will not be shown again as it is not stored anywhere)
+
 ## Quick start
 
 <div class="grid cards" markdown>
-
--   :material-docker: __[Docker]__
-
-    ---
-
-    Instructions for Docker download
 
 -   :material-language-java: :simple-scala: __[Java/Scala]__
 
@@ -27,6 +29,12 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
     ---
 
     Instructions for using YAML via Docker
+
+-   :material-docker: __[UI App - Docker]__
+
+    ---
+
+    Instructions for Docker download
 
 -   :material-apple: __[UI App - Mac]__
 
@@ -48,20 +56,12 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 </div>
 
-  [Docker]: #docker
   [Java/Scala]: #javascala-api
   [YAML]: #yaml
+  [UI App - Docker]: #docker
   [UI App - Mac]: #mac
-  [UI App - Windows]: #windows
   [UI App - Linux]: #linux
-
-### Docker
-
-1. Docker
-   ```shell
-   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.13.1
-   ```
-2. [Open localhost:9898](http://localhost:9898)
+  [UI App - Windows]: #windows
 
 ### Java/Scala API
 
@@ -83,27 +83,30 @@ cd data-caterer-example && ./run.sh
 # - docker/data/custom/validation
 ```
 
+### Docker
+
+1. Docker
+   ```shell
+   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone -e DATA_CATERER_API_USER=<user from above> -e DATA_CATERER_API_TOKEN=<token from above> --name datacaterer datacatering/data-caterer:0.13.1
+   ```
+2. [Open localhost:9898](http://localhost:9898)
+
 ### Mac
 
-1. [Mac download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-mac.zip)
-2. Extract zip file
-3. Double-click 'DataCaterer-1.0.0.dmg'
-4. Drag Data Caterer into 'Applications' folder
-5. Go to 'Applications' folder, right click Data Caterer, click 'Open' and then 'Open Anyway'
-6. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
+1. In any Slack channel, type `/download-mac` (the message will only be seen by you) and download from the link provided
+2. Drag Data Caterer to your Applications folder adn double-click to run
+3. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
 
 ### Windows
 
-1. [Windows download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-windows.zip)
-2. After downloaded, go to 'Downloads' folder and 'Extract All' from data-caterer-windows
-3. Double-click 'DataCaterer-1.0.0' to install Data Caterer
-4. Click on 'More info' then at the bottom, click 'Run anyway'
-5. Go to '/Program Files/DataCaterer' folder and run DataCaterer application
-6. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
+1. In any Slack channel, type `/download-windows` (the message will only be seen by you) and download from the link provided
+2. Click on 'More info' then at the bottom, click 'Run anyway'
+3. Go to '/Program Files/DataCaterer' folder and run DataCaterer application
+4. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
 
 ### Linux
 
-1. [Linux download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-linux.zip)
+1. In any Slack channel, type `/download-linux` (the message will only be seen by you) and download from the link provided
 2. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
 
 #### Report
@@ -112,10 +115,12 @@ Check the report generated under `docker/data/custom/report/index.html`.
 
 [**Sample report can also be seen here**](../sample/report/html/index.html).
 
-## Slow start
+## Gradual start
 
-### Guided tour
+If you prefer a step-by-step approach to learning the capabilities of Data Caterer, there are a number of guides that
+take you through the various data sources and approaches that can be taken when using the tool.
 
-[**Check out the starter guide here**](../docs/guide/scenario/first-data-generation.md) that will take your through
-step by step. You can also check the other guides [**here**](../docs/guide/index.md) to see the other possibilities of
+- [**Check out the starter guide here**](../docs/guide/scenario/first-data-generation.md) that will take your through
+step by step
+- You can also check the other guides [**here**](../docs/guide/index.md) to see the other possibilities of
 what Data Caterer can achieve for you.

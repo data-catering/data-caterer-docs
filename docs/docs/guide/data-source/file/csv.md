@@ -43,12 +43,11 @@ First, we will clone the data-caterer-example repo which will already have the b
 
 ### Plan Setup
 
-Create a new Java or Scala class.
+Create a file depending on which interface you want to use.
 
 - Java: `src/main/java/io/github/datacatering/plan/MyCSVJavaPlan.java`
 - Scala: `src/main/scala/io/github/datacatering/plan/MyCSVPlan.scala`
-
-Make sure your class extends `PlanRun`.
+- YAML: `docker/data/custom/plan/my-csv.yaml`
 
 === "Java"
 
@@ -67,6 +66,31 @@ Make sure your class extends `PlanRun`.
     class MyCSVPlan extends PlanRun {
     }
     ```
+
+=== "YAML"
+
+    In `docker/data/custom/plan/my-csv.yaml`:
+    ```yaml
+    name: "my_csv_plan"
+    description: "Create account data in CSV"
+    tasks:
+      - name: "csv_task"
+        dataSourceName: "my_csv"
+    ```
+
+=== "UI"
+
+    1. Click on `Connection` towards the top of the screen
+    1. For connection name, set to `my_csv`
+    1. Click on `Select data source type..` and select `CSV`
+    1. Set `Path` as `/tmp/custom/csv/accounts`
+        1. Optionally, we could set the number of partitions and columns to partition by
+    1. Click on `Create`
+    1. You should see your connection `my_csv` show under `Existing connections`
+    1. Click on `Home` towards the top of the screen
+    1. Set plan name to `my_csv_plan`
+    1. Set task name to `csv_task`
+    1. Click on `Select data source..` and select `my_csv`
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
@@ -98,6 +122,21 @@ Within our class, we can start by defining the connection properties to read/wri
     ```
     
     Additional options such as including a header row, etc can be found [**here**](https://spark.apache.org/docs/latest/sql-data-sources-csv.html#data-source-option).
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    csv {
+        my_csv {
+            "header": "true"
+        }
+    }
+    ```
+
+=== "UI"
+
+    1. We have already created the connection details in [this step](#plan-setup)
 
 #### Schema
 
@@ -133,19 +172,63 @@ have unique values generated.
     execute(myPlan, config, accountTask, transactionTask)
     ```
 
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    flags {
+      enableUniqueCheck = true
+    }
+    folders {
+      generatedReportsFolderPath = "/opt/app/data/report"
+    }
+    ```
+
+=== "UI"
+
+    1. Click on `Advanced Configuration` towards the bottom of the screen
+    1. Click on `Flag` and click on `Unique Check`
+    1. Click on `Folder` and enter `/tmp/data-caterer/report` for `Generated Reports Folder Path`
+
 ### Run
 
 Now we can run via the script `./run.sh` that is in the top level directory of the `data-caterer-example` to run the class we just
 created.
 
-```shell
-./run.sh
-#input class MyCSVJavaPlan or MyCSVPlan
-#after completing, let's pick an account and check the transactions for that account
-account=$(tail -1 docker/sample/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
-echo $account
-cat docker/sample/customer/transaction/part-00000* | grep $account
-```
+=== "Java"
+
+    ```shell
+    ./run.sh MyCSVJavaPlan
+    account=$(tail -1 docker/sample/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
+    echo $account
+    cat docker/sample/customer/transaction/part-00000* | grep $account
+    ```
+
+=== "Scala"
+
+    ```shell
+    ./run.sh MyCSVPlan
+    account=$(tail -1 docker/sample/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
+    echo $account
+    cat docker/sample/customer/transaction/part-00000* | grep $account
+    ```
+
+=== "YAML"
+
+    ```shell
+    ./run.sh my-csv.yaml
+    account=$(tail -1 docker/sample/customer/account/part-00000* | awk -F "," '{print $1 "," $4}')
+    echo $account
+    cat docker/sample/customer/transaction/part-00000* | grep $account
+    ```
+
+=== "UI"
+
+    1. Click the button `Execute` at the top
+    1. Progress updates will show in the bottom right corner
+    1. Click on `History` at the top
+    1. Check for your plan name and see the result summary
+    1. Click on `Report` on the right side to see more details of what was executed
 
 It should look something like this.
 
