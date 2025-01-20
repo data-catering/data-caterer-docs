@@ -90,12 +90,14 @@ cd data-caterer-example && ./run.sh
    docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.14.2
    ```
 2. [Open localhost:9898](http://localhost:9898)
+3. Login with the user and token given from [here](#get-token)
 
 ### Mac
 
 1. In any Slack channel, type `/download-mac` (the message will only be seen by you) and download from the link provided
 2. Drag Data Caterer to your Applications folder adn double-click to run
 3. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
+4. Login with the user and token given from [here](#get-token)
 
 ### Windows
 
@@ -103,11 +105,13 @@ cd data-caterer-example && ./run.sh
 2. Click on 'More info' then at the bottom, click 'Run anyway'
 3. Go to '/Program Files/DataCaterer' folder and run DataCaterer application
 4. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
+5. Login with the user and token given from [here](#get-token)
 
 ### Linux
 
 1. In any Slack channel, type `/download-linux` (the message will only be seen by you) and download from the link provided
 2. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
+3. Login with the user and token given from [here](#get-token)
 
 #### Report
 
