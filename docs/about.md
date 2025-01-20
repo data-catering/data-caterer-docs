@@ -9,7 +9,7 @@ repeatable. Through the use of metadata, Data Caterer can help simplify your dat
 environment data, aid in data debugging, or whatever your data use case may be.
 
 Given that it is going to save you and your team time and money, please help in considering financial support. This will
-help the product grow into a sustainable and feature-full service. Check the [pricing section](sponsor.md) to see how 
+help the product grow into a sustainable and feature-full service. Check the [pricing section](pricing.md) to see how 
 you can help.
 
 ## Contact

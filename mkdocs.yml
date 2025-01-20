@@ -150,6 +150,8 @@ extra:
   analytics:
     provider: google
     property: G-4098CTH5TX
+  version:
+    provider: mike
 
 markdown_extensions:
   - attr_list
