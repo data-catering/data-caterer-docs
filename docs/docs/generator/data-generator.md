@@ -9,22 +9,22 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 Below is a list of all supported data types for generating data:
 
-| Data Type                 | Spark Data Type               | Options                                  | Description                                               |
-|---------------------------|-------------------------------|------------------------------------------|-----------------------------------------------------------|
-| string                    | StringType                    | `minLen, maxLen, expression, enableNull` |                                                           |
-| integer                   | IntegerType                   | `min, max, stddev, mean`                 |                                                           |
-| long                      | LongType                      | `min, max, stddev, mean`                 |                                                           |
-| short                     | ShortType                     | `min, max, stddev, mean`                 |                                                           |
-| decimal(precision, scale) | DecimalType(precision, scale) | `min, max, stddev, mean`                 |                                                           |
-| double                    | DoubleType                    | `min, max, round, stddev, mean`          |                                                           |
-| float                     | FloatType                     | `min, max, round, stddev, mean`          |                                                           |
-| date                      | DateType                      | `min, max, enableNull`                   |                                                           |
-| timestamp                 | TimestampType                 | `min, max, enableNull`                   |                                                           |
-| boolean                   | BooleanType                   |                                          |                                                           |
-| binary                    | BinaryType                    | `minLen, maxLen, enableNull`             |                                                           |
-| byte                      | ByteType                      |                                          |                                                           |
-| array                     | ArrayType                     | `arrayMinLen, arrayMaxLen, arrayType`    |                                                           |
-| _                         | StructType                    |                                          | Implicitly supported when a schema is defined for a field |
+| Data Type                              | Options                              |
+|----------------------------------------|--------------------------------------|
+| string, StringType                     | [String options](#string)            |
+| integer, IntegerType                   | [Integer options](#integerlongshort) |
+| long, LongType                         | [Long options](#integerlongshort)    |
+| short, ShortType                       | [Short options](#integerlongshort)   |
+| decimal(precision, scale), DecimalType | [Decimal options](#decimal)          |
+| double, DoubleType                     | [Double options](#doublefloat)       |
+| float, FloatType                       | [Float options](#doublefloat)        |
+| date, DateType                         | [Date options](#date)                |
+| timestamp, TimestampType               | [Timestamp options](#timestamp)      |
+| boolean, BooleanType                   |                                      |
+| binary, BinaryType                     | [Binary options](#binary)            |
+| byte, ByteType                         | [Byte options](#binary)              |
+| array, ArrayType                       | [Array options](#array)              |
+| struct, StructType                     |                                      |
 
 ## Options
 
@@ -33,13 +33,13 @@ Below is a list of all supported data types for generating data:
 Some options are available to use for all types of data generators. Below is the list along with example and
 descriptions:
 
-| Option                | Default | Example                                                 | Description                                                                                                                                                                                                                                                                                        |
-|-----------------------|---------|---------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `enableEdgeCase`      | false   | `enableEdgeCase: "true"`                                | Enable/disable generated data to contain edge cases based on the data type. For example, integer data type has edge cases of (Int.MaxValue, Int.MinValue and 0)                                                                                                                                    |
-| `edgeCaseProbability` | 0.0     | `edgeCaseProb: "0.1"`                                   | Probability of generating a random edge case value if `enableEdgeCase` is true                                                                                                                                                                                                                     |
-| `isUnique`            | false   | `isUnique: "true"`                                      | Enable/disable generated data to be unique for that field. Errors will be thrown when it is unable to generate unique data                                                                                                                                                                        |
-| `regex`               | <empty> | `regex: "ACC[0-9]{10}"`                                 | Regular expression to define pattern generated data should follow                                                                                                                                                                                                                                  |
-| `seed`                | <empty> | `seed: "1"`                                             | Defines the random seed for generating data for that particular field. It will override any seed defined at a global level                                                                                                                                                                        |
+| Option                | Default | Example                                                 | Description                                                                                                                                                                                                                                                                                     |
+|-----------------------|---------|---------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `enableEdgeCase`      | false   | `enableEdgeCase: "true"`                                | Enable/disable generated data to contain edge cases based on the data type. For example, integer data type has edge cases of (Int.MaxValue, Int.MinValue and 0)                                                                                                                                 |
+| `edgeCaseProbability` | 0.0     | `edgeCaseProb: "0.1"`                                   | Probability of generating a random edge case value if `enableEdgeCase` is true                                                                                                                                                                                                                  |
+| `isUnique`            | false   | `isUnique: "true"`                                      | Enable/disable generated data to be unique for that field. Errors will be thrown when it is unable to generate unique data                                                                                                                                                                      |
+| `regex`               | <empty> | `regex: "ACC[0-9]{10}"`                                 | Regular expression to define pattern generated data should follow                                                                                                                                                                                                                               |
+| `seed`                | <empty> | `seed: "1"`                                             | Defines the random seed for generating data for that particular field. It will override any seed defined at a global level                                                                                                                                                                      |
 | `sql`                 | <empty> | `sql: "CASE WHEN amount < 10 THEN true ELSE false END"` | Define any SQL statement for generating that fields value. Computation occurs after all non-SQL fields are generated. This means any fields used in the SQL cannot be based on other SQL generated fields. Data type of generated value from SQL needs to match data type defined for the field |
 
 ### String
@@ -119,12 +119,14 @@ as defined by the data source (i.e. max value as per database type).
 
 #### Integer/Long/Short
 
-| Option   | Default     | Example         | Description                                                          |
-|----------|-------------|-----------------|----------------------------------------------------------------------|
-| `min`    | 0           | `min: "2"`      | Ensures that all generated values are greater than or equal to `min` |
-| `max`    | 1000        | `max: "25"`     | Ensures that all generated values are less than or equal to `max`    |
-| `stddev` | 1.0         | `stddev: "2.0"` | Standard deviation for normal distributed data                       |
-| `mean`   | `max - min` | `mean: "5.0"`   | Mean for normal distributed data                                     |
+| Option                  | Default     | Example                        | Description                                                                          |
+|-------------------------|-------------|--------------------------------|--------------------------------------------------------------------------------------|
+| `min`                   | 0           | `min: "2"`                     | Ensures that all generated values are greater than or equal to `min`                 |
+| `max`                   | 1000        | `max: "25"`                    | Ensures that all generated values are less than or equal to `max`                    |
+| `stddev`                | 1.0         | `stddev: "2.0"`                | Standard deviation for normal distributed data                                       |
+| `mean`                  | `max - min` | `mean: "5.0"`                  | Mean for normal distributed data                                                     |
+| `distribution`          | <empty>     | `distribution: "exponential"`  | Type of distribution of the data. Either `exponential` or `normal`                   |
+| `distributionRateParam` | <empty>     | `distributionRateParam: "1.0"` | If distribution is `exponential`, rate parameter to adjust exponential distribution  |
 
 **Edge cases Integer**: (2147483647, -2147483648, 0)  
 **Edge cases Long**: (9223372036854775807, -9223372036854775808, 0)  
@@ -176,14 +178,16 @@ as defined by the data source (i.e. max value as per database type).
 #### Decimal
 
 
-| Option             | Default     | Example           | Description                                                                                             |
-|--------------------|-------------|-------------------|---------------------------------------------------------------------------------------------------------|
-| `min`              | 0           | `min: "2"`        | Ensures that all generated values are greater than or equal to `min`                                    |
-| `max`              | 1000        | `max: "25"`       | Ensures that all generated values are less than or equal to `max`                                       |
-| `stddev`           | 1.0         | `stddev: "2.0"`   | Standard deviation for normal distributed data                                                          |
-| `mean`             | `max - min` | `mean: "5.0"`     | Mean for normal distributed data                                                                        |
-| `numericPrecision` | 10          | `precision: "25"` | The maximum number of digits                                                                            |
-| `numericScale`     | 0           | `scale: "25"`     | The number of digits on the right side of the decimal point (has to be less than or equal to precision) |
+| Option                  | Default     | Example                        | Description                                                                                             |
+|-------------------------|-------------|--------------------------------|---------------------------------------------------------------------------------------------------------|
+| `min`                   | 0           | `min: "2"`                     | Ensures that all generated values are greater than or equal to `min`                                    |
+| `max`                   | 1000        | `max: "25"`                    | Ensures that all generated values are less than or equal to `max`                                       |
+| `stddev`                | 1.0         | `stddev: "2.0"`                | Standard deviation for normal distributed data                                                          |
+| `mean`                  | `max - min` | `mean: "5.0"`                  | Mean for normal distributed data                                                                        |
+| `numericPrecision`      | 10          | `precision: "25"`              | The maximum number of digits                                                                            |
+| `numericScale`          | 0           | `scale: "25"`                  | The number of digits on the right side of the decimal point (has to be less than or equal to precision) |
+| `distribution`          | <empty>     | `distribution: "exponential"`  | Type of distribution of the data. Either `exponential` or `normal`                                      |
+| `distributionRateParam` | <empty>     | `distributionRateParam: "1.0"` | If distribution is `exponential`, rate parameter to adjust exponential distribution                     |
 
 **Edge cases Decimal**: (9223372036854775807, -9223372036854775808, 0)
 
@@ -225,13 +229,16 @@ as defined by the data source (i.e. max value as per database type).
 
 #### Double/Float
 
-| Option   | Default     | Example         | Description                                                          |
-|----------|-------------|-----------------|----------------------------------------------------------------------|
-| `min`    | 0.0         | `min: "2.1"`    | Ensures that all generated values are greater than or equal to `min` |
-| `max`    | 1000.0      | `max: "25.9"`   | Ensures that all generated values are less than or equal to `max`    |
-| `round`  | N/A         | `round: "2"`    | Round to particular number of decimal places                         |
-| `stddev` | 1.0         | `stddev: "2.0"` | Standard deviation for normal distributed data                       |
-| `mean`   | `max - min` | `mean: "5.0"`   | Mean for normal distributed data                                     |
+| Option                  | Default     | Example                        | Description                                                                         |
+|-------------------------|-------------|--------------------------------|-------------------------------------------------------------------------------------|
+| `min`                   | 0.0         | `min: "2.1"`                   | Ensures that all generated values are greater than or equal to `min`                |
+| `max`                   | 1000.0      | `max: "25.9"`                  | Ensures that all generated values are less than or equal to `max`                   |
+| `round`                 | N/A         | `round: "2"`                   | Round to particular number of decimal places                                        |
+| `stddev`                | 1.0         | `stddev: "2.0"`                | Standard deviation for normal distributed data                                      |
+| `mean`                  | `max - min` | `mean: "5.0"`                  | Mean for normal distributed data                                                    |
+| `round`                 | <empty>     | `round: "2"`                   | Number of decimal places to round to (round up)                                     |
+| `distribution`          | <empty>     | `distribution: "exponential"`  | Type of distribution of the data. Either `exponential` or `normal`                  |
+| `distributionRateParam` | <empty>     | `distributionRateParam: "1.0"` | If distribution is `exponential`, rate parameter to adjust exponential distribution |
 
 **Edge cases Double**: (+infinity, 1.7976931348623157e+308, 4.9e-324, 0.0, -0.0, -1.7976931348623157e+308, -infinity,
 NaN)  
