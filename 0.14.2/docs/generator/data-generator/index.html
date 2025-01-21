@@ -2567,95 +2567,65 @@
 <thead>
 <tr>
 <th>Data Type</th>
-<th>Spark Data Type</th>
 <th>Options</th>
-<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>string</td>
-<td>StringType</td>
-<td><code>minLen, maxLen, expression, enableNull</code></td>
+<td>string, StringType</td>
+<td><a href="#string">String options</a></td>
+</tr>
+<tr>
+<td>integer, IntegerType</td>
+<td><a href="#integerlongshort">Integer options</a></td>
+</tr>
+<tr>
+<td>long, LongType</td>
+<td><a href="#integerlongshort">Long options</a></td>
+</tr>
+<tr>
+<td>short, ShortType</td>
+<td><a href="#integerlongshort">Short options</a></td>
+</tr>
+<tr>
+<td>decimal(precision, scale), DecimalType</td>
+<td><a href="#decimal">Decimal options</a></td>
+</tr>
+<tr>
+<td>double, DoubleType</td>
+<td><a href="#doublefloat">Double options</a></td>
+</tr>
+<tr>
+<td>float, FloatType</td>
+<td><a href="#doublefloat">Float options</a></td>
+</tr>
+<tr>
+<td>date, DateType</td>
+<td><a href="#date">Date options</a></td>
+</tr>
+<tr>
+<td>timestamp, TimestampType</td>
+<td><a href="#timestamp">Timestamp options</a></td>
+</tr>
+<tr>
+<td>boolean, BooleanType</td>
 <td></td>
 </tr>
 <tr>
-<td>integer</td>
-<td>IntegerType</td>
-<td><code>min, max, stddev, mean</code></td>
-<td></td>
+<td>binary, BinaryType</td>
+<td><a href="#binary">Binary options</a></td>
 </tr>
 <tr>
-<td>long</td>
-<td>LongType</td>
-<td><code>min, max, stddev, mean</code></td>
-<td></td>
+<td>byte, ByteType</td>
+<td><a href="#binary">Byte options</a></td>
 </tr>
 <tr>
-<td>short</td>
-<td>ShortType</td>
-<td><code>min, max, stddev, mean</code></td>
-<td></td>
+<td>array, ArrayType</td>
+<td><a href="#array">Array options</a></td>
 </tr>
 <tr>
-<td>decimal(precision, scale)</td>
-<td>DecimalType(precision, scale)</td>
-<td><code>min, max, stddev, mean</code></td>
+<td>struct, StructType</td>
 <td></td>
-</tr>
-<tr>
-<td>double</td>
-<td>DoubleType</td>
-<td><code>min, max, round, stddev, mean</code></td>
-<td></td>
-</tr>
-<tr>
-<td>float</td>
-<td>FloatType</td>
-<td><code>min, max, round, stddev, mean</code></td>
-<td></td>
-</tr>
-<tr>
-<td>date</td>
-<td>DateType</td>
-<td><code>min, max, enableNull</code></td>
-<td></td>
-</tr>
-<tr>
-<td>timestamp</td>
-<td>TimestampType</td>
-<td><code>min, max, enableNull</code></td>
-<td></td>
-</tr>
-<tr>
-<td>boolean</td>
-<td>BooleanType</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>binary</td>
-<td>BinaryType</td>
-<td><code>minLen, maxLen, enableNull</code></td>
-<td></td>
-</tr>
-<tr>
-<td>byte</td>
-<td>ByteType</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>array</td>
-<td>ArrayType</td>
-<td><code>arrayMinLen, arrayMaxLen, arrayType</code></td>
-<td></td>
-</tr>
-<tr>
-<td>_</td>
-<td>StructType</td>
-<td></td>
-<td>Implicitly supported when a schema is defined for a field</td>
 </tr>
 </tbody>
 </table>
@@ -2848,6 +2818,18 @@ as defined by the data source (i.e. max value as per database type).</p>
 <td><code>mean: "5.0"</code></td>
 <td>Mean for normal distributed data</td>
 </tr>
+<tr>
+<td><code>distribution</code></td>
+<td><empty></td>
+<td><code>distribution: "exponential"</code></td>
+<td>Type of distribution of the data. Either <code>exponential</code> or <code>normal</code></td>
+</tr>
+<tr>
+<td><code>distributionRateParam</code></td>
+<td><empty></td>
+<td><code>distributionRateParam: "1.0"</code></td>
+<td>If distribution is <code>exponential</code>, rate parameter to adjust exponential distribution</td>
+</tr>
 </tbody>
 </table>
 <p><strong>Edge cases Integer</strong>: (2147483647, -2147483648, 0)<br />
@@ -2940,6 +2922,18 @@ as defined by the data source (i.e. max value as per database type).</p>
 <td><code>scale: "25"</code></td>
 <td>The number of digits on the right side of the decimal point (has to be less than or equal to precision)</td>
 </tr>
+<tr>
+<td><code>distribution</code></td>
+<td><empty></td>
+<td><code>distribution: "exponential"</code></td>
+<td>Type of distribution of the data. Either <code>exponential</code> or <code>normal</code></td>
+</tr>
+<tr>
+<td><code>distributionRateParam</code></td>
+<td><empty></td>
+<td><code>distributionRateParam: "1.0"</code></td>
+<td>If distribution is <code>exponential</code>, rate parameter to adjust exponential distribution</td>
+</tr>
 </tbody>
 </table>
 <p><strong>Edge cases Decimal</strong>: (9223372036854775807, -9223372036854775808, 0)</p>
@@ -3016,6 +3010,24 @@ as defined by the data source (i.e. max value as per database type).</p>
 <td><code>max - min</code></td>
 <td><code>mean: "5.0"</code></td>
 <td>Mean for normal distributed data</td>
+</tr>
+<tr>
+<td><code>round</code></td>
+<td><empty></td>
+<td><code>round: "2"</code></td>
+<td>Number of decimal places to round to (round up)</td>
+</tr>
+<tr>
+<td><code>distribution</code></td>
+<td><empty></td>
+<td><code>distribution: "exponential"</code></td>
+<td>Type of distribution of the data. Either <code>exponential</code> or <code>normal</code></td>
+</tr>
+<tr>
+<td><code>distributionRateParam</code></td>
+<td><empty></td>
+<td><code>distributionRateParam: "1.0"</code></td>
+<td>If distribution is <code>exponential</code>, rate parameter to adjust exponential distribution</td>
 </tr>
 </tbody>
 </table>
