@@ -2345,6 +2345,73 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            Changelog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../use-case/changelog/0.14.2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0.14.2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3175,6 +3242,64 @@ as expected.</p>
 </tr>
 </tbody>
 </table>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:4"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><input id="__tabbed_10_3" name="__tabbed_10" type="radio" /><input id="__tabbed_10_4" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">Java</label><label for="__tabbed_10_2">Scala</label><label for="__tabbed_10_3">YAML</label><label for="__tabbed_10_4">UI</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-java highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kd">var</span><span class="w"> </span><span class="n">httpTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">http</span><span class="p">(</span><span class="s">&quot;my_http&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Map</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Constants</span><span class="p">.</span><span class="na">VALIDATION_IDENTIFIER</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;POST/pets&quot;</span><span class="p">))</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">        </span><span class="p">.</span><span class="na">fields</span><span class="p">(</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="w">                </span><span class="p">...</span>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="w">        </span><span class="p">)</span>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="w">        </span><span class="p">.</span><span class="na">validations</span><span class="p">(</span>
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="w">                </span><span class="n">validation</span><span class="p">().</span><span class="na">field</span><span class="p">(</span><span class="s">&quot;request.method&quot;</span><span class="p">).</span><span class="na">isEqual</span><span class="p">(</span><span class="s">&quot;POST&quot;</span><span class="p">),</span>
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="w">                </span><span class="n">validation</span><span class="p">().</span><span class="na">field</span><span class="p">(</span><span class="s">&quot;response.statusCode&quot;</span><span class="p">).</span><span class="na">isEqual</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span>
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="w">                </span><span class="n">validation</span><span class="p">().</span><span class="na">field</span><span class="p">(</span><span class="s">&quot;response.timeTaken&quot;</span><span class="p">).</span><span class="na">lessThan</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a><span class="w">                </span><span class="n">validation</span><span class="p">().</span><span class="na">field</span><span class="p">(</span><span class="s">&quot;response.headers.Content-Length&quot;</span><span class="p">).</span><span class="na">greaterThan</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="w">                </span><span class="n">validation</span><span class="p">().</span><span class="na">field</span><span class="p">(</span><span class="s">&quot;response.headers.Content-Type&quot;</span><span class="p">).</span><span class="na">isEqual</span><span class="p">(</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="w">        </span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-scala highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="kd">val</span><span class="w"> </span><span class="n">httpTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">http</span><span class="p">(</span><span class="s">&quot;my_http&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Map</span><span class="p">(</span><span class="nc">VALIDATION_IDENTIFIER</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;POST/pets&quot;</span><span class="p">))</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">  </span><span class="p">.</span><span class="n">fields</span><span class="p">(</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="w">  </span><span class="p">)</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="w">  </span><span class="p">.</span><span class="n">validations</span><span class="p">(</span>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="w">    </span><span class="n">validation</span><span class="p">.</span><span class="n">field</span><span class="p">(</span><span class="s">&quot;request.method&quot;</span><span class="p">).</span><span class="n">isEqual</span><span class="p">(</span><span class="s">&quot;POST&quot;</span><span class="p">),</span>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="w">    </span><span class="n">validation</span><span class="p">.</span><span class="n">field</span><span class="p">(</span><span class="s">&quot;response.statusCode&quot;</span><span class="p">).</span><span class="n">isEqual</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="w">    </span><span class="n">validation</span><span class="p">.</span><span class="n">field</span><span class="p">(</span><span class="s">&quot;response.timeTaken&quot;</span><span class="p">).</span><span class="n">lessThan</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="w">    </span><span class="n">validation</span><span class="p">.</span><span class="n">field</span><span class="p">(</span><span class="s">&quot;response.headers.Content-Length&quot;</span><span class="p">).</span><span class="n">greaterThan</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a><span class="w">    </span><span class="n">validation</span><span class="p">.</span><span class="n">field</span><span class="p">(</span><span class="s">&quot;response.headers.Content-Type&quot;</span><span class="p">).</span><span class="n">isEqual</span><span class="p">(</span><span class="s">&quot;application/json&quot;</span><span class="p">),</span>
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a><span class="w">  </span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>In <code>docker/data/custom/validation/http/http-validation.yaml</code>:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http_checks&quot;</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="nt">dataSources</span><span class="p">:</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="w">  </span><span class="nt">my_http</span><span class="p">:</span>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">options</span><span class="p">:</span>
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="w">        </span><span class="nt">validationIdentifier</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;POST/pets&quot;</span>
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="w">      </span><span class="nt">validations</span><span class="p">:</span>
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;request.method</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&#39;POST&#39;&quot;</span>
+</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;response.statusCode</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">200&quot;</span>
+</span><span id="__span-37-9"><a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;response.timeTaken</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">100&quot;</span>
+</span><span id="__span-37-10"><a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;response.headers.Content-Length</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">0&quot;</span>
+</span><span id="__span-37-11"><a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;response.headers.Content-Type</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&#39;application/json&#39;&quot;</span>
+</span></code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>Open <code>Validation</code></li>
+<li>Click on <code>Manual</code> checkbox</li>
+<li>Click on <code>+ Validation</code> button and click <code>Select validation type</code> and select <code>Field</code></li>
+<li>Enter <code>request.method</code> in the <code>Field</code> text box</li>
+<li>Click on <code>+</code> next to <code>Operator</code> and select <code>Equal</code></li>
+<li>Enter <code>POST</code> in the <code>Equal</code> text box</li>
+<li>Continue adding validations for <code>response.statusCode</code>, <code>response.timeTaken</code>, <code>response.headers.Content-Length</code> and <code>response.headers.Content-Type</code></li>
+</ol>
+</div>
+</div>
+</div>
 <p>If you want to validate data from an HTTP source,
 <a href="../../../../validation/">follow the validation documentation found here to help guide you</a>.</p>
 <p>Check out the full example under <code>HttpPlanRun</code> in the example repo.</p>

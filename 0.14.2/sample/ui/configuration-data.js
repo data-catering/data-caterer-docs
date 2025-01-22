@@ -581,7 +581,6 @@ configurationOptionsMap.set("flag", {
         default: "false",
         type: "text",
         choice: ["true", "false"],
-        paid: "true",
         help: "Enable/disable automatically generating validations based on the data sources defined."
     },
     "enableRecordTracking": {
@@ -590,7 +589,6 @@ configurationOptionsMap.set("flag", {
         default: "true",
         type: "text",
         choice: ["true", "false"],
-        paid: "true",
         help: "Enable/disable tracking of data records generated."
     },
     "enableDeleteGeneratedRecords": {
@@ -599,7 +597,6 @@ configurationOptionsMap.set("flag", {
         default: "false",
         type: "text",
         choice: ["true", "false"],
-        paid: "true",
         help: "Delete all generated records based off record tracking (if <code>Record Tracking</code> has been set to true whilst generating)."
     },
     "enableGeneratePlanAndTasks": {
@@ -608,7 +605,6 @@ configurationOptionsMap.set("flag", {
         default: "false",
         type: "text",
         choice: ["true", "false"],
-        paid: "true",
         help: "Enable/disable plan and task automatic generation based off data source connections."
     },
 });
@@ -646,7 +642,6 @@ configurationOptionsMap.set("validation", {
         default: "true",
         type: "text",
         choice: ["true", "false"],
-        paid: "true",
         help: "Enable/disable to delete record tracking files at end of execution."
     },
 });
@@ -665,7 +660,6 @@ configurationOptionsMap.set("metadata", {
         displayName: "Records From Data Source",
         default: 10000,
         type: "number",
-        paid: "true",
         min: 0,
         help: "Number of records read in from the data source that could be used for data profiling.",
         required: ""
@@ -675,7 +669,6 @@ configurationOptionsMap.set("metadata", {
         displayName: "Records For Analysis",
         default: 10000,
         type: "number",
-        paid: "true",
         min: 0,
         help: "Number of records used for data profiling from the records gathered in <code>Records From Data Source</code>.",
         required: ""
@@ -685,7 +678,6 @@ configurationOptionsMap.set("metadata", {
         displayName: "One-of Distinct Count vs Count Threshold",
         default: 0.2,
         type: "number",
-        paid: "true",
         min: 0.0,
         max: 1.0,
         step: 0.001,
@@ -697,7 +689,6 @@ configurationOptionsMap.set("metadata", {
         displayName: "One-of Min Count",
         default: 1000,
         type: "number",
-        paid: "true",
         min: 0,
         help: "Minimum number of records required before considering if a field can be of type oneOf.",
         required: ""
@@ -765,7 +756,6 @@ configurationOptionsMap.set("folder", {
         displayName: "Generated Plan And Tasks Folder Path",
         default: "/tmp",
         type: "text",
-        paid: "true",
         help: "Folder path where generated plan and task files will be saved.",
         required: ""
     },
@@ -774,7 +764,6 @@ configurationOptionsMap.set("folder", {
         displayName: "Record Tracking Folder Path",
         default: "/opt/app/record-tracking",
         type: "text",
-        paid: "true",
         help: "Folder path where record tracking files will be saved.",
         required: ""
     },
@@ -783,7 +772,6 @@ configurationOptionsMap.set("folder", {
         displayName: "Record Tracking For Validation Folder Path",
         default: "/opt/app/record-tracking-validation",
         type: "text",
-        paid: "true",
         help: "Folder path where record tracking for validation files will be saved.",
         required: ""
     },

@@ -2240,6 +2240,73 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            Changelog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use-case/changelog/0.14.2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0.14.2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2385,7 +2452,6 @@ metadata gets saved.</p>
 <tr>
 <th>Config</th>
 <th>Default</th>
-<th>Paid</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -2393,73 +2459,61 @@ metadata gets saved.</p>
 <tr>
 <td><code>enableGenerateData</code></td>
 <td>true</td>
-<td>N</td>
 <td>Enable/disable data generation</td>
 </tr>
 <tr>
 <td><code>enableCount</code></td>
 <td>true</td>
-<td>N</td>
 <td>Count the number of records generated. Can be disabled to improve performance</td>
 </tr>
 <tr>
 <td><code>enableFailOnError</code></td>
 <td>true</td>
-<td>N</td>
 <td>Whilst saving generated data, if there is an error, it will stop any further data from being generated</td>
 </tr>
 <tr>
 <td><code>enableSaveReports</code></td>
 <td>true</td>
-<td>N</td>
 <td>Enable/disable HTML reports summarising data generated, metadata of data generated (if <code>enableSinkMetadata</code> is enabled) and validation results (if <code>enableValidation</code> is enabled). Sample <a href="../report/html-report/"><strong>here</strong></a></td>
 </tr>
 <tr>
 <td><code>enableSinkMetadata</code></td>
 <td>true</td>
-<td>N</td>
 <td>Run data profiling for the generated data. Shown in HTML reports if <code>enableSaveSinkMetadata</code> is enabled</td>
 </tr>
 <tr>
 <td><code>enableValidation</code></td>
 <td>false</td>
-<td>N</td>
 <td>Run validations as described in plan. Results can be viewed from logs or from HTML report if <code>enableSaveSinkMetadata</code> is enabled. Sample <a href="../validation/"><strong>here</strong></a></td>
 </tr>
 <tr>
 <td><code>enableUniqueCheck</code></td>
 <td>false</td>
-<td>N</td>
 <td>If enabled, for any <code>isUnique</code> fields, will ensure only unique values are generated</td>
 </tr>
 <tr>
 <td><code>enableAlerts</code></td>
 <td>true</td>
-<td>N</td>
 <td>Enable/disable alerts to be sent</td>
 </tr>
 <tr>
 <td><code>enableGeneratePlanAndTasks</code></td>
 <td>false</td>
-<td>Y</td>
 <td>Enable/disable plan and task auto generation based off data source connections</td>
 </tr>
 <tr>
 <td><code>enableRecordTracking</code></td>
 <td>false</td>
-<td>Y</td>
 <td>Enable/disable which data records have been generated for any data source</td>
 </tr>
 <tr>
 <td><code>enableDeleteGeneratedRecords</code></td>
 <td>false</td>
-<td>Y</td>
 <td>Delete all generated records based off record tracking (if <code>enableRecordTracking</code> has been set to true)</td>
 </tr>
 <tr>
 <td><code>enableGenerateValidations</code></td>
 <td>false</td>
-<td>Y</td>
 <td>If enabled, it will generate validations based on the data sources defined.</td>
 </tr>
 </tbody>
@@ -2538,7 +2592,6 @@ records generated.</p>
 <tr>
 <th>Config</th>
 <th>Default</th>
-<th>Paid</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -2546,43 +2599,36 @@ records generated.</p>
 <tr>
 <td><code>planFilePath</code></td>
 <td>/opt/app/plan/customer-create-plan.yaml</td>
-<td>N</td>
 <td>Plan file path to use when generating and/or validating data</td>
 </tr>
 <tr>
 <td><code>taskFolderPath</code></td>
 <td>/opt/app/task</td>
-<td>N</td>
 <td>Task folder path that contains all the task files (can have nested directories)</td>
 </tr>
 <tr>
 <td><code>validationFolderPath</code></td>
 <td>/opt/app/validation</td>
-<td>N</td>
 <td>Validation folder path that contains all the validation files (can have nested directories)</td>
 </tr>
 <tr>
 <td><code>generatedReportsFolderPath</code></td>
 <td>/opt/app/report</td>
-<td>N</td>
 <td>Where HTML reports get generated that contain information about data generated along with any validations performed</td>
 </tr>
 <tr>
 <td><code>generatedPlanAndTaskFolderPath</code></td>
 <td>/tmp</td>
-<td>Y</td>
 <td>Folder path where generated plan and task files will be saved</td>
 </tr>
 <tr>
 <td><code>recordTrackingFolderPath</code></td>
 <td>/opt/app/record-tracking</td>
-<td>Y</td>
 <td>Where record tracking parquet files get saved</td>
 </tr>
 <tr>
 <td><code>recordTrackingForValidationFolderPath</code></td>
 <td>/opt/app/record-tracking-validation</td>
-<td>Y</td>
 <td>Where record tracking parquet files get saved for the purpose of validation</td>
 </tr>
 </tbody>
@@ -2647,7 +2693,6 @@ when analysing the generated data if the number of records generated is large.</
 <tr>
 <th>Config</th>
 <th>Default</th>
-<th>Paid</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -2655,31 +2700,26 @@ when analysing the generated data if the number of records generated is large.</
 <tr>
 <td><code>numRecordsFromDataSource</code></td>
 <td>10000</td>
-<td>Y</td>
 <td>Number of records read in from the data source that could be used for data profiling</td>
 </tr>
 <tr>
 <td><code>numRecordsForAnalysis</code></td>
 <td>10000</td>
-<td>Y</td>
 <td>Number of records used for data profiling from the records gathered in <code>numRecordsFromDataSource</code></td>
 </tr>
 <tr>
 <td><code>oneOfMinCount</code></td>
 <td>1000</td>
-<td>Y</td>
 <td>Minimum number of records required before considering if a field can be of type <code>oneOf</code></td>
 </tr>
 <tr>
 <td><code>oneOfDistinctCountVsCountThreshold</code></td>
 <td>0.2</td>
-<td>Y</td>
 <td>Threshold ratio to determine if a field is of type <code>oneOf</code> (i.e. a field called <code>status</code> that only contains <code>open</code> or <code>closed</code>. Distinct count = 2, total count = 10, ratio = 2 / 10 = 0.2 therefore marked as <code>oneOf</code>)</td>
 </tr>
 <tr>
 <td><code>numGeneratedSamples</code></td>
 <td>10</td>
-<td>N</td>
 <td>Number of sample records from generated data to take. Shown in HTML report</td>
 </tr>
 </tbody>
@@ -2726,7 +2766,6 @@ batch.</p>
 <tr>
 <th>Config</th>
 <th>Default</th>
-<th>Paid</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -2734,13 +2773,11 @@ batch.</p>
 <tr>
 <td><code>numRecordsPerBatch</code></td>
 <td>100000</td>
-<td>N</td>
 <td>Number of records across all data sources to generate per batch</td>
 </tr>
 <tr>
 <td><code>numRecordsPerStep</code></td>
 <td><empty></td>
-<td>N</td>
 <td>Overrides the count defined in each step with this value if defined (i.e. if set to 1000, for each step, 1000 records will be generated)</td>
 </tr>
 </tbody>
@@ -2775,7 +2812,6 @@ batch.</p>
 <tr>
 <th>Config</th>
 <th>Default</th>
-<th>Paid</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -2783,13 +2819,11 @@ batch.</p>
 <tr>
 <td><code>numSampleErrorRecords</code></td>
 <td>5</td>
-<td>N</td>
 <td>Number of error sample records to retrieve and display in generated HTML report. Increase to help debugging data issues</td>
 </tr>
 <tr>
 <td><code>enableDeleteRecordTrackingFiles</code></td>
 <td>true</td>
-<td>Y</td>
 <td>After validations are complete, delete record tracking files that were used for validation purposes (enabled via <code>enableRecordTracking</code>)</td>
 </tr>
 </tbody>
