@@ -10,7 +10,7 @@ All the configurations and customisation related to Data Caterer can be found un
 
 ## Guide
 
-If you want a guided tour of using the Java or Scala API, you can follow one of the guides found [**here**](guide/index.md).
+If you want a guided tour, you can follow one of the guides found [**here**](guide/index.md).
 
 ## Specific Configuration
 
@@ -22,7 +22,7 @@ If you want a guided tour of using the Java or Scala API, you can follow one of 
 - :material-chart-bell-curve-cumulative: __[Generators]__ - Choose and configure the type of generator you want used for
   fields
 - :material-check: __[Validations]__ - How to validate data to ensure your system is performing as expected
-- :material-key: __[Foreign Keys]__ - Define links between data elements across data sources
+- :material-key: __[Relationships]__ - Define links between data elements across data sources
 - :material-file-move: __[Deployment]__ - Deploy Data Caterer as a job to your chosen environment
 - :material-eyedropper-variant: __[Advanced]__ - Advanced usage of Data Caterer
 
@@ -32,7 +32,7 @@ If you want a guided tour of using the Java or Scala API, you can follow one of 
   [Connections]: connection.md
   [Generators]: generator/data-generator.md
   [Validations]: validation.md
-  [Foreign Keys]: generator/foreign-key.md
+  [Relationships]: generator/foreign-key.md
   [Deployment]: deployment.md
   [Advanced]: advanced.md
 

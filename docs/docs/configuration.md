@@ -17,20 +17,20 @@ These configurations are defined from within your Java or Scala class via `confi
 
 Flags are used to control which processes are executed when you run Data Caterer.
 
-| Config                         | Default | Paid | Description                                                                                                                                                                                                                 |
-|--------------------------------|---------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `enableGenerateData`           | true    | N    | Enable/disable data generation                                                                                                                                                                                              |
-| `enableCount`                  | true    | N    | Count the number of records generated. Can be disabled to improve performance                                                                                                                                               |
-| `enableFailOnError`            | true    | N    | Whilst saving generated data, if there is an error, it will stop any further data from being generated                                                                                                                      |
-| `enableSaveReports`            | true    | N    | Enable/disable HTML reports summarising data generated, metadata of data generated (if `enableSinkMetadata` is enabled) and validation results (if `enableValidation` is enabled). Sample [**here**](report/html-report.md) |
-| `enableSinkMetadata`           | true    | N    | Run data profiling for the generated data. Shown in HTML reports if `enableSaveSinkMetadata` is enabled                                                                                                                     |
-| `enableValidation`             | false   | N    | Run validations as described in plan. Results can be viewed from logs or from HTML report if `enableSaveSinkMetadata` is enabled. Sample [**here**](validation.md)                                                          |
-| `enableUniqueCheck`            | false   | N    | If enabled, for any `isUnique` fields, will ensure only unique values are generated                                                                                                                                         |
-| `enableAlerts`                 | true    | N    | Enable/disable alerts to be sent                                                                                                                                                                                            |
-| `enableGeneratePlanAndTasks`   | false   | Y    | Enable/disable plan and task auto generation based off data source connections                                                                                                                                              |
-| `enableRecordTracking`         | false   | Y    | Enable/disable which data records have been generated for any data source                                                                                                                                                   |
-| `enableDeleteGeneratedRecords` | false   | Y    | Delete all generated records based off record tracking (if `enableRecordTracking` has been set to true)                                                                                                                     |
-| `enableGenerateValidations`    | false   | Y    | If enabled, it will generate validations based on the data sources defined.                                                                                                                                                 |
+| Config                         | Default | Description                                                                                                                                                                                                                 |
+|--------------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `enableGenerateData`           | true    | Enable/disable data generation                                                                                                                                                                                              |
+| `enableCount`                  | true    | Count the number of records generated. Can be disabled to improve performance                                                                                                                                               |
+| `enableFailOnError`            | true    | Whilst saving generated data, if there is an error, it will stop any further data from being generated                                                                                                                      |
+| `enableSaveReports`            | true    | Enable/disable HTML reports summarising data generated, metadata of data generated (if `enableSinkMetadata` is enabled) and validation results (if `enableValidation` is enabled). Sample [**here**](report/html-report.md) |
+| `enableSinkMetadata`           | true    | Run data profiling for the generated data. Shown in HTML reports if `enableSaveSinkMetadata` is enabled                                                                                                                     |
+| `enableValidation`             | false   | Run validations as described in plan. Results can be viewed from logs or from HTML report if `enableSaveSinkMetadata` is enabled. Sample [**here**](validation.md)                                                          |
+| `enableUniqueCheck`            | false   | If enabled, for any `isUnique` fields, will ensure only unique values are generated                                                                                                                                         |
+| `enableAlerts`                 | true    | Enable/disable alerts to be sent                                                                                                                                                                                            |
+| `enableGeneratePlanAndTasks`   | false   | Enable/disable plan and task auto generation based off data source connections                                                                                                                                              |
+| `enableRecordTracking`         | false   | Enable/disable which data records have been generated for any data source                                                                                                                                                   |
+| `enableDeleteGeneratedRecords` | false   | Delete all generated records based off record tracking (if `enableRecordTracking` has been set to true)                                                                                                                     |
+| `enableGenerateValidations`    | false   | If enabled, it will generate validations based on the data sources defined.                                                                                                                                                 |
 
 === "Java"
 
@@ -106,15 +106,15 @@ records generated.
 
 These folder pathways can be defined as a cloud storage pathway (i.e. `s3a://my-bucket/task`).
 
-| Config                                     | Default                                 | Paid | Description                                                                                                         |
-|--------------------------------------------|-----------------------------------------|------|---------------------------------------------------------------------------------------------------------------------|
-| `planFilePath`                             | /opt/app/plan/customer-create-plan.yaml | N    | Plan file path to use when generating and/or validating data                                                        |
-| `taskFolderPath`                           | /opt/app/task                           | N    | Task folder path that contains all the task files (can have nested directories)                                     |
-| `validationFolderPath`                     | /opt/app/validation                     | N    | Validation folder path that contains all the validation files (can have nested directories)                         |
-| `generatedReportsFolderPath`               | /opt/app/report                         | N    | Where HTML reports get generated that contain information about data generated along with any validations performed |
-| `generatedPlanAndTaskFolderPath`           | /tmp                                    | Y    | Folder path where generated plan and task files will be saved                                                       |
-| `recordTrackingFolderPath`                 | /opt/app/record-tracking                | Y    | Where record tracking parquet files get saved                                                                       |
-| `recordTrackingForValidationFolderPath`    | /opt/app/record-tracking-validation     | Y    | Where record tracking parquet files get saved for the purpose of validation                                         |
+| Config                                     | Default                                 | Description                                                                                                         |
+|--------------------------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| `planFilePath`                             | /opt/app/plan/customer-create-plan.yaml | Plan file path to use when generating and/or validating data                                                        |
+| `taskFolderPath`                           | /opt/app/task                           | Task folder path that contains all the task files (can have nested directories)                                     |
+| `validationFolderPath`                     | /opt/app/validation                     | Validation folder path that contains all the validation files (can have nested directories)                         |
+| `generatedReportsFolderPath`               | /opt/app/report                         | Where HTML reports get generated that contain information about data generated along with any validations performed |
+| `generatedPlanAndTaskFolderPath`           | /tmp                                    | Folder path where generated plan and task files will be saved                                                       |
+| `recordTrackingFolderPath`                 | /opt/app/record-tracking                | Where record tracking parquet files get saved                                                                       |
+| `recordTrackingForValidationFolderPath`    | /opt/app/record-tracking-validation     | Where record tracking parquet files get saved for the purpose of validation                                         |
 
 === "Java"
 
@@ -176,13 +176,13 @@ You may face issues if the number of records in the data source is large as data
 Similarly, it can be expensive
 when analysing the generated data if the number of records generated is large.
 
-| Config                               | Default | Paid | Description                                                                                                                                                                                                             |
-|--------------------------------------|---------|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `numRecordsFromDataSource`           | 10000   | Y    | Number of records read in from the data source that could be used for data profiling                                                                                                                                    |
-| `numRecordsForAnalysis`              | 10000   | Y    | Number of records used for data profiling from the records gathered in `numRecordsFromDataSource`                                                                                                                       |
-| `oneOfMinCount`                      | 1000    | Y    | Minimum number of records required before considering if a field can be of type `oneOf`                                                                                                                                 |
-| `oneOfDistinctCountVsCountThreshold` | 0.2     | Y    | Threshold ratio to determine if a field is of type `oneOf` (i.e. a field called `status` that only contains `open` or `closed`. Distinct count = 2, total count = 10, ratio = 2 / 10 = 0.2 therefore marked as `oneOf`) |
-| `numGeneratedSamples`                | 10      | N    | Number of sample records from generated data to take. Shown in HTML report                                                                                                                                              |
+| Config                               | Default | Description                                                                                                                                                                                                             |
+|--------------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `numRecordsFromDataSource`           | 10000   | Number of records read in from the data source that could be used for data profiling                                                                                                                                    |
+| `numRecordsForAnalysis`              | 10000   | Number of records used for data profiling from the records gathered in `numRecordsFromDataSource`                                                                                                                       |
+| `oneOfMinCount`                      | 1000    | Minimum number of records required before considering if a field can be of type `oneOf`                                                                                                                                 |
+| `oneOfDistinctCountVsCountThreshold` | 0.2     | Threshold ratio to determine if a field is of type `oneOf` (i.e. a field called `status` that only contains `open` or `closed`. Distinct count = 2, total count = 10, ratio = 2 / 10 = 0.2 therefore marked as `oneOf`) |
+| `numGeneratedSamples`                | 10      | Number of sample records from generated data to take. Shown in HTML report                                                                                                                                              |
 
 === "Java"
 
@@ -225,10 +225,10 @@ sources prone to failure under load.
 To help alleviate these issues or speed up performance, you can control the number of records that get generated in each
 batch.
 
-| Config               | Default | Paid | Description                                                                                                                              |
-|----------------------|---------|------|------------------------------------------------------------------------------------------------------------------------------------------|
-| `numRecordsPerBatch` | 100000  | N    | Number of records across all data sources to generate per batch                                                                          |
-| `numRecordsPerStep`  | <empty> | N    | Overrides the count defined in each step with this value if defined (i.e. if set to 1000, for each step, 1000 records will be generated) |
+| Config               | Default | Description                                                                                                                              |
+|----------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `numRecordsPerBatch` | 100000  | Number of records across all data sources to generate per batch                                                                          |
+| `numRecordsPerStep`  | <empty> | Overrides the count defined in each step with this value if defined (i.e. if set to 1000, for each step, 1000 records will be generated) |
 
 === "Java"
 
@@ -259,10 +259,10 @@ batch.
 
 Configurations to alter how validations are executed.
 
-| Config                            | Default | Paid | Description                                                                                                                              |
-|-----------------------------------|---------|------|------------------------------------------------------------------------------------------------------------------------------------------|
-| `numSampleErrorRecords`           | 5       | N    | Number of error sample records to retrieve and display in generated HTML report. Increase to help debugging data issues                  |
-| `enableDeleteRecordTrackingFiles` | true    | Y    | After validations are complete, delete record tracking files that were used for validation purposes (enabled via `enableRecordTracking`) |
+| Config                            | Default | Description                                                                                                                              |
+|-----------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `numSampleErrorRecords`           | 5       | Number of error sample records to retrieve and display in generated HTML report. Increase to help debugging data issues                  |
+| `enableDeleteRecordTrackingFiles` | true    | After validations are complete, delete record tracking files that were used for validation purposes (enabled via `enableRecordTracking`) |
 
 === "Java"
 

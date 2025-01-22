@@ -123,6 +123,8 @@ nav:
       - Blog:
           - A year of getting paid from Medium articles: 'use-case/blog/a-year-of-getting-paid-from-medium-articles.md'
           - Shift Left Data Quality: 'use-case/blog/shift-left-data-quality.md'
+      - Changelog:
+          - 0.14.2: 'use-case/changelog/0.14.2.md'
   - About:
       - 'about.md'
       - Pricing: 'pricing.md'
