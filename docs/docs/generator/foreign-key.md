@@ -418,3 +418,80 @@ key definition.
               step: "transactions"
               fields: ["account_id", "_txn_name"]
     ```
+
+## Ordering
+
+When defining relationships/foreign keys, the order matters. The source of the foreign key is generated first, then the children 
+foreign keys are generated. This is to ensure that the source data is available for the children to reference.
+
+When using the HTTP data sources, it gives you the opportunity to define the order in which the requests are executed.
+For example, you want the following order:
+
+- Create a pet with `id`
+- Get pet with `id`
+- Delete pet with `id`
+
+Below is how you can define the order of the HTTP data sources.
+
+=== "Java"
+
+    ```java
+    var httpTask = http("my_http")
+            .fields(metadataSource().openApi("/opt/app/mount/http/petstore.json"))
+            .count(count().records(2));
+
+    var myPlan = plan().addForeignKeyRelationship(
+            foreignField("my_http", "POST/pets", "body.id"),
+            foreignField("my_http", "GET/pets/{id}", "pathParamid"),
+            foreignField("my_http", "DELETE/pets/{id}", "pathParamid")
+    );
+    ```
+
+=== "Scala"
+
+    ```scala
+    val httpTask = http("my_http")
+      .fields(metadataSource.openApi("/opt/app/mount/http/petstore.json"))
+      .count(count.records(2))
+
+    val myPlan = plan.addForeignKeyRelationship(
+      foreignField("my_http", "POST/pets", "body.id"),
+      foreignField("my_http", "GET/pets/{id}", "pathParamid"),
+      foreignField("my_http", "DELETE/pets/{id}", "pathParamid"),
+    )
+    ```
+
+=== "YAML"
+
+    In `docker/data/custom/task/http/openapi-task.yaml`:
+    ```yaml
+    name: "http_task"
+    steps:
+      - name: "my_petstore"
+        options:
+          metadataSourceType: "openapi"
+          schemaLocation: "/opt/app/mount/http/petstore.json"
+    ```
+
+    In `docker/data/custom/plan/my-http.yaml`:
+    ```yaml
+    name: "my_http_plan"
+    description: "Create pet data via HTTP from OpenAPI metadata"
+    tasks:
+      - name: "http_task"
+        dataSourceName: "my_http"
+
+    sinkOptions:
+      foreignKeys:
+        - source:
+            dataSource: "my_http"
+            step: "POST/pets"
+            fields: ["body.id"]
+          generate:
+            - dataSource: "my_http"
+              step: "GET/pets/{id}"
+              fields: ["pathParamid"]
+            - dataSource: "my_http"
+              step: "DELETE/pets/{id}"
+              fields: ["pathParamid"]
+    ```
