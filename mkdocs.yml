@@ -55,6 +55,11 @@ theme:
         name: Switch to system preference
   icon:
     repo: fontawesome/brands/git-alt
+    admonition:
+      example: fontawesome/solid/database
+      note: simple/spring
+      abstract: simple/apachekafka
+      info: fontawesome/solid/file
 
 nav:
   - Home: 'index.md'
@@ -124,8 +129,9 @@ nav:
           - A year of getting paid from Medium articles: 'use-case/blog/a-year-of-getting-paid-from-medium-articles.md'
           - Shift Left Data Quality: 'use-case/blog/shift-left-data-quality.md'
       - Changelog:
-          - 0.14.2: 'use-case/changelog/0.14.2.md'
+          - 0.14.4: 'use-case/changelog/0.14.4.md'
           - 0.14.3: 'use-case/changelog/0.14.3.md'
+          - 0.14.2: 'use-case/changelog/0.14.2.md'
   - About:
       - 'about.md'
       - Pricing: 'pricing.md'
