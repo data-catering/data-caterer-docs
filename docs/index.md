@@ -232,6 +232,9 @@ Generate production-like data to test your jobs or applications. Create data in 
               - name: "account_id"
                 options:
                   regex: "ACC[0-9]{8}"
+              - name: "account_status"
+                options:
+                  oneOf: ["open", "closed", "suspended", "pending"]
               - name: "balance"
                 type: "double"
                 options:
@@ -255,6 +258,8 @@ Generate production-like data to test your jobs or applications. Create data in 
             1. Click on `+ Field`, add name `messageBody` with type `struct`
                 1. Click on inner `+ Field`, add name `account_id` with type `string`
                 1. Click on `+`, select `Regex` and enter `ACC[0-9]{8}`
+                1. Click on inner `+ Field`, add name `account_status` with type `string`
+                1. Click on `+`, select `One Of` and enter `open, closed, suspended, pending`
                 1. Click on inner `+ Field`, add name `balance` with type `double`
                 1. Click on `+`, select `Round` and enter `2`
                 1. Click on inner `+ Field`, add name `details` with type `struct`

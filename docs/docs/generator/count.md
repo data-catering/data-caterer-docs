@@ -69,11 +69,9 @@ For example, if I wanted to generate between 1000 and 2000 records, I could defi
         options:
           path: "app/src/test/resources/sample/csv/transactions"
         count:
-          generator:
-            type: "random"
-            options:
-              min: 1000
-              max: 2000
+          options:
+            min: 1000
+            max: 2000
     ```
 
 ## Per Field Count
@@ -181,11 +179,117 @@ In the example below, it will generate between `(count.records * count.perFieldG
             fieldNames:
               - "account_id"
               - "name"
-            generator:
-              type: "random"
-              options:
-                min: 1
-                max: 2
+            options:
+              min: 1
+              max: 2
+    ```
+
+#### Distribution
+
+You also have the option to alter the distribution of the record count per field by choosing either `normal` or `exponential`.
+By default, the distribution is `uniform`. Below are examples where you can define the `min` and `max` parameters for 
+each distribution (`exponential` also has a `rateParameter` argument to adjust the distribution).
+
+=== "Java"
+    ```java
+    count().recordsPerFieldNormalDistribution(1, 10, "account_id")
+    count().recordsPerFieldExponentialDistribution(1, 10, 2.0, "account_id")
+    ```
+
+=== "Scala"
+    ```scala
+    count.recordsPerFieldNormalDistribution(1, 10, "account_id")
+    count.recordsPerFieldExponentialDistribution(1, 10, 2.0, "account_id")
+    ```
+
+=== "YAML"
+    ```yaml
+    ---
+    name: "simple_kafka"
+    steps:
+    - name: "kafka_account"
+      type: "kafka"
+      options:
+        topic: "accounts"
+      count:
+        perField:
+        fieldNames:
+          - "account_id"
+        options:
+          min: 1
+          max: 10
+          distribution: "normal"
+    ```
+
+### Nested Field
+
+You can also generate a number of records based on a nested field via creating a temporary field at the top level. For 
+example, we have a Kafka message body that contains `account_id` and we want to generate multiple records per `account_id`.
+We create a field called `tmp_account_id` that has the same metadata as we want for `account_id`. Then we associate the
+two fields via `field().name("account_id").sql("tmp_account_id")`.
+
+=== "Java"
+    ```java
+    var kafkaTask = kafka("my_kafka", "kafka:9092")
+            .topic("accounts")
+            .fields(field().name("tmp_account_id").regex("ACC[0-9]{8}").omit(true))
+            .fields(
+                    field().messageBody(
+                            field().name("account_id").sql("tmp_account_id"),
+                            field().name("account_status").oneOf("open", "closed", "suspended", "pending")
+                    )
+            )
+            .count(count().recordsPerFieldGenerator(generator.min(1).max(10), "tmp_account_id"));
+    ```
+
+=== "Scala"
+    ```scala
+    val kafkaTask = kafka("my_kafka", "kafka:9092")
+      .topic("accounts")
+      .fields(field.name("tmp_account_id").regex("ACC[0-9]{8}").omit(true))
+      .fields(
+        field.messageBody(
+          field.name("account_id").sql("tmp_account_id"),
+          field.name("account_status").oneOf("open", "closed", "suspended", "pending")
+        )
+      )
+    .count(count.recordsPerFieldGenerator(generator.min(1).max(10), "tmp_account_id"))
+    ```
+
+
+=== "YAML"
+    ```yaml
+    ---
+    name: "simple_kafka"
+    steps:
+    - name: "kafka_account"
+      type: "kafka"
+      options:
+        topic: "accounts"
+      count:
+        perField:
+        fieldNames:
+          - "tmp_account_id"
+        options:
+          min: 1
+          max: 10
+      fields:
+        - name: "tmp_account_id"
+          options:
+            regex: "ACC[0-9]{8}"
+            omit: true
+        - name: "key"
+          options:
+            sql: "body.account_id"
+        - name: "messageBody"
+          type: struct
+          fields:
+          - name: "account_id"
+            options:
+              sql: "tmp_account_id"
+          - name: "account_status"
+            options:
+              oneOf: ["open", "closed", "suspended", "pending"]
     ```
 
 ## All Combinations
