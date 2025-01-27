@@ -9,8 +9,8 @@ hide:
   - toc
 ---
 
-<h1 align="center" style="padding-top: 25px;"><b>Automated Test Data Management</b></h1>
-<h3 align="center" style="padding-bottom: 25px">Create simple managed flows for testing your jobs or applications</h3>
+<h1 align="center" style="padding-top: 25px;"><b>Say Goodbye to Slow and Complex Integration Tests</b></h1>
+<h3 align="center" style="padding-bottom: 25px">Automate end-to-end data tests for any job or application</h3>
 
 <picture class="center-content">
 <source media="(min-width: 650px)" srcset="diagrams/index/high_level_flow-run-config-basic-flow-basic-flow.svg">
@@ -487,7 +487,7 @@ validating the downstream data sources have the correct information.
 ## Why use Data Caterer
 
 - **Catch bugs before production**: Bring stability to your data pipelines
-- **Speed up your development cycles**: Fast feedback during testing
+- **Speed up your development cycles**: Fast feedback testing locally and in test environments
 - **Single tool for all data sources**: No custom scripts needed
 - **No production data or connection required**: Secure first approach, fully metadata driven
 - **Easy to use for testers and developers**: Use either UI, Java, Scala or YAML
