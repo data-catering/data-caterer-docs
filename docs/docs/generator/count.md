@@ -256,7 +256,6 @@ two fields via `field().name("account_id").sql("tmp_account_id")`.
     .count(count.recordsPerFieldGenerator(generator.min(1).max(10), "tmp_account_id"))
     ```
 
-
 === "YAML"
     ```yaml
     ---

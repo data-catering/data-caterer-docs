@@ -28,13 +28,13 @@ Generate production-like data to test your jobs or applications. Create data in 
 
     === "Scala"
         ```scala
-        val accountTask = postgres("customer_postgres", "jdbc:postgresql://host.docker.internal:5432/customer")
+        val accountTask = postgres("customer_postgres", "jdbc:postgresql://localhost:5432/customer")
         val config = configuration.enableGeneratePlanAndTasks(true)
         ```
 
     === "Java"
         ```java
-        var accountTask = postgres("customer_accounts", "jdbc:postgresql://host.docker.internal:5432/customer");
+        var accountTask = postgres("customer_accounts", "jdbc:postgresql://localhost:5432/customer");
         var config = configuration().enableGeneratePlanAndTasks(true);
         ```
 
@@ -176,7 +176,7 @@ Generate production-like data to test your jobs or applications. Create data in 
 
     === "Scala"
         ```scala
-        val kafkaTask = kafka("my_kafka", "kafka:9092")
+        val kafkaTask = kafka("my_kafka", "localhost:9092")
           .topic("accounts")
           .fields(field.name("key").sql("body.account_id"))
           .fields(
@@ -195,7 +195,7 @@ Generate production-like data to test your jobs or applications. Create data in 
 
     === "Java"
         ```java
-        var kafkaTask = kafka("my_kafka", "kafka:9092")
+        var kafkaTask = kafka("my_kafka", "localhost:9092")
                 .topic("accounts")
                 .fields(field().name("key").sql("body.account_id"))
                 .fields(
