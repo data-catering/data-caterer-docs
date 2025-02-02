@@ -689,7 +689,7 @@ The following fields are made available to you to validate against:
             .validations(
                     validation().field("request.method").isEqual("POST"),
                     validation().field("response.statusCode").isEqual(200),
-                    validation().field("response.timeTaken").lessThan(100),
+                    validation().field("response.timeTakenMs").lessThan(100),
                     validation().field("response.headers.Content-Length").greaterThan(0),
                     validation().field("response.headers.Content-Type").isEqual("application/json")
             )
@@ -705,7 +705,7 @@ The following fields are made available to you to validate against:
       .validations(
         validation.field("request.method").isEqual("POST"),
         validation.field("response.statusCode").isEqual(200),
-        validation.field("response.timeTaken").lessThan(100),
+        validation.field("response.timeTakenMs").lessThan(100),
         validation.field("response.headers.Content-Length").greaterThan(0),
         validation.field("response.headers.Content-Type").isEqual("application/json"),
       )
@@ -723,7 +723,7 @@ The following fields are made available to you to validate against:
           validations:
             - expr: "request.method == 'POST'"
             - expr: "response.statusCode == 200"
-            - expr: "response.timeTaken < 100"
+            - expr: "response.timeTakenMs < 100"
             - expr: "response.headers.Content-Length > 0"
             - expr: "response.headers.Content-Type == 'application/json'"
     ```
@@ -736,7 +736,7 @@ The following fields are made available to you to validate against:
     1. Enter `request.method` in the `Field` text box
     1. Click on `+` next to `Operator` and select `Equal`
     1. Enter `POST` in the `Equal` text box
-    1. Continue adding validations for `response.statusCode`, `response.timeTaken`, `response.headers.Content-Length` and `response.headers.Content-Type`
+    1. Continue adding validations for `response.statusCode`, `response.timeTakenMs`, `response.headers.Content-Length` and `response.headers.Content-Type`
 
 If you want to validate data from an HTTP source,
 [follow the validation documentation found here to help guide you](../../../validation.md).

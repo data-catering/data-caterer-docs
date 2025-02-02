@@ -2,7 +2,7 @@
 
 ![Data Catering](docs/diagrams/logo/data_catering_landscape_banner.svg)
 
-Documentation for Data Caterer
+Documentation for [Data Caterer](https://data.catering)
 
 ## Helm
 
