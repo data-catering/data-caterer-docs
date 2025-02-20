@@ -1030,6 +1030,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Connection Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2867,7 +2882,7 @@ for the tables you configure.</p>
 </span></code></pre></div></p>
 </div>
 <div class="tabbed-block">
-<details class="note">
+<details class="warning">
 <summary>BigQuery not supported in UI</summary>
 <p>BigQuery is not supported in the UI at this time. It will be added soon!</p>
 </details>
@@ -2879,7 +2894,8 @@ methods defined to make it simple and easy to use.</p>
 <h4 id="connection-configuration">Connection Configuration</h4>
 <p>Within our class, we can start by defining the connection properties to connect to BigQuery.
 Follows same configuration as defined by the Spark BigQuery Connector as found
-<a href="https://github.com/GoogleCloudDataproc/spark-bigquery-connector?tab=readme-ov-file#properties"><strong>here</strong></a>.</p>
+<a href="https://github.com/GoogleCloudDataproc/spark-bigquery-connector?tab=readme-ov-file#properties"><strong>here</strong></a>.
+By default, it will use <code>indirect</code> as the <code>writeMethod</code> which involves writing to GCS first before loading into BigQuery.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:4"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><input id="__tabbed_3_4" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Java</label><label for="__tabbed_3_2">Scala</label><label for="__tabbed_3_3">YAML</label><label for="__tabbed_3_4">UI</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -2909,13 +2925,16 @@ Follows same configuration as defined by the Spark BigQuery Connector as found
 </span></code></pre></div></p>
 </div>
 <div class="tabbed-block">
-<details class="note">
+<details class="warning">
 <summary>BigQuery not supported in UI</summary>
 <p>BigQuery is not supported in the UI at this time. It will be added soon!</p>
 </details>
 </div>
 </div>
 </div>
+<h5 id="authentication">Authentication</h5>
+<p>To setup authentication, follow the options found
+<a href="https://github.com/GoogleCloudDataproc/spark-bigquery-connector?tab=readme-ov-file#how-do-i-authenticate-outside-gce--dataproc"><strong>here</strong></a>.</p>
 <h4 id="schema">Schema</h4>
 <p>Let's create a task for inserting data into the <code>account.accounts</code> and <code>account.balances</code> tables as
 defined under<code>docker/data/sql/bigquery/customer.cql</code>. This table should already be setup for you if you followed this
