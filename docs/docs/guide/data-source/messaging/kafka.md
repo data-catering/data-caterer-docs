@@ -15,7 +15,6 @@ for the topics you configure.
 - Git
 - Gradle
 - Docker
-- Kafka
 
 ## Get Started
 

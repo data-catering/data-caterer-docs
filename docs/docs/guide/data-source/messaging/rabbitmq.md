@@ -1,15 +1,13 @@
 ---
-title: "Solace Test Data Management"
-description: "Example of Solace for data generation and validation tool for queue/topic."
+title: "RabbitMQ Test Data Management"
+description: "Example of RabbitMQ for data generation and validation tool for queue/topic."
 image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 ---
 
-# Solace
+# RabbitMQ
 
-Creating a data generator for Solace. You will build a Docker image that will be able to populate data in Solace
+Creating a data generator for RabbitMQ. You will build a Docker image that will be able to populate data in RabbitMQ
 for the queues/topics you configure.
-
-![Generate Solace messages](../../../../diagrams/data-source/solace_generation_run.gif)
 
 ## Requirements
 
@@ -44,38 +42,37 @@ First, we will clone the data-caterer-example repo which will already have the b
 
     [Run Data Caterer UI via the 'Quick Start' found here.](../../../../get-started/quick-start.md)
 
-If you already have a Solace instance running, you can skip to [this step](#plan-setup).
+If you already have a RabbitMQ instance running, you can skip to [this step](#plan-setup).
 
-### Solace Setup
+### RabbitMQ Setup
 
-Next, let's make sure you have an instance of Solace up and running in your local environment. This will make it
+Next, let's make sure you have an instance of RabbitMQ up and running in your local environment. This will make it
 easy for us to iterate and check our changes.
 
 ```shell
 cd docker
-docker-compose up -d solace
+docker-compose up -d rabbitmq
 ```
 
-Open up [localhost:8080](http://localhost:8080) and login with `admin:admin` and check there is the `default` VPN like
-below. Notice there is 2 queues/topics created. If you do not see 2 created, try to run the script found under
-`docker/data/solace/setup_solace.sh` and change the `host` to `localhost`.
+Open up [localhost:15672/#/queues](http://localhost:15672/#/queues) and login with `guest:guest`. Create a new queue 
+with name `accounts`.
 
-![Solace dashboard](../../../../diagrams/data-source/solace_dashboard.png)
+![RabbitMQ dashboard](../../../../diagrams/data-source/rabbitmq_queue.png)
 
 ### Plan Setup
 
 Create a file depending on which interface you want to use.
 
-- Java: `src/main/java/io/github/datacatering/plan/MyAdvancedSolaceJavaPlan.java`
-- Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedSolacePlan.scala`
-- YAML: `docker/data/custom/plan/my-solace.yaml`
+- Java: `src/main/java/io/github/datacatering/plan/MyAdvancedRabbitMQJavaPlan.java`
+- Scala: `src/main/scala/io/github/datacatering/plan/MyAdvancedRabbitMQPlan.scala`
+- YAML: `docker/data/custom/plan/my-rabbitmq.yaml`
 
 === "Java"
 
     ```java
     import io.github.datacatering.datacaterer.java.api.PlanRun;
     
-    public class MyAdvancedSolaceJavaPlan extends PlanRun {
+    public class MyAdvancedRabbitMQJavaPlan extends PlanRun {
     }
     ```
 
@@ -84,48 +81,48 @@ Create a file depending on which interface you want to use.
     ```scala
     import io.github.datacatering.datacaterer.api.PlanRun
     
-    class MyAdvancedSolacePlan extends PlanRun {
+    class MyAdvancedRabbitMQPlan extends PlanRun {
     }
     ```
 
 === "YAML"
 
-    In `docker/data/custom/plan/my-solace.yaml`:
+    In `docker/data/custom/plan/my-rabbitmq.yaml`:
     ```yaml
-    name: "my_solace_plan"
-    description: "Create account data in Solace"
+    name: "my_rabbitmq_plan"
+    description: "Create account data in RabbitMQ"
     tasks:
-      - name: "solace_task"
-        dataSourceName: "my_solace"
+      - name: "rabbitmq_task"
+        dataSourceName: "my_rabbitmq"
     ```
 
 === "UI"
 
     1. Click on `Connection` towards the top of the screen
-    1. For connection name, set to `my_solace`
-    1. Click on `Select data source type..` and select `Solace`
-    1. Set `URL` as `smf://host.docker.internal:55554`
+    1. For connection name, set to `my_rabbitmq`
+    1. Click on `Select data source type..` and select `RabbitMQ`
+    1. Set `URL` as `ampq://host.docker.internal:5672`
         1. Optionally, we could set the JNDI destination (queue or topic) but we would have to create a new connection for each queue or topic
     1. Click on `Create`
-    1. You should see your connection `my_solace` show under `Existing connections`
+    1. You should see your connection `my_rabbitmq` show under `Existing connections`
     1. Click on `Home` towards the top of the screen
-    1. Set plan name to `my_solace_plan`
-    1. Set task name to `solace_task`
-    1. Click on `Select data source..` and select `my_solace`
+    1. Set plan name to `my_rabbitmq_plan`
+    1. Set task name to `rabbitmq_task`
+    1. Click on `Select data source..` and select `my_rabbitmq`
 
 This class defines where we need to define all of our configurations for generating data. There are helper variables and
 methods defined to make it simple and easy to use.
 
 #### Connection Configuration
 
-Within our class, we can start by defining the connection properties to connect to Solace.
+Within our class, we can start by defining the connection properties to connect to RabbitMQ.
 
 === "Java"
 
     ```java
-    var accountTask = solace(
-        "my_solace",                        //name
-        "smf://host.docker.internal:55554", //url
+    var accountTask = rabbitmq(
+        "my_rabbitmq",                        //name
+        "ampq://host.docker.internal:5672", //url
         Map.of()                            //optional additional connection options
     );
     ```
@@ -135,9 +132,9 @@ Within our class, we can start by defining the connection properties to connect 
 === "Scala"
 
     ```scala
-    val accountTask = solace(
-        "my_solace",                        //name
-        "smf://host.docker.internal:55554", //url
+    val accountTask = rabbitmq(
+        "my_rabbitmq",                        //name
+        "ampq://host.docker.internal:5672", //url
         Map()                               //optional additional connection options
     )
     ```
@@ -149,12 +146,12 @@ Within our class, we can start by defining the connection properties to connect 
     In `docker/data/custom/application.conf`:
     ```
     jms {
-        solace {
-            initialContextFactory = "com.solacesystems.jndi.SolJNDIInitialContextFactory"
+        rabbitmq {
+            initialContextFactory = "com.rabbitmqsystems.jndi.SolJNDIInitialContextFactory"
             initialContextFactory = ${?SOLACE_INITIAL_CONTEXT_FACTORY}
             connectionFactory = "/jms/cf/default"
             connectionFactory = ${?SOLACE_CONNECTION_FACTORY}
-            url = "smf://solaceserver:55555"
+            url = "smf://rabbitmqserver:55555"
             url = ${?SOLACE_URL}
             user = "admin"
             user = ${?SOLACE_USER}
@@ -173,9 +170,9 @@ Within our class, we can start by defining the connection properties to connect 
 #### Schema
 
 Let's create a task for inserting data into the `rest_test_queue` or `rest_test_topic` that is already created for us
-from this [step](#solace-setup).
+from this [step](#rabbitmq-setup).
 
-Trimming the connection details to work with the docker-compose Solace, we have a base Solace connection to define
+Trimming the connection details to work with the docker-compose RabbitMQ, we have a base RabbitMQ connection to define
 the JNDI destination we will publish to. Let's define each field along with their corresponding data type. You will
 notice
 that the `text` fields do not have a data type defined. This is because the default data type is `StringType`.
@@ -184,8 +181,8 @@ that the `text` fields do not have a data type defined. This is because the defa
 
     ```java
     {
-        var solaceTask = solace("my_solace", "smf://host.docker.internal:55554")
-                .destination("/JNDI/Q/rest_test_queue")
+        var rabbitmqTask = rabbitmq("my_rabbitmq", "ampq://host.docker.internal:5672")
+                .destination("accounts")
                 .fields(
                         //field().name("partition").type(IntegerType.instance()),   can define JMS priority here
                         field().messageHeaders(   //set message properties via headers field
@@ -221,8 +218,8 @@ that the `text` fields do not have a data type defined. This is because the defa
 === "Scala"
 
     ```scala
-    val solaceTask = solace("my_solace", "smf://host.docker.internal:55554")
-      .destination("/JNDI/Q/rest_test_queue")
+    val rabbitmqTask = rabbitmq("my_rabbitmq", "ampq://host.docker.internal:5672")
+      .destination("accounts")
       .fields(
         //field.name("partition").type(IntegerType),  can define JMS priority here
         field.messageHeaders(                         //set message properties via headers field
@@ -258,13 +255,13 @@ that the `text` fields do not have a data type defined. This is because the defa
 
 === "YAML"
 
-    In `docker/data/custom/task/solace/solace-task.yaml`:
+    In `docker/data/custom/task/rabbitmq/rabbitmq-task.yaml`:
     ```yaml
-    name: "solace_task"
+    name: "rabbitmq_task"
     steps:
-      - name: "solace_account"
+      - name: "rabbitmq_account"
         options:
-          destinationName: "/JNDI/Q/rest_test_queue"
+          destinationName: "accounts"
         fields:
           - name: "messageBody"
             fields:
@@ -326,7 +323,7 @@ that the `text` fields do not have a data type defined. This is because the defa
 
 #### Fields
 
-The schema defined for Solace has a format that needs to be followed as noted above. Specifically, the required fields
+The schema defined for RabbitMQ has a format that needs to be followed as noted above. Specifically, the required fields
 are:
 - `messageBody`
 
@@ -362,13 +359,13 @@ expression.
 
 === "YAML"
 
-    In `docker/data/custom/task/solace/solace-task.yaml`:
+    In `docker/data/custom/task/rabbitmq/rabbitmq-task.yaml`:
     ```yaml
-    name: "solace_task"
+    name: "rabbitmq_task"
     steps:
-      - name: "solace_account"
+      - name: "rabbitmq_account"
         options:
-          destinationName: "/JNDI/Q/rest_test_queue"
+          destinationName: "accounts"
         fields:
           - name: "messageHeaders"
             fields:
@@ -414,13 +411,13 @@ can be controlled via `arrayMinLength` and `arrayMaxLength`.
 
 === "YAML"
 
-    In `docker/data/custom/task/solace/solace-task.yaml`:
+    In `docker/data/custom/task/rabbitmq/rabbitmq-task.yaml`:
     ```yaml
-    name: "solace_task"
+    name: "rabbitmq_task"
     steps:
-      - name: "solace_account"
+      - name: "rabbitmq_account"
         options:
-          destinationName: "/JNDI/Q/rest_test_queue"
+          destinationName: "accounts"
         fields:
           - name: "messageBody"
             fields:
@@ -476,13 +473,13 @@ sort the array by `txn_date` and get the first element.
 
 === "YAML"
 
-    In `docker/data/custom/task/solace/solace-task.yaml`:
+    In `docker/data/custom/task/rabbitmq/rabbitmq-task.yaml`:
     ```yaml
-    name: "solace_task"
+    name: "rabbitmq_task"
     steps:
-      - name: "solace_account"
+      - name: "rabbitmq_account"
         options:
-          destinationName: "/JNDI/Q/rest_test_queue"
+          destinationName: "accounts"
         fields:
           - name: "messageBody"
             fields:
@@ -542,7 +539,7 @@ output folder of that report via configurations.
 
 #### Execute
 
-To tell Data Caterer that we want to run with the configurations along with the `kafkaTask`, we have to call `execute`.
+To tell Data Caterer that we want to run with the configurations along with the `rabbitmqTask`, we have to call `execute`.
 
 ### Run
 
@@ -552,22 +549,22 @@ class we just created.
 === "Java"
 
     ```shell
-    ./run.sh AdvancedSolaceJavaPlanRun
-    #after completing, check http://localhost:8080 from browser
+    ./run.sh AdvancedRabbitMQJavaPlanRun
+    #after completing, check http://localhost:15672/#/queues/%2F/accounts from browser
     ```
 
 === "Scala"
 
     ```shell
-    ./run.sh AdvancedSolacePlanRun
-    #after completing, check http://localhost:8080 from browser
+    ./run.sh AdvancedRabbitMQPlanRun
+    #after completing, check http://localhost:15672/#/queues/%2F/accounts from browser
     ```
 
 === "YAML"
 
     ```shell
-    ./run.sh my-solace.yaml
-    #after completing, check http://localhost:8080 from browser
+    ./run.sh my-rabbitmq.yaml
+    #after completing, check http://localhost:15672/#/queues/%2F/accounts from browser
     ```
 
 === "UI"
@@ -580,10 +577,12 @@ class we just created.
 
 Your output should look like this.
 
-![Solace messages queued](../../../../diagrams/data-source/solace_messages_queued.png)
+![RabbitMQ messages queued](../../../../diagrams/data-source/rabbitmq_messages_queued.png)
 
-Unfortunately, there is no easy way to see the message content. You can check the message content from your application
-or service that consumes these messages.
+You can check the message payload by clicking on `Get Message(s)`. Once you copy the payload, you can run a command 
+like: `echo "<payload>" | base64 -D` to see the actual message.
+
+![RabbitMQ message payload](../../../../diagrams/data-source/rabbitmq_message_payload.png)
 
 Also check the HTML report, found at `docker/sample/report/index.html`, that gets generated to get an overview of what
 was executed. Or view the sample report found [here](../../../../sample/report/html/index.html).

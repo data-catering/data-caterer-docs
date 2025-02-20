@@ -87,7 +87,7 @@ cd data-caterer-example && ./run.sh
 
 1. Docker
    ```shell
-   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.14.6
+   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.15.0
    ```
 2. [Open localhost:9898](http://localhost:9898)
 3. Login with the user and token given from [here](#get-token)

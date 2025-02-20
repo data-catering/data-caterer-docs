@@ -80,6 +80,7 @@ nav:
               - Multiple Records Per Field Value: 'docs/guide/scenario/records-per-field.md'
           - Data Sources:
               - Database:
+                - BigQuery: 'docs/guide/data-source/database/bigquery.md'
                 - Cassandra: 'docs/guide/data-source/database/cassandra.md'
                 - MySQL: 'docs/guide/data-source/database/mysql.md'
                 - Postgres: 'docs/guide/data-source/database/postgres.md'
@@ -94,6 +95,7 @@ nav:
                 - REST API: 'docs/guide/data-source/http/http.md'
               - Messaging:
                 - Kafka: 'docs/guide/data-source/messaging/kafka.md'
+                - RabbitMQ: 'docs/guide/data-source/messaging/rabbitmq.md'
                 - Solace: 'docs/guide/data-source/messaging/solace.md'
               - Metadata:
                 - Data Contract CLI: 'docs/guide/data-source/metadata/data-contract-cli.md'
@@ -126,9 +128,14 @@ nav:
       - Comparison: 'use-case/comparison.md'
       - Roadmap: 'use-case/roadmap.md'
       - Blog:
+          - Rethinking shift-left for data pipelines: 'use-case/blog/rethinking-shift-left-for-data-pipelines.md'
           - A year of getting paid from Medium articles: 'use-case/blog/a-year-of-getting-paid-from-medium-articles.md'
           - Shift Left Data Quality: 'use-case/blog/shift-left-data-quality.md'
       - Changelog:
+          - 0.15.0: 'use-case/changelog/0.15.0.md'
+          - 0.14.7: 'use-case/changelog/0.14.7.md'
+          - 0.14.6: 'use-case/changelog/0.14.6.md'
+          - 0.14.5: 'use-case/changelog/0.14.5.md'
           - 0.14.4: 'use-case/changelog/0.14.4.md'
           - 0.14.3: 'use-case/changelog/0.14.3.md'
           - 0.14.2: 'use-case/changelog/0.14.2.md'

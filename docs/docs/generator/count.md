@@ -184,6 +184,100 @@ In the example below, it will generate between `(count.records * count.perFieldG
               max: 2
     ```
 
+#### One Of
+
+You can also generate a number of records based on a prescribed set of values. For example, if you only want to generate
+1,5 or 10 records per `account_id, name` you can have the following configuration:
+
+=== "Java"
+
+    ```java
+    csv("transactions", "app/src/test/resources/sample/csv/transactions")
+      .count(
+        count()
+          .records(1000)
+          .recordsPerFieldGenerator(generator().oneOf(1, 5, 10), "account_id", "name")
+      );
+    ```
+
+=== "Scala"
+
+    ```scala
+    csv("transactions", "app/src/test/resources/sample/csv/transactions")
+      .count(
+        count
+          .records(1000)
+          .recordsPerFieldGenerator(generator.oneOf(1, 5, 10), "account_id", "name")
+      )
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "csv_file"
+    steps:
+      - name: "transactions"
+        type: "csv"
+        options:
+          path: "app/src/test/resources/sample/csv/transactions"
+        count:
+          records: 1000
+          perField:
+            fieldNames:
+              - "account_id"
+              - "name"
+            options:
+              oneOf: [1, 5, 10]
+    ```
+
+##### Weighted
+
+You can also generate a number of records based on a prescribed set of values with weights. For example, if you want to
+generate 1 record 50% of the time, 5 records 30% of the time and 10 records 20% of the time per `account_id, name` you can
+have the following configuration:
+
+
+=== "Java"
+
+    ```java
+    csv("transactions", "app/src/test/resources/sample/csv/transactions")
+      .count(
+        count()
+          .records(1000)
+          .recordsPerFieldGenerator(generator().oneOfWeighted("1->0.5", "5->0.3", "10->0.2"), "account_id", "name")
+      );
+    ```
+
+=== "Scala"
+
+    ```scala
+    csv("transactions", "app/src/test/resources/sample/csv/transactions")
+      .count(
+        count
+          .records(1000)
+          .recordsPerFieldGenerator(generator.oneOfWeighted("1->0.5", "5->0.3", "10->0.2"), "account_id", "name")
+      )
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "csv_file"
+    steps:
+      - name: "transactions"
+        type: "csv"
+        options:
+          path: "app/src/test/resources/sample/csv/transactions"
+        count:
+          records: 1000
+          perField:
+            fieldNames:
+              - "account_id"
+              - "name"
+            options:
+              oneOfWeighted: ["1->0.5", "5->0.3", "10->0.2"]
+    ```
+
 #### Distribution
 
 You also have the option to alter the distribution of the record count per field by choosing either `normal` or `exponential`.

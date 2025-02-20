@@ -14,12 +14,14 @@ Below are a list of guides you can follow to create your first Data Catering job
 
 <div class="grid cards" markdown>
 
+- __:material-database: [BigQuery]__ - Generate/validate data for BigQuery
 - __:material-database: [Cassandra]__ - Generate/validate data for Cassandra
 - __:material-database: [MySQL]__ - Generate/validate data for MySQL
 - __:material-database: [Postgres]__ - Generate/validate data for Postgres
 
 </div>
   
+  [BigQuery]: data-source/database/bigquery.md
   [Cassandra]: data-source/database/cassandra.md
   [MySQL]: data-source/database/mysql.md
   [Postgres]: data-source/database/postgres.md
@@ -59,11 +61,13 @@ Below are a list of guides you can follow to create your first Data Catering job
 <div class="grid cards" markdown>
 
 - __:material-message: [Kafka]__ - Generate data for Kafka topics
-- __:material-message: [Solace]__ - Generate data for Solace messages
+- __:material-message: [Rabbitmq]__ - Generate data for Rabbitmq
+- __:material-message: [Solace]__ - Generate data for Solace
 
 </div>
 
   [Kafka]: data-source/messaging/kafka.md
+  [Rabbitmq]: data-source/messaging/rabbitmq.md
   [Solace]: data-source/messaging/solace.md
 
 ### Metadata

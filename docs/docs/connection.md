@@ -17,6 +17,7 @@ These configurations can be done via API or from configuration. Examples of both
 | Cloud Storage    | AWS S3                             | :white_check_mark:                        |
 | Cloud Storage    | Azure Blob Storage                 | :white_check_mark:                        |
 | Cloud Storage    | GCP Cloud Storage                  | :white_check_mark:                        |
+| Database         | BigQuery                           | :white_check_mark:                        |
 | Database         | Cassandra                          | :white_check_mark:                        |
 | Database         | MySQL                              | :white_check_mark:                        |
 | Database         | Postgres                           | :white_check_mark:                        |
@@ -32,10 +33,10 @@ These configurations can be done via API or from configuration. Examples of both
 | File             | Hudi                               | :octicons-x-circle-fill-12:{ .red-cross } |
 | HTTP             | REST API                           | :white_check_mark:                        |
 | Messaging        | Kafka                              | :white_check_mark:                        |
+| Messaging        | RabbitMQ                           | :white_check_mark:                        |
 | Messaging        | Solace                             | :white_check_mark:                        |
 | Messaging        | ActiveMQ                           | :octicons-x-circle-fill-12:{ .red-cross } |
 | Messaging        | Pulsar                             | :octicons-x-circle-fill-12:{ .red-cross } |
-| Messaging        | RabbitMQ                           | :octicons-x-circle-fill-12:{ .red-cross } |
 | Metadata         | Data Contract CLI                  | :white_check_mark:                        |
 | Metadata         | Great Expectations                 | :white_check_mark:                        |
 | Metadata         | Marquez                            | :white_check_mark:                        |
@@ -278,10 +279,10 @@ Sample can be found below
 
     ```java
     postgres(
-        "customer_postgres",                            #name
-        "jdbc:postgresql://localhost:5432/customer",    #url
-        "postgres",                                     #username
-        "postgres"                                      #password
+        "customer_postgres",                            //name
+        "jdbc:postgresql://localhost:5432/customer",    //url
+        "postgres",                                     //username
+        "postgres"                                      //password
     )
     ```
 
@@ -289,10 +290,10 @@ Sample can be found below
 
     ```scala
     postgres(
-        "customer_postgres",                            #name
-        "jdbc:postgresql://localhost:5432/customer",    #url
-        "postgres",                                     #username
-        "postgres"                                      #password
+        "customer_postgres",                            //name
+        "jdbc:postgresql://localhost:5432/customer",    //url
+        "postgres",                                     //username
+        "postgres"                                      //password
     )
     ```
 
@@ -345,10 +346,10 @@ Following permissions are required when generating plan and tasks:
 
     ```java
     mysql(
-        "customer_mysql",                       #name
-        "jdbc:mysql://localhost:3306/customer", #url
-        "root",                                 #username
-        "root"                                  #password
+        "customer_mysql",                       //name
+        "jdbc:mysql://localhost:3306/customer", //url
+        "root",                                 //username
+        "root"                                  //password
     )
     ```
 
@@ -356,10 +357,10 @@ Following permissions are required when generating plan and tasks:
 
     ```scala
     mysql(
-        "customer_mysql",                       #name
-        "jdbc:mysql://localhost:3306/customer", #url
-        "root",                                 #username
-        "root"                                  #password
+        "customer_mysql",                       //name
+        "jdbc:mysql://localhost:3306/customer", //url
+        "root",                                 //username
+        "root"                                  //password
     )
     ```
 
@@ -389,6 +390,43 @@ Following permissions are required when generating plan and tasks:
     GRANT SELECT ON information_schema.key_column_usage TO < user >;
     ```
 
+### BigQuery
+
+Follows same configuration as defined by the Spark BigQuery Connector as found 
+[**here**](https://github.com/GoogleCloudDataproc/spark-bigquery-connector?tab=readme-ov-file#properties).
+
+=== "Java"
+
+    ```java
+    bigquery(
+        "customer_bigquery",   //name
+        "gs://my-test-bucket", //temporaryGcsBucket
+        Map.of()               //optional additional connection options
+    )
+    ```
+
+=== "Scala"
+
+    ```scala
+    bigquery(
+      "customer_bigquery",   //name
+      "gs://my-test-bucket", //temporaryGcsBucket
+      Map()                  //optional additional connection options
+    )
+    ```
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    bigquery {
+        customer_bigquery {
+            temporaryGcsBucket = "gs://my-test-bucket"
+            temporaryGcsBucket = ${?BIGQUERY_TEMPORARY_GCS_BUCKET}
+        }
+    }
+    ```
+
 ### Cassandra
 
 Follows same configuration as defined by the Spark Cassandra Connector as
@@ -398,11 +436,11 @@ found [**here**](https://github.com/datastax/spark-cassandra-connector/blob/mast
 
     ```java
     cassandra(
-        "customer_cassandra",   #name
-        "localhost:9042",       #url
-        "cassandra",            #username
-        "cassandra",            #password
-        Map.of()                #optional additional connection options
+        "customer_cassandra",   //name
+        "localhost:9042",       //url
+        "cassandra",            //username
+        "cassandra",            //password
+        Map.of()                //optional additional connection options
     )
     ```
 
@@ -410,11 +448,11 @@ found [**here**](https://github.com/datastax/spark-cassandra-connector/blob/mast
 
     ```scala
     cassandra(
-        "customer_cassandra",   #name
-        "localhost:9042",       #url
-        "cassandra",            #username
-        "cassandra",            #password
-        Map()                #optional additional connection options
+        "customer_cassandra",   //name
+        "localhost:9042",       //url
+        "cassandra",            //username
+        "cassandra",            //password
+        Map()                   //optional additional connection options
     )
     ```
 
@@ -467,8 +505,8 @@ found [**here**](https://spark.apache.org/docs/latest/structured-streaming-kafka
 
     ```java
     kafka(
-        "customer_kafka",   #name
-        "localhost:9092"    #url
+        "customer_kafka",   //name
+        "localhost:9092"    //url
     )
     ```
 
@@ -476,8 +514,8 @@ found [**here**](https://spark.apache.org/docs/latest/structured-streaming-kafka
 
     ```scala
     kafka(
-        "customer_kafka",   #name
-        "localhost:9092"    #url
+        "customer_kafka",   //name
+        "localhost:9092"    //url
     )
     ```
 
@@ -504,17 +542,67 @@ Uses JNDI lookup to send messages to JMS queue. Ensure that the messaging system
 registered
 via JNDI otherwise a connection cannot be created.
 
+#### Rabbitmq
+
+=== "Java"
+
+    ```java
+    rabbitmq(
+        "customer_rabbitmq",                            //name
+        "amqp://localhost:5672",                        //url
+        "guest",                                        //username
+        "guest",                                        //password
+        "/",                                            //virtual host
+        "com.rabbitmq.jms.admin.RMQConnectionFactory",  //connection factory
+    )
+    ```
+
+=== "Scala"
+
+    ```scala
+    rabbitmq(
+      "customer_rabbitmq",                            //name
+      "amqp://localhost:5672",                        //url
+      "guest",                                        //username
+      "guest",                                        //password
+      "/",                                            //virtual host
+      "com.rabbitmq.jms.admin.RMQConnectionFactory",  //connection factory
+    )
+    ```
+
+=== "YAML"
+
+    In `docker/data/custom/application.conf`:
+    ```
+    jms {
+        customer_rabbitmq {
+            connectionFactory = "com.rabbitmq.jms.admin.RMQConnectionFactory"
+            connectionFactory = ${?RABBITMQ_CONNECTION_FACTORY}
+            url = "amqp://localhost:5672"
+            url = ${?RABBITMQ_URL}
+            user = "guest"
+            user = ${?RABBITMQ_USER}
+            password = "guest"
+            password = ${?RABBITMQ_PASSWORD}
+            virtualHost = "/"
+            virtualHost = ${?RABBITMQ_VIRTUAL_HOST}
+        }
+    }
+    ```
+
+#### Solace
+
 === "Java"
 
     ```java
     solace(
-        "customer_solace",                                      #name
-        "smf://localhost:55554",                                #url
-        "admin",                                                #username
-        "admin",                                                #password
-        "default",                                              #vpn name
-        "/jms/cf/default",                                      #connection factory
-        "com.solacesystems.jndi.SolJNDIInitialContextFactory"   #initial context factory
+        "customer_solace",                                      //name
+        "smf://localhost:55554",                                //url
+        "admin",                                                //username
+        "admin",                                                //password
+        "default",                                              //vpn name
+        "/jms/cf/default",                                      //connection factory
+        "com.solacesystems.jndi.SolJNDIInitialContextFactory"   //initial context factory
     )
     ```
 
@@ -522,13 +610,13 @@ via JNDI otherwise a connection cannot be created.
 
     ```scala
     solace(
-        "customer_solace",                                      #name
-        "smf://localhost:55554",                                #url
-        "admin",                                                #username
-        "admin",                                                #password
-        "default",                                              #vpn name
-        "/jms/cf/default",                                      #connection factory
-        "com.solacesystems.jndi.SolJNDIInitialContextFactory"   #initial context factory
+        "customer_solace",                                      //name
+        "smf://localhost:55554",                                //url
+        "admin",                                                //username
+        "admin",                                                //password
+        "default",                                              //vpn name
+        "/jms/cf/default",                                      //connection factory
+        "com.solacesystems.jndi.SolJNDIInitialContextFactory"   //initial context factory
     )
     ```
 
@@ -561,9 +649,9 @@ The url is defined in the tasks to allow for generated data to be populated in t
 
     ```java
     http(
-        "customer_api", #name
-        "admin",        #username
-        "admin"         #password
+        "customer_api", //name
+        "admin",        //username
+        "admin"         //password
     )
     ```
 
@@ -571,9 +659,9 @@ The url is defined in the tasks to allow for generated data to be populated in t
 
     ```scala
     http(
-        "customer_api", #name
-        "admin",        #username
-        "admin"         #password
+        "customer_api", //name
+        "admin",        //username
+        "admin"         //password
     )
     ```
 
