@@ -101,7 +101,7 @@ Create a file depending on which interface you want to use.
 
 === "UI"
 
-    ??? note "BigQuery not supported in UI"
+    ??? warning "BigQuery not supported in UI"
         BigQuery is not supported in the UI at this time. It will be added soon!
         
 
@@ -113,6 +113,7 @@ methods defined to make it simple and easy to use.
 Within our class, we can start by defining the connection properties to connect to BigQuery.
 Follows same configuration as defined by the Spark BigQuery Connector as found
 [**here**](https://github.com/GoogleCloudDataproc/spark-bigquery-connector?tab=readme-ov-file#properties).
+By default, it will use `indirect` as the `writeMethod` which involves writing to GCS first before loading into BigQuery.
 
 === "Java"
 
@@ -148,8 +149,13 @@ Follows same configuration as defined by the Spark BigQuery Connector as found
 
 === "UI"
 
-    ??? note "BigQuery not supported in UI"
+    ??? warning "BigQuery not supported in UI"
         BigQuery is not supported in the UI at this time. It will be added soon!
+
+##### Authentication
+
+To setup authentication, follow the options found
+[**here**](https://github.com/GoogleCloudDataproc/spark-bigquery-connector?tab=readme-ov-file#how-do-i-authenticate-outside-gce--dataproc).
 
 #### Schema
 
