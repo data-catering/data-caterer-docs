@@ -51,6 +51,13 @@ const defaultDataTypeOptions = {
         help: "Generated values will be one of the defined values. Comma separated.",
         required: ""
     },
+    oneOfWeighted: {
+        displayName: "One Of Weighted",
+        default: [],
+        type: "text",
+        help: "Generated values will be one of the defined values by weight (i.e. open->0.8, closed->0.1, suspended->0.1). Comma separated.",
+        required: ""
+    },
     omit: {
         displayName: "Omit",
         default: "false",
@@ -91,6 +98,29 @@ function getNumberOptions(min, max) {
             default: 500,
             type: "number", ...minMaxOpt,
             help: "Mean of generated values.",
+            required: ""
+        },
+        round: {
+            displayName: "Round",
+            default: 2,
+            type: "integer",
+            help: "Round to number of decimal places.",
+            required: ""
+        },
+        distribution: {
+            displayName: "Distribution",
+            default: "normal",
+            type: "text",
+            choice: ["normal", "exponential"],
+            help: "Type of distribution values should follow.",
+            required: ""
+        },
+        incremental: {
+            displayName: "Incremental",
+            default: "",
+            type: "text",
+            disabled: "",
+            help: "Create incremental integer values. Starts from 1 until number of records generated.",
             required: ""
         }
     };
@@ -140,7 +170,14 @@ dataTypeOptionsMap.set("string", {
         help: "Probability of generating null values. Range from 0-1.",
         required: ""
     },
-    regex: {displayName: "Regex", default: "", type: "text", help: "Regex for generating values.", required: ""}
+    regex: {displayName: "Regex", default: "", type: "text", help: "Regex for generating values.", required: ""},
+    uuid: {
+        displayName: "UUID",
+        default: "",
+        type: "text",
+        help: "Generate UUID values. Optionally, define a field name to generate consistent UUID values from",
+        required: ""
+    }
 });
 dataTypeOptionsMap.set("integer", {...defaultDataTypeOptions, ...getNumberOptions(-2147483648, 2147483647)});
 dataTypeOptionsMap.set("long", {...defaultDataTypeOptions, ...getNumberOptions(-9223372036854775808, 9223372036854775807)});
@@ -262,10 +299,10 @@ dataTypeOptionsMap.set("array", {
 dataTypeOptionsMap.set("struct", {...defaultDataTypeOptions, addBlock: {type: "field"}});
 
 export const validationTypeDisplayNameMap = new Map();
-validationTypeDisplayNameMap.set("column", "Field");
+validationTypeDisplayNameMap.set("field", "Field");
 validationTypeDisplayNameMap.set("groupBy", "Group By/Aggregate");
 validationTypeDisplayNameMap.set("upstream", "Upstream");
-validationTypeDisplayNameMap.set("columnNames", "Field Names");
+validationTypeDisplayNameMap.set("fieldNames", "Field Names");
 export const validationTypeOptionsMap = new Map();
 const defaultValidationOptions = {
     description: {
@@ -282,7 +319,7 @@ const defaultValidationOptions = {
         help: "Number or percentage (0.0 to 1.0) of errors before marking validation as failed."
     },
 }
-validationTypeOptionsMap.set("column", {
+validationTypeOptionsMap.set("field", {
     ...defaultValidationOptions,
     defaultChildField: {displayName: "Field", default: "", type: "text", required: "", help: "Field to validate."},
     equal: {
@@ -292,8 +329,14 @@ validationTypeOptionsMap.set("column", {
         group: {type: "checkbox", innerText: "Not"},
         help: "Equal to value. Select 'Not' for not equals."
     },
-    null: {displayName: "Null", default: "", type: "text", disabled: "", help: "Values are null."},
-    notNull: {displayName: "Not Null", default: "", type: "text", disabled: "", help: "Values are not null."},
+    null: {
+        displayName: "Null",
+        default: "",
+        type: "text",
+        disabled: "",
+        group: {type: "checkbox", innerText: "Not"},
+        help: "Values are null."
+    },
     contains: {
         displayName: "Contains",
         default: "",
@@ -386,6 +429,7 @@ validationTypeOptionsMap.set("column", {
         default: "",
         type: "text",
         disabled: "",
+        group: {type: "checkbox", innerText: "Not"},
         help: "Values are valid credit card or identification numbers according to Luhn Algorithm.",
         required: ""
     },
@@ -394,6 +438,7 @@ validationTypeOptionsMap.set("column", {
         default: "string",
         type: "text",
         choice: baseDataTypes,
+        group: {type: "checkbox", innerText: "Not"},
         help: "Values are of data type."
     },
     sql: {
@@ -406,7 +451,7 @@ validationTypeOptionsMap.set("column", {
 });
 validationTypeOptionsMap.set("groupBy", {
     ...defaultValidationOptions,
-    defaultChildGroupByColumns: {
+    defaultChildGroupByFields: {
         displayName: "Group By Field(s)",
         default: "",
         type: "text",
@@ -418,14 +463,14 @@ validationTypeOptionsMap.set("groupBy", {
         default: "",
         type: "text",
         help: "Field name to count number of groups after group by.",
-        addBlock: {type: "column"}
+        addBlock: {type: "field"}
     },
     sum: {
         displayName: "Sum",
         default: "",
         type: "text",
         help: "Field name of values to sum after group by.",
-        addBlock: {type: "column"},
+        addBlock: {type: "field"},
         required: ""
     },
     min: {
@@ -433,7 +478,7 @@ validationTypeOptionsMap.set("groupBy", {
         default: "",
         type: "text",
         help: "Field name to find minimum value after group by.",
-        addBlock: {type: "column"},
+        addBlock: {type: "field"},
         required: ""
     },
     max: {
@@ -441,7 +486,7 @@ validationTypeOptionsMap.set("groupBy", {
         default: "",
         type: "text",
         help: "Field name to find maximum value after group by.",
-        addBlock: {type: "column"},
+        addBlock: {type: "field"},
         required: ""
     },
     average: {
@@ -449,7 +494,7 @@ validationTypeOptionsMap.set("groupBy", {
         default: "",
         type: "text",
         help: "Field name to find average value after group by.",
-        addBlock: {type: "column"},
+        addBlock: {type: "field"},
         required: ""
     },
     standardDeviation: {
@@ -457,7 +502,7 @@ validationTypeOptionsMap.set("groupBy", {
         default: "",
         type: "text",
         help: "Field name to find standard deviation value after group by.",
-        addBlock: {type: "column"},
+        addBlock: {type: "field"},
         required: ""
     },
 });
@@ -472,7 +517,13 @@ validationTypeOptionsMap.set("upstream", {
         help: "Name of upstream data generation task."
     },
     addBlock: {type: "validation"},
-    joinColumns: {displayName: "Join Field(s)", default: "", type: "text", help: "Field name(s) to join by.", required: ""},
+    joinFields: {
+        displayName: "Join Field(s)",
+        default: "",
+        type: "text",
+        help: "Field name(s) to join by.",
+        required: ""
+    },
     joinType: {
         displayName: "Join Type",
         default: "outer",
@@ -480,11 +531,23 @@ validationTypeOptionsMap.set("upstream", {
         choice: ["inner", "outer", "left_outer", "right_outer", "left_semi", "anti", "cross"],
         help: "Type of join."
     },
-    joinExpr: {displayName: "Join Expression", default: "", type: "text", help: "Custom join SQL expression.", required: ""}
+    joinExpr: {
+        displayName: "Join Expression",
+        default: "",
+        type: "text",
+        help: "Custom join SQL expression.",
+        required: ""
+    }
 });
-validationTypeOptionsMap.set("columnNames", {
+validationTypeOptionsMap.set("fieldNames", {
     ...defaultValidationOptions,
-    countEqual: {displayName: "Count Equal", default: 0, type: "number", help: "Number of fields has to equal value.", required: ""},
+    countEqual: {
+        displayName: "Count Equal",
+        default: 0,
+        type: "number",
+        help: "Number of fields has to equal value.",
+        required: ""
+    },
     countBetween: {
         displayName: "Count Between",
         default: 0,
@@ -581,6 +644,7 @@ configurationOptionsMap.set("flag", {
         default: "false",
         type: "text",
         choice: ["true", "false"],
+        paid: "true",
         help: "Enable/disable automatically generating validations based on the data sources defined."
     },
     "enableRecordTracking": {
@@ -589,6 +653,7 @@ configurationOptionsMap.set("flag", {
         default: "true",
         type: "text",
         choice: ["true", "false"],
+        paid: "true",
         help: "Enable/disable tracking of data records generated."
     },
     "enableDeleteGeneratedRecords": {
@@ -597,6 +662,7 @@ configurationOptionsMap.set("flag", {
         default: "false",
         type: "text",
         choice: ["true", "false"],
+        paid: "true",
         help: "Delete all generated records based off record tracking (if <code>Record Tracking</code> has been set to true whilst generating)."
     },
     "enableGeneratePlanAndTasks": {
@@ -605,6 +671,7 @@ configurationOptionsMap.set("flag", {
         default: "false",
         type: "text",
         choice: ["true", "false"],
+        paid: "true",
         help: "Enable/disable plan and task automatic generation based off data source connections."
     },
 });
@@ -642,6 +709,7 @@ configurationOptionsMap.set("validation", {
         default: "true",
         type: "text",
         choice: ["true", "false"],
+        paid: "true",
         help: "Enable/disable to delete record tracking files at end of execution."
     },
 });
@@ -660,6 +728,7 @@ configurationOptionsMap.set("metadata", {
         displayName: "Records From Data Source",
         default: 10000,
         type: "number",
+        paid: "true",
         min: 0,
         help: "Number of records read in from the data source that could be used for data profiling.",
         required: ""
@@ -669,6 +738,7 @@ configurationOptionsMap.set("metadata", {
         displayName: "Records For Analysis",
         default: 10000,
         type: "number",
+        paid: "true",
         min: 0,
         help: "Number of records used for data profiling from the records gathered in <code>Records From Data Source</code>.",
         required: ""
@@ -678,6 +748,7 @@ configurationOptionsMap.set("metadata", {
         displayName: "One-of Distinct Count vs Count Threshold",
         default: 0.2,
         type: "number",
+        paid: "true",
         min: 0.0,
         max: 1.0,
         step: 0.001,
@@ -689,6 +760,7 @@ configurationOptionsMap.set("metadata", {
         displayName: "One-of Min Count",
         default: 1000,
         type: "number",
+        paid: "true",
         min: 0,
         help: "Minimum number of records required before considering if a field can be of type oneOf.",
         required: ""
@@ -756,6 +828,7 @@ configurationOptionsMap.set("folder", {
         displayName: "Generated Plan And Tasks Folder Path",
         default: "/tmp",
         type: "text",
+        paid: "true",
         help: "Folder path where generated plan and task files will be saved.",
         required: ""
     },
@@ -764,6 +837,7 @@ configurationOptionsMap.set("folder", {
         displayName: "Record Tracking Folder Path",
         default: "/opt/app/record-tracking",
         type: "text",
+        paid: "true",
         help: "Folder path where record tracking files will be saved.",
         required: ""
     },
@@ -772,6 +846,7 @@ configurationOptionsMap.set("folder", {
         displayName: "Record Tracking For Validation Folder Path",
         default: "/opt/app/record-tracking-validation",
         type: "text",
+        paid: "true",
         help: "Folder path where record tracking for validation files will be saved.",
         required: ""
     },
@@ -790,6 +865,25 @@ reportConfigKeys.forEach(key => reportOptionsMap.set(key[1], configurationOption
 
 export const dataSourcePropertiesMap = new Map();
 // Data Source
+dataSourcePropertiesMap.set("bigquery", {
+    optGroupLabel: "Data Source",
+    Name: "BigQuery",
+    properties: {
+        temporaryGcsBucket: {
+            displayName: "Temporary GCS Bucket",
+            default: "",
+            type: "text",
+            help: "Temporary Google Cloud Storage bucket to store data."
+        },
+        table: {
+            displayName: "Table",
+            default: "",
+            type: "text",
+            help: "Table to generate/validate data to/from. Format: [project name].[dataset name].[table name].",
+            override: "true",
+        }
+    }
+})
 dataSourcePropertiesMap.set("cassandra", {
     optGroupLabel: "Data Source",
     Name: "Cassandra",
@@ -820,14 +914,14 @@ dataSourcePropertiesMap.set("cassandra", {
             default: "",
             type: "text",
             help: "Keyspace to generate/validate data to/from.",
-            override: "true"
+            override: "true",
         },
         table: {
             displayName: "Table",
             default: "",
             type: "text",
             help: "Table to generate/validate data to/from.",
-            override: "true"
+            override: "true",
         }
     }
 });
@@ -853,7 +947,7 @@ dataSourcePropertiesMap.set("csv", {
             displayName: "Partition By",
             default: "",
             type: "text",
-            help: "Column name(s) to partition by (comma separated).",
+            help: "Field name(s) to partition by (comma separated).",
             override: "true"
         }
     }
@@ -945,7 +1039,7 @@ dataSourcePropertiesMap.set("iceberg", {
             displayName: "Partition By",
             default: "",
             type: "text",
-            help: "Column name(s) to partition by (comma separated).",
+            help: "Field name(s) to partition by (comma separated).",
             override: "true"
         }
     }
@@ -972,7 +1066,7 @@ dataSourcePropertiesMap.set("json", {
             displayName: "Partition By",
             default: "",
             type: "text",
-            help: "Column name(s) to partition by (comma separated).",
+            help: "Field name(s) to partition by (comma separated).",
             override: "true"
         }
     }
@@ -994,7 +1088,7 @@ dataSourcePropertiesMap.set("kafka", {
             type: "text",
             help: "Topic to generate/validate data to/from.",
             required: "",
-            override: "true"
+            override: "true",
         },
     }
 });
@@ -1028,14 +1122,14 @@ dataSourcePropertiesMap.set("mysql", {
             default: "",
             type: "text",
             help: "Schema to generate/validate data to/from.",
-            override: "true"
+            override: "true",
         },
         table: {
             displayName: "Table",
             default: "",
             type: "text",
             help: "Table to generate/validate data to/from.",
-            override: "true"
+            override: "true",
         }
     }
 });
@@ -1061,7 +1155,7 @@ dataSourcePropertiesMap.set("orc", {
             displayName: "Partition By",
             default: "",
             type: "text",
-            help: "Column name(s) to partition by (comma separated).",
+            help: "Field name(s) to partition by (comma separated).",
             override: "true"
         }
     }
@@ -1088,7 +1182,7 @@ dataSourcePropertiesMap.set("parquet", {
             displayName: "Partition By",
             default: "",
             type: "text",
-            help: "Column name(s) to partition by (comma separated).",
+            help: "Field name(s) to partition by (comma separated).",
             override: "true"
         }
     }
@@ -1123,14 +1217,49 @@ dataSourcePropertiesMap.set("postgres", {
             default: "",
             type: "text",
             help: "Schema to generate/validate data to/from.",
-            override: "true"
+            override: "true",
         },
         table: {
             displayName: "Table",
             default: "",
             type: "text",
             help: "Table to generate/validate data to/from.",
-            override: "true"
+            override: "true",
+        }
+    }
+});
+dataSourcePropertiesMap.set("rabbitmq", {
+    optGroupLabel: "Data Source",
+    Name: "RabbitMQ",
+    properties: {
+        url: {
+            displayName: "URL",
+            default: "ampq://host.docker.internal:5672",
+            type: "text",
+            help: "URL to connect to RabbitMQ.",
+            required: ""
+        },
+        user: {
+            displayName: "Username",
+            default: "guest",
+            type: "text",
+            help: "Username to connect to RabbitMQ.",
+            required: ""
+        },
+        password: {
+            displayName: "Password",
+            default: "guest",
+            type: "password",
+            help: "Password to connect to RabbitMQ.",
+            required: ""
+        },
+        destination: {
+            displayName: "Destination",
+            default: "accounts",
+            type: "text",
+            help: "JMS destination (queue or topic) to generate data to.",
+            required: "",
+            override: "true",
         }
     }
 });
@@ -1149,9 +1278,9 @@ dataSourcePropertiesMap.set("solace", {
             displayName: "Destination",
             default: "/JNDI/Q/test_queue",
             type: "text",
-            help: "JNDI destination to generate/validate data to/from.",
+            help: "JNDI JMS destination to generate data to.",
             required: "",
-            override: "true"
+            override: "true",
         }
     }
 });
@@ -1170,19 +1299,6 @@ dataSourcePropertiesMap.set("amundsen", {
         }
     }
 });
-dataSourcePropertiesMap.set("dataContractCli", {
-    optGroupLabel: "Metadata Source",
-    Name: "Data Contract CLI",
-    properties: {
-        path: {
-            displayName: "Contract File",
-            default: "",
-            type: "text",
-            help: "File path to data contract file.",
-            required: ""
-        }
-    }
-});
 dataSourcePropertiesMap.set("datahub", {
     optGroupLabel: "Metadata Source",
     Name: "Datahub",
@@ -1196,7 +1312,20 @@ dataSourcePropertiesMap.set("datahub", {
         }
     }
 });
-dataSourcePropertiesMap.set("great_expectations", {
+dataSourcePropertiesMap.set("dataContractCli", {
+    optGroupLabel: "Metadata Source",
+    Name: "Data Contract CLI",
+    properties: {
+        path: {
+            displayName: "Contract File",
+            default: "",
+            type: "text",
+            help: "File path to data contract file.",
+            required: ""
+        }
+    }
+});
+dataSourcePropertiesMap.set("greatExpectations", {
     optGroupLabel: "Metadata Source",
     Name: "Great Expectations",
     properties: {
@@ -1251,7 +1380,7 @@ dataSourcePropertiesMap.set("openApi", {
 });
 dataSourcePropertiesMap.set("openDataContractStandard", {
     optGroupLabel: "Metadata Source",
-    Name: "ODCS",
+    Name: "Open Data Contract Standard (ODCS)",
     properties: {
         path: {
             displayName: "Contract File",
@@ -1315,5 +1444,24 @@ dataSourcePropertiesMap.set("slack", {
             help: "Channel(s) to send alerts to (comma separated).",
             required: ""
         }
+    }
+});
+
+export let subDataSourceConfigMap = new Map();
+subDataSourceConfigMap.set("http", {
+    method: {
+        displayName: "Method",
+        default: "",
+        type: "text",
+        help: "HTTP method.",
+        choice: ["", "GET", "POST", "PUT", "DELETE", "PATCH", "CONNECT", "OPTIONS", "TRACE", "HEAD"],
+        override: "true"
+    },
+    endpoint: {
+        displayName: "Endpoint",
+        default: "",
+        type: "text",
+        help: "Endpoint pathway (i.e. '/my-path/data').",
+        override: "true"
     }
 });
