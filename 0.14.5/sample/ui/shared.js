@@ -595,32 +595,9 @@ export function executePlan(requestBody, planName, runId) {
                         createToast(planName, `Plan ${planName} failed! Error: ${err}`, "fail");
                         reject("Plan run failed");
                     })
-                    .then(resp => {
-                        if (resp.ok) {
-                            return resp.json();
-                        } else {
-                            resp.text().then(text => {
-                                createToast(planName, `Plan ${planName} failed! Error: ${text}`, "fail");
-                                throw new Error(text);
-                            });
-                        }
-                    })
-                    .then(respJson => {
-                        let latestStatus = respJson.status;
-                        if (latestStatus !== currentStatus) {
-                            currentStatus = latestStatus;
-                            let type = "running";
-                            let msg = `Plan ${planName} update, status: ${latestStatus}`;
-                            if (currentStatus === "finished") {
-                                type = "success";
-                                msg = `Successfully completed ${planName}.`;
-                            } else if (currentStatus === "failed") {
-                                type = "fail";
-                                let failReason = respJson.failedReason.length > 200 ? respJson.failedReason.substring(0, 200) + "..." : respJson.failedReason;
-                                msg = `Plan ${planName} failed! Error: ${failReason}`;
-                            }
-                            createToast(planName, msg, type);
-                        }
+                    .then(() => {
+                        currentStatus = "finished";
+                        createToast(planName, `Successfully completed ${planName}.`, "success");
                     });
                 await wait(500);
             }

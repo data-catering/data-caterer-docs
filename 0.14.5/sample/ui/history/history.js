@@ -72,7 +72,7 @@ Promise.resolve({"planExecutionByPlan":[{"executions":[{"id":"1cbd6ab2-a59e-4e60
 
             let editButton = createButton(`plan-edit-${planRunsByIdTableId}`, "Plan edit", "btn btn-primary", "Edit");
             editButton.addEventListener("click", function() {
-                location.href = `http://localhost:9898/?plan-name=${planName}`;
+                location.href = `https://data.catering/latest/sample/ui/index.html?plan-name=${planName}`;
             });
             let buttonGroup = createButtonGroup(editButton);
             let header = planHistoryContainer.querySelector(".accordion-header");
