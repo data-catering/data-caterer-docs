@@ -13,14 +13,14 @@
         <link rel="canonical" href="https://data.catering/0.14.5/docs/guide/data-source/messaging/solace/">
       
       
-        <link rel="prev" href="../kafka/">
+        <link rel="prev" href="../rabbitmq/">
       
       
         <link rel="next" href="../../metadata/data-contract-cli/">
       
       
       <link rel="icon" href="../../../../../diagrams/logo/data_catering_transparent.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
     
     
       
@@ -28,7 +28,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.a40c8224.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
@@ -62,7 +62,7 @@
         
         
         
-        <link rel="stylesheet" href="../../../../../assets/external/fonts.googleapis.com/css.49ea35f2.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -936,6 +936,28 @@
   
   
     <li class="md-nav__item">
+      <a href="../../database/bigquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BigQuery
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../database/cassandra/" class="md-nav__link">
         
   
@@ -1304,6 +1326,28 @@
   
   <span class="md-ellipsis">
     Kafka
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rabbitmq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RabbitMQ
     
   </span>
   
@@ -2366,6 +2410,28 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../use-case/blog/rethinking-shift-left-for-data-pipelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rethinking shift-left for data pipelines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../use-case/blog/a-year-of-getting-paid-from-medium-articles/" class="md-nav__link">
         
   
@@ -2449,6 +2515,94 @@
             Changelog
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../use-case/changelog/0.15.0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0.15.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../use-case/changelog/0.14.7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0.14.7
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../use-case/changelog/0.14.6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0.14.6
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../use-case/changelog/0.14.5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0.14.5
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2671,7 +2825,6 @@ for the queues/topics you configure.</p>
 <li>Git</li>
 <li>Gradle</li>
 <li>Docker</li>
-<li>Solace</li>
 </ul>
 <h2 id="get-started">Get Started</h2>
 <p>First, we will clone the data-caterer-example repo which will already have the base project setup required.</p>
@@ -3166,25 +3319,21 @@ output folder of that report via configurations.</p>
 <h3 id="run">Run</h3>
 <p>Now we can run via the script <code>./run.sh</code> that is in the top level directory of the <code>data-caterer-example</code> to run the
 class we just created.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>./run.sh
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1">#input class AdvancedSolaceJavaPlanRun or AdvancedSolacePlanRun</span>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="c1">#after completing, check http://localhost:8080 from browser</span>
-</span></code></pre></div>
 <div class="tabbed-set tabbed-alternate" data-tabs="9:4"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><input id="__tabbed_9_3" name="__tabbed_9" type="radio" /><input id="__tabbed_9_4" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">Java</label><label for="__tabbed_9_2">Scala</label><label for="__tabbed_9_3">YAML</label><label for="__tabbed_9_4">UI</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>./run.sh<span class="w"> </span>AdvancedSolaceJavaPlanRun
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>./run.sh<span class="w"> </span>AdvancedSolaceJavaPlanRun
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1">#after completing, check http://localhost:8080 from browser</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>./run.sh<span class="w"> </span>AdvancedSolacePlanRun
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="c1">#after completing, check http://localhost:8080 from browser</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>./run.sh<span class="w"> </span>AdvancedSolacePlanRun
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>./run.sh<span class="w"> </span>my-solace.yaml
 </span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="c1">#after completing, check http://localhost:8080 from browser</span>
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>./run.sh<span class="w"> </span>my-solace.yaml
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="c1">#after completing, check http://localhost:8080 from browser</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -3246,7 +3395,7 @@ was executed. Or view the sample report found <a href="../../../../../sample/rep
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../kafka/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Kafka">
+          <a href="../rabbitmq/" class="md-footer__link md-footer__link--prev" aria-label="Previous: RabbitMQ">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3256,7 +3405,7 @@ was executed. Or view the sample report found <a href="../../../../../sample/rep
                 Previous
               </span>
               <div class="md-ellipsis">
-                Kafka
+                RabbitMQ
               </div>
             </div>
           </a>
@@ -3395,7 +3544,7 @@ was executed. Or view the sample report found <a href="../../../../../sample/rep
     <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.instant", "navigation.instant.prefetch", "navigation.tracking", "navigation.top", "navigation.footer", "navigation.path", "content.code.copy", "content.code.select", "content.tabs.link", "toc.integrate", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.5090c770.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.f1b6f286.min.js"></script>
       
         <script src="../../../../../js/open_in_new_tab.js"></script>
       
