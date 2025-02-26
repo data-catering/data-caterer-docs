@@ -275,7 +275,7 @@ have the following configuration:
               - "account_id"
               - "name"
             options:
-              oneOfWeighted: ["1->0.5", "5->0.3", "10->0.2"]
+              oneOf: ["1->0.5", "5->0.3", "10->0.2"]
     ```
 
 #### Distribution

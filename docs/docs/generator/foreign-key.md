@@ -495,3 +495,137 @@ Below is how you can define the order of the HTTP data sources.
               step: "DELETE/pets/{id}"
               fields: ["pathParamid"]
     ```
+
+## Fast Relationships
+
+You may want to generate a large number of records whilst retaining relationships across datasets. This consumes a lot
+of memory as Data Caterer will keep track of generated values and will check for global uniqueness.
+
+There are some tactics that can be used to avoid defining a relationships but still maintain the same values across
+datasets by leveraging incremental values. When you define an incremental value, it will be globally unique across the 
+data generated for that field. Below is an example where you have `accounts` and `transactions` where the same `id`
+values should appear in both datasets.
+
+=== "Java"
+
+    ```java
+    var accountTask = csv("accounts", "app/src/test/resources/sample/csv/accounts")
+        .fields(
+            field().name("id").type(LongType.instance()).incremental()
+        );
+
+    var transactionTask = csv("transactions", "app/src/test/resources/sample/csv/transactions")
+        .fields(
+            field().name("id").type(LongType.instance()).incremental()
+        );
+    
+    var config = configuration()
+      .enableCount(false)
+      .enableSinkMetadata(false)
+      .enableUniqueCheckOnlyInBatch(true);
+    ```
+
+=== "Scala"
+
+    ```scala
+    val accountTask = csv("accounts", "app/src/test/resources/sample/csv/accounts")
+      .fields(
+        field.name("id").`type`(LongType).incremental()
+      )
+
+    val transactionTask = csv("transactions", "app/src/test/resources/sample/csv/transactions")
+      .fields(
+        field.name("id").`type`(LongType).incremental()
+      )
+
+    val config = configuration
+      .enableCount(false)
+      .enableSinkMetadata(false)
+      .enableUniqueCheckOnlyInBatch(true)
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "csv_file"
+    steps:
+      - name: "accounts"
+        ...
+        fields:
+          - name: "id"
+            type: "long"
+            options:
+              incremental: 1
+      - name: "transactions"
+        ...
+        fields:
+          - name: "id"
+            type: "long"
+            options:
+              incremental: 1
+    ```
+
+    In `docker/data/custom/application.conf`:
+    ```yaml
+    flags {
+        enableCount = false
+        enableCount = ${?ENABLE_COUNT}
+        enableSinkMetadata = false
+        enableSinkMetadata = ${?ENABLE_SINK_METADATA}
+        enableUniqueCheckOnlyInBatch = true
+        enableUniqueCheckOnlyInBatch = ${?ENABLE_UNIQUE_CHECK_ONLY_IN_BATCH}
+    }
+    ```
+
+### UUID
+
+If you require UUID values to match across datasets, you can also leverage `incremental` with `uuid`.
+
+=== "Java"
+
+    ```java
+    var accountTask = csv("accounts", "app/src/test/resources/sample/csv/accounts")
+        .fields(
+            field().name("id").incremental().uuid()
+        );
+
+    var transactionTask = csv("transactions", "app/src/test/resources/sample/csv/transactions")
+        .fields(
+            field().name("id").incremental().uuid()
+        );
+    ```
+
+=== "Scala"
+
+    ```scala
+    val accountTask = csv("accounts", "app/src/test/resources/sample/csv/accounts")
+      .fields(
+        field.name("id").incremental().uuid()
+      )
+
+    val transactionTask = csv("transactions", "app/src/test/resources/sample/csv/transactions")
+      .fields(
+        field.name("id").incremental().uuid()
+      )
+    ```
+
+=== "YAML"
+
+    ```yaml
+    name: "csv_file"
+    steps:
+      - name: "accounts"
+        ...
+        fields:
+          - name: "id"
+            options:
+              incremental: 1
+              uuid: ""
+      - name: "transactions"
+        ...
+        fields:
+          - name: "id"
+            options:
+              incremental: 1
+              uuid: ""
+    ```
