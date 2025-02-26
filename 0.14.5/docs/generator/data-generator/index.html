@@ -3038,13 +3038,7 @@ descriptions:</p>
 <tr>
 <td><code>oneOf</code></td>
 <td><empty></td>
-<td><code>oneOf: ["open", "closed", "suspended"]</code></td>
-<td>Field can only take one of the prescribed values</td>
-</tr>
-<tr>
-<td><code>oneOfWeighted</code></td>
-<td><empty></td>
-<td><code>oneOfWeighted: ["open-&gt;0.8", "closed-&gt;0.1", "suspended-&gt;0.1"]</code></td>
+<td><code>oneOf: ["open", "closed", "suspended"]</code> or <code>oneOf: ["open-&gt;0.8", "closed-&gt;0.1", "suspended-&gt;0.1"]</code></td>
 <td>Field can only take one of the prescribed values. Chance of value being chosen is based on the weight assigned to it. Weight can be any double value.</td>
 </tr>
 <tr>
@@ -3100,7 +3094,7 @@ descriptions:</p>
 <td><code>uuid</code></td>
 <td><empty></td>
 <td><code>uuid: "account_id"</code></td>
-<td>Generate a UUID value. If value is non-empty, UUID value will be generated based off column value.</td>
+<td>Generate a UUID value. If value is non-empty, UUID value will be generated based off column value</td>
 </tr>
 </tbody>
 </table>
@@ -3212,9 +3206,9 @@ as defined by the data source (i.e. max value as per database type).</p>
 </tr>
 <tr>
 <td><code>incremental</code></td>
-<td><empty></td>
-<td><code>incremental: ""</code></td>
-<td>Values will be incremental. Starting from 1 until number of rows generated</td>
+<td>1</td>
+<td><code>incremental: "1"</code></td>
+<td>Values will be incremental. Define a start number to increment from</td>
 </tr>
 </tbody>
 </table>
