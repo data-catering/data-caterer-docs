@@ -127,7 +127,7 @@ in total.
         count:
           records: 1000
           perField:
-            records: 2
+            count: 2
             fieldNames:
               - "account_id"
               - "name"
