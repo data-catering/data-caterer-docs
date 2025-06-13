@@ -195,6 +195,8 @@ to the accounts generated.
     steps:
       - name: "accounts"
         type: "json"
+        options:
+          path: "/opt/app/data/customer/account_json"
         fields:
           - name: "account_id"
           - name: "balance"
@@ -204,6 +206,7 @@ to the accounts generated.
             type: "timestamp"
           - name: "status"
           - name: "customer_details"
+            type: "struct"
             fields:
               - name: "name"
               - name: "age"
