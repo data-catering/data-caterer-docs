@@ -100,6 +100,7 @@ nav:
               - Metadata:
                 - Data Contract CLI: 'docs/guide/data-source/metadata/data-contract-cli.md'
                 - Great Expectations: 'docs/guide/data-source/metadata/great-expectations.md'
+                - JSON Schema: 'docs/guide/data-source/metadata/json-schema.md'
                 - Marquez: 'docs/guide/data-source/metadata/marquez.md'
                 - OpenMetadata: 'docs/guide/data-source/metadata/open-metadata.md'
                 - Open Data Contract Standard (ODCS): 'docs/guide/data-source/metadata/open-data-contract-standard.md'
@@ -132,6 +133,7 @@ nav:
           - A year of getting paid from Medium articles: 'use-case/blog/a-year-of-getting-paid-from-medium-articles.md'
           - Shift Left Data Quality: 'use-case/blog/shift-left-data-quality.md'
       - Changelog:
+          - 0.16.0: 'use-case/changelog/0.16.0.md'
           - 0.15.0: 'use-case/changelog/0.15.0.md'
           - 0.14.7: 'use-case/changelog/0.14.7.md'
           - 0.14.6: 'use-case/changelog/0.14.6.md'
@@ -141,7 +143,6 @@ nav:
           - 0.14.2: 'use-case/changelog/0.14.2.md'
   - About:
       - 'about.md'
-      - Pricing: 'pricing.md'
   - Demo: 'demo.md'
 
 
