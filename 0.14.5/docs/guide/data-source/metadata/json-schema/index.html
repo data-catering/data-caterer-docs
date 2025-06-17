@@ -3278,11 +3278,13 @@
 </div>
 </div>
 </div>
-<p>The field filtering options provide flexibility to:
-- <strong>includeFields</strong>: Only generate data for the specified field paths
-- <strong>excludeFields</strong>: Generate data for all fields except the specified ones
-- <strong>includeFieldPatterns</strong>: Include fields matching the regex patterns
-- <strong>excludeFieldPatterns</strong>: Exclude fields matching the regex patterns</p>
+<p>The field filtering options provide flexibility to:</p>
+<ul>
+<li><strong>includeFields</strong>: Only generate data for the specified field paths</li>
+<li><strong>excludeFields</strong>: Generate data for all fields except the specified ones</li>
+<li><strong>includeFieldPatterns</strong>: Include fields matching the regex patterns</li>
+<li><strong>excludeFieldPatterns</strong>: Exclude fields matching the regex patterns</li>
+</ul>
 <p>Field paths use dot notation to navigate nested structures (e.g., <code>parent.child.grandchild</code>).</p>
 <h4 id="additional-configurations">Additional Configurations</h4>
 <p>At the end of data generation, a report gets generated that summarises the actions it performed. We can control the output folder of that report via configurations.</p>
@@ -3358,7 +3360,33 @@
 </div>
 </div>
 <p>It should look something like this.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span><span class="nt">&quot;customer_direct_debit_initiation_v11&quot;</span><span class="p">:{</span><span class="nt">&quot;group_header&quot;</span><span class="p">:{</span><span class="nt">&quot;message_identification&quot;</span><span class="p">:</span><span class="s2">&quot;MSG001&quot;</span><span class="p">,</span><span class="nt">&quot;creation_date_time&quot;</span><span class="p">:</span><span class="s2">&quot;2024-03-15T10:30:45Z&quot;</span><span class="p">,</span><span class="nt">&quot;number_of_transactions&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;control_sum&quot;</span><span class="p">:</span><span class="mf">100.50</span><span class="p">,</span><span class="nt">&quot;initiating_party&quot;</span><span class="p">:{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;ACME Corp&quot;</span><span class="p">}},</span><span class="nt">&quot;payment_information&quot;</span><span class="p">:{</span><span class="nt">&quot;payment_information_identification&quot;</span><span class="p">:</span><span class="s2">&quot;PMT001&quot;</span><span class="p">,</span><span class="nt">&quot;payment_method&quot;</span><span class="p">:</span><span class="s2">&quot;DD&quot;</span><span class="p">,</span><span class="nt">&quot;batch_booking&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">&quot;direct_debit_transaction_information&quot;</span><span class="p">:{</span><span class="nt">&quot;payment_identification&quot;</span><span class="p">:{</span><span class="nt">&quot;end_to_end_identification&quot;</span><span class="p">:</span><span class="s2">&quot;TXN001&quot;</span><span class="p">},</span><span class="nt">&quot;instructed_amount&quot;</span><span class="p">:{</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="mf">100.50</span><span class="p">,</span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="s2">&quot;EUR&quot;</span><span class="p">}}}}}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="nt">&quot;customer_direct_debit_initiation_v11&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">        </span><span class="nt">&quot;group_header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">            </span><span class="nt">&quot;message_identification&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MSG001&quot;</span><span class="p">,</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">            </span><span class="nt">&quot;creation_date_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-03-15T10:30:45Z&quot;</span><span class="p">,</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">            </span><span class="nt">&quot;number_of_transactions&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">            </span><span class="nt">&quot;control_sum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">100.50</span><span class="p">,</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">            </span><span class="nt">&quot;initiating_party&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ACME Corp&quot;</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">        </span><span class="p">},</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">        </span><span class="nt">&quot;payment_information&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="w">            </span><span class="nt">&quot;payment_information_identification&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PMT001&quot;</span><span class="p">,</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="w">            </span><span class="nt">&quot;payment_method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DD&quot;</span><span class="p">,</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="w">            </span><span class="nt">&quot;batch_booking&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="w">            </span><span class="nt">&quot;direct_debit_transaction_information&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="w">                </span><span class="nt">&quot;payment_identification&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="w">                    </span><span class="nt">&quot;end_to_end_identification&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TXN001&quot;</span>
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a><span class="w">                </span><span class="p">},</span>
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a><span class="w">                </span><span class="nt">&quot;instructed_amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="w">                    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">100.50</span><span class="p">,</span>
+</span><span id="__span-23-22"><a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a><span class="w">                    </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EUR&quot;</span>
+</span><span id="__span-23-23"><a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a><span class="w">                </span><span class="p">}</span>
+</span><span id="__span-23-24"><a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-23-25"><a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-23-26"><a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-23-27"><a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Congratulations! You have now made a data generator that uses JSON Schema as a metadata source to generate realistic test data following your schema specifications.</p>
 <h3 id="complex-schema-support">Complex Schema Support</h3>
