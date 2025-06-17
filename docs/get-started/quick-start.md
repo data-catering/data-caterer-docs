@@ -6,14 +6,6 @@ image: "https://data.catering/diagrams/logo/data_catering_logo.svg"
 
 # Run Data Caterer
 
-## Get Token
-
-To run a trial of Data Caterer, you will need a username and token. Get one by following the below instructions.
-
-1. Join the Data Catering [Slack](https://join.slack.com/t/data-catering/shared_invite/zt-2664ylbpi-w3n7lWAO~PHeOG9Ujpm~~w)
-2. In any channel, type `/token` (the message will only be seen by you)
-3. Take note of your given `user-id` and `token` values (your token value will not be shown again as it is not stored anywhere)
-
 ## Quick start
 
 <div class="grid cards" markdown>
@@ -69,49 +61,51 @@ To run a trial of Data Caterer, you will need a username and token. Get one by f
 git clone git@github.com:data-catering/data-caterer-example.git
 cd data-caterer-example && ./run.sh
 #check results under docker/sample/report/index.html folder
+#If you want to run any other examples, check the class names under src/scala or src/java
+#And then run with ./run.sh <class_name>
+#i.e. ./run.sh CsvPlan
 ```
 
 ### YAML
 
 ```shell
 git clone git@github.com:data-catering/data-caterer-example.git
-cd data-caterer-example && ./run.sh
+cd data-caterer-example && ./run.sh simple-json.yaml
 #check results under docker/sample/report/index.html folder
 #check example YAML files under:
 # - docker/data/custom/plan
 # - docker/data/custom/task
 # - docker/data/custom/validation
+#If you want to run any other examples, check the files under docker/data/custom/plan
+#And then run with ./run.sh <file_name>
+#i.e. ./run.sh parquet.yaml
 ```
 
 ### Docker
 
 1. Docker
    ```shell
-   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.15.2
+   docker run -d -i -p 9898:9898 -e DEPLOY_MODE=standalone --name datacaterer datacatering/data-caterer:0.16.1
    ```
 2. [Open localhost:9898](http://localhost:9898)
-3. Login with the user and token given from [here](#get-token)
 
 ### Mac
 
-1. In any Slack channel, type `/download-mac` (the message will only be seen by you) and download from the link provided
-2. Drag Data Caterer to your Applications folder adn double-click to run
+1. [Mac download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-mac.zip)
+2. Drag Data Caterer to your Applications folder and double-click to run
 3. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
-4. Login with the user and token given from [here](#get-token)
 
 ### Windows
 
-1. In any Slack channel, type `/download-windows` (the message will only be seen by you) and download from the link provided
+1. [Windows download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-windows.zip)
 2. Click on 'More info' then at the bottom, click 'Run anyway'
 3. Go to '/Program Files/DataCaterer' folder and run DataCaterer application
 4. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
-5. Login with the user and token given from [here](#get-token)
 
 ### Linux
 
-1. In any Slack channel, type `/download-linux` (the message will only be seen by you) and download from the link provided
+1. [Linux download](https://nightly.link/data-catering/data-caterer/workflows/build/main/data-caterer-linux.zip)
 2. If your browser doesn't open, go to [http://localhost:9898](http://localhost:9898) in your preferred browser
-3. Login with the user and token given from [here](#get-token)
 
 #### Report
 

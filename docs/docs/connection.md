@@ -39,6 +39,7 @@ These configurations can be done via API or from configuration. Examples of both
 | Messaging        | Pulsar                             | :octicons-x-circle-fill-12:{ .red-cross } |
 | Metadata         | Data Contract CLI                  | :white_check_mark:                        |
 | Metadata         | Great Expectations                 | :white_check_mark:                        |
+| Metadata         | JSON Schema                        | :white_check_mark:                        |
 | Metadata         | Marquez                            | :white_check_mark:                        |
 | Metadata         | OpenMetadata                       | :white_check_mark:                        |
 | Metadata         | OpenAPI/Swagger                    | :white_check_mark:                        |

@@ -350,6 +350,7 @@ JSON Schema metadata source supports powerful field filtering capabilities to co
     1. Or use `Exclude Field Patterns` with regex patterns
 
 The field filtering options provide flexibility to:
+
 - **includeFields**: Only generate data for the specified field paths
 - **excludeFields**: Generate data for all fields except the specified ones
 - **includeFieldPatterns**: Include fields matching the regex patterns
@@ -439,7 +440,33 @@ Now we can run via the script `./run.sh` that is in the top level directory of t
 It should look something like this.
 
 ```json
-{"customer_direct_debit_initiation_v11":{"group_header":{"message_identification":"MSG001","creation_date_time":"2024-03-15T10:30:45Z","number_of_transactions":1,"control_sum":100.50,"initiating_party":{"name":"ACME Corp"}},"payment_information":{"payment_information_identification":"PMT001","payment_method":"DD","batch_booking":true,"direct_debit_transaction_information":{"payment_identification":{"end_to_end_identification":"TXN001"},"instructed_amount":{"value":100.50,"currency":"EUR"}}}}}
+{
+    "customer_direct_debit_initiation_v11": {
+        "group_header": {
+            "message_identification": "MSG001",
+            "creation_date_time": "2024-03-15T10:30:45Z",
+            "number_of_transactions": 1,
+            "control_sum": 100.50,
+            "initiating_party": {
+                "name": "ACME Corp"
+            }
+        },
+        "payment_information": {
+            "payment_information_identification": "PMT001",
+            "payment_method": "DD",
+            "batch_booking": true,
+            "direct_debit_transaction_information": {
+                "payment_identification": {
+                    "end_to_end_identification": "TXN001"
+                },
+                "instructed_amount": {
+                    "value": 100.50,
+                    "currency": "EUR"
+                }
+            }
+        }
+    }
+}
 ```
 
 Congratulations! You have now made a data generator that uses JSON Schema as a metadata source to generate realistic test data following your schema specifications.
