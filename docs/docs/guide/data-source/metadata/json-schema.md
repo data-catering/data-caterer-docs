@@ -242,7 +242,7 @@ We can point the schema of a data source to our JSON Schema file. The metadata s
           path: "/opt/app/data/json-schema-output"
           saveMode: "overwrite"
           metadataSourceType: "jsonSchema"
-          schemaFile: "/opt/app/mount/json-schema/payment-schema.json"
+          jsonSchemaFile: "/opt/app/mount/json-schema/payment-schema.json"
         count:
           records: 10
     ```
@@ -319,7 +319,7 @@ JSON Schema metadata source supports powerful field filtering capabilities to co
           path: "/opt/app/data/json-schema-output"
           saveMode: "overwrite"
           metadataSourceType: "jsonSchema"
-          schemaFile: "/opt/app/mount/json-schema/payment-schema.json"
+          jsonSchemaFile: "/opt/app/mount/json-schema/payment-schema.json"
           # Include specific fields only
           includeFields:
             - "customer_direct_debit_initiation_v11.group_header.message_identification"
