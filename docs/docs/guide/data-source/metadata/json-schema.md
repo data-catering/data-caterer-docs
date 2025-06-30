@@ -60,14 +60,14 @@ Example JSON Schema structure:
         "group_header": {
           "type": "object",
           "properties": {
-            "message_identification": {"type": "string"},
-            "creation_date_time": {"type": "string", "format": "date-time"},
-            "number_of_transactions": {"type": "integer"},
-            "control_sum": {"type": "number"},
+            "message_identification": { "type": "string" },
+            "creation_date_time": { "type": "string", "format": "date-time" },
+            "number_of_transactions": { "type": "integer" },
+            "control_sum": { "type": "number" },
             "initiating_party": {
               "type": "object",
               "properties": {
-                "name": {"type": "string"}
+                "name": { "type": "string" }
               }
             }
           }
@@ -75,23 +75,23 @@ Example JSON Schema structure:
         "payment_information": {
           "type": "object",
           "properties": {
-            "payment_information_identification": {"type": "string"},
-            "payment_method": {"type": "string"},
-            "batch_booking": {"type": "boolean"},
+            "payment_information_identification": { "type": "string" },
+            "payment_method": { "type": "string" },
+            "batch_booking": { "type": "boolean" },
             "direct_debit_transaction_information": {
               "type": "object",
               "properties": {
                 "payment_identification": {
                   "type": "object",
                   "properties": {
-                    "end_to_end_identification": {"type": "string"}
+                    "end_to_end_identification": { "type": "string" }
                   }
                 },
                 "instructed_amount": {
                   "type": "object",
                   "properties": {
-                    "value": {"type": "number"},
-                    "currency": {"type": "string"}
+                    "value": { "type": "number" },
+                    "currency": { "type": "string" }
                   }
                 }
               }
@@ -116,7 +116,7 @@ Create a file depending on which interface you want to use.
 
     ```java
     import io.github.datacatering.datacaterer.java.api.PlanRun;
-    
+
     public class MyJSONSchemaJavaPlan extends PlanRun {
         {
             var conf = configuration().enableGeneratePlanAndTasks(true)
@@ -129,7 +129,7 @@ Create a file depending on which interface you want to use.
 
     ```scala
     import io.github.datacatering.datacaterer.api.PlanRun
-    
+
     class MyJSONSchemaPlan extends PlanRun {
       val conf = configuration.enableGeneratePlanAndTasks(true)
         .generatedReportsFolderPath("/opt/app/data/report")
@@ -185,7 +185,7 @@ Within our class, we can start by defining the connection properties to read/wri
 
     ```scala
     val jsonSchemaTask = json(
-      "my_json_schema",                           //name         
+      "my_json_schema",                           //name
       "/opt/app/data/json-schema-output",         //path
       Map("saveMode" -> "overwrite")              //additional options
     )
@@ -278,7 +278,7 @@ JSON Schema metadata source supports powerful field filtering capabilities to co
             // ))
             // Or include fields matching patterns
             // .includeFieldPatterns(List.of(".*amount.*", ".*identification.*"))
-            // Or exclude fields matching patterns  
+            // Or exclude fields matching patterns
             // .excludeFieldPatterns(List.of(".*internal.*", ".*debug.*"))
             .count(count().records(10));
     ```
@@ -302,7 +302,7 @@ JSON Schema metadata source supports powerful field filtering capabilities to co
       // )
       // Or include fields matching patterns
       // .includeFieldPatterns(".*amount.*", ".*identification.*")
-      // Or exclude fields matching patterns  
+      // Or exclude fields matching patterns
       // .excludeFieldPatterns(".*internal.*", ".*debug.*")
       .count(count.records(10))
     ```
@@ -441,62 +441,357 @@ It should look something like this.
 
 ```json
 {
-    "customer_direct_debit_initiation_v11": {
-        "group_header": {
-            "message_identification": "MSG001",
-            "creation_date_time": "2024-03-15T10:30:45Z",
-            "number_of_transactions": 1,
-            "control_sum": 100.50,
-            "initiating_party": {
-                "name": "ACME Corp"
-            }
+  "customer_direct_debit_initiation_v11": {
+    "group_header": {
+      "message_identification": "MSG001",
+      "creation_date_time": "2024-03-15T10:30:45Z",
+      "number_of_transactions": 1,
+      "control_sum": 100.5,
+      "initiating_party": {
+        "name": "ACME Corp"
+      }
+    },
+    "payment_information": {
+      "payment_information_identification": "PMT001",
+      "payment_method": "DD",
+      "batch_booking": true,
+      "direct_debit_transaction_information": {
+        "payment_identification": {
+          "end_to_end_identification": "TXN001"
         },
-        "payment_information": {
-            "payment_information_identification": "PMT001",
-            "payment_method": "DD",
-            "batch_booking": true,
-            "direct_debit_transaction_information": {
-                "payment_identification": {
-                    "end_to_end_identification": "TXN001"
-                },
-                "instructed_amount": {
-                    "value": 100.50,
-                    "currency": "EUR"
-                }
-            }
+        "instructed_amount": {
+          "value": 100.5,
+          "currency": "EUR"
         }
+      }
     }
+  }
 }
 ```
 
 Congratulations! You have now made a data generator that uses JSON Schema as a metadata source to generate realistic test data following your schema specifications.
 
-### Complex Schema Support
+## JSON Schema Support
 
-JSON Schema metadata source supports various JSON Schema features:
+This section provides comprehensive documentation about Data Caterer's JSON Schema metadata support, including which features are supported, how they map to data generation, and current limitations.
 
-#### Data Types
+### Supported JSON Schema Versions
 
-- **String**: Generates random strings with optional length constraints
-- **Number/Integer**: Generates numeric values within specified ranges
-- **Boolean**: Generates true/false values
-- **Array**: Generates arrays with configurable item types and sizes
-- **Object**: Generates nested objects with all defined properties
+Data Caterer supports the following JSON Schema versions:
 
-#### Constraints
+- **Draft 4** (`http://json-schema.org/draft-04/schema#`)
+- **Draft 6** (`http://json-schema.org/draft-06/schema#`)
+- **Draft 7** (`http://json-schema.org/draft-07/schema#`)
+- **Draft 2019-09** (`https://json-schema.org/draft/2019-09/schema`)
+- **Draft 2020-12** (`https://json-schema.org/draft/2020-12/schema`) - _Default_
 
-- **enum**: Selects from predefined values
-- **pattern**: Generates strings matching regex patterns
-- **minimum/maximum**: Numeric range constraints
-- **minLength/maxLength**: String length constraints
-- **format**: Built-in formats like date-time, email, uri, etc.
+If no `$schema` is specified, Data Caterer defaults to Draft 2020-12.
 
-#### Nested Structures
-Complex nested objects and arrays are fully supported, allowing you to generate data that matches sophisticated JSON Schema definitions.
+### Data Type Mapping
 
-### Validation
+JSON Schema types are mapped to Data Caterer data types as follows:
+
+| JSON Schema Type | Data Caterer Type       | Generated Data Examples                |
+| ---------------- | ----------------------- | -------------------------------------- |
+| `string`         | `StringType`            | Random strings, format-specific values |
+| `integer`        | `IntegerType`           | Random integers within constraints     |
+| `number`         | `DoubleType`            | Random decimal numbers                 |
+| `boolean`        | `BooleanType`           | `true` or `false`                      |
+| `array`          | `ArrayType`             | Arrays of the specified item type      |
+| `object`         | `StructType`            | Nested objects with defined properties |
+| `null`           | `StringType` (nullable) | Treated as nullable string             |
+
+### Core Schema Features
+
+#### Basic Properties
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "age": { "type": "integer" },
+    "active": { "type": "boolean" }
+  },
+  "required": ["name"]
+}
+```
+
+- **Supported**: All basic types, nested objects, required fields
+- **Data Generation**: Required fields are non-nullable, optional fields are nullable
+
+#### Arrays
+
+```json
+{
+  "type": "array",
+  "items": {
+    "type": "string"
+  },
+  "minItems": 1,
+  "maxItems": 10,
+  "uniqueItems": true
+}
+```
+
+- **Supported**: Arrays of primitives and objects, nested arrays
+- **Array Constraints**: `minItems`, `maxItems`, `uniqueItems`
+- **Data Generation**: Generates arrays within specified size bounds
+
+#### Nested Objects
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": { "type": "string" },
+        "city": { "type": "string" }
+      },
+      "required": ["street"]
+    }
+  }
+}
+```
+
+- **Supported**: Multi-level nesting, required fields at any level
+- **Data Generation**: Preserves nested structure and constraints
+
+### Validation Constraints
+
+#### String Constraints
+
+| Constraint  | Support    | Data Generation Effect                   |
+| ----------- | ---------- | ---------------------------------------- |
+| `pattern`   | ✅ Full    | Generates strings matching regex pattern |
+| `minLength` | ✅ Full    | Minimum string length                    |
+| `maxLength` | ✅ Full    | Maximum string length                    |
+| `enum`      | ✅ Full    | Selects from predefined values           |
+| `const`     | ✅ Full    | Always generates the constant value      |
+| `format`    | ✅ Partial | Format-specific generators (see below)   |
+
+**Format Support:**
+
+- `email` - Generates realistic email addresses
+- `uri`/`url` - Generates valid URLs
+- `uuid` - Generates UUID strings
+- `date` - Generates date strings (YYYY-MM-DD)
+- `date-time` - Generates timestamp strings
+- `time` - Generates time strings (HH:MM:SS)
+- `ipv4` - Generates IPv4 addresses
+- `ipv6` - Generates IPv6 addresses
+- `hostname` - Generates hostname strings
+
+#### Numeric Constraints
+
+| Constraint         | Support          | Data Generation Effect    |
+| ------------------ | ---------------- | ------------------------- |
+| `minimum`          | ✅ Full          | Minimum value (inclusive) |
+| `maximum`          | ✅ Full          | Maximum value (inclusive) |
+| `exclusiveMinimum` | ❌ Not supported | Treated as minimum        |
+| `exclusiveMaximum` | ❌ Not supported | Treated as maximum        |
+| `multipleOf`       | ❌ Not supported | Ignored                   |
+
+#### Array Constraints
+
+| Constraint    | Support          | Data Generation Effect            |
+| ------------- | ---------------- | --------------------------------- |
+| `minItems`    | ✅ Full          | Minimum array length              |
+| `maxItems`    | ✅ Full          | Maximum array length              |
+| `uniqueItems` | ✅ Full          | Ensures array elements are unique |
+| `contains`    | ❌ Not supported | Ignored                           |
+| `minContains` | ❌ Not supported | Ignored                           |
+| `maxContains` | ❌ Not supported | Ignored                           |
+
+#### Object Constraints
+
+| Constraint             | Support          | Data Generation Effect                  |
+| ---------------------- | ---------------- | --------------------------------------- |
+| `required`             | ✅ Full          | Makes fields non-nullable               |
+| `minProperties`        | ❌ Not supported | Ignored                                 |
+| `maxProperties`        | ❌ Not supported | Ignored                                 |
+| `additionalProperties` | ⚠️ Recognized    | Does not generate additional properties |
+
+### Advanced Features
+
+#### References ($ref)
+
+Data Caterer supports JSON Schema references for reusable schema components:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "user": { "$ref": "#/definitions/User" }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" }
+      },
+      "required": ["id"]
+    }
+  }
+}
+```
+
+**Reference Support:**
+
+- ✅ `#/definitions/DefinitionName` - Internal definitions
+- ❌ External references (different files/URLs)
+- ❌ JSON Pointer references other than `#/definitions/`
+
+**Data Generation**: References are resolved and constraints from referenced schemas are preserved.
+
+#### Schema Composition
+
+##### allOf (Full Support)
+
+```json
+{
+  "allOf": [
+    { "$ref": "#/definitions/BaseEntity" },
+    { "$ref": "#/definitions/TimestampFields" },
+    {
+      "properties": {
+        "description": { "type": "string" }
+      }
+    }
+  ]
+}
+```
+
+**Data Generation**: Merges all schemas and generates fields from all combined properties.
+
+##### oneOf/anyOf (Limited Support)
+
+```json
+{
+  "oneOf": [
+    { "$ref": "#/definitions/CreditCardPayment" },
+    { "$ref": "#/definitions/BankTransferPayment" }
+  ]
+}
+```
+
+**Data Generation**: Uses the **first schema** from the oneOf/anyOf array. Other schemas are ignored.
+
+##### not (Not Supported)
+
+`not` schemas are not supported and will be ignored.
+
+### Field Filtering
+
+Data Caterer provides powerful field filtering options for JSON Schema metadata sources:
+
+#### Include/Exclude Specific Fields
+
+```scala
+// Include only specific fields
+.includeFields("profile.name", "profile.email", "addresses.street")
+
+// Exclude specific fields
+.excludeFields("profile.createdDate", "sessionId")
+```
+
+#### Pattern-Based Filtering
+
+```scala
+// Include fields matching patterns
+.includeFieldPatterns(".*email.*", ".*name.*")
+
+// Exclude fields matching patterns
+.excludeFieldPatterns(".*internal.*", ".*debug.*")
+```
+
+**Field Path Format**: Use dot notation for nested fields (e.g., `profile.address.street`).
+
+### Constraints Preservation
+
+Data Caterer preserves constraints through:
+
+1. **Direct mapping**: Simple constraints map directly to Data Caterer options
+2. **Reference resolution**: Constraints from referenced schemas are maintained
+3. **Composition merging**: allOf compositions merge constraints from all schemas
+4. **Nested structures**: Multi-level constraints are preserved at appropriate levels
+
+#### Example: Complex Constraint Preservation
+
+```json
+{
+  "properties": {
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      },
+      "minItems": 1,
+      "maxItems": 100
+    }
+  },
+  "definitions": {
+    "User": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 18,
+          "maximum": 65
+        }
+      }
+    }
+  }
+}
+```
+
+**Generated Data**:
+
+- Array will have 1-100 items
+- Each user will have a valid email format
+- Ages will be between 18-65
+
+### Unsupported Features
+
+The following JSON Schema features are **not currently supported**:
+
+#### Schema Composition
+
+- `not` schemas
+- Complex `anyOf`/`oneOf` resolution (only first option used)
+
+#### Advanced Constraints
+
+- `exclusiveMinimum`/`exclusiveMaximum`
+- `multipleOf`
+- `contains`, `minContains`, `maxContains`
+- `minProperties`/`maxProperties`
+- `unevaluatedProperties`/`unevaluatedItems`
+
+#### Advanced Features
+
+- `if`/`then`/`else` conditional schemas
+- `dependentRequired`/`dependentSchemas`
+- `prefixItems` (Draft 2020-12)
+- External references
+- Dynamic references
+- Schema recursion detection
+
+#### Format Extensions
+
+- Custom formats beyond the built-in list
+- `idn-email`, `idn-hostname`
+- `iri`, `iri-reference`
+- `duration`
+
+## Validation
 
 If you want to validate data against a JSON Schema, you can use the generated data with validation frameworks or tools that support JSON Schema validation.
 
 The JSON Schema metadata source in Data Caterer focuses on data generation based on the schema structure, ensuring that the generated data conforms to the defined schema constraints and types.
-
